@@ -4,9 +4,14 @@
 **See also:** `ARCHITECTURE.md` — where a second language attaches to the build:
 the Burmese-only runtime rule, the source-to-build field mapping, and what has
 to exist before any translation can be wired.
-**Source present:** `docs/translations/unit1.json` — Unit 1 bilingual draft, 67
-`en`/`my` pairs, verified complete. Marked `draft-unreviewed` and wired to
-nothing; QA check 13 keeps it out of `src/` and warns until it is reviewed.
+**Sources present:** `docs/translations/unit0.json`…`unit7.json` — the flat
+delivery, 210 fields built into overlays and live in the app; plus
+`unit1.bilingual-source.json`, the older paired draft (67 `en`/`my` pairs) that
+still supplies 17 of Unit 1's fields. All `draft-unreviewed`: machine-drafted,
+no native pass. QA check 13 keeps the sources themselves out of `src/` and warns
+until they are reviewed.
+**Still outstanding:** 27 content fields, listed in `TRANSLATION-REQUEST.md`
+with their full English in `translation-source.json`.
 **Against:** Civics Course Storyboard v5.3 and Question_Bank_Companion.md.
 **Generated:** the string inventory in Part 2 is extracted from source, not
 typed by hand, so it does not drift out of date silently. Regenerate it before
