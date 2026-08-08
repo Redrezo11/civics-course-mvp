@@ -28,6 +28,11 @@ jobs:
       # content regression blocks the deploy rather than shipping.
       - name: QA gate
         run: npm run qa
+      # Drives the UI and walks every unit end to end. Catches the class of
+      # defect that compiles cleanly and passes the QA gate while leaving a
+      # learner unable to get past a screen.
+      - name: Completability tests
+        run: npm test
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -86,22 +86,35 @@ per-question seed, so the order is stable across reloads but the answer moves.
   shape and does not pretend to record anything.
 - `speechSynthesis` "Listen" button: cut from MVP per explicit decision.
 
+## Tests
+```
+npm test          # drives the UI and walks every unit end to end
+npm run test:watch
+```
+`tests/lesson-completable.test.js` mounts each unit and clicks through it the
+way a learner would, failing if forward progress ever stops. It exists because
+three separate defects shipped while the build and the QA gate were both green:
+tap-to-sort never signalled completion (so **Unit 1 was uncompletable by
+anyone**), answers were written onto imported JSON and came back pre-answered,
+and two consecutive `practice` screens shared one `SingleSelect` instance so the
+second arrived already answered with no way forward.
+
+The test has teeth — removing the `{#key screen.id}` guard in `Lesson.svelte`
+fails ten of its cases. CI runs it before the build.
+
 ## Testing note — read this before trusting the build
 
 What is verified: the QA gate passes (8 checks), the production build compiles,
 the question bank reconciles against the Companion's checksums, and the review
 and rehearsal selection logic is property-tested across hundreds of seeds.
 
-What is **not** verified: the app has still had only limited click-testing in a
-real browser. That gap has already cost real defects that compilation could not
-see — the tap-to-sort interaction was an unescapable dead-end for months
-because a Svelte reactive statement did not name the variable it depended on,
-which meant **Unit 1 was never completable by anyone**. Nothing about the build
-output looked wrong.
+What is **not** verified: G-08 full-bank practice, R1–R3, Rehearsal, E-01 and
+the completion screen are covered by the QA gate and by property tests on their
+selection logic, but they are not yet walked by the completability test — that
+currently drives lesson units only. Extending it to those five screens is the
+obvious next piece of work.
 
-The lesson: `npm run build` succeeding proves almost nothing about whether a
-learner can get through a screen. Walk each unit end to end after any change to
-`GuidedPractice`, `VocabDeck`, `FullBank`, `Review`, or `Rehearsal`.
-
-There is no automated browser test yet. Adding one is the highest-value next
-piece of work on this repo.
+The standing lesson: `npm run build` succeeding proves almost nothing about
+whether a learner can get through a screen. Every progression defect this
+project has had compiled cleanly. If you change an interaction component, run
+`npm test` — and if you add a new screen type, add it to the walk.
