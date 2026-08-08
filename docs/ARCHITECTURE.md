@@ -114,21 +114,44 @@ S15 — and are live.
 
 ---
 
-## 4. Before any of this can be wired
+## 4. Status — the layer is built
 
-Four blockers, detailed in `STRUCTURAL_CHANGES.md` Part 3. Summarised here only
-so this document is not misread as a green light:
+All four original blockers are cleared:
 
-1. **No i18n layer exists.** `ui-strings.json` and `content/units/{en,my}/` were
-   never built; ~146 UI strings are hardcoded in components; there is no
-   string-lookup function anywhere.
-2. **Settings promises a switch that does nothing.** `$progress.language` is read
-   in three places and changes no text.
-3. **Noto Sans Myanmar is not bundled**, and `lang="my"` is applied nowhere.
-4. **`current-answers.json` is unverified.**
+1. **The i18n layer exists.** `src/lib/i18n.js` provides `t()` for UI chrome and
+   `localiseScreen()` for course content. Both fall back to English.
+2. **Settings does what it says.** Selecting Burmese changes the interface and
+   Unit 1's teaching text, and the screen states its real coverage.
+3. **Noto Sans Myanmar is bundled**, self-hosted, and `<html lang>` is set.
+4. `current-answers.json` is still unverified — unrelated to language.
 
-(1) is the real work: adding Burmese is a code change before it is a content
-drop.
+### Coverage today
+
+| Layer | State |
+|---|---|
+| UI chrome | 31 keys wired, 33 of 38 carry Burmese |
+| Unit 1 content | 17 fields, 9 screens |
+| Units 0, 2–7 content | English (no source exists) |
+
+### Adding more Burmese is now a data drop
+
+1. Author `docs/translations/unitN.json` against the **current** screen schema
+   (§3), not the mockup.
+2. `node scripts/build-translations.js unitN` — it maps what corresponds and
+   reports what does not, rather than guessing.
+3. Register the overlay in the `OVERLAYS` map in `src/lib/i18n.js`.
+
+For chrome, fill the `my` values in `src/lib/content/ui-strings.json`. QA check
+14 reports how many are still untranslated on every run.
+
+### The font, and why `unicode-range` matters
+
+The Myanmar subset is **154 KB** — heavy against the prepaid-data constraint the
+project calls its binding limit. The `@font-face` in `app.css` declares
+`unicode-range: U+1000-109F, …`, and a browser only fetches a font once it has
+to render a character in that range. **An English learner downloads none of it.**
+Self-hosted, never a CDN (G-11). SIL OFL 1.1, licence at
+`src/assets/fonts/OFL.txt` as redistribution requires.
 
 ---
 
