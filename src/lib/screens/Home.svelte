@@ -38,11 +38,15 @@
     units.find((u) => !$progress.unitsCompleted.includes(u.id) && builtUnits.includes(u.id)) ||
     units.find((u) => builtUnits.includes(u.id));
 
+  // START carries no subtitle: naming the unit would only repeat the first row
+  // of the list directly beneath it, and there is nowhere else to start from.
+  // CONTINUE keeps its title because which unit you are returning to is the
+  // one thing the learner cannot infer.
   $: primary = allDone
     ? { label: 'PRACTICE THE INTERVIEW', title: 'Rehearsal', href: '/rehearsal' }
     : started
       ? { label: 'CONTINUE', title: `Unit ${resumeUnit.id.slice(1)} — ${resumeUnit.name}`, href: `/unit/${resumeUnit.id}` }
-      : { label: 'START', title: `Unit ${resumeUnit.id.slice(1)} — ${resumeUnit.name}`, href: `/unit/${resumeUnit.id}` };
+      : { label: 'START', title: '', href: `/unit/${resumeUnit.id}` };
 
   // Reviews unlock after U2, U5 and U7 (§8). They are shown only once earned —
   // an empty "Reviews" heading with nothing under it would be worse than
@@ -78,8 +82,12 @@
         class="tap w-full text-left bg-ink dark:bg-dark-accent text-surface dark:text-dark-accent-ink rounded-card p-4 mb-5"
         on:click={() => navigate(primary.href)}
       >
-        <div class="text-[10px] tracking-wide opacity-70 mb-1">{primary.label}</div>
-        <div class="text-base font-bold">{primary.title}</div>
+        {#if primary.title}
+          <div class="text-[10px] tracking-wide opacity-70 mb-1">{primary.label}</div>
+          <div class="text-base font-bold">{primary.title}</div>
+        {:else}
+          <div class="text-base font-bold tracking-wide">{primary.label}</div>
+        {/if}
       </button>
     {/if}
 

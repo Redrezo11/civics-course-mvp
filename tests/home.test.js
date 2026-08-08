@@ -35,6 +35,12 @@ describe('Home primary card', () => {
     expect(container.textContent).not.toContain('CONTINUE');
   });
 
+  it('the START card is the word alone, with no unit subtitle', () => {
+    const { container } = render(Home, {});
+    // Naming the unit would only repeat the first row of the list below it.
+    expect(firstCard(container).textContent.trim()).toBe('START');
+  });
+
   it('says CONTINUE and names the unit actually left off in', () => {
     // Jump straight to U3 without completing anything — the case the old logic
     // got wrong, because it keyed off unitsCompleted rather than position.
