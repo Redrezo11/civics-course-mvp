@@ -1,7 +1,7 @@
 <script>
   import { progress, questionsPracticedCount, lessonsFinishedCount } from '../stores/progress.js';
   import { navigate } from '../router.js';
-  import { getUnitQuestions, TOTAL_QUESTIONS } from '../content/questions.js';
+  import { getUnitQuestions, TOTAL_QUESTIONS, ANSWERS_CHECKED } from '../content/questions.js';
   import { REVIEWS, unlockedReviews } from '../select-review.js';
 
   const units = [
@@ -117,7 +117,7 @@
     {/if}
 
     <p class="text-[10px] text-ink-muted dark:text-dark-ink-muted text-center mt-4">
-      Answers checked: Aug 2026 ·
+      {#if ANSWERS_CHECKED}Answers checked: {ANSWERS_CHECKED}{:else}Some answers change — check uscis.gov{/if} ·
       <button class="underline font-bold text-ink dark:text-dark-ink" on:click={() => navigate('/help')}>Help</button> ·
       <button class="underline font-bold text-ink dark:text-dark-ink" on:click={() => navigate('/settings')}>Settings</button>
     </p>

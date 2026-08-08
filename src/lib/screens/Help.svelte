@@ -1,6 +1,7 @@
 <script>
   import { navigate } from '../router.js';
   import { progress } from '../stores/progress.js';
+  import { ANSWERS_CHECKED } from '../content/questions.js';
 
   const entries = [
     { q: 'My lessons disappeared', a: 'Private window or cleared data. Use a normal window — your lessons are all still here.' },
@@ -33,7 +34,14 @@
 
   <div class="border-t border-border dark:border-dark-border pt-3 mt-4 text-xs text-ink-muted dark:text-dark-ink-muted">
     <p class="mb-1">About: a self-paced civics course to help you prepare for the U.S. naturalization test.</p>
-    <p>Sources: USCIS M-1778 · National Archives / Library of Congress photos · checked Aug 2026</p>
+    <!-- Derived, never hardcoded. This line previously read "checked Aug 2026"
+         while current-answers.json carried no date at all and every dynamic
+         card said "not checked yet" — the app contradicting itself about
+         whether anyone had verified anything. -->
+    <p>
+      Sources: USCIS M-1778 · National Archives / Library of Congress photos ·
+      {#if ANSWERS_CHECKED}answers checked {ANSWERS_CHECKED}{:else}answers that change with elections have not been checked yet{/if}
+    </p>
   </div>
 
   <div class="border border-border dark:border-dark-border rounded-card p-3 mt-3 text-center text-sm font-bold">
