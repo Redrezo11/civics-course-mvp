@@ -12,6 +12,7 @@
   import { localiseScreen } from '../i18n.js';
   import LessonBar from '../components/LessonBar.svelte';
   import QuestionCard from '../components/QuestionCard.svelte';
+  import AnswerLabel from '../components/AnswerLabel.svelte';
   import SingleSelect from '../components/SingleSelect.svelte';
   import MultiSelect from '../components/MultiSelect.svelte';
   import VocabDeck from '../components/VocabDeck.svelte';
@@ -195,7 +196,7 @@
             class="btn-secondary mb-2.5 disabled:opacity-70"
             disabled={interactionDone}
             on:click={() => { interactionDone = true; }}
-          >{opt}</button>
+          ><AnswerLabel text={opt} gloss={screen.optionsGloss?.[i]} /></button>
         {/each}
         {#if interactionDone}
           <p class="text-sm mt-4 p-3 rounded-card border border-border dark:border-dark-border leading-relaxed">

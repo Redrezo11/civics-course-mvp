@@ -1,6 +1,8 @@
 {
   "_note": "Untruncated English for every field in TRANSLATION-REQUEST.md, keyed screenId.field. The markdown clips long values for table display; these are the full ones. Return each value in the same shape and, for lists, the same length and order. The ⚠ rules in section 0 of the markdown still apply.",
-  "_ui": {},
+  "_ui": {
+    "settings.answersStayEnglish": "Answer choices show English first, with the Burmese underneath."
+  },
   "U1-S05.paragraphs": [
     "In 1787, the thirteen states had just finished a long war against a king. They needed a government — but they were afraid of two opposite things at the same time.",
     "They were afraid of having no government. Without one, nobody could defend the country, settle arguments between states, or pay for anything.",
@@ -25,11 +27,6 @@
     }
   ],
   "U1-S09.items[0].question": "Name one thing the U.S. Constitution does.",
-  "U1-S09.items[0].options": [
-    "Protects the rights of the people",
-    "Chooses the President",
-    "Collects taxes from each state"
-  ],
   "U1-S09.items[1].instructions": "Tap to sort into Declaration or Constitution.",
   "U2-S04.cards": [
     {
@@ -226,6 +223,11 @@
     "Not everyone was convinced. To persuade the doubters, James Madison, Alexander Hamilton, and John Jay wrote a series of essays — the Federalist Papers — explaining the Constitution and urging its passage.",
     "Here are the most important founders and what they did: George Washington — general of the Continental Army, president of the Constitutional Convention, first President: the 'Father of Our Country.' Thomas Jefferson — writer of the Declaration, third President. James Madison — the 'Father of the Constitution,' fourth President. Alexander Hamilton — first Secretary of the Treasury. Benjamin Franklin — diplomat, inventor, first Postmaster General, founder of the first free public libraries."
   ],
+  "U6-S09.items[2].options": [
+    "Founded the first free public libraries",
+    "First president of the United States",
+    "Led the Union during the Civil War"
+  ],
   "U7-S04.cards": [
     {
       "word": "slavery",
@@ -284,5 +286,14 @@
     "At your ceremony there will be a flag. Read it like a sentence: 13 stripes — the 13 original colonies, from the founding story. 50 stars — one for each state, from the growing story.",
     "The capital: Washington, D.C. The Statue of Liberty stands in New York Harbor — for many immigrants before you, the first sight of America. The national anthem: The Star-Spangled Banner. And the nation's first motto, on the coins in your pocket: E Pluribus Unum — out of many, one. That has always included people who chose this country. It includes you.",
     "The holidays mark the story you now know: Independence Day — the country's birthday, July 4. Memorial Day — honors soldiers who died in military service. Veterans Day — honors all who served."
+  ],
+  "U7-S12.items[1].buckets": [
+    "Memorial Day",
+    "Veterans Day"
+  ],
+  "U7-S12.items[2].options": [
+    "To stop the spread of communism",
+    "To defend Pearl Harbor",
+    "To free Kuwait"
   ]
 }

@@ -305,6 +305,32 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
     ['dark', 'ui', 'dark-ink', 'dark-raised'],
   ];
 
+  // The Burmese gloss under an answer, READ FROM THE COMPONENT rather than
+  // listed here. It renders on the answered-state backgrounds as well as the
+  // resting ones, and none of those pairs was audited before because no text
+  // used a secondary token there.
+  //
+  // Derived on purpose: a hardcoded pair would keep passing while someone
+  // swapped the component to a lighter grey. ink-muted was the first choice and
+  // fails at 4.38:1 on dark-gotit-bg, so this is a live risk, not a theoretical
+  // one.
+  {
+    const label = join(srcDir, 'lib', 'components', 'AnswerLabel.svelte');
+    const markup = readFileSync(label, 'utf8');
+    // The light and dark colour classes are written adjacently on the gloss
+    // span, so match that pair directly rather than parsing the whole tag.
+    const m = /text-([a-z][a-z-]*) dark:text-(dark-[a-z-]+)/.exec(markup);
+    if (!m) {
+      fail(check, 'could not read the gloss colour out of AnswerLabel.svelte — the audit below is not covering it');
+    } else {
+      const [, lightTok, darkTok] = m;
+      for (const bg of ['raised', 'surface', 'gotit-bg', 'notyet-bg']) {
+        PAIRS.push(['light', 'text', lightTok, bg]);
+        PAIRS.push(['dark', 'text', darkTok, `dark-${bg}`]);
+      }
+    }
+  }
+
   const worst = { light: Infinity, dark: Infinity };
   for (const [theme, kind, fg, bg] of PAIRS) {
     if (!colors[fg] || !colors[bg]) {
@@ -694,12 +720,16 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
   const officialText = questions.map((q) => q.official).filter((s) => s.length > 15);
   const acceptedText = new Set(questions.flatMap((q) => q.acceptedAnswers).filter((s) => s.length > 12));
 
-  // The one case the derived rule cannot see (ARCHITECTURE §1a). U1's interpret
-  // options are English test questions carrying a Burmese gloss — paraphrases,
-  // so neither official wording nor accepted answers. Translating them away
-  // would delete the skill being practised without tripping anything above.
-  const KEEP_ENGLISH_GLOSS = 'unit1.json:U1-S09.items[3].options';
-  let glossSeen = false;
+  // Answer surfaces. Their overlay values are GLOSSES — rendered in grey under
+  // the English, never in place of it (GLOSS_FIELDS in src/lib/i18n.js). So the
+  // accepted-answer rule below does not apply to them: a translated accepted
+  // answer sitting beneath the English one is the intended result.
+  //
+  // They get their own rule instead. A gloss that repeats its English prints
+  // the same words twice in two greys, which is what the interpret options did
+  // before the generator started stripping the duplicated prefix.
+  const ANSWER_FIELDS = new Set(['options', 'buckets', 'orderItems', 'sortItems']);
+  const fieldOf = (path) => path.split('.').pop().replace(/\[\d+\]$/, '');
 
   /** Flatten an overlay screen to [path, translated, english] triples. */
   const paths = (screenId, fields, byId) =>
@@ -741,10 +771,15 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
           if (english === undefined) continue; // check 15 owns unmatched fields
           checked += 1;
 
-          if (key === KEEP_ENGLISH_GLOSS) {
-            glossSeen = true;
-            if (!english.every((e, i) => String(value?.[i] ?? '').includes(e))) {
-              fail(check, `${lang}/${key}: interpret options keep their English text plus a gloss, never replace it`);
+          if (ANSWER_FIELDS.has(fieldOf(path))) {
+            if (Array.isArray(english) && Array.isArray(value)) {
+              english.forEach((e, i) => {
+                const enText = typeof e === 'string' ? e : e?.text;
+                const gloss = value[i];
+                if (enText && gloss && String(gloss).includes(enText)) {
+                  fail(check, `${lang}/${key}[${i}] repeats its English inside the gloss — it would print twice`);
+                }
+              });
             }
             continue;
           }
@@ -771,11 +806,10 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
     }
   }
 
-  // A guard that matches nothing is a guard that has stopped guarding.
-  if (!glossSeen) {
-    warn(check, `${KEEP_ENGLISH_GLOSS} matched no overlay field — the interpret gloss guard is pointing at nothing`);
-  }
-
+  // The stronger half of this guarantee — that an answer is never RENDERED in
+  // Burmese — cannot be seen from the overlay files, because it depends on how
+  // localiseScreen merges them. tests/i18n.test.js asserts it on the resolved
+  // screen instead, which is the thing a learner actually sees.
   if (!errors.some((e) => e.startsWith(check))) {
     pass(check, `${checked} overlay field(s) preserve every official sentence and accepted answer in their English source`);
   }

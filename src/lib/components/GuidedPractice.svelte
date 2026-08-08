@@ -18,6 +18,7 @@
   // re-ran, and a finished sort could never advance.
 
   import { createEventDispatcher } from 'svelte';
+  import AnswerLabel from './AnswerLabel.svelte';
   const dispatch = createEventDispatcher();
 
   export let items = [];
@@ -132,18 +133,22 @@
         <div class="flex gap-2 mb-3">
           {#each item.buckets as b, bi}
             <div class="flex-1 border border-border dark:border-dark-border rounded-card p-2 min-h-[80px]">
-              <p class="text-xs font-bold text-center mb-1">{b}</p>
+              <div class="text-center mb-1">
+                <AnswerLabel text={b} gloss={item.bucketsGloss?.[bi]} textClass="text-sm font-bold" />
+              </div>
               {#each item.sortItems as si, si_i}
                 {#if sortAssignments[i]?.[si_i] === bi}
                   {@const right = si.bucket === bi}
-                  <p
+                  <div
                     class="text-xs rounded px-1.5 py-1 mb-1
                       {doneFlags[i] && right ? 'bg-gotit-bg dark:bg-dark-gotit-bg' : ''}
                       {doneFlags[i] && !right ? 'border border-border-interactive dark:border-dark-border-interactive' : ''}
                       {!doneFlags[i] ? 'bg-gotit-bg dark:bg-dark-gotit-bg' : ''}"
                   >
-                    {#if doneFlags[i]}{right ? '✓ ' : '✗ '}{/if}{si.text}
-                  </p>
+                    <AnswerLabel text={si.text} gloss={item.sortItemsGloss?.[si_i]}
+                      >{#if doneFlags[i]}{right ? '✓ ' : '✗ '}{/if}</AnswerLabel
+                    >
+                  </div>
                 {/if}
               {/each}
             </div>
@@ -153,10 +158,14 @@
         {#each item.sortItems as si, si_i}
           {#if sortAssignments[i]?.[si_i] === undefined}
             <div class="border border-border-interactive dark:border-dark-border-interactive rounded-card p-3 mb-2">
-              <p class="text-sm mb-2">{si.text}</p>
+              <div class="mb-2">
+                <AnswerLabel text={si.text} gloss={item.sortItemsGloss?.[si_i]} textClass="text-sm" />
+              </div>
               <div class="flex gap-2">
                 {#each item.buckets as b, bi}
-                  <button class="btn-secondary tap !py-1.5 !text-xs" on:click={() => assignBucket(i, si_i, bi)}>{b}</button>
+                  <button class="btn-secondary tap !py-1.5 !text-xs" on:click={() => assignBucket(i, si_i, bi)}>
+                    <AnswerLabel text={b} gloss={item.bucketsGloss?.[bi]} />
+                  </button>
                 {/each}
               </div>
             </div>
@@ -172,7 +181,13 @@
                 {sortWrong[i].length === 1 ? 'One belongs' : `${sortWrong[i].length} belong`} somewhere else:
               </span>
               {#each sortWrong[i] as w}
-                <br />“{w.si.text}” → <strong>{item.buckets[w.si.bucket]}</strong>
+                {@const siIdx = item.sortItems.indexOf(w.si)}
+                <div class="mt-1">
+                  <AnswerLabel text="“{w.si.text}” → {item.buckets[w.si.bucket]}"
+                    gloss={item.sortItemsGloss
+                      ? `“${item.sortItemsGloss[siIdx]}” → ${item.bucketsGloss?.[w.si.bucket] ?? item.buckets[w.si.bucket]}`
+                      : ''} />
+                </div>
               {/each}
             {/if}
           </div>
@@ -197,7 +212,7 @@
                 {!doneFlags[i] ? 'border-border-interactive dark:border-dark-border-interactive' : ''}"
             >
               <span class="font-bold shrink-0">{slot + 1}.</span>
-              <span>{item.orderItems[pickIdx]}</span>
+              <AnswerLabel text={item.orderItems[pickIdx]} gloss={item.orderItemsGloss?.[pickIdx]} />
               {#if doneFlags[i]}<span class="ml-auto shrink-0 font-bold">{right ? '✓' : '✗'}</span>{/if}
             </div>
           {/each}
@@ -209,7 +224,7 @@
               <button
                 class="tap flex items-center w-full text-left py-2.5 px-4 mb-2 rounded-card font-bold text-sm border-2 border-border-interactive dark:border-dark-border-interactive"
                 on:click={() => pickOrder(i, entry.i)}
-              >{entry.text}</button>
+              ><AnswerLabel text={entry.text} gloss={item.orderItemsGloss?.[entry.i]} /></button>
             {/if}
           {/each}
           {#if (orderPicks[i] || []).length > 0}
@@ -223,7 +238,12 @@
               <span class="font-bold">Correct order.</span> {item.feedbackCorrect || ''}
             {:else}
               <span class="font-bold">The correct order is:</span>
-              {#each item.orderItems as t, n}<br />{n + 1}. {t}{/each}
+              {#each item.orderItems as t, n}
+                <div class="mt-1 flex gap-2">
+                  <span class="shrink-0">{n + 1}.</span>
+                  <AnswerLabel text={t} gloss={item.orderItemsGloss?.[n]} />
+                </div>
+              {/each}
             {/if}
           </div>
           <button class="tap inline-flex items-center text-xs underline text-ink-muted dark:text-dark-ink-muted mt-2" on:click={() => resetOrder(i)}>
@@ -262,7 +282,9 @@
             on:click={() => selectAnswer(i, oi)}
           >
             <span class="flex-1">
-              {#if answered && isCorrect}✓ {:else if isWrongPick}✗ {/if}{opt}
+              <AnswerLabel text={opt} gloss={item.optionsGloss?.[oi]}
+                >{#if answered && isCorrect}✓ {:else if isWrongPick}✗ {/if}</AnswerLabel
+              >
             </span>
           </button>
         {/each}

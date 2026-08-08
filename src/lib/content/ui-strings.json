@@ -100,6 +100,10 @@
     "en": "Rehearsal",
     "my": "စာမေးပွဲ လေ့ကျင့်ခန်း"
   },
+  "settings.answersStayEnglish": {
+    "en": "Answer choices show English first, with the Burmese underneath.",
+    "my": null
+  },
   "settings.back": {
     "en": "‹ Back",
     "my": "‹ နောက်သို့"

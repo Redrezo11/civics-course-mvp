@@ -52,9 +52,22 @@
   <p class="text-xs text-ink-secondary dark:text-dark-ink-secondary mb-2 leading-relaxed">
     {$progress.language === 'my' ? $t('settings.coverage.my') : $t('settings.coverage.en')}
   </p>
-  <p class="text-xs text-ink-secondary dark:text-dark-ink-secondary mb-6 leading-relaxed">
+  <p class="text-xs text-ink-secondary dark:text-dark-ink-secondary mb-2 leading-relaxed">
     {$t('settings.testStaysEnglish')}
   </p>
+  <!--
+    Only in Burmese, and only because the screen would otherwise be misleading:
+    English answer options are a deliberate choice, not translation that has not
+    arrived yet, and the line above tells the learner that untranslated things
+    stay English. Without this they read the answers as missing work.
+  -->
+  {#if $progress.language === 'my'}
+    <p class="text-xs text-ink-secondary dark:text-dark-ink-secondary mb-6 leading-relaxed">
+      {$t('settings.answersStayEnglish')}
+    </p>
+  {:else}
+    <div class="mb-4"></div>
+  {/if}
 
   <p class="text-sm font-bold text-ink-muted dark:text-dark-ink-muted mb-2">{$t('settings.theme')}</p>
   <div class="flex gap-2 mb-6">

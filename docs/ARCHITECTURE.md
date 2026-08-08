@@ -9,12 +9,14 @@ rules that decide what may and may not be translated.
 
 ## 1. The runtime rule
 
-**Burmese is exclusively for the Burmese version. The two languages never appear
-on screen together.**
+**Burmese is exclusively for the Burmese version.** A learner whose language is
+`my` sees Burmese; a learner set to `en` sees English. Teaching text is never
+presented as a bilingual pair — no side-by-side layout for prose, no English
+paragraph with its translation stacked under it.
 
-A learner whose language is `my` sees Burmese. A learner set to `en` sees
-English. There is no side-by-side layout, no stacked pair, no "English with a
-translation underneath".
+**Answers are the exception**, and §1a explains why at length: they stay English
+with the Burmese beneath. Everything below in this section is about the
+teaching text around them.
 
 This is why every translatable field in the build is a **single string**, not a
 `{ en, my }` pair. `feedbackExplain`, `learnedLine`, `paragraphs` — one language,
@@ -23,19 +25,61 @@ shipped content.
 
 The pattern this was explicitly modelled against — `vocalize-mvp`, which stacks
 `explanation` and `explanationArabic` on the same screen — is the thing this
-course does **not** do.
+course does **not** do *for teaching text*. Answers stack deliberately and for a
+specific reason (§1a); explanations do not stack at all.
 
-### 1a. The one exception
+### 1a. The exception: answers
 
-On the **interpret** item (module-level Objective 3), option text stays
-**English even in Burmese mode**, with a Burmese gloss in parentheses.
+**Everything the learner picks as an answer stays English, with the Burmese
+underneath it in grey.** This is the one place the two languages share a screen,
+and it is deliberate.
 
-The skill being taught is recognising a familiar test question under unfamiliar
-wording. The officer will ask in English. Translating the options would delete
-the thing being practised. The bilingual source encodes this decision itself:
+The reasoning is the reasoning behind the whole course. The officer conducts the
+interview in English. An answer a learner has only ever met in Burmese is an
+answer they cannot give — and the practice that was supposed to prepare them
+instead rehearses a phrasing nobody will use. The Burmese carries the meaning;
+the English carries the skill.
+
+This began as a narrower rule. The **interpret** item alone kept its options in
+English with a bracketed Burmese gloss, and the bilingual source stated why:
 
 > `"Option text stays English (test-language exposure) with Burmese gloss in
 > parentheses."`
+
+That argument was never specific to interpret items, so it now covers all four
+answer surfaces — multiple-choice options, sort bucket labels, sort chips and
+ordering cards — with a proper layout instead of parentheses.
+
+**Teaching prose, questions and instructions are not answers** and stay fully
+translated. The learner reads those to understand; they only have to *produce*
+the answers.
+
+#### How it works
+
+`GLOSS_FIELDS` in [`i18n.js`](../src/lib/i18n.js) lists the four answer fields.
+For those, `localiseScreen` does not overwrite — it writes a parallel
+`optionsGloss` / `bucketsGloss` / `orderItemsGloss` / `sortItemsGloss`, always a
+flat list of strings aligned by index.
+[`AnswerLabel.svelte`](../src/lib/components/AnswerLabel.svelte) renders the
+pair, and is the only component that does.
+
+Two consequences worth keeping:
+
+- **`correctIndex` and `sortItems[].bucket` can no longer be corrupted by a
+  translation,** because the arrays holding them are never touched. That is not
+  theoretical — a delivery of `sortItems` as plain strings erased every bucket
+  index in five units before this design.
+- **The gloss colour is `ink-secondary`, not `ink-muted`.** The lighter grey
+  measures 4.38:1 on `dark-gotit-bg`, under the 4.5 floor. QA check 5 reads the
+  token out of the component rather than from a list, so swapping it back fails
+  the build.
+- **The gloss is not set smaller.** Burmese stacks vowel marks above and below
+  the consonant; under about 14px they collapse and it stops being readable.
+  Weight and colour carry the hierarchy instead.
+
+The build strips a gloss that repeats its English (the old bracketed form) and
+omits one entirely where the translation came back in English, so no answer ever
+shows the same words twice.
 
 ### 1b. Never translated at all
 

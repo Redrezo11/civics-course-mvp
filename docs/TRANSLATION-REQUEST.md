@@ -6,8 +6,8 @@ content change rather than editing this file, or it will describe a course that
 no longer exists.
 
 Everything already translated is live and is **not** listed here, so nothing gets
-translated twice. Remaining: **0 interface strings** and
-**27 content fields**.
+translated twice. Remaining: **1 interface strings** and
+**29 content fields**.
 
 **Work from `docs/translation-source.json`, not from the tables below.** The
 tables clip long values to fit a markdown column; that JSON carries the full
@@ -65,11 +65,13 @@ were lost this way before we worked out the cause.
 
 ---
 
-## 1. Interface strings — 0 of 38 remaining
+## 1. Interface strings — 1 of 39 remaining
 
 In `src/lib/content/ui-strings.json`. Fill the `my` value; leave `en` alone.
 
-_All 38 interface strings carry Burmese._ They remain `draft-unreviewed` and still need a native pass, but none is missing.
+| Key | English |
+|---|---|
+| `settings.answersStayEnglish` | Answer choices show English first, with the Burmese underneath. |
 
 ---
 
@@ -117,14 +119,14 @@ which is the authority if this description and the JSON ever disagree:
 | Unit | Fields outstanding |
 |---|---|
 | U0 Test day | 0 |
-| U1 We the People | 6 |
+| U1 We the People | 5 |
 | U2 Three branches | 3 |
 | U3 Who represents you | 4 |
 | U4 Federal and state | 2 |
 | U5 Rights and responsibilities | 3 |
-| U6 How America began | 4 |
-| U7 How America changed | 5 |
-| **Total** | **27** |
+| U6 How America began | 5 |
+| U7 How America changed | 7 |
+| **Total** | **29** |
 
 ---
 
@@ -138,7 +140,7 @@ _Fully translated._
 
 ### U1 — We the People
 
-**6 fields.**
+**5 fields.**
 
 | Screen | Field | English |
 |---|---|---|
@@ -146,7 +148,6 @@ _Fully translated._
 | `U1-S06b` | `paragraphs` | Can the rulebook change? Yes — by amendment. But the writers made changing it slow and difficult on purpose. A rulebook that is easy to change is not much of a limit on anyone. \| In more than 230 years, it has changed only 27 times. That small number is the point. \| Many people worried that the new Constitution did n… **[clipped — full text in `translation-source.json` under `U1-S06b.paragraphs`]** |
 | `U1-S08` | `twoColumn` | Declaration of Independence — 1776: An announcement to the world: America is free from Britain. It says all people are created equal, with rights that belong to them — 'Life, Liberty, and the pursuit of Happiness.' \| Constitution — 1787: A rulebook. It builds: the government America still uses today. |
 | `U1-S09` | `items[0].question` | Name one thing the U.S. Constitution does. **⚠ keep the quoted official question in English**; translate only the words around it |
-| `U1-S09` | `items[0].options` | Protects the rights of the people \| Chooses the President \| Collects taxes from each state **⚠ KEEP ENGLISH** — these restate accepted answers |
 | `U1-S09` | `items[1].instructions` | Tap to sort into Declaration or Constitution. |
 
 ### U2 — Three branches
@@ -191,7 +192,7 @@ _Fully translated._
 
 ### U6 — How America began
 
-**4 fields.**
+**5 fields.**
 
 | Screen | Field | English |
 |---|---|---|
@@ -199,10 +200,11 @@ _Fully translated._
 | `U6-S05` | `paragraphs` | Chapter 1 — Before. \| American Indians — Native Americans — lived on this land first, for thousands of years, in many nations: Cherokee, Navajo, Sioux, and hundreds more. \| Then ships came from Europe. The colonists came for reasons you will recognize: freedom — religious freedom, political liberty — economic opportu… **[clipped — full text in `translation-source.json` under `U6-S05.paragraphs`]** |
 | `U6-S06` | `paragraphs` | Chapter 2 — The break. \| The thirteen colonies were ruled by Britain, and Britain taxed them — the Stamp Act, the Tea Act — while giving them no vote and no voice in the decisions. The colonists gave their complaint a name that still rings: taxation without representation. Protest grew — the Boston Tea Party — and pro… **[clipped — full text in `translation-source.json` under `U6-S06.paragraphs`]** |
 | `U6-S07` | `paragraphs` | Chapter 3 — The build. \| The colonies were free — but they were struggling. The first loose arrangement between the states (the Articles of Confederation) proved too weak to work. So in 1787, the states sent their best minds to Philadelphia and wrote the Constitution — the rulebook you know, born from the two fears yo… **[clipped — full text in `translation-source.json` under `U6-S07.paragraphs`]** |
+| `U6-S09` | `items[2].options` | Founded the first free public libraries \| First president of the United States \| Led the Union during the Civil War **⚠ KEEP ENGLISH** — these restate accepted answers |
 
 ### U7 — How America changed
 
-**5 fields.**
+**7 fields.**
 
 | Screen | Field | English |
 |---|---|---|
@@ -211,3 +213,5 @@ _Fully translated._
 | `U7-S06` | `paragraphs` | Chapter 2 — The promise, written into the rulebook. \| After the war, the amendment tool went to work. The 14th Amendment wrote a new promise into the rulebook: all persons born or naturalized in the United States are U.S. citizens. Read that twice — or naturalized. Your certificate, when you receive it, will rest on t… **[clipped — full text in `translation-source.json` under `U7-S06.paragraphs`]** |
 | `U7-S07` | `paragraphs` | Chapter 3 — America in the world. \| The 1900s took America into the world, and the test asks why each time — so learn the reasons, not just the names. \| World War I. Germany attacked American ships. The United States entered the war. \| The Great Depression began in 1929 when the stock market crashed. It was the long… **[clipped — full text in `translation-source.json` under `U7-S07.paragraphs`]** |
 | `U7-S08` | `paragraphs` | Chapter 4 — The symbols you will stand under. \| At your ceremony there will be a flag. Read it like a sentence: 13 stripes — the 13 original colonies, from the founding story. 50 stars — one for each state, from the growing story. \| The capital: Washington, D.C. The Statue of Liberty stands in New York Harbor — for m… **[clipped — full text in `translation-source.json` under `U7-S08.paragraphs`]** |
+| `U7-S12` | `items[1].buckets` | Memorial Day \| Veterans Day |
+| `U7-S12` | `items[2].options` | To stop the spread of communism \| To defend Pearl Harbor \| To free Kuwait **⚠ KEEP ENGLISH** — these restate accepted answers |

@@ -57,6 +57,16 @@ const QUESTIONS = ['u1', 'u2', 'u3', 'u4', 'u5', 'u6', 'u7'].flatMap((u) =>
 const OFFICIAL = QUESTIONS.map((q) => q.official).filter((s) => s.length > 15);
 const ACCEPTED = new Set(QUESTIONS.flatMap((q) => q.acceptedAnswers).filter((s) => s.length > 12));
 
+// Answer surfaces. Their translations are never rendered as the answer itself —
+// the English stays primary and these become the grey gloss line beneath it
+// (see GLOSS_FIELDS in src/lib/i18n.js and AnswerLabel.svelte). That changes
+// what the generator owes them: they are no longer subject to the G-3 drop,
+// because a translated accepted answer sitting under the English one is the
+// intended result rather than a violation.
+const ANSWER_FIELDS = new Set(['options', 'buckets', 'orderItems', 'sortItems']);
+
+const hasMyanmar = (s) => /[က-႟]/.test(String(s));
+
 // ---------------------------------------------------------------------------
 // Bilingual source → overlay
 // ---------------------------------------------------------------------------
@@ -282,12 +292,16 @@ function normaliseShape(overlay, buildById, unusable) {
       if (field === 'items' && Array.isArray(value)) {
         value.forEach((item, i) => {
           for (const [k, v] of Object.entries(item || {})) {
+            // Answer fields are glosses, so a plain string IS the right shape —
+            // folding a sortItem back onto its { text, bucket } object was only
+            // needed while the translation replaced the English outright.
+            if (ANSWER_FIELDS.has(k)) continue;
             const folded = fold(`${screenId}.items[${i}].${k}`, v, en.items?.[i]?.[k]);
             if (folded === AMBIGUOUS) delete item[k];
             else item[k] = folded;
           }
         });
-      } else {
+      } else if (!ANSWER_FIELDS.has(field)) {
         const folded = fold(`${screenId}.${field}`, value, en[field]);
         if (folded === AMBIGUOUS) delete fields[field];
         else fields[field] = folded;
@@ -330,15 +344,85 @@ function stripUntranslatable(overlay, buildById, official, accepted, dropped) {
       if (field === 'items' && Array.isArray(value)) {
         value.forEach((item, i) => {
           for (const [k, v] of Object.entries(item || {})) {
+            if (ANSWER_FIELDS.has(k)) continue; // rendered as a gloss, never as the answer
             if (violates(v, en.items?.[i]?.[k])) {
               delete item[k];
               dropped.push(`${screenId}.items[${i}].${k}: translated official wording or an accepted answer — kept English`);
             }
           }
         });
-      } else if (violates(value, en[field])) {
+      } else if (!ANSWER_FIELDS.has(field) && violates(value, en[field])) {
         delete fields[field];
         dropped.push(`${screenId}.${field}: translated official wording or an accepted answer — kept English`);
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Gloss preparation — what goes UNDER the English answer.
+//
+// Two things have to be true of a gloss, and neither is true of the delivery
+// as it arrives:
+//
+// 1. It must not repeat the English. The interpret options were already
+//    delivered as "English (Burmese)", which was correct when the option was
+//    replaced outright but now prints the English twice. The English prefix is
+//    stripped and the brackets unwrapped.
+// 2. It must not be English. Six option strings came back deliberately
+//    untranslated; rendering those produces the same line twice in two greys.
+//    They are removed so no gloss line appears at all.
+// ---------------------------------------------------------------------------
+
+function prepareGlosses(overlay, buildById, notes) {
+  const clean = (where, value, english) => {
+    if (typeof value !== 'string' || typeof english !== 'string') return value;
+
+    let out = value;
+    if (out.includes(english)) {
+      const rest = out.replace(english, '').trim().replace(/^[([{]\s*|\s*[)\]}]$/g, '').trim();
+      // Only accept the remainder if it is actually Burmese. If stripping the
+      // English leaves nothing usable, the string was English to begin with.
+      if (hasMyanmar(rest)) {
+        notes.push(`${where}: stripped the repeated English from the gloss`);
+        out = rest;
+      }
+    }
+    if (!hasMyanmar(out)) {
+      notes.push(`${where}: no Burmese in the translation — no gloss line will show`);
+      return undefined;
+    }
+    return out;
+  };
+
+  const cleanField = (where, value, english) => {
+    if (!Array.isArray(value) || !Array.isArray(english)) return value;
+    const out = value.map((v, i) => {
+      const e = english[i];
+      const enText = typeof e === 'string' ? e : e?.text;
+      const vText = typeof v === 'string' ? v : v?.text;
+      return clean(`${where}[${i}]`, vText, enText);
+    });
+    return out.some((v) => v !== undefined) ? out.map((v) => v ?? '') : undefined;
+  };
+
+  for (const [screenId, fields] of Object.entries(overlay)) {
+    const en = buildById[screenId];
+    if (!en) continue;
+    for (const [field, value] of Object.entries(fields)) {
+      if (field === 'items' && Array.isArray(value)) {
+        value.forEach((item, i) => {
+          for (const [k, v] of Object.entries(item || {})) {
+            if (!ANSWER_FIELDS.has(k)) continue;
+            const out = cleanField(`${screenId}.items[${i}].${k}`, v, en.items?.[i]?.[k]);
+            if (out === undefined) delete item[k];
+            else item[k] = out;
+          }
+        });
+      } else if (ANSWER_FIELDS.has(field)) {
+        const out = cleanField(`${screenId}.${field}`, value, en[field]);
+        if (out === undefined) delete fields[field];
+        else fields[field] = out;
       }
     }
   }
@@ -437,6 +521,7 @@ function buildUnit(unit) {
 
   const dropped = [];
   stripUntranslatable(overlay, buildById, OFFICIAL, ACCEPTED, dropped);
+  prepareGlosses(overlay, buildById, notes);
 
   // Gaps come from the bilingual pass, which runs before the flat merge. Once
   // merged, most of Unit 1's are filled — the flat delivery carries exactly the

@@ -17,6 +17,7 @@ import { render } from '@testing-library/svelte';
 import { get } from 'svelte/store';
 import Lesson from '../src/lib/screens/Lesson.svelte';
 import Settings from '../src/lib/screens/Settings.svelte';
+import GuidedPractice from '../src/lib/components/GuidedPractice.svelte';
 import { progress } from '../src/lib/stores/progress.js';
 import { t, localiseScreen, translatedUnits } from '../src/lib/i18n.js';
 import uiStrings from '../src/lib/content/ui-strings.json';
@@ -180,16 +181,109 @@ describe('G-3 — official English survives the Burmese overlay', () => {
     }
   });
 
-  it('keeps the interpret options English, with the gloss added rather than substituted', () => {
-    // ARCHITECTURE §1a. The skill is recognising an English test question under
-    // unfamiliar wording; a fully Burmese option list deletes it silently.
-    const gp = unit1.screens.find((s) => s.id === 'U1-S09');
-    const item = gp.items.findIndex((x) => x.kind === 'interpret');
-    const out = localiseScreen(gp, 'U1', 'my');
-    out.items[item].options.forEach((opt, n) => {
-      expect(opt).toContain(gp.items[item].options[n]);
-      expect(isBurmese(opt), 'the Burmese gloss is missing').toBe(true);
-    });
+  it('never renders ANY answer in Burmese — every unit, every screen', () => {
+    // The core guarantee of the English-primary design, asserted on the
+    // resolved screen rather than on the overlay files. An answer the learner
+    // has only ever met in Burmese is an answer they cannot give the officer.
+    let checked = 0;
+    for (const unit of UNITS) {
+      for (const screen of unit.screens) {
+        const out = localiseScreen(screen, unit.id, 'my');
+        for (const field of ['options', 'buckets', 'orderItems']) {
+          if (!screen[field]) continue;
+          checked += 1;
+          expect(out[field], `${screen.id}.${field} was translated`).toEqual(screen[field]);
+        }
+        for (const [i, item] of (screen.items || []).entries()) {
+          const got = out.items[i];
+          for (const field of ['options', 'buckets', 'orderItems', 'sortItems']) {
+            if (!item[field]) continue;
+            checked += 1;
+            expect(got[field], `${screen.id}.items[${i}].${field} was translated`).toEqual(item[field]);
+          }
+        }
+      }
+    }
+    expect(checked).toBeGreaterThan(40);
+  });
+});
+
+describe('the Burmese gloss beneath an answer', () => {
+  const glossPairs = () => {
+    const out = [];
+    for (const unit of UNITS) {
+      for (const screen of unit.screens) {
+        const loc = localiseScreen(screen, unit.id, 'my');
+        const scan = (english, resolved, where) => {
+          for (const [field, glossField] of [
+            ['options', 'optionsGloss'],
+            ['buckets', 'bucketsGloss'],
+            ['orderItems', 'orderItemsGloss'],
+            ['sortItems', 'sortItemsGloss'],
+          ]) {
+            if (resolved[glossField]) out.push([`${where}.${field}`, english[field], resolved[glossField]]);
+          }
+        };
+        scan(screen, loc, screen.id);
+        (screen.items || []).forEach((item, i) => scan(item, loc.items[i], `${screen.id}.items[${i}]`));
+      }
+    }
+    return out;
+  };
+
+  it('exists at all', () => {
+    expect(glossPairs().length).toBeGreaterThan(10);
+  });
+
+  it('always has exactly one entry per English answer', () => {
+    // A gloss that drifts by one index labels every answer with the translation
+    // of a different answer — and looks completely normal doing it.
+    for (const [where, english, gloss] of glossPairs()) {
+      expect(gloss, `${where} gloss length`).toHaveLength(english.length);
+    }
+  });
+
+  it('never repeats the English it sits under', () => {
+    for (const [where, english, gloss] of glossPairs()) {
+      english.forEach((e, i) => {
+        const enText = typeof e === 'string' ? e : e.text;
+        if (gloss[i]) {
+          expect(String(gloss[i]), `${where}[${i}] prints its English twice`).not.toContain(enText);
+        }
+      });
+    }
+  });
+
+  it('is Burmese, or absent — never an English duplicate line', () => {
+    for (const [where, , gloss] of glossPairs()) {
+      gloss.forEach((g, i) => {
+        if (g) expect(isBurmese(g), `${where}[${i}] gloss is not Burmese`).toBe(true);
+      });
+    }
+  });
+});
+
+describe('an answer on screen', () => {
+  it('shows the English and the Burmese together', async () => {
+    progress.setLanguage('my');
+    const gp = localiseScreen(
+      unit1.screens.find((s) => s.id === 'U1-S09'),
+      'U1',
+      'my'
+    );
+    const item = gp.items.findIndex((x) => x.optionsGloss);
+    expect(item, 'expected a guided item with a gloss').toBeGreaterThan(-1);
+
+    const { container } = render(GuidedPractice, { props: { items: [gp.items[item]] } });
+    const text = container.textContent;
+
+    // Both languages, on the same button, at the same time.
+    expect(text).toContain(gp.items[item].options[0]);
+    expect(hasConsonant(text), 'no Burmese gloss rendered').toBe(true);
+
+    // And the gloss carries lang="my", which is what switches a screen reader's
+    // voice and scopes the bundled Myanmar font.
+    expect(container.querySelector('[lang="my"]')).toBeTruthy();
   });
 });
 
@@ -203,11 +297,16 @@ describe('the UI string lookup', () => {
     expect(isBurmese(get(t)('settings.coverage.my'))).toBe(true);
   });
 
-  it('has Burmese for every key, so nothing silently falls back', () => {
+  it('has Burmese for every key but the ones known to be outstanding', () => {
+    // Named rather than counted. A count would let a newly-added English string
+    // slip in the moment an old one was translated, which is exactly when
+    // nobody is looking. Anything appearing here that is not on this list is a
+    // gap someone introduced without requesting the translation.
+    const AWAITING = ['settings.answersStayEnglish'];
     const missing = Object.entries(uiStrings)
       .filter(([k, v]) => k !== '_note' && !v.my)
       .map(([k]) => k);
-    expect(missing).toEqual([]);
+    expect(missing.sort()).toEqual([...AWAITING].sort());
   });
 
   it('makes an unknown key VISIBLE rather than blank', () => {
