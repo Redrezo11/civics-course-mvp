@@ -7,9 +7,11 @@
   // about what's chosen) but screen content stays English until the
   // translation workstream (Phase 2, native-reviewed) is complete.
   function setLang(lang) { progress.setLanguage(lang); }
+  // Only stores the choice. App.svelte owns the dark class and applies it
+  // reactively — two owners meant a reset could clear the stored theme while
+  // the class stayed on.
   function setTheme(theme) {
     progress.setTheme(theme);
-    document.documentElement.classList.toggle('dark', theme === 'dark');
   }
 </script>
 
