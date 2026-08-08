@@ -1,0 +1,177 @@
+{
+  "id": "U1",
+  "title": "We the People",
+  "questionCount": 14,
+  "screens": [
+    {
+      "id": "U1-S01",
+      "type": "orient",
+      "unitLabel": "Unit 1",
+      "heading": "We the People",
+      "body": "At your interview, the officer will ask about America's rulebook — questions like:",
+      "sampleQuestionId": "Q2",
+      "afterQuote": "This lesson will help you answer those questions.",
+      "coverageLine": "It covers 14 of the 128 on the test.",
+      "afterTest": "And what you learn here matters after the test too — this rulebook is what protects your rights as a citizen.",
+      "primaryLabel": "Begin"
+    },
+    {
+      "id": "U1-S02",
+      "type": "hook",
+      "companionPose": "thinking",
+      "question": "Who is the boss of America?",
+      "options": ["The President", "Congress", "The people"],
+      "feedback": "In America, the answer is: the people. The Constitution starts with three words — We the People. But how can millions of people be the boss? That is what this lesson explains."
+    },
+    {
+      "id": "U1-S03",
+      "type": "connect",
+      "bodyList": [
+        "Every group you have ever been part of had rules.",
+        "A workplace has rules about what the boss can and cannot ask you to do.",
+        "A family has rules everyone knows.",
+        "A game has rules, written down, that even the best player must follow."
+      ],
+      "bodyList2": [
+        "America wrote its rules for government down in one book — and made that book very hard to change.",
+        "Even the President must obey it."
+      ],
+      "closing": "That book is the Constitution.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U1-S04",
+      "type": "vocab",
+      "cards": [
+        { "word": "Constitution", "def": "the rulebook of the government.", "example": "The Constitution is the highest law in America." },
+        { "word": "supreme", "def": "highest.", "example": "Supreme means nothing is above it." },
+        { "word": "amendment", "def": "an official change or addition to the Constitution.", "example": "The 19th Amendment gave women the vote — your daughter votes because of it." },
+        { "word": "rights", "def": "freedoms the law protects for you.", "example": "You have the right to speak freely." }
+      ],
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U1-S05",
+      "type": "bigIdea",
+      "image": "doc-constitution.jpg",
+      "paragraphs": [
+        "In 1787, the thirteen states had just finished a long war against a king. They needed a government — but they were afraid of two opposite things at the same time.",
+        "They were afraid of having no government. Without one, nobody could defend the country, settle arguments between states, or pay for anything.",
+        "They were also afraid of a government so strong it would act like the king they had just escaped."
+      ],
+      "resolution": "The Constitution is their answer to both fears at once.",
+      "handle": "It creates the government, limits it, and protects your rights.",
+      "handleSub": "Three jobs, all born from the same fear of kings.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U1-S06a",
+      "type": "bigIdea",
+      "paragraphs": [
+        "No law is allowed to go against the Constitution. That is why it is called the supreme law of the land — the highest law. And the rule of law means everyone must follow it. Leaders too. No one is above the law."
+      ],
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U1-S06b",
+      "type": "bigIdea",
+      "paragraphs": [
+        "Can the rulebook change? Yes — by amendment. But the writers made changing it slow and difficult on purpose. A rulebook that is easy to change is not much of a limit on anyone.",
+        "In more than 230 years, it has changed only 27 times. That small number is the point.",
+        "Many people worried that the new Constitution did not clearly protect individual rights. Several states ratified it while asking for those protections to be added. Congress soon proposed amendments. The first 10 became the Bill of Rights. They protect basic rights such as freedom of speech and freedom of religion.",
+        "They protect the basic rights of people living in the United States — not only citizens."
+      ],
+      "image": "doc-declaration.jpg",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U1-S07",
+      "type": "seeItNotIt",
+      "heading": "The rulebook only means something if it actually stops someone.",
+      "example": "Congress passes a new law. A court decides it goes against the Constitution. The law stops — even Congress must obey the book.",
+      "nonExample": "Now picture a country with no rulebook. A king makes a rule. No one may question it, and no one can stop him.",
+      "takeaway": "In America, there is always something above the leader — even the President, even Congress.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U1-S07b",
+      "type": "confusablePair",
+      "heading": "Two names on the test sound alike. Do not mix them up.",
+      "termA": { "name": "Supreme law of the land", "def": "the Constitution, the book of rules." },
+      "termB": { "name": "Supreme Court", "def": "the highest court, a group of nine judges." },
+      "resolution": "The judges must follow the Constitution. They cannot change it by themselves.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U1-S08",
+      "type": "bigIdea",
+      "twoColumn": [
+        { "image": "doc-declaration.jpg", "heading": "Declaration of Independence — 1776", "body": "An announcement to the world: America is free from Britain. It says all people are created equal, with rights that belong to them — 'Life, Liberty, and the pursuit of Happiness.'" },
+        { "image": "doc-constitution.jpg", "heading": "Constitution — 1787", "body": "A rulebook. It builds: the government America still uses today." }
+      ],
+      "closing": "First the country announced what it believed. Eleven years later, it wrote the rules to make those beliefs real. 1776 declares. 1787 designs. Remember those two dates — they answer several test questions.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U1-S09",
+      "type": "guidedPractice",
+      "items": [
+        {
+          "kind": "exemplify",
+          "question": "Name one thing the U.S. Constitution does.",
+          "options": ["Protects the rights of the people", "Chooses the President", "Collects taxes from each state"],
+          "correctIndex": 0
+        },
+        {
+          "kind": "compare",
+          "instructions": "Tap to sort into Declaration or Constitution.",
+          "buckets": ["Declaration", "Constitution"],
+          "sortItems": [
+            { "text": "Says America is free from Britain", "bucket": 0 },
+            { "text": "The supreme law of the land", "bucket": 1 },
+            { "text": "Life, Liberty, and the pursuit of Happiness", "bucket": 0 },
+            { "text": "Written in 1787", "bucket": 1 },
+            { "text": "Has 27 amendments", "bucket": 1 }
+          ]
+        },
+        {
+          "kind": "infer",
+          "question": "A new law is passed. Someone says it goes against the Constitution. Who decides — and what happens to the law if they agree?",
+          "options": ["A court decides; the law stops", "The President decides; the law continues", "No one can question a law"],
+          "correctIndex": 0
+        },
+        {
+          "kind": "interpret",
+          "question": "Which question is asking the same thing as: \"What is the supreme law of the land?\"",
+          "questionCard": true,
+          "cardText": "What is the supreme law of the land?",
+          "options": ["What is the highest law in America?", "Who is the highest judge in America?", "What is the oldest law in America?"],
+          "correctIndex": 0,
+          "pairedOfficial": "What is the supreme law of the land?"
+        }
+      ],
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U1-S10",
+      "type": "officialQuestions",
+      "questionIds": ["Q2","Q3","Q5","Q6","Q7","Q13","Q8","Q9","Q10","Q11","Q12","Q14"],
+      "q14Note": "Q14 — Name a document that influenced the Constitution. You already know one: Declaration of Independence.",
+      "primaryLabel": "Next"
+    },
+    { "id": "U1-S11", "type": "practice", "questionId": "Q2" },
+    { "id": "U1-S12", "type": "practice", "questionId": "Q7" },
+    { "id": "U1-S13", "type": "practice", "questionId": "Q13" },
+    { "id": "U1-S14", "type": "readAndAnswer", "questionId": "Q4" },
+    { "id": "U1-S15", "type": "readAndAnswer", "questionId": "Q5" },
+    {
+      "id": "U1-S16",
+      "type": "lockItIn",
+      "heading": "Lesson 1 finished.",
+      "companionPose": "pleased",
+      "learnedLine": "You learned the ideas behind all 14 questions in this lesson, and practiced 5 of them.",
+      "fullBankOffer": { "unit": "U1", "total": 14, "label": "Practice all 14 questions" },
+      "askSomeone": "Ask someone: what are the first three words of the U.S. Constitution? — any language."
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Atkinson Hyperlegible: bundle the real font files here at build time.
+   Not fetchable from this sandbox (no font-CDN network access), so the
+   Tailwind font stack falls back to system fonts for now. Replace this
+   comment with @font-face rules once .woff2 files are added to
+   src/assets/fonts/ — see Colour_Scheme_and_Asset_Direction.md §3. */
+
+@layer base {
+  html {
+    @apply bg-surface text-ink;
+  }
+  html.dark {
+    @apply bg-dark-surface text-dark-ink;
+  }
+  body {
+    @apply font-sans text-base m-0 min-h-screen;
+  }
+  /* Visible focus is a build requirement (G-9, WCAG 2.4.7) — never remove this. */
+  :focus-visible {
+    outline: 3px solid theme('colors.accent');
+    outline-offset: 2px;
+  }
+  html.dark :focus-visible {
+    outline-color: theme('colors.dark-accent');
+  }
+}
+
+@layer components {
+  /* Interactive border = "you can tap this" (G-16 rule, applies to build too).
+     Never apply .border-interactive to non-tappable elements. */
+  .btn-primary {
+    @apply block w-full text-center py-3 px-4 rounded-full font-bold text-base
+           bg-accent text-accent-ink border-2 border-accent transition-colors;
+  }
+  html.dark .btn-primary {
+    @apply bg-dark-accent text-dark-accent-ink border-dark-accent;
+  }
+  .btn-secondary {
+    @apply block w-full text-center py-3 px-4 rounded-full font-bold text-base
+           bg-transparent text-ink border-2 border-border-interactive transition-colors;
+  }
+  html.dark .btn-secondary {
+    @apply text-dark-ink border-dark-border-interactive;
+  }
+  .question-card {
+    @apply relative bg-raised border-2 border-ink rounded-card px-4 pt-5 pb-4 my-4;
+  }
+  html.dark .question-card {
+    @apply bg-dark-raised border-dark-ink;
+  }
+  .question-tag {
+    @apply absolute -top-2.5 left-3 bg-ink text-surface text-xs font-bold px-2 py-0.5 rounded;
+  }
+  html.dark .question-tag {
+    @apply bg-dark-ink text-dark-surface;
+  }
+}

@@ -1,0 +1,259 @@
+[
+  {
+    "id": "Q1",
+    "unit": "U1",
+    "star": false,
+    "dynamic": false,
+    "official": "What is the form of government of the United States?",
+    "acceptedAnswers": [
+      "Republic",
+      "Constitution-based federal republic",
+      "Representative democracy"
+    ],
+    "options": [
+      "Republic",
+      "A kingdom ruled by one family",
+      "A territory governed by another country"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q2",
+    "unit": "U1",
+    "star": true,
+    "dynamic": false,
+    "official": "What is the supreme law of the land?",
+    "acceptedAnswers": [
+      "(U.S.) Constitution"
+    ],
+    "options": [
+      "(U.S.) Constitution",
+      "The Declaration of Independence",
+      "The Supreme Court"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q3",
+    "unit": "U1",
+    "star": false,
+    "dynamic": false,
+    "official": "Name one thing the U.S. Constitution does.",
+    "acceptedAnswers": [
+      "Forms the government",
+      "Defines powers of government",
+      "Defines the parts of government",
+      "Protects the rights of the people"
+    ],
+    "options": [
+      "Forms the government",
+      "Chooses the President each year",
+      "Collects taxes from each state"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q4",
+    "unit": "U1",
+    "star": false,
+    "dynamic": false,
+    "official": "The U.S. Constitution starts with the words “We the People.” What does “We the People” mean?",
+    "acceptedAnswers": [
+      "Self-government",
+      "Popular sovereignty",
+      "Consent of the governed",
+      "People should govern themselves"
+    ],
+    "options": [
+      "Self-government",
+      "Only the government has power",
+      "Only elected officials matter"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q5",
+    "unit": "U1",
+    "star": false,
+    "dynamic": false,
+    "official": "How are changes made to the U.S. Constitution?",
+    "acceptedAnswers": [
+      "Amendments",
+      "The amendment process"
+    ],
+    "options": [
+      "Amendments",
+      "A new vote every year",
+      "The President decides"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q6",
+    "unit": "U1",
+    "star": false,
+    "dynamic": false,
+    "official": "What does the Bill of Rights protect?",
+    "acceptedAnswers": [
+      "(The basic) rights of Americans",
+      "(The basic) rights of people living in the United States"
+    ],
+    "options": [
+      "(The basic) rights of Americans",
+      "The salary of the President",
+      "The borders of the states"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q7",
+    "unit": "U1",
+    "star": true,
+    "dynamic": false,
+    "official": "How many amendments does the U.S. Constitution have?",
+    "acceptedAnswers": [
+      "Twenty-seven (27)"
+    ],
+    "options": [
+      "Twenty-seven (27)",
+      "Ten (10)",
+      "Fifty (50)"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q8",
+    "unit": "U1",
+    "star": false,
+    "dynamic": false,
+    "official": "Why is the Declaration of Independence important?",
+    "acceptedAnswers": [
+      "It says America is free from British control",
+      "It says all people are created equal",
+      "It identifies inherent rights",
+      "It identifies individual freedoms"
+    ],
+    "options": [
+      "It says America is free from British control",
+      "It created the three branches of government",
+      "It set the rules for electing a president"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q9",
+    "unit": "U1",
+    "star": false,
+    "dynamic": false,
+    "official": "What founding document said the American colonies were free from Britain?",
+    "acceptedAnswers": [
+      "Declaration of Independence"
+    ],
+    "options": [
+      "Declaration of Independence",
+      "The U.S. Constitution",
+      "The Bill of Rights"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q10",
+    "unit": "U1",
+    "star": false,
+    "dynamic": false,
+    "official": "Name two important ideas from the Declaration of Independence and the U.S. Constitution.",
+    "acceptedAnswers": [
+      "Equality",
+      "Liberty",
+      "Social contract",
+      "Natural rights",
+      "Limited government",
+      "Self-government"
+    ],
+    "multiSelect": 2,
+    "options": [
+      "Equality",
+      "Liberty",
+      "Social contract",
+      "Natural rights",
+      "Limited government",
+      "Rule by a single family",
+      "Taxation without a vote"
+    ]
+  },
+  {
+    "id": "Q11",
+    "unit": "U1",
+    "star": false,
+    "dynamic": false,
+    "official": "The words “Life, Liberty, and the pursuit of Happiness” are in what founding document?",
+    "acceptedAnswers": [
+      "Declaration of Independence"
+    ],
+    "options": [
+      "Declaration of Independence",
+      "The U.S. Constitution",
+      "The Bill of Rights"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q12",
+    "unit": "U1",
+    "star": true,
+    "dynamic": false,
+    "official": "What is the economic system of the United States?",
+    "acceptedAnswers": [
+      "Capitalism",
+      "Free market economy"
+    ],
+    "options": [
+      "Capitalism",
+      "A system where the government owns all businesses",
+      "A system based on trading goods without money"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q13",
+    "unit": "U1",
+    "star": false,
+    "dynamic": false,
+    "official": "What is the rule of law?",
+    "acceptedAnswers": [
+      "Everyone must follow the law",
+      "Leaders must obey the law",
+      "Government must obey the law",
+      "No one is above the law"
+    ],
+    "options": [
+      "Everyone must follow the law",
+      "Only citizens must follow the law",
+      "Leaders can change the law whenever they want"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q14",
+    "unit": "U1",
+    "star": false,
+    "dynamic": false,
+    "official": "Many documents influenced the U.S. Constitution. Name one.",
+    "acceptedAnswers": [
+      "Declaration of Independence",
+      "Articles of Confederation",
+      "Federalist Papers",
+      "Anti-Federalist Papers",
+      "Virginia Declaration of Rights",
+      "Fundamental Orders of Connecticut",
+      "Mayflower Compact",
+      "Iroquois Great Law of Peace"
+    ],
+    "options": [
+      "Declaration of Independence",
+      "The Emancipation Proclamation",
+      "The Gettysburg Address"
+    ],
+    "correctIndex": 0
+  }
+]
