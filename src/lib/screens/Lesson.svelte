@@ -57,6 +57,8 @@
   });
 
   $: screen = unit?.screens[index];
+  $: isDynamicPractice =
+    screen?.type === 'practice' && getQuestion(screen.questionId)?.dynamic;
   $: isLast = unit && index === unit.screens.length - 1;
   $: if (screen) { interactionDone = false; }
 
@@ -77,9 +79,10 @@
     else index -= 1;
   }
 
-  function positionLabel() {
-    return unitId === 'U0' ? `${index + 1} of ${unit.screens.length}` : `${index + 1} of ${unit.screens.length}`;
-  }
+  // Reactive, not a function call in the template. As a function it read
+  // `index` without naming it in the template expression, so Svelte never
+  // re-ran it — the bar sat on "1 of 18" for an entire unit.
+  $: positionLabel = unit ? `${index + 1} of ${unit.screens.length}` : '';
 
   // Guided-practice and single-item practice screens all funnel answers
   // through here, into the one storage chokepoint (storage.js note).
@@ -94,7 +97,7 @@
   <div class="min-h-screen flex flex-col max-w-md mx-auto">
     <LessonBar
       unitLabel={unit.title}
-      position={positionLabel()}
+      position={positionLabel}
       onBack={back}
     />
 
@@ -226,9 +229,15 @@
         <p class="font-bold">{screen.resolution}</p>
 
       {:else if screen.type === 'guidedPractice'}
+        <!-- Guided-practice answers are deliberately NOT recorded. G-22: the
+             "questions practiced" counter is a count out of the official 128,
+             and these are authored teaching items, not test questions. They
+             were being written to progress under synthetic ids ("guided-0",
+             "guided-1", …), which inflated the counter with entries that are
+             not questions at all — the precise blurring of taught vs
+             practiced that G-22 exists to prevent. -->
         <GuidedPractice
           items={screen.items}
-          on:answer={(e) => handleAnswer(e.detail.id, e.detail.correct)}
           on:alldone={() => (interactionDone = true)}
         />
 
@@ -317,7 +326,9 @@
       {/if}
     </div>
 
-    {#if !selfPaced.has(screen.type) || interactionDone}
+    <!-- A ◆ dynamic practice screen has nothing to answer, so it would never
+         set interactionDone and would trap the learner with no Next. -->
+    {#if !selfPaced.has(screen.type) || interactionDone || isDynamicPractice}
       <div class="px-5 py-4 border-t border-border dark:border-dark-border">
         <button class="btn-primary" on:click={next}>
           {screen.primaryLabel || (isLast ? 'Finish' : 'Next')}

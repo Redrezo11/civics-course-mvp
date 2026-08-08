@@ -12,7 +12,13 @@
     flipped = flipped; // trigger reactivity
   }
 
+  // Signal completion as soon as every card is flipped, and render no button
+  // of our own. The parent Lesson screen owns the single advance control on
+  // every screen type; rendering one here too put two "Next" buttons on the
+  // screen, which is both confusing and a G-1 violation (one action per
+  // screen — the escape bar is the only sanctioned exception).
   $: allFlipped = flipped.size === cards.length;
+  $: if (allFlipped) dispatch('done');
 </script>
 
 <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-3">
@@ -36,8 +42,6 @@
   {/if}
 {/each}
 
-{#if allFlipped}
-  <button class="btn-primary mt-3" on:click={() => dispatch('done')}>Next</button>
-{:else}
+{#if !allFlipped}
   <p class="text-xs text-ink-muted dark:text-dark-ink-muted text-center mt-3">flip all {cards.length} to continue</p>
 {/if}

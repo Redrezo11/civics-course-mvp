@@ -3,18 +3,65 @@
   // is the fix for the "everything was classifying" defect found in the
   // Instructional Strategy Foundation audit. One item advances to the next;
   // the parent Lesson screen's Next button appears once all items are done.
+  //
+  // All per-item state lives HERE, in component-local arrays — never written
+  // back onto `items`. `items` comes straight from an imported unit JSON
+  // module, which is a singleton: mutating it (the previous `_answeredIndex`
+  // approach) left answers stuck on the data itself, so leaving a screen and
+  // returning showed the questions already answered.
+  //
+  // Every completion test below reads these state variables directly inside
+  // the reactive declarations. That is deliberate: Svelte only re-runs a
+  // template expression or `$:` block when a variable *named in it* changes,
+  // so a helper like `itemDone(i)` that reads state it does not name never
+  // re-ran, and a finished sort could never advance.
+
   import { createEventDispatcher } from 'svelte';
   const dispatch = createEventDispatcher();
 
   export let items = [];
-  let current = 0;
-  let sortAssignments = {}; // itemIndex -> { sortItemIndex: bucketIndex }
-  let orderPicks = {}; // itemIndex -> [orderItemIndex, ...] in the order tapped
 
-  // Tap-to-order (storyboard interaction type 3): 3–4 cards tapped into
-  // sequence. orderItems is authored in the CORRECT sequence; this scrambles
-  // the presentation deterministically so the answer is never just "top to
-  // bottom", without needing a second authored field.
+  let current = 0;
+  let answers = {};         // itemIndex -> chosen option index
+  let sortAssignments = {}; // itemIndex -> { sortItemIndex: bucketIndex }
+  let orderPicks = {};      // itemIndex -> [orderItemIndex, ...] as tapped
+  let announced = false;
+
+  // Reset when the parent swaps in a different screen's items.
+  let loadedFor = null;
+  $: if (items !== loadedFor) {
+    loadedFor = items;
+    current = 0;
+    answers = {};
+    sortAssignments = {};
+    orderPicks = {};
+    announced = false;
+  }
+
+  function selectAnswer(idx, optionIndex) {
+    if (answers[idx] !== undefined) return;
+    answers = { ...answers, [idx]: optionIndex };
+    dispatch('answer', {
+      id: items[idx].id || `guided-${idx}`,
+      correct: optionIndex === items[idx].correctIndex,
+      official: false,
+    });
+  }
+
+  function assignBucket(itemIdx, sortItemIdx, bucket) {
+    sortAssignments = {
+      ...sortAssignments,
+      [itemIdx]: { ...(sortAssignments[itemIdx] || {}), [sortItemIdx]: bucket },
+    };
+  }
+
+  function resetSort(itemIdx) {
+    sortAssignments = { ...sortAssignments, [itemIdx]: {} };
+  }
+
+  // Tap-to-order (interaction type 3): 3–4 cards tapped into sequence.
+  // orderItems is authored in the CORRECT order; presentation is scrambled
+  // deterministically so the answer is never simply "top to bottom".
   function scrambled(list) {
     return list
       .map((text, i) => ({ text, i }))
@@ -24,59 +71,60 @@
   function pickOrder(itemIdx, orderItemIdx) {
     const picks = orderPicks[itemIdx] || [];
     if (picks.includes(orderItemIdx)) return;
-    orderPicks[itemIdx] = [...picks, orderItemIdx];
-    orderPicks = orderPicks;
+    orderPicks = { ...orderPicks, [itemIdx]: [...picks, orderItemIdx] };
   }
 
   function resetOrder(itemIdx) {
-    orderPicks[itemIdx] = [];
-    orderPicks = orderPicks;
-  }
-
-  function orderComplete(idx) {
-    const item = items[idx];
-    return (orderPicks[idx] || []).length === item.orderItems.length;
-  }
-
-  function orderCorrect(idx) {
-    const picks = orderPicks[idx] || [];
-    return picks.every((v, i) => v === i);
-  }
-
-  function selectAnswer(item, optionIndex) {
-    const correct = optionIndex === item.correctIndex;
-    item._answeredIndex = optionIndex;
-    dispatch('answer', { id: `guided-${current}`, correct });
-    items = items;
-  }
-
-  function assignBucket(itemIdx, sortItemIdx, bucket) {
-    sortAssignments[itemIdx] = sortAssignments[itemIdx] || {};
-    sortAssignments[itemIdx][sortItemIdx] = bucket;
-    sortAssignments = sortAssignments;
-  }
-
-  function itemDone(idx) {
-    const item = items[idx];
-    if (item.kind === 'compare') {
-      return sortAssignments[idx] && Object.keys(sortAssignments[idx]).length === item.sortItems.length;
-    }
-    if (item.kind === 'order') {
-      return orderComplete(idx);
-    }
-    return item._answeredIndex !== undefined;
+    orderPicks = { ...orderPicks, [itemIdx]: [] };
   }
 
   function advance() {
     if (current < items.length - 1) current += 1;
   }
 
-  $: allDone = items.every((_, i) => itemDone(i));
-  $: if (allDone) dispatch('alldone');
+  // --- Completion, recomputed whenever any of the three state stores change.
+  $: doneFlags = items.map((item, i) => {
+    if (item.kind === 'compare') {
+      const a = sortAssignments[i] || {};
+      return Object.keys(a).length === item.sortItems.length;
+    }
+    if (item.kind === 'order') {
+      return (orderPicks[i] || []).length === item.orderItems.length;
+    }
+    return answers[i] !== undefined;
+  });
+
+  $: allDone = doneFlags.length > 0 && doneFlags.every(Boolean);
+
+  $: if (allDone && !announced) {
+    announced = true;
+    dispatch('alldone');
+  }
+
+  // Sort scoring — the authored `bucket` on each sortItem was previously
+  // never read, so any arrangement was accepted in silence and the Compare
+  // item taught nothing. G-20: lead with the correct answer, then explain.
+  $: sortWrong = items.map((item, i) => {
+    if (item.kind !== 'compare' || !doneFlags[i]) return [];
+    const a = sortAssignments[i] || {};
+    return item.sortItems
+      .map((si, si_i) => ({ si, si_i }))
+      .filter(({ si, si_i }) => a[si_i] !== si.bucket);
+  });
+
+  $: orderCorrect = items.map((item, i) =>
+    item.kind === 'order' && doneFlags[i]
+      ? (orderPicks[i] || []).every((v, n) => v === n)
+      : false
+  );
 </script>
 
 {#each items as item, i}
   {#if i === current}
+    <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-2">
+      Practice {i + 1} of {items.length} — not an official test question
+    </p>
+
     <div>
       {#if item.kind === 'compare'}
         <p class="text-sm mb-3">{item.instructions}</p>
@@ -86,12 +134,21 @@
               <p class="text-xs font-bold text-center mb-1">{b}</p>
               {#each item.sortItems as si, si_i}
                 {#if sortAssignments[i]?.[si_i] === bi}
-                  <p class="text-xs bg-gotit-bg dark:bg-dark-gotit-bg rounded px-1.5 py-1 mb-1">{si.text}</p>
+                  {@const right = si.bucket === bi}
+                  <p
+                    class="text-xs rounded px-1.5 py-1 mb-1
+                      {doneFlags[i] && right ? 'bg-gotit-bg dark:bg-dark-gotit-bg' : ''}
+                      {doneFlags[i] && !right ? 'border border-border-interactive dark:border-dark-border-interactive' : ''}
+                      {!doneFlags[i] ? 'bg-gotit-bg dark:bg-dark-gotit-bg' : ''}"
+                  >
+                    {#if doneFlags[i]}{right ? '✓ ' : '✗ '}{/if}{si.text}
+                  </p>
                 {/if}
               {/each}
             </div>
           {/each}
         </div>
+
         {#each item.sortItems as si, si_i}
           {#if sortAssignments[i]?.[si_i] === undefined}
             <div class="border border-border-interactive dark:border-dark-border-interactive rounded-card p-3 mb-2">
@@ -104,34 +161,48 @@
             </div>
           {/if}
         {/each}
-        {#if itemDone(i) && i < items.length - 1}
-          <button class="btn-primary mt-2" on:click={advance}>Next</button>
+
+        {#if doneFlags[i]}
+          <div class="mt-1 p-3 rounded-card border border-border dark:border-dark-border text-sm leading-relaxed">
+            {#if sortWrong[i].length === 0}
+              <span class="font-bold">All sorted correctly.</span>
+            {:else}
+              <span class="font-bold">
+                {sortWrong[i].length === 1 ? 'One belongs' : `${sortWrong[i].length} belong`} somewhere else:
+              </span>
+              {#each sortWrong[i] as w}
+                <br />“{w.si.text}” → <strong>{item.buckets[w.si.bucket]}</strong>
+              {/each}
+            {/if}
+          </div>
+          <button class="text-xs underline text-ink-muted dark:text-dark-ink-muted mt-2" on:click={() => resetSort(i)}>
+            Try again
+          </button>
+          {#if i < items.length - 1}
+            <button class="btn-primary mt-3" on:click={advance}>Next</button>
+          {/if}
         {/if}
 
       {:else if item.kind === 'order'}
         <p class="text-sm mb-3">{item.instructions}</p>
 
-        <!-- Chosen sequence, numbered. Position is stated as a number, not
-             implied by placement alone. -->
         <div class="mb-3">
           {#each orderPicks[i] || [] as pickIdx, slot}
             {@const right = pickIdx === slot}
             <div
               class="flex items-start gap-2 border-2 rounded-card p-2.5 mb-2 text-sm
-                {orderComplete(i) && right ? 'bg-gotit-bg dark:bg-dark-gotit-bg border-gotit dark:border-dark-gotit' : ''}
-                {orderComplete(i) && !right ? 'border-border-interactive dark:border-dark-border-interactive text-ink-muted dark:text-dark-ink-muted' : ''}
-                {!orderComplete(i) ? 'border-border-interactive dark:border-dark-border-interactive' : ''}"
+                {doneFlags[i] && right ? 'bg-gotit-bg dark:bg-dark-gotit-bg border-gotit dark:border-dark-gotit' : ''}
+                {doneFlags[i] && !right ? 'border-border-interactive dark:border-dark-border-interactive text-ink-muted dark:text-dark-ink-muted' : ''}
+                {!doneFlags[i] ? 'border-border-interactive dark:border-dark-border-interactive' : ''}"
             >
               <span class="font-bold shrink-0">{slot + 1}.</span>
               <span>{item.orderItems[pickIdx]}</span>
-              {#if orderComplete(i)}
-                <span class="ml-auto shrink-0 font-bold">{right ? '✓' : '✗'}</span>
-              {/if}
+              {#if doneFlags[i]}<span class="ml-auto shrink-0 font-bold">{right ? '✓' : '✗'}</span>{/if}
             </div>
           {/each}
         </div>
 
-        {#if !orderComplete(i)}
+        {#if !doneFlags[i]}
           {#each scrambled(item.orderItems) as entry}
             {#if !(orderPicks[i] || []).includes(entry.i)}
               <button
@@ -147,13 +218,11 @@
           {/if}
         {:else}
           <div class="mt-1 p-3 rounded-card border border-border dark:border-dark-border text-sm leading-relaxed">
-            {#if orderCorrect(i)}
+            {#if orderCorrect[i]}
               <span class="font-bold">Correct order.</span> {item.feedbackCorrect || ''}
             {:else}
-              <!-- G-20: lead with the answer, then explain. -->
               <span class="font-bold">The correct order is:</span>
               {#each item.orderItems as t, n}<br />{n + 1}. {t}{/each}
-              {#if item.feedbackCorrect}<br /><br />{item.feedbackCorrect}{/if}
             {/if}
           </div>
           <button class="text-xs underline text-ink-muted dark:text-dark-ink-muted mt-2" on:click={() => resetOrder(i)}>
@@ -166,7 +235,6 @@
 
       {:else}
         {#if item.questionCard}
-          <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-2">Practice — not an official test question</p>
           <p class="mb-2">{item.question}</p>
           <div class="question-card">
             <span class="question-tag">Q</span>
@@ -177,25 +245,27 @@
         {/if}
 
         {#each item.options as opt, oi}
+          {@const answered = answers[i] !== undefined}
           <button
             class="block w-full text-left py-2.5 px-4 mb-2 rounded-full font-bold text-sm border-2 transition-colors
-              {item._answeredIndex !== undefined && oi === item.correctIndex ? 'bg-gotit-bg dark:bg-dark-gotit-bg border-gotit dark:border-dark-gotit' : ''}
-              {item._answeredIndex !== undefined && oi !== item.correctIndex ? 'border-border-interactive dark:border-dark-border-interactive opacity-55' : ''}
-              {item._answeredIndex === undefined ? 'border-border-interactive dark:border-dark-border-interactive' : ''}"
-            disabled={item._answeredIndex !== undefined}
-            on:click={() => selectAnswer(item, oi)}
+              {answered && oi === item.correctIndex ? 'bg-gotit-bg dark:bg-dark-gotit-bg border-gotit dark:border-dark-gotit' : ''}
+              {answered && oi !== item.correctIndex ? 'border-border-interactive dark:border-dark-border-interactive opacity-55' : ''}
+              {!answered ? 'border-border-interactive dark:border-dark-border-interactive' : ''}"
+            disabled={answered}
+            on:click={() => selectAnswer(i, oi)}
           >
-            {item._answeredIndex !== undefined && oi === item.correctIndex ? '✓ ' : ''}{opt}
+            {#if answered && oi === item.correctIndex}✓ {/if}{opt}
           </button>
         {/each}
 
-        {#if item._answeredIndex !== undefined}
-          {#if item.pairedOfficial}
-            <div class="mt-2 p-3 rounded-card border border-border dark:border-dark-border text-sm">
-              <span class="font-bold">Yes.</span> This asks the same thing as:
-              <em>"{item.pairedOfficial}"</em>
-            </div>
-          {/if}
+        {#if answers[i] !== undefined}
+          <div class="mt-2 p-3 rounded-card border border-border dark:border-dark-border text-sm leading-relaxed">
+            <span class="font-bold">The correct answer is {item.options[item.correctIndex]}.</span>
+            {#if item.pairedOfficial}
+              <br />It asks the same thing as the official question:
+              <em>“{item.pairedOfficial}”</em>
+            {/if}
+          </div>
           {#if i < items.length - 1}
             <button class="btn-primary mt-3" on:click={advance}>Next</button>
           {/if}
@@ -204,7 +274,3 @@
     </div>
   {/if}
 {/each}
-
-{#if allDone}
-  <div class="h-2"></div>
-{/if}

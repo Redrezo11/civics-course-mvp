@@ -48,9 +48,16 @@ function createProgressStore() {
 export const progress = createProgressStore();
 
 // Derived, read-only conveniences used throughout the UI.
-export const questionsPracticedCount = derived(
-  progress,
-  ($p) => Object.keys($p.questionsAnswered).length
+// Counts only real question ids (Q1…Q128). Guided-practice items were once
+// written here under synthetic ids like "guided-0", which inflated the count
+// with entries that are not test questions. Filtering here also repairs the
+// count for anyone whose localStorage already holds those stale keys, without
+// touching their genuine progress.
+const OFFICIAL_QUESTION_ID = /^Q\d+$/;
+
+export const questionsPracticedCount = derived(progress, ($p) =>
+  Object.keys($p.questionsAnswered).filter((id) => OFFICIAL_QUESTION_ID.test(id))
+    .length
 );
 
 export const lessonsFinishedCount = derived(
