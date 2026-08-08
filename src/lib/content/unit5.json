@@ -199,24 +199,6 @@
       "primaryLabel": "Next"
     },
     {
-      "id": "U5-S10",
-      "type": "officialQuestions",
-      "questionIds": [
-        "Q63",
-        "Q64",
-        "Q65",
-        "Q66",
-        "Q67",
-        "Q68",
-        "Q69",
-        "Q70",
-        "Q71",
-        "Q72"
-      ],
-      "q14Note": "Q65 asks for three rights and Q67 for two promises — the screen will tell you the count each time. Give exactly what is asked.",
-      "primaryLabel": "Next"
-    },
-    {
       "id": "U5-S11",
       "type": "practice",
       "questionId": "Q64"
@@ -253,7 +235,8 @@
         "label": "Practice all 10 questions"
       },
       "askSomeone": "Tell someone one promise from the Oath — in any language.",
-      "unlocksReview": "R2"
+      "unlocksReview": "R2",
+      "strategyNote": "Q65 asks for three rights and Q67 for two promises — the screen will tell you the count each time. Give exactly what is asked."
     }
   ]
 }

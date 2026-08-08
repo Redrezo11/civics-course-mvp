@@ -182,19 +182,6 @@
       "primaryLabel": "Next"
     },
     {
-      "id": "U4-S09",
-      "type": "officialQuestions",
-      "questionIds": [
-        "Q58",
-        "Q59",
-        "Q60",
-        "Q61",
-        "Q62"
-      ],
-      "q14Note": "Two of these depend on where you live — your governor and your state capital. They are on the Current Answers page.",
-      "primaryLabel": "Next"
-    },
-    {
       "id": "U4-S10",
       "type": "practice",
       "questionId": "Q58"
@@ -220,7 +207,8 @@
         "total": 5,
         "label": "Practice all 5 questions"
       },
-      "askSomeone": "Ask at home: who fixes the roads on our street — the country, or California?"
+      "askSomeone": "Ask at home: who fixes the roads on our street — the country, or California?",
+      "strategyNote": "Two of these depend on where you live — your governor and your state capital. They are on the Current Answers page."
     }
   ]
 }

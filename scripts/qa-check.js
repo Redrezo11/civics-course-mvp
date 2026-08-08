@@ -144,7 +144,7 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
     'body', 'closing', 'resolution', 'handle', 'handleSub', 'example',
     'nonExample', 'takeaway', 'heading', 'afterQuote', 'afterTest',
     'coverageLine', 'learnedLine', 'askSomeone', 'feedback', 'question',
-    'instructions', 'smallPrint', 'privacyLine', 'q14Note', 'def', 'unitLabel',
+    'instructions', 'smallPrint', 'privacyLine', 'strategyNote', 'def', 'unitLabel',
   ]);
   const LIST_KEYS = new Set(['bodyList', 'bodyList2', 'paragraphs']);
 
@@ -427,12 +427,24 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
       ];
       for (const r of refs) if (!ids.has(r)) fail(check, `${s.id} references unknown question ${r}`);
     }
-    const oq = u.screens.find((s) => s.type === 'officialQuestions');
-    if (oq) {
-      const expected = questions.filter((q) => q.unit === u.id).map((q) => q.id).sort();
-      const got = [...oq.questionIds].sort();
-      if (JSON.stringify(expected) !== JSON.stringify(got)) {
-        fail(check, `${u.id} official-questions screen lists ${got.length} of its ${expected.length} questions`);
+    // Coverage guarantee. This used to be enforced by the beat-8
+    // "officialQuestions" screen listing every question in the unit. That
+    // screen was removed — it taught nothing and only re-listed questions
+    // already reachable in three other places — so the guarantee moves here
+    // rather than disappearing with it: every unit must offer a full-bank set
+    // sized to its whole question count. G-08 draws from getUnitQuestions(),
+    // so coverage is then structural.
+    if (u.id !== 'U0') {
+      const expected = questions.filter((q) => q.unit === u.id).length;
+      const li = u.screens.find((s) => s.type === 'lockItIn');
+      if (!li) {
+        fail(check, `${u.id} has no lockItIn screen, so it offers no full-bank practice`);
+      } else if (!li.fullBankOffer) {
+        fail(check, `${u.id} lockItIn carries no fullBankOffer — its ${expected} questions would be unreachable as practice`);
+      } else if (li.fullBankOffer.total !== expected) {
+        fail(check, `${u.id} offers full-bank practice for ${li.fullBankOffer.total} questions but the unit has ${expected}`);
+      } else if (li.fullBankOffer.unit !== u.id) {
+        fail(check, `${u.id} fullBankOffer points at ${li.fullBankOffer.unit}`);
       }
     }
     if (u.questionCount !== undefined) {

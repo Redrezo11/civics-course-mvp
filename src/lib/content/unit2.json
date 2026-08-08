@@ -127,21 +127,6 @@
       "primaryLabel": "Next"
     },
     {
-      "id": "U2-S09",
-      "type": "confusablePair",
-      "heading": "One more pair, carried over from Lesson 1.",
-      "termA": {
-        "name": "Supreme Court",
-        "def": "the highest court, a group of judges."
-      },
-      "termB": {
-        "name": "Supreme law of the land",
-        "def": "the Constitution, a book of rules."
-      },
-      "resolution": "The judges must follow the book.",
-      "primaryLabel": "Next"
-    },
-    {
       "id": "U2-S10",
       "type": "guidedPractice",
       "items": [
@@ -217,34 +202,6 @@
       "primaryLabel": "Next"
     },
     {
-      "id": "U2-S11",
-      "type": "officialQuestions",
-      "questionIds": [
-        "Q15",
-        "Q16",
-        "Q17",
-        "Q18",
-        "Q41",
-        "Q42",
-        "Q43",
-        "Q44",
-        "Q45",
-        "Q46",
-        "Q47",
-        "Q48",
-        "Q50",
-        "Q51",
-        "Q52",
-        "Q53",
-        "Q54",
-        "Q55",
-        "Q56",
-        "Q57"
-      ],
-      "q14Note": "Q48 asks for two Cabinet-level positions. Three easy ones: Secretary of State, Secretary of War (Defense), Attorney General. Q57 — the Chief Justice — changes with appointments, so check the Current Answers page.",
-      "primaryLabel": "Next"
-    },
-    {
       "id": "U2-S12",
       "type": "practice",
       "questionId": "Q16"
@@ -286,7 +243,8 @@
         "label": "Practice all 20 questions"
       },
       "askSomeone": "Point at a picture of the White House and ask someone: what is the job of the person who works here?",
-      "unlocksReview": "R1"
+      "unlocksReview": "R1",
+      "strategyNote": "Q48 asks for two Cabinet-level positions. Three easy ones: Secretary of State, Secretary of War (Defense), Attorney General. Q57 — the Chief Justice — changes with appointments, so check the Current Answers page."
     }
   ]
 }

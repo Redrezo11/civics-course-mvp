@@ -221,28 +221,6 @@
       "primaryLabel": "Next"
     },
     {
-      "id": "U1-S10",
-      "type": "officialQuestions",
-      "questionIds": [
-        "Q1",
-        "Q2",
-        "Q3",
-        "Q4",
-        "Q5",
-        "Q6",
-        "Q7",
-        "Q13",
-        "Q8",
-        "Q9",
-        "Q10",
-        "Q11",
-        "Q12",
-        "Q14"
-      ],
-      "q14Note": "Q14 — Name a document that influenced the Constitution. You already know one: Declaration of Independence.",
-      "primaryLabel": "Next"
-    },
-    {
       "id": "U1-S11",
       "type": "practice",
       "questionId": "Q2"
@@ -278,7 +256,8 @@
         "total": 14,
         "label": "Practice all 14 questions"
       },
-      "askSomeone": "Ask someone: what are the first three words of the U.S. Constitution? — any language."
+      "askSomeone": "Ask someone: what are the first three words of the U.S. Constitution? — any language.",
+      "strategyNote": "Q14 — Name a document that influenced the Constitution. You already know one: Declaration of Independence."
     }
   ]
 }

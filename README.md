@@ -79,6 +79,33 @@ Also built: G-08 full-bank practice (per unit, optional, non-blocking),
 R1–R3 cumulative reviews with objective re-queueing, Rehearsal mode, the E-01
 epitome, and the G-05b completion screen.
 
+### Deliberate deviation from Storyboard v5.3
+
+**Beat 8 (`officialQuestions`) is not built.** The storyboard specifies a
+per-unit screen that lists the unit's official questions. It was built, then
+removed, because it provided no instruction and no assessment: it re-presented
+questions the learner can already reach in three other places — the searchable
+128-question bank (G-03), every in-unit practice screen, and the unit's G-08
+full-bank set. Reading the same official wording a fourth time without doing
+anything with it is not a beat; it is repetition.
+
+The one thing on that screen worth keeping was its strategy tip (rule G-19 —
+"give exactly what is asked", "any one is enough"). Those seven tips moved onto
+each unit's Lock it in screen as `strategyNote`, and a test asserts they
+survived.
+
+The coverage guarantee that screen used to provide — proof that every question
+in a unit is surfaced to the learner — did not disappear with it. QA gate check
+10 now asserts every unit offers a full-bank set sized to its whole question
+count, and G-08 draws from `getUnitQuestions()`, so coverage is structural.
+
+**U2-S09 is also removed** — a confusable-pair screen whose own heading read
+"One more pair, carried over from Lesson 1", re-teaching Supreme Court vs.
+supreme law of the land from U1-S07b with the terms swapped.
+
+Net: 127 screens → 119. A phrase-overlap scan across all remaining screens
+found no other substantial duplication.
+
 **Option order is permuted at render time, not in the data.** The Companion
 lists the correct option first in every entry — an authoring convention for
 human review. Transcribed literally that puts the correct answer at index 0 for

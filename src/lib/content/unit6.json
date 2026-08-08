@@ -174,31 +174,6 @@
       "primaryLabel": "Next"
     },
     {
-      "id": "U6-S10",
-      "type": "officialQuestions",
-      "questionIds": [
-        "Q73",
-        "Q74",
-        "Q75",
-        "Q76",
-        "Q77",
-        "Q78",
-        "Q79",
-        "Q80",
-        "Q81",
-        "Q82",
-        "Q83",
-        "Q84",
-        "Q85",
-        "Q86",
-        "Q87",
-        "Q88",
-        "Q89"
-      ],
-      "q14Note": "Q81 asks you to name five of the 13 original states. Here are five: New York, New Jersey, Pennsylvania, Virginia, Georgia.",
-      "primaryLabel": "Next"
-    },
-    {
       "id": "U6-S11",
       "type": "practice",
       "questionId": "Q78"
@@ -239,7 +214,8 @@
         "total": 17,
         "label": "Practice all 17 questions"
       },
-      "askSomeone": "Tell someone the story of 1776 — in any language. Telling the story is studying."
+      "askSomeone": "Tell someone the story of 1776 — in any language. Telling the story is studying.",
+      "strategyNote": "Q81 asks you to name five of the 13 original states. Here are five: New York, New Jersey, Pennsylvania, Virginia, Georgia."
     }
   ]
 }

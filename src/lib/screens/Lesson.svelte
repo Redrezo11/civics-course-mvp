@@ -262,25 +262,6 @@
           on:alldone={() => (interactionDone = true)}
         />
 
-      {:else if screen.type === 'officialQuestions'}
-        <p class="mb-1">One idea.</p>
-        <h1 class="text-heading font-bold mb-4">{screen.questionIds.length} real questions.</h1>
-        {#each screen.questionIds.slice(0, 6) as qid}
-          {@const q = getQuestion(qid)}
-          <div class="question-card !py-3">
-            <span class="question-tag">Q</span>
-            <p class="text-sm font-bold m-0">{q.official}{q.star ? ' ★' : ''}</p>
-          </div>
-        {/each}
-        {#if screen.questionIds.length > 6}
-          <p class="text-xs text-ink-muted dark:text-dark-ink-muted">+ {screen.questionIds.length - 6} more</p>
-        {/if}
-        {#if screen.q14Note}
-          <div class="border border-border dark:border-dark-border rounded-card p-3 mt-3 text-sm">
-            {screen.q14Note}
-          </div>
-        {/if}
-
       {:else if screen.type === 'practice'}
         {@const q = getQuestion(screen.questionId)}
         <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-2">Practice — the official test question</p>
@@ -340,6 +321,18 @@
         <h2 class="text-heading font-bold text-center mb-3">{screen.heading}</h2>
         <div class="w-16 h-16 rounded-full mx-auto mb-4 bg-[repeating-linear-gradient(135deg,theme(colors.border),theme(colors.border)_6px,theme(colors.surface)_6px,theme(colors.surface)_12px)]"></div>
         <p class="text-sm text-center mb-5">{screen.learnedLine}</p>
+
+        <!-- The one piece of real instruction that used to live on the removed
+             beat-8 screen: G-19, smallest safe answer. "Give exactly what is
+             asked", "any one is enough". Kept because it is test-taking advice
+             the learner cannot get anywhere else — the rest of that screen only
+             re-listed questions already reachable in the bank, in practice and
+             in the full-bank set. -->
+        {#if screen.strategyNote}
+          <div class="border border-border dark:border-dark-border rounded-card p-3 mb-4 text-sm leading-relaxed">
+            {screen.strategyNote}
+          </div>
+        {/if}
         <!-- G-08 entry point. Optional and non-blocking: it sits above the
              Next control, never in place of it, so it can never gate
              progression to the following unit. -->

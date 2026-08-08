@@ -111,15 +111,17 @@ async function walkUnit(unitId, screenCount) {
   );
 }
 
+// Counts dropped by 8 when the beat-8 "officialQuestions" screens and the
+// duplicate U2-S09 confusable pair were removed.
 const UNITS = [
   ['U0', 7],
-  ['U1', 18],
-  ['U2', 18],
-  ['U3', 17],
-  ['U4', 13],
-  ['U5', 16],
-  ['U6', 17],
-  ['U7', 21],
+  ['U1', 17],
+  ['U2', 16],
+  ['U3', 16],
+  ['U4', 12],
+  ['U5', 15],
+  ['U6', 16],
+  ['U7', 20],
 ];
 
 describe('every unit is completable end to end', () => {
@@ -136,13 +138,14 @@ describe('every unit is completable end to end', () => {
 describe('regressions that previously stranded a learner', () => {
   it('a second consecutive practice screen is answerable, not pre-answered', async () => {
     resetAll();
-    // U1 screens 13 and 14 are both `practice` — the pair that broke.
+    // U1 screens 12 and 13 are both `practice` — the pair that broke. (They
+    // were 13 and 14 before beat 8 was removed from the unit.)
     const { container } = render(Lesson, { props: { unitId: 'U1' } });
 
     // Walk to the first practice screen.
     for (let i = 0; i < 200; i += 1) {
       const pos = position(container);
-      if (/^1[34] of 18$/.test(pos)) break;
+      if (/^1[23] of 17$/.test(pos)) break;
       const buttons = clickable(container);
       if (!buttons.length) break;
       const advances = buttons.filter((b) => ADVANCE.test(b.textContent.trim()));
@@ -168,6 +171,63 @@ describe('regressions that previously stranded a learner', () => {
     // Reaching the end at all means the sort item did not trap the walk.
     expect(getState().unitsCompleted).toContain('U1');
   }, 30000);
+
+  it('the strategy tips survived the removal of the beat-8 screen', async () => {
+    resetAll();
+    // U5's tip is the G-19 one: "give exactly what is asked". It used to live
+    // on the officialQuestions screen; it now belongs to Lock it in. Removing
+    // a redundant screen must not quietly take real instruction with it.
+    const { container } = render(Lesson, { props: { unitId: 'U5' } });
+
+    // U5 practises Q65, a "choose 3" multi-select, so the walk needs the same
+    // distinct-option tracking walkUnit uses — clicking the first control over
+    // and over just toggles one answer on and off.
+    let used = new Set();
+    let lastPos = null;
+    for (let i = 0; i < 400; i += 1) {
+      if (getState().unitsCompleted.includes('U5')) break;
+      if (/Give exactly what is asked/.test(container.textContent)) break;
+
+      const pos = position(container);
+      if (pos !== lastPos) {
+        lastPos = pos;
+        used = new Set();
+      }
+
+      const buttons = clickable(container);
+      if (!buttons.length) break;
+      const advances = buttons.filter((b) => ADVANCE.test(b.textContent.trim()));
+      let target;
+      if (advances.length) {
+        target = advances[advances.length - 1];
+      } else {
+        const unpicked = buttons.filter((b) => !/^●/.test(b.textContent.trim()));
+        const pool = unpicked.length ? unpicked : buttons;
+        target = pool.find((b) => !used.has(label(b))) || pool[0];
+        used.add(label(target));
+      }
+      await fireEvent.click(target);
+    }
+
+    expect(container.textContent).toMatch(/Give exactly what is asked/);
+  }, 30000);
+
+  it('no unit still renders the removed beat-8 screen', async () => {
+    for (const unitId of ['U1', 'U2', 'U5', 'U7']) {
+      resetAll();
+      const { container, unmount } = render(Lesson, { props: { unitId } });
+      for (let i = 0; i < 400; i += 1) {
+        if (getState().unitsCompleted.includes(unitId)) break;
+        // "One idea. / N real questions." was the beat-8 heading.
+        expect(container.textContent).not.toMatch(/\d+ real questions\./);
+        const buttons = clickable(container);
+        if (!buttons.length) break;
+        const advances = buttons.filter((b) => ADVANCE.test(b.textContent.trim()));
+        await fireEvent.click(advances.length ? advances[advances.length - 1] : buttons[0]);
+      }
+      unmount();
+    }
+  }, 60000);
 
   it('vocab screens present exactly one advance control', async () => {
     resetAll();
