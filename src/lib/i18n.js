@@ -1,0 +1,92 @@
+// i18n.js — the language layer.
+//
+// Two separate jobs, because the app has two kinds of text:
+//
+//   t(key)                  UI chrome — buttons, labels, headings that live in
+//                           components. Keyed strings in ui-strings.json.
+//   localiseScreen(screen)  course content — teaching prose that lives in the
+//                           unit JSON. Resolved by merging a per-language
+//                           overlay over the English screen.
+//
+// Both fall back to English when a translation is missing, per v1.1 plan §5: a
+// partial translation must never break the course. A learner set to Burmese who
+// opens a unit with no Burmese sees English, not blanks.
+//
+// What is NEVER translated: official question wording, accepted answers and
+// practice options. They are verbatim USCIS text and the interview is conducted
+// in English (G-3). They live in questions-uN.json, which this module does not
+// touch at all.
+
+import { derived } from 'svelte/store';
+import { progress } from './stores/progress.js';
+import uiStrings from './content/ui-strings.json';
+import myUnit1 from './content/translations/my/unit1.json';
+
+// Overlays, by language then unit. Only units with a translation appear here;
+// everything else resolves to English by absence.
+const OVERLAYS = {
+  my: {
+    U1: myUnit1,
+  },
+};
+
+export const LANGUAGES = [
+  { id: 'en', label: 'English' },
+  { id: 'my', label: 'မြန်မာဘာသာ', english: 'Burmese' },
+];
+
+/** Substitute {name} placeholders. */
+function interpolate(str, vars) {
+  if (!vars) return str;
+  return str.replace(/\{(\w+)\}/g, (whole, name) =>
+    Object.prototype.hasOwnProperty.call(vars, name) ? String(vars[name]) : whole
+  );
+}
+
+/**
+ * UI string lookup, as a derived store so every component re-renders when the
+ * language changes: `{$t('home.continue')}`.
+ *
+ * An unknown key returns the key itself rather than an empty string. A missing
+ * translation must be VISIBLE — silent blanks are how a broken interface ships
+ * looking fine.
+ */
+export const t = derived(progress, ($p) => {
+  const lang = $p.language || 'en';
+  return (key, vars) => {
+    const entry = uiStrings[key];
+    if (!entry) return key;
+    return interpolate(entry[lang] ?? entry.en, vars);
+  };
+});
+
+/**
+ * Merge a language overlay over an English screen.
+ *
+ * Shallow by field: an overlay supplies whole values (a string, a full list),
+ * never a partial one. Anything the overlay does not carry stays English.
+ */
+export function localiseScreen(screen, unitId, lang) {
+  if (!screen || !lang || lang === 'en') return screen;
+  const fields = OVERLAYS[lang]?.[unitId]?.[screen.id];
+  if (!fields) return screen;
+
+  const out = { ...screen, ...fields };
+
+  // `items` (guided practice) is a list of objects, so merge item by item
+  // rather than replacing the array and losing correctIndex/kind/bucket.
+  if (fields.items && Array.isArray(screen.items)) {
+    out.items = screen.items.map((item, i) => ({ ...item, ...(fields.items[i] || {}) }));
+  }
+  return out;
+}
+
+/** Reactive helper for components: `$localise(screen, 'U1')`. */
+export const localise = derived(progress, ($p) => (screen, unitId) =>
+  localiseScreen(screen, unitId, $p.language || 'en')
+);
+
+/** Which units actually have a translation in the given language. */
+export function translatedUnits(lang) {
+  return Object.keys(OVERLAYS[lang] || {});
+}

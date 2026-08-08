@@ -33,6 +33,15 @@
     document.documentElement.classList.toggle('dark', $progress.theme === 'dark');
   }
 
+  // Language on <html>: assistive technology had no way to know what it was
+  // reading, and the Myanmar font stack has to apply document-wide rather than
+  // per-component. `lang` is also what tells a screen reader to switch voice.
+  $: if (typeof document !== 'undefined') {
+    const lang = $progress.language || 'en';
+    document.documentElement.lang = lang;
+    document.documentElement.classList.toggle('font-myanmar', lang === 'my');
+  }
+
   $: parsed = parseRoute($route);
 </script>
 

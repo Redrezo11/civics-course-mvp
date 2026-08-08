@@ -9,6 +9,7 @@
     ANSWERS_CHECKED,
     USCIS_UPDATES_URL,
   } from '../content/questions.js';
+  import { localiseScreen } from '../i18n.js';
   import LessonBar from '../components/LessonBar.svelte';
   import QuestionCard from '../components/QuestionCard.svelte';
   import SingleSelect from '../components/SingleSelect.svelte';
@@ -59,7 +60,19 @@
     }
   });
 
-  $: screen = unit?.screens[index];
+  // The English screen is the structural source of truth; a language overlay is
+  // merged over it at render. Anything the overlay does not carry stays English,
+  // so a partial translation degrades to English rather than to blanks.
+  //
+  // `lang` is deliberately a plain string, not the $localise store. Deriving
+  // `screen` from the progress store created a cycle: screen changes →
+  // saveScreenPosition writes progress → the store fires → screen recomputes →
+  // saves again. Svelte treats every object assignment as changed, so it never
+  // settled and the whole lesson stopped rendering controls. A primitive only
+  // invalidates when its value actually differs, which breaks the loop.
+  $: lang = $progress.language || 'en';
+  $: rawScreen = unit?.screens[index];
+  $: screen = rawScreen ? localiseScreen(rawScreen, unitId, lang) : rawScreen;
   $: isDynamicPractice =
     screen?.type === 'practice' && getQuestion(screen.questionId)?.dynamic;
   $: isLast = unit && index === unit.screens.length - 1;

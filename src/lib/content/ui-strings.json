@@ -1,0 +1,51 @@
+{
+  "_note": "UI chrome, keyed by screen. `my: null` means not yet translated — t() falls back to English, which is distinguishable from a deliberately empty string. Official question wording and accepted answers are NEVER here; they live in questions-uN.json and stay English (G-3). See docs/ARCHITECTURE.md.",
+  "settings.title": {
+    "en": "Settings",
+    "my": null
+  },
+  "settings.back": {
+    "en": "‹ Back",
+    "my": "‹ နောက်သို့"
+  },
+  "settings.language": {
+    "en": "Language",
+    "my": "ဘာသာစကား"
+  },
+  "settings.theme": {
+    "en": "Theme",
+    "my": "အသွင်အပြင်"
+  },
+  "settings.light": {
+    "en": "Light",
+    "my": "အလင်း"
+  },
+  "settings.dark": {
+    "en": "Dark",
+    "my": "အမှောင်"
+  },
+  "settings.done": {
+    "en": "Done",
+    "my": "ပြီးပါပြီ"
+  },
+  "settings.saved": {
+    "en": "Your choice is saved on this phone.",
+    "my": null
+  },
+  "settings.coverage.en": {
+    "en": "The course is written in English.",
+    "my": null
+  },
+  "settings.coverage.my": {
+    "en": "Burmese is a draft and covers part of Lesson 1 so far. Everything not yet translated stays in English.",
+    "my": "မြန်မာဘာသာမှာ မူကြမ်းဖြစ်ပြီး ယခုအချိန်ထိ သင်ခန်းစာ ၁ ၏ တစ်စိတ်တစ်ပိုင်းကိုသာ လွှမ်းခြုံပါသည်။ မဘာသာပြန်ရသေးသည်များကို အင်္ဂလိပ်ဘာသာဖြင့် ဆက်လက်ဖော်ပြပါမည်။"
+  },
+  "settings.testStaysEnglish": {
+    "en": "Test questions and answers stay in English — that is the language of the real interview.",
+    "my": null
+  },
+  "settings.draftBadge": {
+    "en": "draft",
+    "my": null
+  }
+}

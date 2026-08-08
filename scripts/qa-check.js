@@ -594,6 +594,83 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
   }
 }
 
+// --- 14. Every UI string key resolves ---------------------------------------
+// t() returns the key itself when it is unknown, so a typo renders as
+// "home.contnue" on screen rather than blank. Visible is better than silent,
+// but neither should ship.
+{
+  const check = '14 ui string keys resolve';
+  const strings = readJson(join(contentDir, 'ui-strings.json'));
+  const defined = new Set(Object.keys(strings).filter((k) => !k.startsWith('_')));
+  const used = new Set();
+  for (const { text } of sourceText) {
+    // Strip comments first: a doc example like `{$t('home.continue')}` in a
+    // JSDoc block is not a usage, and counting it reports a phantom missing key.
+    const code = text
+      .replace(/\/\*[\s\S]*?\*\//g, '')
+      .replace(/(^|[^:])\/\/.*$/gm, '$1')
+      .replace(/<!--[\s\S]*?-->/g, '');
+    for (const m of code.matchAll(/\$t\(\s*['"]([^'"]+)['"]/g)) used.add(m[1]);
+  }
+  const missing = [...used].filter((k) => !defined.has(k));
+  const orphaned = [...defined].filter((k) => !used.has(k));
+
+  if (missing.length) fail(check, `used in source but absent from ui-strings.json: ${missing.join(', ')}`);
+  if (orphaned.length) warn(check, `defined but never used: ${orphaned.join(', ')}`);
+  if (!missing.length) pass(check, `all ${used.size} keys used in source are defined`);
+
+  const untranslated = [...defined].filter((k) => strings[k].my === null);
+  if (untranslated.length) {
+    warn(check, `${untranslated.length}/${defined.size} UI strings have no Burmese yet — they fall back to English`);
+  }
+}
+
+// --- 15. Translation overlays target real fields ----------------------------
+// An overlay key that does not exist on the English screen is dead weight the
+// renderer never reads, and it would hide a schema drift silently.
+{
+  const check = '15 translation overlays valid';
+  const dir = join(root, 'src', 'lib', 'content', 'translations');
+  let langs = [];
+  try {
+    langs = readdirSync(dir);
+  } catch {
+    // No overlays yet.
+  }
+  let checked = 0;
+  for (const lang of langs) {
+    let files = [];
+    try {
+      files = readdirSync(join(dir, lang)).filter((n) => n.endsWith('.json'));
+    } catch {
+      continue;
+    }
+    for (const name of files) {
+      const overlay = readJson(join(dir, lang, name));
+      const en = readJson(join(contentDir, name));
+      const byId = Object.fromEntries(en.screens.map((s) => [s.id, s]));
+      for (const [screenId, fields] of Object.entries(overlay)) {
+        const screen = byId[screenId];
+        if (!screen) {
+          fail(check, `${lang}/${name}: ${screenId} is not a screen in ${name}`);
+          continue;
+        }
+        for (const [field, value] of Object.entries(fields)) {
+          checked += 1;
+          if (!(field in screen)) {
+            fail(check, `${lang}/${name}: ${screenId}.${field} does not exist on the English screen`);
+          } else if (Array.isArray(screen[field]) && Array.isArray(value) && screen[field].length !== value.length) {
+            fail(check, `${lang}/${name}: ${screenId}.${field} has ${value.length} items, English has ${screen[field].length}`);
+          }
+        }
+      }
+    }
+  }
+  if (!errors.some((e) => e.startsWith(check))) {
+    pass(check, `${checked} overlay field(s) resolve to real English fields`);
+  }
+}
+
 // Contrast and readability USED to be listed here as human-only. They are not:
 // both are mechanical and are now checks 4 and 5. What genuinely cannot be
 // done in this script is anything requiring the source document or human
