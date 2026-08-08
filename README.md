@@ -79,6 +79,13 @@ Also built: G-08 full-bank practice (per unit, optional, non-blocking),
 R1–R3 cumulative reviews with objective re-queueing, Rehearsal mode, the E-01
 epitome, and the G-05b completion screen.
 
+### Architecture and translation records
+
+`docs/ARCHITECTURE.md` covers where a second language attaches to the build —
+the rule that Burmese is exclusively for the Burmese version (the two languages
+never share a screen), the one exception on interpret items, the source-to-build
+field mapping, and the four blockers that must be cleared first.
+
 ### Translation / structural-change record
 
 `docs/STRUCTURAL_CHANGES.md` reconciles the build against Storyboard v5.3 and

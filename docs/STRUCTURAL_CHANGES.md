@@ -1,6 +1,9 @@
 # Structural changes and translation surface
 
 **For:** whoever revises the Burmese (`my`) translation.
+**See also:** `ARCHITECTURE.md` — where a second language attaches to the build:
+the Burmese-only runtime rule, the source-to-build field mapping, and what has
+to exist before any translation can be wired.
 **Against:** Civics Course Storyboard v5.3 and Question_Bank_Companion.md.
 **Generated:** the string inventory in Part 2 is extracted from source, not
 typed by hand, so it does not drift out of date silently. Regenerate it before

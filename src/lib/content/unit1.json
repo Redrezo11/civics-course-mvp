@@ -224,7 +224,7 @@
       "id": "U1-S11",
       "type": "practice",
       "questionId": "Q2",
-      "feedbackExplain": "Watch the two names: the supreme law of the land is the Constitution, a book of rules. The Supreme Court is the highest court, a group of judges. The judges must follow the book."
+      "feedbackExplain": "Remember the pair: the supreme law of the land is a book of rules. The Supreme Court is the highest court, with nine judges. The judges must follow the book."
     },
     {
       "id": "U1-S12",
@@ -235,17 +235,20 @@
     {
       "id": "U1-S13",
       "type": "practice",
-      "questionId": "Q13"
+      "questionId": "Q13",
+      "feedbackExplain": "That is what the rule of law means — no one is above the law."
     },
     {
       "id": "U1-S14",
       "type": "practice",
-      "questionId": "Q4"
+      "questionId": "Q4",
+      "feedbackExplain": "The Constitution begins with “We the People” because political power starts with the people."
     },
     {
       "id": "U1-S15",
       "type": "practice",
-      "questionId": "Q5"
+      "questionId": "Q5",
+      "feedbackExplain": "An amendment is an official change or addition to the Constitution."
     },
     {
       "id": "U1-S16",

@@ -557,6 +557,43 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
   }
 }
 
+// --- 13. Unreviewed translations stay out of the build --------------------
+// Translation sources live in docs/translations/ and carry
+// translationStatus: "draft-unreviewed". The storyboard requires native review
+// before Burmese reaches a learner, so nothing under src/ may import them —
+// otherwise unreviewed text is one line away from shipping, and nothing else
+// would notice. See docs/ARCHITECTURE.md §2.
+{
+  const check = '13 unreviewed translations not shipped';
+  const offenders = [];
+  for (const { f, text } of sourceText) {
+    if (/from\s+['"][^'"]*docs\/translations|require\(\s*['"][^'"]*docs\/translations/.test(text)) {
+      offenders.push(f.replace(root, ''));
+    }
+  }
+  if (offenders.length) {
+    fail(check, `src/ imports a translation source: ${offenders.join(', ')}`);
+  } else {
+    pass(check, 'no src/ file imports docs/translations/');
+  }
+
+  // If any source file is present, report its review status so an unreviewed
+  // one cannot quietly be assumed finished.
+  const dir = join(root, 'docs', 'translations');
+  let files = [];
+  try {
+    files = readdirSync(dir).filter((n) => n.endsWith('.json'));
+  } catch {
+    // No translation sources yet — nothing to report.
+  }
+  for (const name of files) {
+    const t = readJson(join(dir, name));
+    if (t.translationStatus !== 'reviewed') {
+      warn(check, `docs/translations/${name} is "${t.translationStatus || 'unmarked'}" — not fit to ship`);
+    }
+  }
+}
+
 // Contrast and readability USED to be listed here as human-only. They are not:
 // both are mechanical and are now checks 4 and 5. What genuinely cannot be
 // done in this script is anything requiring the source document or human
