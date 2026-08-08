@@ -302,6 +302,7 @@
             options={p.options}
             acceptedAnswers={q.acceptedAnswers}
             required={q.multiSelect}
+            feedbackExplain={screen.feedbackExplain || ''}
             on:answer={(e) => { handleAnswer(q.id, e.detail.correct); interactionDone = true; }}
           />
         {:else}
@@ -310,6 +311,7 @@
             options={p.options}
             correctIndex={p.correctIndex}
             correctAnswerText={q.acceptedAnswers[0]}
+            feedbackExplain={screen.feedbackExplain || ''}
             on:answer={(e) => { handleAnswer(q.id, e.detail.correct); interactionDone = true; }}
           />
         {/if}

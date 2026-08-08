@@ -145,6 +145,7 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
     'nonExample', 'takeaway', 'heading', 'afterQuote', 'afterTest',
     'coverageLine', 'learnedLine', 'askSomeone', 'feedback', 'question',
     'instructions', 'smallPrint', 'privacyLine', 'strategyNote', 'def', 'unitLabel',
+    'feedbackExplain',
   ]);
   const LIST_KEYS = new Set(['bodyList', 'bodyList2', 'paragraphs']);
 
@@ -269,6 +270,10 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
     ['light', 'text', 'accent-ink', 'accent'],
     ['light', 'text', 'ink', 'gotit-bg'],
     ['light', 'text', 'gotit', 'gotit-bg'],
+    ['light', 'text', 'notyet', 'notyet-bg'],
+    ['light', 'text', 'ink', 'notyet-bg'],
+    ['light', 'ui', 'notyet', 'surface'],
+    ['light', 'ui', 'notyet', 'raised'],
     ['light', 'text', 'surface', 'ink'],
     ['light', 'ui', 'border-interactive', 'surface'],
     ['light', 'ui', 'border-interactive', 'raised'],
@@ -286,6 +291,10 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
     ['dark', 'text', 'dark-accent-ink', 'dark-accent'],
     ['dark', 'text', 'dark-ink', 'dark-gotit-bg'],
     ['dark', 'text', 'dark-gotit', 'dark-gotit-bg'],
+    ['dark', 'text', 'dark-notyet', 'dark-notyet-bg'],
+    ['dark', 'text', 'dark-ink', 'dark-notyet-bg'],
+    ['dark', 'ui', 'dark-notyet', 'dark-surface'],
+    ['dark', 'ui', 'dark-notyet', 'dark-raised'],
     ['dark', 'text', 'dark-surface', 'dark-ink'],
     ['dark', 'ui', 'dark-border-interactive', 'dark-surface'],
     ['dark', 'ui', 'dark-border-interactive', 'dark-raised'],

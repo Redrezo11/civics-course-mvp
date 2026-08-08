@@ -12,6 +12,7 @@
   export let options = [];
   export let acceptedAnswers = [];
   export let required = 2;
+  export let feedbackExplain = ''; // course-authored, single language — see PracticeItem
 
   let chosen = [];
   let answered = false;
@@ -46,7 +47,7 @@
     <button
       class="tap flex items-center w-full text-left py-2.5 px-4 mb-2.5 rounded-card font-bold text-sm border-2 transition-colors
         {reveal ? 'bg-gotit-bg dark:bg-dark-gotit-bg border-gotit dark:border-dark-gotit text-ink dark:text-dark-ink' : ''}
-        {wrongPick ? 'border-border-interactive dark:border-dark-border-interactive text-ink-muted dark:text-dark-ink-muted' : ''}
+        {wrongPick ? 'bg-notyet-bg dark:bg-dark-notyet-bg border-notyet dark:border-dark-notyet text-ink dark:text-dark-ink' : ''}
         {!answered && picked ? 'border-ink dark:border-dark-ink text-ink dark:text-dark-ink' : ''}
         {!answered && !picked ? 'border-border-interactive dark:border-dark-border-interactive text-ink dark:text-dark-ink' : ''}
         {answered && !picked && !reveal ? 'border-border dark:border-dark-border text-ink-muted dark:text-dark-ink-muted opacity-60' : ''}"
@@ -74,6 +75,7 @@
       <span class="font-bold">Accepted answers are marked ✓.</span>
       Any {required} of them is enough — the officer asks for {required}, so give
       {required} and stop.
+      {#if feedbackExplain}<br />{feedbackExplain}{/if}
     </div>
   {/if}
 </div>

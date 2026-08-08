@@ -17,6 +17,12 @@ export default {
         'accent-ink': '#FFFFFF',
         gotit: '#2F6B33',
         'gotit-bg': '#EAF1E7',
+        // The mirror of gotit, for the option a learner actually chose when it
+        // was wrong. Named "notyet", not "wrong" or "error": G-17 forbids the
+        // interface framing the learner as deficient, and Rehearsal already
+        // uses "✗ Not yet". 6.17:1 on its own background, 6.79:1 on surface.
+        notyet: '#A32B1C',
+        'notyet-bg': '#FBEAE7',
         // Dark theme — separate palette, not a filter. Verified as its own 4.5:1/3:1 pass.
         'dark-surface': '#17150F',
         'dark-raised': '#221F19',
@@ -35,6 +41,11 @@ export default {
         'dark-accent-ink': '#17150F',
         'dark-gotit': '#86BE7F',
         'dark-gotit-bg': '#1E2A1C',
+        // Dark theme is a separate palette, not a filter — these are chosen
+        // for the dark surfaces, not derived from the light pair.
+        // 7.96:1 on its own background, 8.83:1 on dark-surface.
+        'dark-notyet': '#F0A093',
+        'dark-notyet-bg': '#2E1A16',
       },
       fontFamily: {
         sans: ['Atkinson Hyperlegible', 'Segoe UI', 'Verdana', '-apple-system', 'sans-serif'],

@@ -243,7 +243,8 @@
     {
       "id": "U7-S16",
       "type": "practice",
-      "questionId": "Q97"
+      "questionId": "Q97",
+      "feedbackExplain": "Read the 14th Amendment twice: all persons born “or naturalized” in the United States. Those two words are what your certificate will rest on."
     },
     {
       "id": "U7-S17",
@@ -263,7 +264,8 @@
     {
       "id": "U7-S20",
       "type": "practice",
-      "questionId": "Q126"
+      "questionId": "Q126",
+      "feedbackExplain": "The question asks for three. Give three and stop — extra answers only add chances for a mistake."
     },
     {
       "id": "U7-S21",

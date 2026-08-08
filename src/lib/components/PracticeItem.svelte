@@ -26,6 +26,12 @@
 
   export let q;
   export let label = 'Practice — the official test question';
+  // Course-authored explanation for this item. Comes from the SCREEN in unit
+  // JSON, never from the question file: question files hold verbatim USCIS
+  // wording and are the never-translate boundary, whereas this is our prose
+  // and has to be translatable. Deliberately a single string, not a bilingual
+  // pair — feedback is shown in the learner's chosen language only.
+  export let explain = '';
 
   $: presented = q && !q.dynamic ? presentOptions(q) : null;
   $: currentAnswer = q && q.dynamic ? getCurrentAnswer(q.id) : null;
@@ -69,6 +75,7 @@
         options={presented.options}
         acceptedAnswers={q.acceptedAnswers}
         required={q.multiSelect}
+        feedbackExplain={explain}
         on:answer={(e) => answered(e.detail.correct)}
       />
     {:else}
@@ -76,6 +83,7 @@
         options={presented.options}
         correctIndex={presented.correctIndex}
         correctAnswerText={q.acceptedAnswers[0]}
+        feedbackExplain={explain}
         on:answer={(e) => answered(e.detail.correct)}
       />
     {/if}

@@ -246,15 +246,26 @@
 
         {#each item.options as opt, oi}
           {@const answered = answers[i] !== undefined}
+          {@const isCorrect = oi === item.correctIndex}
+          {@const isWrongPick = answered && answers[i] === oi && !isCorrect}
+          <!-- Same three-state treatment as SingleSelect: `answers[i]` held the
+               learner's pick but the template only ever checked correctIndex,
+               so a wrong choice looked identical to the options not chosen. -->
           <button
-            class="tap flex items-center w-full text-left py-2.5 px-4 mb-2 rounded-full font-bold text-sm border-2 transition-colors
-              {answered && oi === item.correctIndex ? 'bg-gotit-bg dark:bg-dark-gotit-bg border-gotit dark:border-dark-gotit' : ''}
-              {answered && oi !== item.correctIndex ? 'border-border-interactive dark:border-dark-border-interactive opacity-55' : ''}
+            class="tap flex items-center gap-2 w-full text-left py-2.5 px-4 mb-2 rounded-full font-bold text-sm border-2 transition-colors
+              {answered && isCorrect ? 'bg-gotit-bg dark:bg-dark-gotit-bg border-gotit dark:border-dark-gotit' : ''}
+              {isWrongPick ? 'bg-notyet-bg dark:bg-dark-notyet-bg border-notyet dark:border-dark-notyet' : ''}
+              {answered && !isCorrect && !isWrongPick ? 'border-border-interactive dark:border-dark-border-interactive opacity-55' : ''}
               {!answered ? 'border-border-interactive dark:border-dark-border-interactive' : ''}"
             disabled={answered}
             on:click={() => selectAnswer(i, oi)}
           >
-            {#if answered && oi === item.correctIndex}✓ {/if}{opt}
+            <span class="flex-1">
+              {#if answered && isCorrect}✓ {:else if isWrongPick}✗ {/if}{opt}
+            </span>
+            {#if isWrongPick}
+              <span class="shrink-0 text-xs font-normal">your answer</span>
+            {/if}
           </button>
         {/each}
 

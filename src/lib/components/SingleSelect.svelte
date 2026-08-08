@@ -28,15 +28,34 @@
 
 <div>
   {#each options as opt, i}
+    <!--
+      Three states after answering, not two. `selected` was tracked but never
+      read here, so a learner who chose wrongly saw their own answer dimmed
+      exactly like the options they did NOT choose — the app showed the right
+      answer but never showed them what they had done. Knowing which one you
+      picked is the most useful part of feedback.
+
+      State is carried by icon AND word AND colour, never colour alone (§8):
+      the ✓ side takes its word from the feedback box below, so the ✗ side
+      carries "your answer" on the option itself.
+    -->
+    {@const isCorrect = i === correctIndex}
+    {@const isWrongPick = answered && i === selected && !isCorrect}
     <button
-      class="tap flex items-center w-full text-left py-2.5 px-4 mb-2.5 rounded-full font-bold text-sm border-2 transition-colors
-        {answered && i === correctIndex ? 'bg-gotit-bg dark:bg-dark-gotit-bg border-gotit dark:border-dark-gotit text-ink dark:text-dark-ink' : ''}
-        {answered && i !== correctIndex ? 'border-border-interactive dark:border-dark-border-interactive text-ink-muted dark:text-dark-ink-muted opacity-60' : ''}
+      class="tap flex items-center gap-2 w-full text-left py-2.5 px-4 mb-2.5 rounded-full font-bold text-sm border-2 transition-colors
+        {answered && isCorrect ? 'bg-gotit-bg dark:bg-dark-gotit-bg border-gotit dark:border-dark-gotit text-ink dark:text-dark-ink' : ''}
+        {isWrongPick ? 'bg-notyet-bg dark:bg-dark-notyet-bg border-notyet dark:border-dark-notyet text-ink dark:text-dark-ink' : ''}
+        {answered && !isCorrect && !isWrongPick ? 'border-border-interactive dark:border-dark-border-interactive text-ink-muted dark:text-dark-ink-muted opacity-60' : ''}
         {!answered ? 'border-border-interactive dark:border-dark-border-interactive text-ink dark:text-dark-ink' : ''}"
       on:click={() => select(i)}
       disabled={answered}
     >
-      {#if answered && i === correctIndex}✓ {/if}{opt}
+      <span class="flex-1">
+        {#if answered && isCorrect}✓ {:else if isWrongPick}✗ {/if}{opt}
+      </span>
+      {#if isWrongPick}
+        <span class="shrink-0 text-xs font-normal">your answer</span>
+      {/if}
     </button>
   {/each}
 

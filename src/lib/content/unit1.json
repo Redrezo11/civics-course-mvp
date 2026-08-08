@@ -223,12 +223,14 @@
     {
       "id": "U1-S11",
       "type": "practice",
-      "questionId": "Q2"
+      "questionId": "Q2",
+      "feedbackExplain": "Watch the two names: the supreme law of the land is the Constitution, a book of rules. The Supreme Court is the highest court, a group of judges. The judges must follow the book."
     },
     {
       "id": "U1-S12",
       "type": "practice",
-      "questionId": "Q7"
+      "questionId": "Q7",
+      "feedbackExplain": "Twenty-seven — a small number, because changing the rulebook was made slow and difficult on purpose."
     },
     {
       "id": "U1-S13",

@@ -21,6 +21,7 @@ import { describe, it, expect } from 'vitest';
 import { render, fireEvent } from '@testing-library/svelte';
 import Lesson from '../src/lib/screens/Lesson.svelte';
 import { getState, resetAll } from '../src/lib/storage.js';
+import { getQuestion } from '../src/lib/content/questions.js';
 
 // Controls that do NOT move a learner forward. Clicking these in the driver
 // would either leave the unit or undo work.
@@ -228,6 +229,56 @@ describe('regressions that previously stranded a learner', () => {
       unmount();
     }
   }, 60000);
+
+  it('a wrong choice is shown back to the learner, not just the right one', async () => {
+    resetAll();
+    // The original defect: SingleSelect tracked `selected` but never read it,
+    // so the option a learner actually chose was dimmed exactly like the ones
+    // they did not choose. The right answer was shown; the mistake was not.
+    const { container } = render(Lesson, { props: { unitId: 'U1' } });
+
+    // Walk to the first practice screen (12 of 17). NOTE: position() returns
+    // the whole bar label, e.g. "We the People · 12 of 17", so match the tail
+    // rather than anchoring the whole string.
+    for (let i = 0; i < 200; i += 1) {
+      if (position(container).endsWith('12 of 17')) break;
+      const buttons = clickable(container);
+      if (!buttons.length) break;
+      const advances = buttons.filter((b) => ADVANCE.test(b.textContent.trim()));
+      await fireEvent.click(advances.length ? advances[advances.length - 1] : buttons[0]);
+    }
+
+    // Options are the enabled non-advance controls on this screen.
+    const options = clickable(container).filter((b) => !ADVANCE.test(label(b)));
+    expect(options.length).toBeGreaterThanOrEqual(3);
+
+    // Pick a KNOWN-WRONG option. Option order is permuted per question, so
+    // "the first one" is sometimes the right answer — a test that clicked
+    // blindly would take the happy path half the time and prove nothing.
+    // Q2 is this screen's question; anything that is not its correct option
+    // is wrong by construction.
+    const q2 = getQuestion('Q2');
+    const correctText = q2.options[q2.correctIndex];
+    const wrong = options.find((b) => !label(b).includes(correctText));
+    expect(wrong).toBeTruthy();
+    const wrongText = label(wrong);
+
+    await fireEvent.click(wrong);
+
+    const rows = [...container.querySelectorAll('button')].map((b) =>
+      b.textContent.replace(/\s+/g, ' ').trim()
+    );
+
+    // The correct answer is marked ✓ — this already worked.
+    expect(rows.some((t) => t.includes('✓') && t.includes(correctText))).toBe(true);
+
+    // The learner's own wrong pick must be identifiable: icon AND word, so the
+    // state does not rest on colour alone (§8).
+    const picked = rows.find((t) => t.includes(wrongText));
+    expect(picked).toBeTruthy();
+    expect(picked).toMatch(/✗/);
+    expect(picked).toMatch(/your answer/);
+  }, 30000);
 
   it('vocab screens present exactly one advance control', async () => {
     resetAll();

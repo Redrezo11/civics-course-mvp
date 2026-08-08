@@ -96,14 +96,34 @@ None of these exist in any earlier translation draft:
 ### 1.5 Chrome text changed
 
 - **Home** — "Or go to any lesson:" restored; Reviews and "Practice every
-  question" sections added; the footer date line is now conditional (see 1.6).
+  question" sections added; the footer date line is now conditional (see 1.7).
 - **Help** — the Sources line no longer hardcodes a date.
 - **Lesson** — practice screens carry "Practice — the official test question".
 - **Guided practice** — now labelled "Practice ⟨n⟩ of ⟨n⟩ — not an official test
   question", and sort/order items give real feedback where before they gave
   none.
 
-### 1.6 Conditional text — needs two translations, not one
+### 1.6 Answer feedback — new strings, and one rule to hold to
+
+Practice options now show three states instead of two. Previously only the
+correct answer was marked and every other option was dimmed alike, so a learner
+who chose wrongly was never shown *which* option they had chosen. New strings:
+
+- `your answer` — the label on the learner's own pick when it was wrong. It
+  exists because §8 forbids state carried by colour alone: the option needs an
+  icon (✗), a colour (`notyet`), **and** a word.
+- `feedbackExplain` — an optional course-authored explanation on a practice
+  screen. Six are authored so far, on the items the storyboard specifies
+  (U1-S11, U1-S12, U2-S15, U5-S15, U7-S16, U7-S20).
+
+**The rule: feedback is never bilingual.** The pattern this was modelled on
+(`vocalize-mvp`) stacks an English explanation and its translation together on
+the same screen. This course does not. One explanation, in the language the
+learner selected. `feedbackExplain` is therefore a single string per screen —
+when the i18n layer lands it resolves like any other prose key, and there is no
+bilingual layout to unpick.
+
+### 1.7 Conditional text — needs two translations, not one
 
 `ANSWERS_CHECKED` is `null` until someone verifies the dynamic answers, so these
 strings each have **two** states and both need translating:
@@ -114,13 +134,13 @@ strings each have **two** states and both need translating:
 | Help sources | "answers checked ⟨date⟩" | "answers that change with elections have not been checked yet" |
 | Dynamic cards | the officeholder + "Checked: ⟨date⟩" | "This answer has not been checked yet." |
 
-### 1.7 Changes with no text impact
+### 1.8 Changes with no text impact
 
 Listed so they are not re-investigated: option order is now permuted at render
 time; screens remount via `{#key screen.id}`; all controls carry a 48px tap
 target; `dark-border-interactive` was lightened for contrast.
 
-### 1.8 Screen ids were deliberately not renumbered
+### 1.9 Screen ids were deliberately not renumbered
 
 Ids are the keys stored in `screenPosition`, so renumbering would strand every
 learner mid-unit on resume. **Gaps are expected** — U1 runs S01…S09, S11…S16
@@ -140,7 +160,7 @@ readability check measures:
 `resolution` · `handle` · `handleSub` · `example` · `nonExample` · `takeaway` ·
 `heading` · `afterQuote` · `afterTest` · `coverageLine` · `learnedLine` ·
 `askSomeone` · `feedback` · `question` · `instructions` · `smallPrint` ·
-`privacyLine` · `strategyNote` · `unitLabel`
+`privacyLine` · `strategyNote` · `feedbackExplain` · `unitLabel`
 
 Also translatable, nested: `cards[].word` / `.def` / `.example` (vocabulary),
 `termA`/`termB` `.name` and `.def` (confusable pairs), `sortItems[].text`,
