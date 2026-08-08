@@ -46,7 +46,14 @@
       </button>
     {/if}
 
-    <p class="text-sm font-bold mb-2">Or go to any lesson:</p>
+    <!-- Heading states only what is true. The earlier "Or go to any lesson:"
+         claimed access to all eight while U2–U7 render disabled — the exact
+         kind of overstated claim G-22 exists to prevent. -->
+    <p class="text-sm font-bold mb-2">Lessons</p>
+    <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-2">
+      {builtUnits.length} of {units.length} are ready in this prototype. The rest are
+      listed so you can see what the full course covers.
+    </p>
     <div class="border-t border-border dark:border-dark-border">
       {#each units as u}
         {@const built = builtUnits.includes(u.id)}
@@ -59,7 +66,15 @@
           <span class="text-ink-muted dark:text-dark-ink-muted w-6">{u.id}</span>
           <span class="flex-1 {built ? 'text-ink dark:text-dark-ink' : 'text-ink-muted dark:text-dark-ink-muted'}">{u.name}</span>
           {#if done}<span class="text-ink-muted dark:text-dark-ink-muted mr-1.5">✓</span>{/if}
-          {#if built}<span class="text-ink-muted dark:text-dark-ink-muted">›</span>{/if}
+          <!-- Unavailability is stated in words, not signalled by dimming
+               alone (§8: state is never conveyed by visual treatment only).
+               "Not built yet" is factual — deliberately not a "coming soon"
+               that implies content exists behind the row. -->
+          {#if built}
+            <span class="text-ink-muted dark:text-dark-ink-muted">›</span>
+          {:else}
+            <span class="text-[10px] text-ink-muted dark:text-dark-ink-muted">Not built yet</span>
+          {/if}
         </button>
       {/each}
     </div>
