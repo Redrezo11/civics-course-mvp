@@ -67,14 +67,19 @@ would consume one.
 
 `translationStatus` matters: the storyboard requires **native review** before
 Burmese reaches a learner. A file marked `draft-unreviewed` must not be
-importable from `src/`. QA check 13 enforces that.
+importable from `src/`. QA check 13 enforces that, and warns on every run while
+the status is anything other than `reviewed`.
+
+**Present today:** `docs/translations/unit1.json` — Unit 1, complete, 67 `en`/
+`my` pairs with no gaps, `draft-unreviewed`. Not wired to anything.
 
 ---
 
 ## 3. Source → build field mapping
 
-The unit-1 source predates several changes but maps almost completely. Recorded
-so the eventual import is mechanical rather than interpretive.
+The unit-1 source predates several changes but maps almost completely. Verified
+against the real file, not against a description of it: 21 source screens, 16 of
+which exist in the build under the same id.
 
 ### Screens
 
@@ -127,18 +132,28 @@ drop.
 
 ---
 
-## 5. Encoding
+## 5. Encoding — transfer translation files as files, never paste
 
-Burmese is three UTF-8 bytes per character, two of which fall in `0x80–0x9F` —
-the C1 control range. **Text pasted through a channel that strips control
-characters is unrecoverable**, not merely garbled: `မ` (E1 80 99) arrives as a
-bare `á` with both continuation bytes gone, and no round-trip can restore them.
+**Present:** `docs/translations/unit1.json`. Verified on arrival — 85 `my`
+strings, 8,603 characters in the Myanmar block including 3,655 consonants, zero
+U+FFFD, zero Latin-1 residue, all 67 `en`/`my` pairs complete.
 
-A first attempt at landing the bilingual source failed exactly this way — zero
-C1 bytes survived anywhere in the file. Reconstruction would have meant guessing
-letters in a script that cannot be proof-read here, in text a learner would take
-as fact.
+It took two failed attempts to get it here, and the reason will recur for units
+2–7, so it is written down:
 
-**Transfer translation files as files** — attach or commit them, never paste.
-Verify on arrival that `my` strings sit in the Myanmar block (U+1000–U+109F)
-with no `Ã`/`Â`/`â` sequences and no U+FFFD.
+Burmese is three UTF-8 bytes per character — `E1 8x YY`. The middle byte is
+always `0x80`–`0x82`, and for every base consonant (U+1000–U+101F) the third
+byte is `0x80`–`0x9F`. **Both fall in the C1 control range.** A channel that
+strips control characters therefore deletes the middle byte of every character
+and the final byte of every consonant: `ကျွန်ုပ်တို့` arrives as
+`á á» á½ á áº á¯ …` — the vowel marks survive, every consonant is gone.
+
+That is unrecoverable, not garbled. A consonant cannot be inferred from the
+diacritics around it, and guessing would put invented Burmese in front of a
+learner as fact.
+
+**Verifying on arrival** — by codepoint, never by looking at terminal output.
+A Windows console under cp1252 cannot render Burmese and will throw or show
+blanks for a perfectly good file; that says nothing about the data. Assert
+instead that `my` strings sit in U+1000–U+109F, that U+1000–U+101F is non-empty
+(consonants present), and that there is no U+FFFD and no U+00C0–U+00FF residue.

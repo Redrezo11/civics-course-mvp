@@ -1,0 +1,546 @@
+{
+  "unit": "u1",
+  "schemaVersion": 1,
+  "translationStatus": "draft-unreviewed",
+  "storyboardSource": "Civics_Course_Storyboard_v5.3 §5",
+  "title": {
+    "en": "We the People",
+    "my": "ကျွန်ုပ်တို့ ပြည်သူများ"
+  },
+  "questions": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+  "objectives": [
+    {
+      "en": "Choose the correct plain-English meaning of \"the Constitution limits government power\" from three options.",
+      "my": "\"ဖွဲ့စည်းပုံအခြေခံဥပဒေသည် အစိုးရ၏ အာဏာကို ကန့်သတ်သည်\" ဟူသည့် စကားရပ်၏ မှန်ကန်သော ရိုးရှင်းသည့် အဓိပ္ပာယ်ကို ရွေးချယ်စရာ သုံးခုမှ ရွေးနိုင်သည်။"
+    },
+    {
+      "en": "Match a real test question (e.g. \"What is the supreme law of the land?\") to this unit's idea rather than another unit's.",
+      "my": "အမှန်တကယ် စာမေးပွဲမေးခွန်းတစ်ခု (ဥပမာ \"နိုင်ငံ၏ အမြင့်ဆုံးဥပဒေက ဘာလဲ?\") ကို အခြားသင်ခန်းစာမဟုတ်ဘဲ ဤသင်ခန်းစာ၏ အယူအဆနှင့် တွဲဆက်နိုင်သည်။"
+    }
+  ],
+  "screens": [
+    {
+      "id": "U1-S01",
+      "type": "teach",
+      "beat": "orient",
+      "text": {
+        "en": [
+          "At your interview, the officer will ask about America's rulebook — questions like: *What is the supreme law of the land?* This lesson will help you answer those questions. It covers **14 of the 128** on the test. And what you learn here matters after the test too — this rulebook is what protects your rights as a citizen."
+        ],
+        "my": [
+          "သင့်အင်တာဗျူးတွင် အရာရှိသည် အမေရိက၏ စည်းမျဉ်းစာအုပ်အကြောင်း မေးပါလိမ့်မည် — ဥပမာ — *နိုင်ငံ၏ အမြင့်ဆုံးဥပဒေက ဘာလဲ?* ဤသင်ခန်းစာသည် ထိုမေးခွန်းများကို ဖြေဆိုနိုင်ရန် ကူညီပါမည်။ စာမေးပွဲရှိ မေးခွန်း ၁၂၈ ခုအနက် **၁၄ ခု** ကို လွှမ်းခြုံပါသည်။ ဤနေရာတွင် သင်ယူသည့်အရာသည် စာမေးပွဲပြီးနောက်တွင်လည်း အရေးကြီးပါသည် — ဤစည်းမျဉ်းစာအုပ်သည် နိုင်ငံသားတစ်ဦးအနေဖြင့် သင့်အခွင့်အရေးများကို ကာကွယ်ပေးသည့်အရာ ဖြစ်ပါသည်။"
+        ]
+      },
+      "interaction": "next",
+      "notes": "Gagné 2. Problem-first framing (Fix B) + after-the-test line (Fix A) + count as commitment."
+    },
+    {
+      "id": "U1-S02",
+      "type": "practice",
+      "beat": "hook",
+      "graded": false,
+      "advanceOnAnyTap": true,
+      "prompt": {
+        "en": "Who is the boss of America?",
+        "my": "အမေရိကကို အုပ်ချုပ်သူက ဘယ်သူလဲ?"
+      },
+      "options": {
+        "en": ["The President", "Congress", "The people"],
+        "my": ["သမ္မတ", "ကွန်ဂရက်", "ပြည်သူများ"]
+      },
+      "correct": 2,
+      "feedback": {
+        "any": {
+          "en": "In America, the answer is: **the people.** The Constitution starts with three words — *We the People.* But how can millions of people be the boss? That is what this lesson explains.",
+          "my": "အမေရိကတွင် အဖြေမှာ — **ပြည်သူများ** ဖြစ်သည်။ ဖွဲ့စည်းပုံအခြေခံဥပဒေသည် စကားလုံးသုံးလုံးဖြင့် စတင်သည် — *We the People* (ကျွန်ုပ်တို့ ပြည်သူများ)။ သို့သော် လူသန်းပေါင်းများစွာက မည်သို့ အုပ်ချုပ်သူ ဖြစ်နိုင်မည်နည်း? ထိုအချက်ကို ဤသင်ခန်းစာက ရှင်းပြပါမည်။"
+        }
+      },
+      "notes": "Gagné 1. Feedback poses the question the Big Idea answers, instead of answering it prematurely."
+    },
+    {
+      "id": "U1-S03",
+      "type": "teach",
+      "beat": "connect",
+      "text": {
+        "en": [
+          "Every group you have ever been part of had rules. A workplace has rules about what the boss can and cannot ask you to do. A family has rules everyone knows. A game has rules, written down, that even the best player must follow.",
+          "America wrote its rules for government down in one book — and made that book very hard to change. Even the President must obey it.",
+          "That book is the Constitution. This lesson is about what is in it, and why Americans made it that way."
+        ],
+        "my": [
+          "သင်ပါဝင်ခဲ့ဖူးသည့် အဖွဲ့တိုင်းတွင် စည်းမျဉ်းများ ရှိခဲ့သည်။ အလုပ်ခွင်တွင် အလုပ်ရှင်က သင့်အား ခိုင်းစေနိုင်သည့်အရာနှင့် မခိုင်းစေနိုင်သည့်အရာအတွက် စည်းမျဉ်းများ ရှိသည်။ မိသားစုတွင် အားလုံးသိသည့် စည်းမျဉ်းများ ရှိသည်။ ကစားနည်းတစ်ခုတွင် ရေးသားထားသည့် စည်းမျဉ်းများ ရှိပြီး အကောင်းဆုံး ကစားသမားပင် လိုက်နာရသည်။",
+          "အမေရိကသည် အစိုးရအတွက် စည်းမျဉ်းများကို စာအုပ်တစ်အုပ်တည်းတွင် ရေးချခဲ့သည် — ထိုစာအုပ်ကို ပြောင်းလဲရန် အလွန်ခက်ခဲအောင် ပြုလုပ်ခဲ့သည်။ သမ္မတပင် လိုက်နာရသည်။",
+          "ထိုစာအုပ်မှာ ဖွဲ့စည်းပုံအခြေခံဥပဒေ ဖြစ်သည်။ ဤသင်ခန်းစာသည် ထိုစာအုပ်ထဲတွင် ဘာပါသည်၊ အမေရိကန်များ အဘယ်ကြောင့် ထိုသို့ ပြုလုပ်ခဲ့သည်ကို ပြောပြပါမည်။"
+        ]
+      },
+      "interaction": "next",
+      "notes": "Gagné 3. Apolitical prior-experience activation (Strategy Fix C). Never homeland governance."
+    },
+    {
+      "id": "U1-S04",
+      "type": "reveal",
+      "beat": "words-first",
+      "revealAllToAdvance": true,
+      "cards": [
+        {
+          "term": { "en": "Constitution", "my": "ဖွဲ့စည်းပုံအခြေခံဥပဒေ" },
+          "meaning": {
+            "en": "the rulebook of the government",
+            "my": "အစိုးရ၏ စည်းမျဉ်းစာအုပ်"
+          },
+          "example": {
+            "en": "The Constitution is the highest law in America.",
+            "my": "ဖွဲ့စည်းပုံအခြေခံဥပဒေသည် အမေရိက၏ အမြင့်ဆုံးဥပဒေ ဖြစ်သည်။"
+          }
+        },
+        {
+          "term": { "en": "supreme", "my": "အမြင့်ဆုံး" },
+          "meaning": { "en": "highest", "my": "အမြင့်ဆုံး" },
+          "example": {
+            "en": "Supreme means nothing is above it.",
+            "my": "အမြင့်ဆုံး ဆိုသည်မှာ ၎င်းအထက်တွင် ဘာမျှ မရှိခြင်း ဖြစ်သည်။"
+          }
+        },
+        {
+          "term": { "en": "amendment", "my": "ပြင်ဆင်ချက်" },
+          "meaning": {
+            "en": "an official change or addition to the Constitution",
+            "my": "ဖွဲ့စည်းပုံအခြေခံဥပဒေအား တရားဝင် ပြောင်းလဲခြင်း သို့မဟုတ် ဖြည့်စွက်ခြင်း"
+          },
+          "example": {
+            "en": "The 19th Amendment gave women the vote — your daughter votes because of it.",
+            "my": "၁၉ ကြိမ်မြောက် ပြင်ဆင်ချက်သည် အမျိုးသမီးများအား မဲပေးခွင့် ပေးခဲ့သည် — ထိုကြောင့် သင့်သမီး မဲပေးနိုင်ခြင်း ဖြစ်သည်။"
+          }
+        },
+        {
+          "term": { "en": "rights", "my": "အခွင့်အရေးများ" },
+          "meaning": {
+            "en": "freedoms the law protects for you",
+            "my": "ဥပဒေက သင့်အတွက် ကာကွယ်ပေးထားသည့် လွတ်လပ်ခွင့်များ"
+          },
+          "example": {
+            "en": "You have the right to speak freely.",
+            "my": "သင့်တွင် လွတ်လပ်စွာ ပြောဆိုခွင့် ရှိသည်။"
+          }
+        }
+      ],
+      "notes": "Mayer pre-training — moved ahead of the concept per Strategy §3.4. The amendment example seeds Q102 (U7). The unit's only forced completion."
+    },
+    {
+      "id": "U1-S05",
+      "type": "teach",
+      "beat": "big-idea",
+      "asset": 2,
+      "alt": {
+        "en": "Photograph of the original U.S. Constitution on aged parchment, handwritten script visible.",
+        "my": "အဟောင်းဖြစ်နေသော ကတ္တီပါစက္ကူပေါ်ရှိ မူရင်း အမေရိကန် ဖွဲ့စည်းပုံအခြေခံဥပဒေ၏ ဓာတ်ပုံ၊ လက်ရေးစာသား မြင်နိုင်သည်။"
+      },
+      "text": {
+        "en": [
+          "In 1787, the thirteen states had just finished a long war against a king. They needed a government — but they were afraid of two opposite things at the same time.",
+          "They were afraid of having **no** government. Without one, nobody could defend the country, settle arguments between states, or pay for anything.",
+          "They were also afraid of a government so **strong** it would act like the king they had just escaped.",
+          "The Constitution is their answer to both fears at once. It **creates** a government strong enough to work. It **limits** that government so it can never become a king. And because the whole point was limiting power, it also **protects** rights the government is not allowed to take away.",
+          "**It creates the government, limits it, and protects your rights.** Three jobs, all born from the same fear of kings."
+        ],
+        "my": [
+          "၁၇၈၇ ခုနှစ်တွင် ပြည်နယ် ၁၃ ခုသည် ဘုရင်တစ်ပါးကို ဆန့်ကျင်သည့် ရှည်လျားသော စစ်ပွဲကို အပြီးသတ်ခဲ့ကြသည်။ သူတို့ အစိုးရတစ်ရပ် လိုအပ်ခဲ့သည် — သို့သော် ဆန့်ကျင်ဘက် နှစ်ခုကို တစ်ချိန်တည်းတွင် ကြောက်ရွံ့ခဲ့ကြသည်။",
+          "အစိုးရ **မရှိ** ခြင်းကို ကြောက်ခဲ့ကြသည်။ အစိုးရမရှိလျှင် နိုင်ငံကို ကာကွယ်နိုင်မည့်သူ၊ ပြည်နယ်များအကြား အငြင်းပွားမှုများကို ဖြေရှင်းနိုင်မည့်သူ၊ မည်သည့်အရာအတွက်မျှ ငွေပေးချေနိုင်မည့်သူ မရှိပါ။",
+          "အလွန် **အားကောင်း** လွန်းသဖြင့် သူတို့ လွတ်မြောက်လာခဲ့သည့် ဘုရင်ကဲ့သို့ ပြုမူမည့် အစိုးရကိုလည်း ကြောက်ခဲ့ကြသည်။",
+          "ဖွဲ့စည်းပုံအခြေခံဥပဒေသည် ထိုကြောက်ရွံ့မှု နှစ်မျိုးလုံးအတွက် သူတို့၏ အဖြေ ဖြစ်သည်။ ၎င်းသည် အလုပ်လုပ်နိုင်လောက်အောင် အားကောင်းသည့် အစိုးရတစ်ရပ်ကို **ဖန်တီးပေးသည်**။ ထိုအစိုးရသည် ဘုရင်မဖြစ်နိုင်စေရန် **ကန့်သတ်ပေးသည်**။ အာဏာကို ကန့်သတ်ရန်သာ ရည်ရွယ်ချက် ဖြစ်သောကြောင့် အစိုးရက ယူပိုင်ခွင့်မရှိသည့် အခွင့်အရေးများကိုလည်း **ကာကွယ်ပေးသည်**။",
+          "**၎င်းသည် အစိုးရကို ဖန်တီးသည်၊ ကန့်သတ်သည်၊ သင့်အခွင့်အရေးများကို ကာကွယ်သည်။** တာဝန် သုံးမျိုးလုံးသည် ဘုရင်ကို ကြောက်ရွံ့မှု တစ်ခုတည်းမှ မွေးဖွားလာသည်။"
+        ]
+      },
+      "interaction": "next",
+      "notes": "Gagné 4–5. Q1, Q3, Q13 derivable from one causal story. Creates/limits/protects triad is the retrieval handle for Q3."
+    },
+    {
+      "id": "U1-S06a",
+      "type": "teach",
+      "beat": "big-idea",
+      "text": {
+        "en": [
+          "No law is allowed to go against the Constitution. That is why it is called the **supreme law of the land** — the highest law. And the **rule of law** means everyone must follow it. Leaders too. No one is above the law."
+        ],
+        "my": [
+          "မည်သည့်ဥပဒေမျှ ဖွဲ့စည်းပုံအခြေခံဥပဒေကို ဆန့်ကျင်ခွင့် မရှိပါ။ ထိုကြောင့် ၎င်းကို **နိုင်ငံ၏ အမြင့်ဆုံးဥပဒေ** ဟု ခေါ်ခြင်း ဖြစ်သည်။ ထို့ပြင် **ဥပဒေစိုးမိုးရေး** ဆိုသည်မှာ လူတိုင်း ၎င်းကို လိုက်နာရမည် ဖြစ်သည်။ ခေါင်းဆောင်များပါ လိုက်နာရသည်။ ဥပဒေအထက်တွင် မည်သူမျှ မရှိပါ။"
+        ]
+      },
+      "interaction": "next"
+    },
+    {
+      "id": "U1-S06b",
+      "type": "teach",
+      "beat": "big-idea",
+      "asset": 3,
+      "alt": {
+        "en": "Photograph of the Bill of Rights document, aged parchment with visible handwritten articles.",
+        "my": "အခွင့်အရေး ဥပဒေကြမ်း စာတမ်း၏ ဓာတ်ပုံ၊ လက်ရေးဖြင့် ရေးထားသည့် အပိုဒ်များ မြင်နိုင်သည့် ဟောင်းနွမ်းသော ကတ္တီပါစက္ကူ။"
+      },
+      "text": {
+        "en": [
+          "Can the rulebook change? Yes — by **amendment**. But the writers made changing it slow and difficult *on purpose*. A rulebook that is easy to change is not much of a limit on anyone.",
+          "In more than 230 years, it has changed only **27** times. That small number is the point.",
+          "The first **10** amendments followed soon after. Several states agreed to ratify the Constitution only after being promised that a list of basic rights would be added. Congress proposed those rights, and in 1791 the first ten amendments became law. They have their own name: the **Bill of Rights**. They protect the basic rights of people living in the United States — not only citizens."
+        ],
+        "my": [
+          "စည်းမျဉ်းစာအုပ်ကို ပြောင်းလဲနိုင်ပါသလား? ပြောင်းလဲနိုင်သည် — **ပြင်ဆင်ချက်** ဖြင့် ပြောင်းလဲသည်။ သို့သော် ရေးသားသူများသည် ပြောင်းလဲရန် နှေးကွေးပြီး ခက်ခဲအောင် *တမင်တကာ* ပြုလုပ်ခဲ့သည်။ လွယ်လွယ်ကူကူ ပြောင်းလဲနိုင်သည့် စည်းမျဉ်းစာအုပ်သည် မည်သူ့ကိုမျှ သိပ်ကန့်သတ်နိုင်မည် မဟုတ်ပါ။",
+          "နှစ်ပေါင်း ၂၃၀ ကျော်အတွင်း **၂၇** ကြိမ်သာ ပြောင်းလဲခဲ့သည်။ ထိုကိန်းဂဏန်း နည်းပါးခြင်းသည်ပင် အဓိကအချက် ဖြစ်သည်။",
+          "ပထမဆုံး ပြင်ဆင်ချက် **၁၀** ခုသည် မကြာမီ နောက်မှ လိုက်ပါလာသည်။ အခြေခံအခွင့်အရေး စာရင်းတစ်ခု ထည့်သွင်းပေးမည်ဟု ကတိပြုပြီးမှသာ ပြည်နယ်အချို့သည် ဖွဲ့စည်းပုံအခြေခံဥပဒေကို အတည်ပြုရန် သဘောတူခဲ့ကြသည်။ ကွန်ဂရက်က ထိုအခွင့်အရေးများကို အဆိုပြုခဲ့ပြီး ၁၇၉၁ ခုနှစ်တွင် ပထမဆုံး ပြင်ဆင်ချက် ဆယ်ခုသည် ဥပဒေ ဖြစ်လာသည်။ ၎င်းတို့တွင် ကိုယ်ပိုင်အမည် ရှိသည် — **အခွင့်အရေး ဥပဒေကြမ်း**။ ၎င်းတို့သည် အမေရိကန်ပြည်ထောင်စုတွင် နေထိုင်သူများ၏ အခြေခံအခွင့်အရေးများကို ကာကွယ်ပေးသည် — နိုင်ငံသားများသာ မဟုတ်ပါ။"
+        ]
+      },
+      "interaction": "next",
+      "notes": "Q2, Q5, Q6, Q7, Q13. The everyone-not-only-citizens point pre-seeds U5's central distinction."
+    },
+    {
+      "id": "U1-S07",
+      "type": "teach",
+      "beat": "see-it-not-it",
+      "layout": "four-level-hierarchy",
+      "levels": [
+        {
+          "level": 1,
+          "text": {
+            "en": "The rulebook only means something if it actually stops someone.",
+            "my": "စည်းမျဉ်းစာအုပ်သည် တစ်စုံတစ်ဦးကို အမှန်တကယ် ရပ်တန့်စေနိုင်မှသာ အဓိပ္ပာယ် ရှိသည်။"
+          }
+        },
+        {
+          "level": 2,
+          "text": {
+            "en": "Congress passes a new law. A court decides it goes against the Constitution. The law stops — even Congress must obey the book.",
+            "my": "ကွန်ဂရက်က ဥပဒေအသစ်တစ်ခု ပြဋ္ဌာန်းသည်။ ၎င်းသည် ဖွဲ့စည်းပုံအခြေခံဥပဒေကို ဆန့်ကျင်သည်ဟု တရားရုံးက ဆုံးဖြတ်သည်။ ထိုဥပဒေ ရပ်တန့်သွားသည် — ကွန်ဂရက်ပင် ထိုစာအုပ်ကို လိုက်နာရသည်။"
+          }
+        },
+        {
+          "level": 3,
+          "text": {
+            "en": "Now picture a country with no rulebook. A king makes a rule. No one may question it, and no one can stop him.",
+            "my": "ယခု စည်းမျဉ်းစာအုပ် မရှိသည့် နိုင်ငံတစ်ခုကို စဉ်းစားကြည့်ပါ။ ဘုရင်တစ်ပါးက စည်းမျဉ်းတစ်ခု ချမှတ်သည်။ မည်သူမျှ မမေးခွန်းထုတ်ရ၊ မည်သူမျှ မတားဆီးနိုင်ပါ။"
+          }
+        },
+        {
+          "level": 4,
+          "text": {
+            "en": "In America, there is always something above the leader — even the President, even Congress.",
+            "my": "အမေရိကတွင် ခေါင်းဆောင်၏ အထက်၌ အမြဲတမ်း တစ်စုံတစ်ခု ရှိသည် — သမ္မတဖြစ်စေ၊ ကွန်ဂရက်ဖြစ်စေ။"
+          }
+        }
+      ],
+      "interaction": "next",
+      "notes": "Gagné 5 / concept teaching: best example + matched non-example, differing in exactly one attribute."
+    },
+    {
+      "id": "U1-S07b",
+      "type": "teach",
+      "beat": "see-it-not-it",
+      "layout": "four-level-hierarchy",
+      "levels": [
+        {
+          "level": 1,
+          "text": {
+            "en": "Two names on the test sound alike. Do not mix them up.",
+            "my": "စာမေးပွဲရှိ အမည်နှစ်ခုသည် အသံတူသည်။ မရောထွေးပါနှင့်။"
+          }
+        },
+        {
+          "level": 2,
+          "text": {
+            "en": "**Supreme law of the land** — the Constitution. A book of rules.",
+            "my": "**နိုင်ငံ၏ အမြင့်ဆုံးဥပဒေ** — ဖွဲ့စည်းပုံအခြေခံဥပဒေ။ စည်းမျဉ်းစာအုပ်တစ်အုပ်။"
+          }
+        },
+        {
+          "level": 3,
+          "text": {
+            "en": "**Supreme Court** — the highest court. Nine judges.",
+            "my": "**တရားလွှတ်တော်ချုပ်** — အမြင့်ဆုံး တရားရုံး။ တရားသူကြီး ကိုးဦး။"
+          }
+        },
+        {
+          "level": 4,
+          "text": {
+            "en": "The judges must follow the book. The book does not answer to the judges.",
+            "my": "တရားသူကြီးများသည် ထိုစာအုပ်ကို လိုက်နာရသည်။ ထိုစာအုပ်က တရားသူကြီးများကို မလိုက်နာရပါ။"
+          }
+        }
+      ],
+      "interaction": "next",
+      "notes": "Highest-value confusable pair in the unit; earns its own screen."
+    },
+    {
+      "id": "U1-S08",
+      "type": "teach",
+      "beat": "see-it-not-it",
+      "asset": [3, 2],
+      "alt": {
+        "en": "Two documents side by side: the Declaration of Independence on the left, the U.S. Constitution on the right, both aged parchment.",
+        "my": "စာတမ်းနှစ်ခု ဘေးချင်းယှဉ်၍ — ဘယ်ဘက်တွင် လွတ်လပ်ရေး ကြေညာစာတမ်း၊ ညာဘက်တွင် အမေရိကန် ဖွဲ့စည်းပုံအခြေခံဥပဒေ၊ နှစ်ခုစလုံး ဟောင်းနွမ်းသော ကတ္တီပါစက္ကူ။"
+      },
+      "text": {
+        "en": [
+          "**Declaration of Independence — 1776.** An announcement to the world: America is free from Britain. It says all people are created equal, with rights that belong to them — 'Life, Liberty, and the pursuit of Happiness.'",
+          "**Constitution — 1787.** A rulebook. It *builds*: the government America still uses today.",
+          "First the country announced what it believed. Eleven years later, it wrote the rules to make those beliefs real. **1776 declares. 1787 designs.** Remember those two dates — they answer several test questions."
+        ],
+        "my": [
+          "**လွတ်လပ်ရေး ကြေညာစာတမ်း — ၁၇၇၆။** ကမ္ဘာကို ကြေညာချက်တစ်ခု — အမေရိကသည် ဗြိတိန်ထံမှ လွတ်မြောက်ပြီ။ လူတိုင်း တန်းတူညီမျှစွာ ဖန်တီးခံရပြီး ၎င်းတို့ပိုင်ဆိုင်သည့် အခွင့်အရေးများ ရှိသည်ဟု ဆိုသည် — 'အသက်၊ လွတ်လပ်ခွင့်နှင့် ပျော်ရွှင်မှုကို ရှာဖွေခွင့်'။",
+          "**ဖွဲ့စည်းပုံအခြေခံဥပဒေ — ၁၇၈၇။** စည်းမျဉ်းစာအုပ်တစ်အုပ်။ ၎င်းသည် *တည်ဆောက်သည်* — အမေရိက ယနေ့တိုင် အသုံးပြုနေသည့် အစိုးရကို တည်ဆောက်သည်။",
+          "ပထမဦးစွာ နိုင်ငံက မိမိယုံကြည်သည့်အရာကို ကြေညာခဲ့သည်။ ဆယ့်တစ်နှစ်အကြာတွင် ထိုယုံကြည်ချက်များ အမှန်တကယ် ဖြစ်လာစေရန် စည်းမျဉ်းများကို ရေးသားခဲ့သည်။ **၁၇၇၆ က ကြေညာသည်။ ၁၇၈၇ က ဒီဇိုင်းဆွဲသည်။** ထိုရက်စွဲနှစ်ခုကို မှတ်ထားပါ — ၎င်းတို့သည် စာမေးပွဲမေးခွန်း အများအပြားကို ဖြေဆိုပေးသည်။"
+        ]
+      },
+      "interaction": "next",
+      "notes": "Q8, Q9, Q11, Q82. Announce-vs-build is the critical attribute separating the two documents."
+    },
+    {
+      "id": "U1-S09a",
+      "type": "practice",
+      "beat": "guided-practice",
+      "process": "exemplify",
+      "practiceLabel": true,
+      "prompt": {
+        "en": "Name one thing the U.S. Constitution does.",
+        "my": "အမေရိကန် ဖွဲ့စည်းပုံအခြေခံဥပဒေ လုပ်ဆောင်သည့် အရာတစ်ခုကို ဖော်ပြပါ။"
+      },
+      "options": {
+        "en": [
+          "Protects the rights of the people",
+          "Chooses the President",
+          "Collects taxes from each state"
+        ],
+        "my": [
+          "ပြည်သူများ၏ အခွင့်အရေးများကို ကာကွယ်သည်",
+          "သမ္မတကို ရွေးချယ်သည်",
+          "ပြည်နယ်တိုင်းထံမှ အခွန်ကောက်ခံသည်"
+        ]
+      },
+      "correct": 0,
+      "feedback": {
+        "correct": {
+          "en": "Yes. The Constitution **creates** the government, **limits** it, and **protects** your rights.",
+          "my": "မှန်ပါသည်။ ဖွဲ့စည်းပုံအခြေခံဥပဒေသည် အစိုးရကို **ဖန်တီးသည်**၊ **ကန့်သတ်သည်**၊ သင့်အခွင့်အရေးများကို **ကာကွယ်သည်**။"
+        },
+        "wrong": {
+          "en": "The correct answer is **protects the rights of the people**. The Constitution creates the government, limits it, and protects your rights.",
+          "my": "မှန်ကန်သော အဖြေမှာ **ပြည်သူများ၏ အခွင့်အရေးများကို ကာကွယ်သည်** ဖြစ်သည်။ ဖွဲ့စည်းပုံအခြေခံဥပဒေသည် အစိုးရကို ဖန်တီးသည်၊ ကန့်သတ်သည်၊ သင့်အခွင့်အရေးများကို ကာကွယ်သည်။"
+        }
+      }
+    },
+    {
+      "id": "U1-S09b",
+      "type": "sort",
+      "beat": "guided-practice",
+      "process": "compare",
+      "practiceLabel": true,
+      "buckets": [
+        { "id": "declaration", "label": { "en": "Declaration", "my": "ကြေညာစာတမ်း" }, "asset": 3 },
+        { "id": "constitution", "label": { "en": "Constitution", "my": "ဖွဲ့စည်းပုံအခြေခံဥပဒေ" }, "asset": 2 }
+      ],
+      "items": [
+        {
+          "text": { "en": "Says America is free from Britain", "my": "အမေရိကသည် ဗြိတိန်ထံမှ လွတ်မြောက်ပြီဟု ဆိုသည်" },
+          "bucket": "declaration"
+        },
+        {
+          "text": { "en": "The supreme law of the land", "my": "နိုင်ငံ၏ အမြင့်ဆုံးဥပဒေ" },
+          "bucket": "constitution"
+        },
+        {
+          "text": { "en": "Life, Liberty, and the pursuit of Happiness", "my": "အသက်၊ လွတ်လပ်ခွင့်နှင့် ပျော်ရွှင်မှုကို ရှာဖွေခွင့်" },
+          "bucket": "declaration"
+        },
+        {
+          "text": { "en": "Written in 1787", "my": "၁၇၈၇ ခုနှစ်တွင် ရေးသားခဲ့သည်" },
+          "bucket": "constitution"
+        },
+        {
+          "text": { "en": "Has 27 amendments", "my": "ပြင်ဆင်ချက် ၂၇ ခု ရှိသည်" },
+          "bucket": "constitution"
+        }
+      ],
+      "feedback": {
+        "wrong": {
+          "en": "'Life, Liberty…' *announces* a belief — that is the Declaration, 1776. The Constitution *builds* the government.",
+          "my": "'အသက်၊ လွတ်လပ်ခွင့်…' သည် ယုံကြည်ချက်တစ်ခုကို *ကြေညာသည်* — ၎င်းမှာ ၁၇၇၆ ခုနှစ် ကြေညာစာတမ်း ဖြစ်သည်။ ဖွဲ့စည်းပုံအခြေခံဥပဒေက အစိုးရကို *တည်ဆောက်သည်*။"
+        }
+      }
+    },
+    {
+      "id": "U1-S09c",
+      "type": "practice",
+      "beat": "guided-practice",
+      "process": "infer",
+      "practiceLabel": true,
+      "prompt": {
+        "en": "A new law is passed. Someone says it goes against the Constitution. Who decides — and what happens to the law if they agree?",
+        "my": "ဥပဒေအသစ်တစ်ခု ပြဋ္ဌာန်းလိုက်သည်။ ၎င်းသည် ဖွဲ့စည်းပုံအခြေခံဥပဒေကို ဆန့်ကျင်သည်ဟု တစ်စုံတစ်ဦးက ဆိုသည်။ မည်သူက ဆုံးဖြတ်သနည်း — သဘောတူပါက ထိုဥပဒေ မည်သို့ ဖြစ်သွားမည်နည်း?"
+      },
+      "options": {
+        "en": [
+          "A court decides; the law stops",
+          "The President decides; the law continues",
+          "No one can question a law"
+        ],
+        "my": [
+          "တရားရုံးက ဆုံးဖြတ်သည်၊ ထိုဥပဒေ ရပ်တန့်သည်",
+          "သမ္မတက ဆုံးဖြတ်သည်၊ ထိုဥပဒေ ဆက်လက်တည်ရှိသည်",
+          "မည်သူမျှ ဥပဒေတစ်ခုကို မမေးခွန်းထုတ်နိုင်ပါ"
+        ]
+      },
+      "correct": 0,
+      "feedback": {
+        "correct": {
+          "en": "A court compares the law to the rulebook. If the law loses, the law stops — that is the Constitution being *supreme*.",
+          "my": "တရားရုံးက ထိုဥပဒေကို စည်းမျဉ်းစာအုပ်နှင့် နှိုင်းယှဉ်သည်။ ဥပဒေက ရှုံးလျှင် ထိုဥပဒေ ရပ်တန့်သည် — ၎င်းသည်ပင် ဖွဲ့စည်းပုံအခြေခံဥပဒေ *အမြင့်ဆုံး* ဖြစ်ခြင်း ဖြစ်သည်။"
+        },
+        "wrong": {
+          "en": "The correct answer is **a court decides; the law stops**. A court compares the law to the rulebook. If the law loses, the law stops — that is the Constitution being *supreme*.",
+          "my": "မှန်ကန်သော အဖြေမှာ **တရားရုံးက ဆုံးဖြတ်သည်၊ ထိုဥပဒေ ရပ်တန့်သည်** ဖြစ်သည်။ တရားရုံးက ထိုဥပဒေကို စည်းမျဉ်းစာအုပ်နှင့် နှိုင်းယှဉ်သည်။ ဥပဒေက ရှုံးလျှင် ထိုဥပဒေ ရပ်တန့်သည် — ၎င်းသည်ပင် ဖွဲ့စည်းပုံအခြေခံဥပဒေ *အမြင့်ဆုံး* ဖြစ်ခြင်း ဖြစ်သည်။"
+        }
+      },
+      "notes": "G-20: feedback leads with the correct answer."
+    },
+    {
+      "id": "U1-S09d",
+      "type": "practice",
+      "beat": "guided-practice",
+      "process": "interpret",
+      "objective": 3,
+      "practiceLabel": true,
+      "officialWording": "What is the supreme law of the land?",
+      "prompt": {
+        "en": "Which question is asking the same thing as *'What is the supreme law of the land?'*",
+        "my": "မည်သည့်မေးခွန်းသည် *'What is the supreme law of the land?'* နှင့် အတူတူပင် မေးနေသနည်း?"
+      },
+      "options": {
+        "en": [
+          "What is the highest law in America?",
+          "Who is the highest judge in America?",
+          "What is the oldest law in America?"
+        ],
+        "my": [
+          "What is the highest law in America? (အမေရိက၏ အမြင့်ဆုံးဥပဒေက ဘာလဲ?)",
+          "Who is the highest judge in America? (အမေရိက၏ အမြင့်ဆုံး တရားသူကြီးက ဘယ်သူလဲ?)",
+          "What is the oldest law in America? (အမေရိက၏ အသက်အကြီးဆုံး ဥပဒေက ဘာလဲ?)"
+        ]
+      },
+      "correct": 0,
+      "feedback": {
+        "correct": {
+          "en": "Yes — 'What is the highest law in America?' is asking the same thing as the official question: *'What is the supreme law of the land?'* 'Supreme law' means *highest law* — a book, not a judge. Listen for **What** — it asks for a thing, not a person.",
+          "my": "မှန်ပါသည် — 'What is the highest law in America?' သည် တရားဝင်မေးခွန်း *'What is the supreme law of the land?'* နှင့် အတူတူပင် မေးနေခြင်း ဖြစ်သည်။ 'Supreme law' ဆိုသည်မှာ *အမြင့်ဆုံးဥပဒေ* — စာအုပ်တစ်အုပ်၊ တရားသူကြီး မဟုတ်ပါ။ **What** ကို နားထောင်ပါ — ၎င်းသည် လူတစ်ဦးမဟုတ်ဘဲ အရာဝတ္ထုတစ်ခုကို မေးခြင်း ဖြစ်သည်။"
+        },
+        "wrong": {
+          "en": "The correct answer is **'What is the highest law in America?'** — it is asking the same thing as the official question: *'What is the supreme law of the land?'* 'Supreme law' means *highest law* — a book, not a judge. Listen for **What** — it asks for a thing, not a person.",
+          "my": "မှန်ကန်သော အဖြေမှာ **'What is the highest law in America?'** ဖြစ်သည် — ၎င်းသည် တရားဝင်မေးခွန်း *'What is the supreme law of the land?'* နှင့် အတူတူပင် မေးနေခြင်း ဖြစ်သည်။ 'Supreme law' ဆိုသည်မှာ *အမြင့်ဆုံးဥပဒေ* — စာအုပ်တစ်အုပ်၊ တရားသူကြီး မဟုတ်ပါ။ **What** ကို နားထောင်ပါ — ၎င်းသည် လူတစ်ဦးမဟုတ်ဘဲ အရာဝတ္ထုတစ်ခုကို မေးခြင်း ဖြစ်သည်။"
+        }
+      },
+      "notes": "G-21: feedback pairs the rephrased version with the official USCIS wording. Also exercises the U0-S05 question-word skill. Option text stays English (test-language exposure) with Burmese gloss in parentheses."
+    },
+    {
+      "id": "U1-S10",
+      "type": "official-questions",
+      "beat": "official-questions",
+      "countReveal": {
+        "en": "One idea. Fourteen real questions.",
+        "my": "အယူအဆ တစ်ခု။ အမှန်တကယ် မေးခွန်း ဆယ့်လေးခု။"
+      },
+      "expanded": [1, 2, 3, 4, 5, 6, 7, 13],
+      "alsoCovered": [8, 9, 10, 11, 12, 14],
+      "notes": {
+        "q14": {
+          "en": "\"Many documents influenced the Constitution. Name one.\" — the Declaration of Independence, which you just learned about two screens ago, is one of the accepted answers. Any one is enough.",
+          "my": "\"စာတမ်းများစွာသည် ဖွဲ့စည်းပုံအခြေခံဥပဒေကို လွှမ်းမိုးခဲ့သည်။ တစ်ခုကို ဖော်ပြပါ။\" — မျက်နှာပြင်နှစ်ခုအလိုက သင်လေ့လာခဲ့သည့် လွတ်လပ်ရေး ကြေညာစာတမ်းသည် လက်ခံနိုင်သော အဖြေများထဲမှ တစ်ခု ဖြစ်သည်။ တစ်ခုသာ ဖြေလျှင် လုံလောက်ပါသည်။"
+        }
+      },
+      "interaction": "tap-to-expand"
+    },
+    {
+      "id": "U1-S11",
+      "type": "practice",
+      "beat": "independent-practice",
+      "question": 2,
+      "feedback": {
+        "wrong": {
+          "en": "The correct answer is the **(U.S.) Constitution**. Remember the pair: the *supreme law of the land* is a book of rules. The *Supreme Court* is the highest court, with nine judges. The judges must follow the book.",
+          "my": "မှန်ကန်သော အဖြေမှာ **(အမေရိကန်) ဖွဲ့စည်းပုံအခြေခံဥပဒေ** ဖြစ်သည်။ အတွဲကို မှတ်ထားပါ — *နိုင်ငံ၏ အမြင့်ဆုံးဥပဒေ* သည် စည်းမျဉ်းစာအုပ်တစ်အုပ် ဖြစ်သည်။ *တရားလွှတ်တော်ချုပ်* မှာ တရားသူကြီး ကိုးဦးပါဝင်သည့် အမြင့်ဆုံး တရားရုံး ဖြစ်သည်။ တရားသူကြီးများသည် ထိုစာအုပ်ကို လိုက်နာရသည်။"
+        }
+      }
+    },
+    {
+      "id": "U1-S12",
+      "type": "practice",
+      "beat": "independent-practice",
+      "question": 7,
+      "feedback": {
+        "wrong": {
+          "en": "The correct answer is **27**. A small number, because changing the rulebook is hard on purpose.",
+          "my": "မှန်ကန်သော အဖြေမှာ **၂၇** ဖြစ်သည်။ စည်းမျဉ်းစာအုပ်ကို ပြောင်းလဲရန် တမင်တကာ ခက်ခဲအောင် ပြုလုပ်ထားသောကြောင့် ကိန်းဂဏန်း နည်းပါးခြင်း ဖြစ်သည်။"
+        }
+      }
+    },
+    {
+      "id": "U1-S13",
+      "type": "practice",
+      "beat": "independent-practice",
+      "question": 13,
+      "feedback": {
+        "wrong": {
+          "en": "The correct answer is **everyone must follow the law, even leaders**. That is what the rule of law means — no one is above the law.",
+          "my": "မှန်ကန်သော အဖြေမှာ **လူတိုင်း ဥပဒေကို လိုက်နာရမည်၊ ခေါင်းဆောင်များပါ** ဖြစ်သည်။ ၎င်းသည်ပင် ဥပဒေစိုးမိုးရေး၏ အဓိပ္ပာယ် ဖြစ်သည် — ဥပဒေအထက်တွင် မည်သူမျှ မရှိပါ။"
+        }
+      }
+    },
+    {
+      "id": "U1-S14",
+      "type": "practice",
+      "beat": "independent-practice",
+      "question": 4,
+      "feedback": {
+        "wrong": {
+          "en": "The correct answer is **self-government — the people rule themselves**. The Constitution begins with *We the People* because political power starts with the people.",
+          "my": "မှန်ကန်သော အဖြေမှာ **ကိုယ်ပိုင်အုပ်ချုပ်ရေး — ပြည်သူများက မိမိတို့ကိုယ်ကို အုပ်ချုပ်ခြင်း** ဖြစ်သည်။ နိုင်ငံရေးအာဏာသည် ပြည်သူများထံမှ စတင်သောကြောင့် ဖွဲ့စည်းပုံအခြေခံဥပဒေသည် *We the People* ဖြင့် စတင်ခြင်း ဖြစ်သည်။"
+        }
+      }
+    },
+    {
+      "id": "U1-S15",
+      "type": "practice",
+      "beat": "independent-practice",
+      "question": 5,
+      "feedback": {
+        "wrong": {
+          "en": "The correct answer is **amendments**. An amendment is an official change or addition to the Constitution.",
+          "my": "မှန်ကန်သော အဖြေမှာ **ပြင်ဆင်ချက်များ** ဖြစ်သည်။ ပြင်ဆင်ချက်ဆိုသည်မှာ ဖွဲ့စည်းပုံအခြေခံဥပဒေအား တရားဝင် ပြောင်းလဲခြင်း သို့မဟုတ် ဖြည့်စွက်ခြင်း ဖြစ်သည်။"
+        }
+      }
+    },
+    {
+      "id": "U1-S16",
+      "type": "lock-it-in",
+      "beat": "lock-it-in",
+      "heading": {
+        "en": "Lesson 1 finished.",
+        "my": "သင်ခန်းစာ ၁ ပြီးဆုံးပါပြီ။"
+      },
+      "counters": ["lessons", "questionsPracticed"],
+      "summaryLine": {
+        "en": "You learned the ideas behind all 14 questions in this lesson, and practiced 5 of them.",
+        "my": "ဤသင်ခန်းစာရှိ မေးခွန်း ၁၄ ခုလုံး၏ နောက်ကွယ်မှ အယူအဆများကို သင်ယူခဲ့ပြီး ၅ ခုကို လေ့ကျင့်ခဲ့ပါသည်။"
+      },
+      "fullBankOffer": {
+        "en": "Practice all 14 questions from this lesson",
+        "my": "ဤသင်ခန်းစာမှ မေးခွန်း ၁၄ ခုလုံးကို လေ့ကျင့်ပါ"
+      },
+      "spacedButton": {
+        "en": "3 quick questions",
+        "my": "မေးခွန်း ၃ ခု အမြန်"
+      },
+      "askSomeone": {
+        "en": "Ask someone: what are the first three words of the U.S. Constitution? — any language.",
+        "my": "တစ်စုံတစ်ဦးကို မေးကြည့်ပါ — အမေရိကန် ဖွဲ့စည်းပုံအခြေခံဥပဒေ၏ ပထမဆုံး စကားလုံး သုံးလုံးက ဘာလဲ? — မည်သည့်ဘာသာစကားနှင့်မဆို ရပါသည်။"
+      },
+      "notes": "Gagné 9. G-22: two counters shown separately, never merged."
+    }
+  ]
+}

@@ -4,6 +4,9 @@
 **See also:** `ARCHITECTURE.md` — where a second language attaches to the build:
 the Burmese-only runtime rule, the source-to-build field mapping, and what has
 to exist before any translation can be wired.
+**Source present:** `docs/translations/unit1.json` — Unit 1 bilingual draft, 67
+`en`/`my` pairs, verified complete. Marked `draft-unreviewed` and wired to
+nothing; QA check 13 keeps it out of `src/` and warns until it is reviewed.
 **Against:** Civics Course Storyboard v5.3 and Question_Bank_Companion.md.
 **Generated:** the string inventory in Part 2 is extracted from source, not
 typed by hand, so it does not drift out of date silently. Regenerate it before
