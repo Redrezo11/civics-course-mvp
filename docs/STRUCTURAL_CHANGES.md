@@ -109,12 +109,18 @@ Practice options now show three states instead of two. Previously only the
 correct answer was marked and every other option was dimmed alike, so a learner
 who chose wrongly was never shown *which* option they had chosen. New strings:
 
-- `your answer` — the label on the learner's own pick when it was wrong. It
-  exists because §8 forbids state carried by colour alone: the option needs an
-  icon (✗), a colour (`notyet`), **and** a word.
 - `feedbackExplain` — an optional course-authored explanation on a practice
   screen. Six are authored so far, on the items the storyboard specifies
-  (U1-S11, U1-S12, U2-S15, U5-S15, U7-S16, U7-S20).
+  (U1-S11, U1-S12, U2-S15, U5-S15, U7-S16, U7-S20). This is the only new
+  translatable string the change introduces.
+
+The wrong pick is marked with `✗` and the `notyet` colour, and carries no label
+text — so this state adds nothing else to translate. The ✗ is a text character,
+which is what keeps the state off colour alone (§8): it survives greyscale,
+colour-blindness and high-contrast mode. Note for a screen-reader pass: the
+option itself then reads only as "✗ ⟨option⟩", and how that is announced varies
+by reader — the words a non-sighted learner relies on come from the feedback box
+below, which names the correct answer.
 
 **The rule: feedback is never bilingual.** The pattern this was modelled on
 (`vocalize-mvp`) stacks an English explanation and its translation together on

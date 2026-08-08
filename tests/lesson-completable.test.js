@@ -272,12 +272,11 @@ describe('regressions that previously stranded a learner', () => {
     // The correct answer is marked ✓ — this already worked.
     expect(rows.some((t) => t.includes('✓') && t.includes(correctText))).toBe(true);
 
-    // The learner's own wrong pick must be identifiable: icon AND word, so the
-    // state does not rest on colour alone (§8).
+    // The learner's own wrong pick must be identifiable. The ✗ is what keeps
+    // this off colour alone (§8), so it is the thing worth asserting.
     const picked = rows.find((t) => t.includes(wrongText));
     expect(picked).toBeTruthy();
     expect(picked).toMatch(/✗/);
-    expect(picked).toMatch(/your answer/);
   }, 30000);
 
   it('vocab screens present exactly one advance control', async () => {

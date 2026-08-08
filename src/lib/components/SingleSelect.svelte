@@ -35,9 +35,10 @@
       answer but never showed them what they had done. Knowing which one you
       picked is the most useful part of feedback.
 
-      State is carried by icon AND word AND colour, never colour alone (§8):
-      the ✓ side takes its word from the feedback box below, so the ✗ side
-      carries "your answer" on the option itself.
+      The ✗ is what keeps this off colour alone (§8) — the marker is a text
+      character, so the state survives greyscale, colour-blindness and a
+      high-contrast mode. The feedback box below names the correct answer in
+      words.
     -->
     {@const isCorrect = i === correctIndex}
     {@const isWrongPick = answered && i === selected && !isCorrect}
@@ -53,9 +54,6 @@
       <span class="flex-1">
         {#if answered && isCorrect}✓ {:else if isWrongPick}✗ {/if}{opt}
       </span>
-      {#if isWrongPick}
-        <span class="shrink-0 text-xs font-normal">your answer</span>
-      {/if}
     </button>
   {/each}
 

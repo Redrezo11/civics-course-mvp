@@ -263,9 +263,6 @@
             <span class="flex-1">
               {#if answered && isCorrect}✓ {:else if isWrongPick}✗ {/if}{opt}
             </span>
-            {#if isWrongPick}
-              <span class="shrink-0 text-xs font-normal">your answer</span>
-            {/if}
           </button>
         {/each}
 
