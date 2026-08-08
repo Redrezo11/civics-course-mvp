@@ -15,7 +15,6 @@
   import MultiSelect from '../components/MultiSelect.svelte';
   import VocabDeck from '../components/VocabDeck.svelte';
   import GuidedPractice from '../components/GuidedPractice.svelte';
-  import ReadAndAnswer from '../components/ReadAndAnswer.svelte';
 
   import unit0 from '../content/unit0.json';
   import unit1 from '../content/unit1.json';
@@ -45,7 +44,11 @@
 
   // Screen types that manage their own "did the learner finish this" state
   // rather than always showing the parent's Next button immediately.
-  const selfPaced = new Set(['vocab', 'guidedPractice', 'tryOne', 'practice', 'readAndAnswer', 'hook']);
+  // 'readAndAnswer' is deliberately absent. Storyboard v5.0 converted every
+  // self-graded reveal item in Units 1–7 to single-select; the mechanic
+  // survives only in Rehearsal, which implements it inline and is not unit
+  // content. QA check 12 keeps it out.
+  const selfPaced = new Set(['vocab', 'guidedPractice', 'tryOne', 'practice', 'hook']);
 
   onMount(() => {
     // Resume at the saved position, if any (G-5 — progress saves every screen).
@@ -118,7 +121,7 @@
       flipped, and the learner was stranded with no Next button.
 
       Keying here fixes the whole class at once — SingleSelect, MultiSelect,
-      VocabDeck's flipped set, ReadAndAnswer, the hook buttons — rather than
+      VocabDeck's flipped set, the hook buttons — rather than
       leaving each component to remember to reset itself.
     -->
     <div class="flex-1 overflow-y-auto px-5 py-6">
@@ -310,12 +313,6 @@
             on:answer={(e) => { handleAnswer(q.id, e.detail.correct); interactionDone = true; }}
           />
         {/if}
-
-      {:else if screen.type === 'readAndAnswer'}
-        {@const q = getQuestion(screen.questionId)}
-        <QuestionCard text={q.official} />
-        <p class="font-bold text-center my-4">Do you know the answer?<br />Say it to yourself before you look.</p>
-        <ReadAndAnswer {q} on:answer={(e) => { handleAnswer(q.id, e.detail.correct); interactionDone = true; }} />
 
       {:else if screen.type === 'lockItIn'}
         <h2 class="text-heading font-bold text-center mb-3">{screen.heading}</h2>

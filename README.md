@@ -79,6 +79,17 @@ Also built: G-08 full-bank practice (per unit, optional, non-blocking),
 R1–R3 cumulative reviews with objective re-queueing, Rehearsal mode, the E-01
 epitome, and the G-05b completion screen.
 
+### Translation / structural-change record
+
+`docs/STRUCTURAL_CHANGES.md` reconciles the build against Storyboard v5.3 and
+carries the full translation surface — what changed, what may never be
+translated (official wording and accepted answers, G-3), and the blockers that
+stop Burmese from starting. Part 2.2 of it is generated:
+
+```
+node scripts/extract-ui-strings.cjs src --markdown
+```
+
 ### Deliberate deviation from Storyboard v5.3
 
 **Beat 8 (`officialQuestions`) is not built.** The storyboard specifies a
@@ -102,6 +113,13 @@ count, and G-08 draws from `getUnitQuestions()`, so coverage is structural.
 **U2-S09 is also removed** — a confusable-pair screen whose own heading read
 "One more pair, carried over from Lesson 1", re-teaching Supreme Court vs.
 supreme law of the land from U1-S07b with the terms swapped.
+
+**U1-S14 and U1-S15 are now single-select**, which is what the storyboard
+already required. v5.0 converted every self-graded reveal item in Units 1–7 to
+multiple choice and kept the mechanic for Rehearsal alone; these two were simply
+never converted, so a learner was shown the accepted answers to a question they
+had not been taught to answer and then asked to grade themselves. QA check 12
+blocks `readAndAnswer` from returning to unit content.
 
 Net: 127 screens → 119. A phrase-overlap scan across all remaining screens
 found no other substantial duplication.

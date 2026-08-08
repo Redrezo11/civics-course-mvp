@@ -520,6 +520,34 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
   }
 }
 
+// --- 12. No self-graded reveal in unit content -----------------------------
+// Storyboard v5.0 converted all 33 self-graded tap-to-reveal / read-and-answer
+// practice items in Units 1–7 to single-select, and kept the mechanic for
+// Rehearsal ONLY — the one screen that simulates the real interview's
+// no-options format. Rehearsal implements it inline and is not unit content.
+//
+// This exists because two screens (U1-S14, U1-S15) survived that conversion
+// unnoticed for the life of the project: they showed a learner the accepted
+// answers to a question they had never been taught to answer, then asked them
+// to grade themselves. A JSON edit could reintroduce that silently.
+{
+  const check = '12 no self-graded reveal';
+  const offenders = [];
+  for (const u of units) {
+    for (const s of u.screens) {
+      if (s.type === 'readAndAnswer') offenders.push(`${s.id} (${s.questionId || '?'})`);
+    }
+  }
+  if (offenders.length) {
+    fail(
+      check,
+      `unit content uses readAndAnswer, abolished outside Rehearsal by v5.0: ${offenders.join(', ')}`
+    );
+  } else {
+    pass(check, 'no unit screen uses self-graded reveal; it survives in Rehearsal only');
+  }
+}
+
 // Contrast and readability USED to be listed here as human-only. They are not:
 // both are mechanical and are now checks 4 and 5. What genuinely cannot be
 // done in this script is anything requiring the source document or human

@@ -237,12 +237,12 @@
     },
     {
       "id": "U1-S14",
-      "type": "readAndAnswer",
+      "type": "practice",
       "questionId": "Q4"
     },
     {
       "id": "U1-S15",
-      "type": "readAndAnswer",
+      "type": "practice",
       "questionId": "Q5"
     },
     {
