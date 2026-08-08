@@ -671,6 +671,116 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
   }
 }
 
+// --- 16. Overlays never translate official text -----------------------------
+// G-3: official question wording and accepted answers stay English, because the
+// interview is conducted in English. A translated overlay is the one place that
+// rule can break silently — the renderer merges the overlay over the English
+// screen without knowing what the words are.
+//
+// The rule is DERIVED, not listed. Whatever official or accepted text the
+// English value already contains, the translation must still contain. That
+// needs no allowlist and cannot fall out of step with the content: a guided
+// item that starts quoting an official question is protected the moment it
+// does, and one that stops is released just as automatically.
+//
+// An earlier version of this check keyed off `kind: 'interpret'` and fired on
+// six items that were fine. Only U1's interpret item quotes its official
+// question inline; U2–U7 render the question card separately and ask about it
+// in our own prose, which is translatable. The shape of an item does not
+// determine whether it carries official wording — its content does.
+{
+  const check = '16 overlays keep official text english';
+
+  const officialText = questions.map((q) => q.official).filter((s) => s.length > 15);
+  const acceptedText = new Set(questions.flatMap((q) => q.acceptedAnswers).filter((s) => s.length > 12));
+
+  // The one case the derived rule cannot see (ARCHITECTURE §1a). U1's interpret
+  // options are English test questions carrying a Burmese gloss — paraphrases,
+  // so neither official wording nor accepted answers. Translating them away
+  // would delete the skill being practised without tripping anything above.
+  const KEEP_ENGLISH_GLOSS = 'unit1.json:U1-S09.items[3].options';
+  let glossSeen = false;
+
+  /** Flatten an overlay screen to [path, translated, english] triples. */
+  const paths = (screenId, fields, byId) =>
+    Object.entries(fields).flatMap(([field, value]) =>
+      field === 'items' && Array.isArray(value)
+        ? value.flatMap((item, i) =>
+            Object.entries(item || {}).map(([k, v]) => [
+              `${screenId}.items[${i}].${k}`,
+              v,
+              byId[screenId]?.items?.[i]?.[k],
+            ])
+          )
+        : [[`${screenId}.${field}`, value, byId[screenId]?.[field]]]
+    );
+
+  const dir = join(root, 'src', 'lib', 'content', 'translations');
+  let checked = 0;
+
+  let langs = [];
+  try {
+    langs = readdirSync(dir);
+  } catch {
+    // No overlays yet.
+  }
+  for (const lang of langs) {
+    let files = [];
+    try {
+      files = readdirSync(join(dir, lang)).filter((n) => n.endsWith('.json'));
+    } catch {
+      continue;
+    }
+    for (const name of files) {
+      const overlay = readJson(join(dir, lang, name));
+      const byId = Object.fromEntries(readJson(join(contentDir, name)).screens.map((s) => [s.id, s]));
+
+      for (const [screenId, fields] of Object.entries(overlay)) {
+        for (const [path, value, english] of paths(screenId, fields, byId)) {
+          const key = `${name}:${path}`;
+          if (english === undefined) continue; // check 15 owns unmatched fields
+          checked += 1;
+
+          if (key === KEEP_ENGLISH_GLOSS) {
+            glossSeen = true;
+            if (!english.every((e, i) => String(value?.[i] ?? '').includes(e))) {
+              fail(check, `${lang}/${key}: interpret options keep their English text plus a gloss, never replace it`);
+            }
+            continue;
+          }
+
+          // Official wording present in English must survive translation.
+          if (typeof english === 'string') {
+            for (const o of officialText) {
+              if (english.includes(o) && !String(value).includes(o)) {
+                fail(check, `${lang}/${key} drops official wording that must stay English: "${o.slice(0, 48)}…"`);
+              }
+            }
+          }
+
+          // A list entry that restates an accepted answer must be verbatim.
+          if (Array.isArray(english)) {
+            english.forEach((e, i) => {
+              if (typeof e === 'string' && acceptedText.has(e.trim()) && value?.[i] !== e) {
+                fail(check, `${lang}/${key}[${i}] restates an accepted answer and must stay verbatim English: "${e.slice(0, 40)}"`);
+              }
+            });
+          }
+        }
+      }
+    }
+  }
+
+  // A guard that matches nothing is a guard that has stopped guarding.
+  if (!glossSeen) {
+    warn(check, `${KEEP_ENGLISH_GLOSS} matched no overlay field — the interpret gloss guard is pointing at nothing`);
+  }
+
+  if (!errors.some((e) => e.startsWith(check))) {
+    pass(check, `${checked} overlay field(s) preserve every official sentence and accepted answer in their English source`);
+  }
+}
+
 // Contrast and readability USED to be listed here as human-only. They are not:
 // both are mechanical and are now checks 4 and 5. What genuinely cannot be
 // done in this script is anything requiring the source document or human

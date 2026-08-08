@@ -2,8 +2,8 @@
 
 Companion to `STRUCTURAL_CHANGES.md` (what changed) and the Civics Course
 Storyboard v5.3 (what the course says). This file covers **how a second language
-attaches to the build**, because a bilingual source format exists and the
-codebase has nowhere to put it yet.
+attaches to the build**: the source formats, how they become overlays, and the
+rules that decide what may and may not be translated.
 
 ---
 
@@ -48,7 +48,38 @@ Burmese answer beside an English question.
 
 ## 2. The source format
 
-One file per unit, every teaching string paired:
+There are two, and they serve different purposes.
+
+### 2a. Flat — what translators deliver
+
+`docs/translations/unitN.json`, keyed screen id then field name:
+
+```json
+{
+  "U2-S01": { "heading": "…", "body": "…" },
+  "U2-S05": { "paragraphs": ["…", "…", "…"] }
+}
+```
+
+This is already overlay-shaped, so `build-translations.js` validates rather than
+maps. Present for **all eight units**.
+
+**Two shape rules the format does not express**, both enforced by the build:
+
+- `sortItems` is delivered as plain strings, but the build stores
+  `{ text, bucket }` where `bucket` is the index the sort scores against.
+  The generator folds each string back into its English object **by position**.
+  It has to: merging strings over those objects deletes every bucket, and a
+  sort item with no bucket cannot be scored. That shipped in five units before
+  a test caught it.
+- `twoColumn` and `cards` must be delivered as **objects**. A flattened
+  `"heading: body"` string cannot be split back apart, and the build drops the
+  field rather than guess where the boundary was.
+
+### 2b. Bilingual — the older paired file
+
+`docs/translations/unitN.bilingual-source.json`. Only Unit 1 has one. Every
+teaching string paired:
 
 ```json
 {
@@ -70,8 +101,19 @@ Burmese reaches a learner. A file marked `draft-unreviewed` must not be
 importable from `src/`. QA check 13 enforces that, and warns on every run while
 the status is anything other than `reviewed`.
 
-**Present today:** `docs/translations/unit1.json` — Unit 1, complete, 67 `en`/
-`my` pairs with no gaps, `draft-unreviewed`. Not wired to anything.
+Both source formats live in `docs/` and are read only by the build script. QA
+check 13 asserts nothing under `src/` imports from `docs/translations/`.
+
+### 2c. What goes out — `docs/translation-source.json`
+
+`TRANSLATION-REQUEST.md` clips long values to fit a markdown table. That is
+display-only, and treating it as the source cost the first delivery 23 fields —
+every `cards` set and every multi-paragraph `paragraphs`, because the clipped
+text was the only English on offer.
+
+So the request now emits a companion JSON carrying the **untruncated** English
+for every outstanding field, keyed `screenId.field`, in the shape the value must
+return in. The markdown is for reading; the JSON is what you translate.
 
 ---
 
@@ -121,7 +163,7 @@ All four original blockers are cleared:
 1. **The i18n layer exists.** `src/lib/i18n.js` provides `t()` for UI chrome and
    `localiseScreen()` for course content. Both fall back to English.
 2. **Settings does what it says.** Selecting Burmese changes the interface and
-   Unit 1's teaching text, and the screen states its real coverage.
+   the teaching text in every unit, and the screen states its real coverage.
 3. **Noto Sans Myanmar is bundled**, self-hosted, and `<html lang>` is set.
 4. `current-answers.json` is still unverified — unrelated to language.
 
@@ -129,17 +171,47 @@ All four original blockers are cleared:
 
 | Layer | State |
 |---|---|
-| UI chrome | 31 keys wired, 33 of 38 carry Burmese |
-| Unit 1 content | 17 fields, 9 screens |
-| Units 0, 2–7 content | English (no source exists) |
+| UI chrome | 31 keys wired, **all 38 carry Burmese** |
+| Course content | **210 fields across all 8 units**, 83 screens |
+| Outstanding | 27 fields — see `TRANSLATION-REQUEST.md` |
+| Review status | `draft-unreviewed` throughout — machine-drafted, no native pass yet |
 
-### Adding more Burmese is now a data drop
+Coverage is partial *within* each unit, not per unit: every unit shows Burmese
+teaching text, and individual fields still fall back to English where no
+translation exists. That is the fallback rule working, not a gap in wiring.
 
-1. Author `docs/translations/unitN.json` against the **current** screen schema
-   (§3), not the mockup.
-2. `node scripts/build-translations.js unitN` — it maps what corresponds and
-   reports what does not, rather than guessing.
+### Adding more Burmese is a data drop
+
+1. Author `docs/translations/unitN.json` against `translation-source.json`,
+   which carries the current schema and the required shapes.
+2. `node scripts/build-translations.js` — validates all eight units, folds
+   `sortItems` back onto their buckets, drops anything that would break G-3,
+   and reports what it could not use rather than guessing.
 3. Register the overlay in the `OVERLAYS` map in `src/lib/i18n.js`.
+4. `npm run qa` — checks 15 and 16 re-verify the result independently of the
+   generator that produced it.
+
+### G-3 is enforced at two layers, not trusted
+
+A translated overlay is the one place official wording can be replaced silently,
+because the renderer merges the overlay without knowing what the words are.
+
+- **The generator drops** any field whose English carries an official question
+  sentence or an accepted answer that the translation replaced, so the screen
+  falls back to English and the drop is reported.
+- **QA check 16 re-derives the same rule** from `questions-uN.json` and fails
+  the build if anything slipped through.
+
+Neither uses an allowlist of protected strings. The rule is derived from the
+question data, so an item that starts quoting an official question is protected
+the moment it does. The one exception it cannot see is the interpret gloss
+(§1a), which is named explicitly and asserted positively — if a delivery ever
+translates those options away, the check fails rather than going quiet.
+
+This is not hypothetical: the Unit 1 exemplify item shipped with its official
+question and its correct answer both fully in Burmese, which is exactly the
+training-on-wrong-wording failure G-3 exists to prevent. The guards were
+written after finding it.
 
 For chrome, fill the `my` values in `src/lib/content/ui-strings.json`. QA check
 14 reports how many are still untranslated on every run.
@@ -157,9 +229,13 @@ Self-hosted, never a CDN (G-11). SIL OFL 1.1, licence at
 
 ## 5. Encoding — transfer translation files as files, never paste
 
-**Present:** `docs/translations/unit1.json`. Verified on arrival — 85 `my`
-strings, 8,603 characters in the Myanmar block including 3,655 consonants, zero
-U+FFFD, zero Latin-1 residue, all 67 `en`/`my` pairs complete.
+**Present:** eight flat unit files plus the older bilingual Unit 1 source. Every
+arrival is verified by codepoint before it is built, and every one so far has
+matched the sender's stated sha256 and Myanmar character count exactly.
+
+The bilingual file was verified this way first — 85 `my` strings, 8,603
+characters in the Myanmar block including 3,655 consonants, zero U+FFFD, zero
+Latin-1 residue, all 67 `en`/`my` pairs complete.
 
 It took two failed attempts to get it here, and the reason will recur for units
 2–7, so it is written down:

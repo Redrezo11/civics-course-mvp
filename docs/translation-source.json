@@ -1,0 +1,288 @@
+{
+  "_note": "Untruncated English for every field in TRANSLATION-REQUEST.md, keyed screenId.field. The markdown clips long values for table display; these are the full ones. Return each value in the same shape and, for lists, the same length and order. The ⚠ rules in section 0 of the markdown still apply.",
+  "_ui": {},
+  "U1-S05.paragraphs": [
+    "In 1787, the thirteen states had just finished a long war against a king. They needed a government — but they were afraid of two opposite things at the same time.",
+    "They were afraid of having no government. Without one, nobody could defend the country, settle arguments between states, or pay for anything.",
+    "They were also afraid of a government so strong it would act like the king they had just escaped."
+  ],
+  "U1-S06b.paragraphs": [
+    "Can the rulebook change? Yes — by amendment. But the writers made changing it slow and difficult on purpose. A rulebook that is easy to change is not much of a limit on anyone.",
+    "In more than 230 years, it has changed only 27 times. That small number is the point.",
+    "Many people worried that the new Constitution did not clearly protect individual rights. Several states ratified it while asking for those protections to be added. Congress soon proposed amendments. The first 10 became the Bill of Rights. They protect basic rights such as freedom of speech and freedom of religion.",
+    "They protect the basic rights of people living in the United States — not only citizens."
+  ],
+  "U1-S08.twoColumn": [
+    {
+      "heading": "Declaration of Independence — 1776",
+      "body": "An announcement to the world: America is free from Britain. It says all people are created equal, with rights that belong to them — 'Life, Liberty, and the pursuit of Happiness.'",
+      "alt": "Historical document photograph."
+    },
+    {
+      "heading": "Constitution — 1787",
+      "body": "A rulebook. It builds: the government America still uses today.",
+      "alt": "Historical document photograph."
+    }
+  ],
+  "U1-S09.items[0].question": "Name one thing the U.S. Constitution does.",
+  "U1-S09.items[0].options": [
+    "Protects the rights of the people",
+    "Chooses the President",
+    "Collects taxes from each state"
+  ],
+  "U1-S09.items[1].instructions": "Tap to sort into Declaration or Constitution.",
+  "U2-S04.cards": [
+    {
+      "word": "branch",
+      "def": "one part of the government.",
+      "example": "A branch of government is like one branch of a tree."
+    },
+    {
+      "word": "veto",
+      "def": "to say no to a bill.",
+      "example": "The President can veto a bill — say no to it."
+    },
+    {
+      "word": "enforce",
+      "def": "to make people follow a rule.",
+      "example": "Police enforce traffic laws."
+    },
+    {
+      "word": "justice",
+      "def": "a judge on the Supreme Court.",
+      "example": "There are nine justices on the Supreme Court."
+    },
+    {
+      "word": "Cabinet",
+      "def": "the President's team of advisers.",
+      "example": "The Cabinet advises the President."
+    }
+  ],
+  "U2-S05.paragraphs": [
+    "Three buildings. Three jobs.",
+    "The Capitol: Congress works here — it writes the laws. Congress has two parts, the Senate and the House of Representatives; you will meet them closely in the next lesson.",
+    "The White House: the President works here — the President carries out the laws, leads the executive branch, commands the military as Commander in Chief, and leads a team: the Vice President, the Cabinet, and the federal departments and agencies.",
+    "The Supreme Court: nine justices work here — the courts explain the laws, resolve disputes about them, and decide whether a law goes against the Constitution."
+  ],
+  "U2-S06.paragraphs": [
+    "Now watch the buildings push against each other.",
+    "Congress passes a bill. It is not law yet — it goes to the President, who signs it into law or vetoes it. And even a signed law can be stopped: a court can rule it goes against the Constitution.",
+    "Each branch can block the others. That blocking has a name you already know from the rulebook lesson: checks and balances — also called separation of powers. It exists for one reason: so no one part becomes too powerful. The same reason answers three different test questions.",
+    "One more piece of the same idea: Supreme Court justices serve for life. Why? If a judge could be fired, that judge would be afraid of the people above them. A judge who serves for life has no one to fear — so they are free to follow only the rulebook, not politics. That independence is the whole point."
+  ],
+  "U3-S03.bodyList": [
+    "Imagine five towns that share one road, one water supply, and one school.",
+    "One town is large; four are small. When they meet to decide things together, how should the voting work?",
+    "If every decision follows population, the four small towns are ignored forever — outvoted before they speak.",
+    "If every town gets one equal vote, the large town is outvoted by neighbours a fraction of its size."
+  ],
+  "U3-S04.cards": [
+    {
+      "word": "senator",
+      "def": "a member of the Senate.",
+      "example": "Each state has two senators."
+    },
+    {
+      "word": "representative",
+      "def": "a member of the House.",
+      "example": "A representative represents the people of one district."
+    },
+    {
+      "word": "district",
+      "def": "your area.",
+      "example": "Everyone on your street is in your district."
+    },
+    {
+      "word": "term",
+      "def": "how long a leader serves before the next election.",
+      "example": "A senator's term is six years."
+    },
+    {
+      "word": "elect",
+      "def": "to choose by voting.",
+      "example": "Citizens elect their senators."
+    }
+  ],
+  "U3-S05.paragraphs": [
+    "Inside the Capitol are two rooms, built on two opposite principles — on purpose.",
+    "The Senate: every state equal. Two senators per state, big or small. 50 states × 2 = 100 senators. A senator represents the people of their whole state and serves six years — a longer term than representatives get. Why two per state? Equal representation for small states — the deal that saved the union in 1787, called the Great Compromise.",
+    "The House of Representatives: every person equal. Seats follow population — more people, more representatives. 435 voting members. A representative serves the people of one district and serves only two years. Why so short? So they must face the voters constantly — to more closely follow public opinion."
+  ],
+  "U3-S06.paragraphs": [
+    "The President is elected for four years — and may serve only two terms.",
+    "Why the limit? The 22nd Amendment — and you already know the deeper reason: to keep the president from becoming too powerful. The fear of kings, again.",
+    "Who actually decides the winner? The Electoral College — a compromise between electing the president by popular vote and letting Congress choose."
+  ],
+  "U4-S04.cards": [
+    {
+      "word": "federal",
+      "def": "the national government — all fifty states together.",
+      "example": "Federal taxes are paid to the national government."
+    },
+    {
+      "word": "state",
+      "def": "one of the fifty.",
+      "example": "Yours is California."
+    },
+    {
+      "word": "treaty",
+      "def": "an official agreement between countries.",
+      "example": "Only the federal government can make a treaty."
+    },
+    {
+      "word": "zoning",
+      "def": "local rules about land — what can be built where.",
+      "example": "Zoning decides what can be built on an empty lot."
+    }
+  ],
+  "U4-S05.paragraphs": [
+    "Country-sized jobs go to the federal government.",
+    "These are jobs that only work if the whole country does them together: print paper money and mint coins (fifty different currencies would be chaos), declare war, create an army, make treaties with other countries, set foreign policy. One country must speak with one voice to the world.",
+    "Close-to-home jobs go to the states: schools, police, fire departments, driver's licenses, zoning. These need local knowledge — Sacramento knows California's roads; Washington does not.",
+    "And the leftover rule is written in the rulebook itself — the 10th Amendment: powers not given to the federal government belong to the states, or to the people."
+  ],
+  "U5-S04.cards": [
+    {
+      "word": "right",
+      "def": "a freedom the law protects for you.",
+      "example": "You have the right to speak freely."
+    },
+    {
+      "word": "responsibility",
+      "def": "a duty — something you must or should do.",
+      "example": "Paying taxes is a responsibility."
+    },
+    {
+      "word": "jury",
+      "def": "a group of citizens who decide a court case.",
+      "example": "Citizens serve on a jury."
+    },
+    {
+      "word": "oath",
+      "def": "an official, serious promise.",
+      "example": "At your ceremony you will take an oath."
+    },
+    {
+      "word": "loyalty",
+      "def": "faithfulness.",
+      "example": "The oath asks for loyalty to the United States."
+    }
+  ],
+  "U5-S05.paragraphs": [
+    "Remember the Bill of Rights from the rulebook lesson — protections for people living in the United States, not only citizens.",
+    "Everyone here holds these: freedom of speech, freedom of expression, freedom of assembly (gathering in groups), freedom to petition the government (asking it to change something), freedom of religion, and the right to bear arms. These protect you today, before your ceremony.",
+    "Citizens hold three more, and they are the ones that steer the country: vote in federal elections, run for federal office, and serve on a jury. Notice what all three share — they are ways of having a say in how the country is run, not just living in it. Jury service is also a responsibility — it is both a right you hold and a duty you may be called to perform.",
+    "Voting itself was widened by four amendments — remember, changes to the rulebook: any race can vote, women and men can vote, no poll tax (you cannot be charged money to vote), and citizens eighteen and older can vote."
+  ],
+  "U5-S06.paragraphs": [
+    "Belonging also asks.",
+    "Everyone who earns money here pays federal taxes — required by law, and it is how the country pays for what it does. Men aged 18 through 25 register for the Selective Service — a list, required by law, that makes a draft fair if one is ever needed.",
+    "And at your ceremony, you will stand and take the Oath of Allegiance — the member's promises: give up loyalty to other countries, defend the Constitution, obey the laws of the United States, serve the nation if needed, be loyal to the United States.",
+    "On the test, this is Question 67. In your life, it is the moment you become a citizen. It is the only test answer you will one day say out loud, with your hand raised, at your own ceremony.",
+    "How do people become citizens at all? Three doors: born in the United States (a promise written in the 14th Amendment — its story is in Lesson 7), naturalize — your door, the one this course walks you to — or derive citizenship through parents."
+  ],
+  "U6-S04.cards": [
+    {
+      "word": "colony",
+      "def": "a settlement ruled by a faraway country.",
+      "example": "The thirteen colonies were ruled by Britain."
+    },
+    {
+      "word": "independence",
+      "def": "being free — ruling yourself.",
+      "example": "The colonies declared independence in 1776."
+    },
+    {
+      "word": "revolution",
+      "def": "a fight to change who rules.",
+      "example": "The American Revolution won independence from Britain."
+    },
+    {
+      "word": "declare",
+      "def": "to say officially, in front of everyone.",
+      "example": "They declared the colonies free from Britain."
+    },
+    {
+      "word": "founder",
+      "def": "one of the people who started the country.",
+      "example": "George Washington was a founder."
+    }
+  ],
+  "U6-S05.paragraphs": [
+    "Chapter 1 — Before.",
+    "American Indians — Native Americans — lived on this land first, for thousands of years, in many nations: Cherokee, Navajo, Sioux, and hundreds more.",
+    "Then ships came from Europe. The colonists came for reasons you will recognize: freedom — religious freedom, political liberty — economic opportunity, and escape from persecution. Many crossed an ocean for the same kinds of hopes that bring people to America today.",
+    "And a hard truth belongs in this chapter, told plainly: Africans were taken from their homes, brought here by force, and sold as slaves."
+  ],
+  "U6-S06.paragraphs": [
+    "Chapter 2 — The break.",
+    "The thirteen colonies were ruled by Britain, and Britain taxed them — the Stamp Act, the Tea Act — while giving them no vote and no voice in the decisions. The colonists gave their complaint a name that still rings: taxation without representation. Protest grew — the Boston Tea Party — and protest became war: the American Revolution.",
+    "In the middle of that war, the colonies put their reasons in writing for the whole world. Thomas Jefferson wrote the Declaration of Independence, adopted July 4, 1776 — the date America still celebrates as its birthday. It declared the colonies free from Britain, and it declared why: all people are created equal, with rights of their own — life, liberty, the pursuit of happiness.",
+    "The war was long — Bunker Hill, Washington crossing the Delaware, Valley Forge — but it ended with the British surrender at Yorktown."
+  ],
+  "U6-S07.paragraphs": [
+    "Chapter 3 — The build.",
+    "The colonies were free — but they were struggling. The first loose arrangement between the states (the Articles of Confederation) proved too weak to work. So in 1787, the states sent their best minds to Philadelphia and wrote the Constitution — the rulebook you know, born from the two fears you know.",
+    "Not everyone was convinced. To persuade the doubters, James Madison, Alexander Hamilton, and John Jay wrote a series of essays — the Federalist Papers — explaining the Constitution and urging its passage.",
+    "Here are the most important founders and what they did: George Washington — general of the Continental Army, president of the Constitutional Convention, first President: the 'Father of Our Country.' Thomas Jefferson — writer of the Declaration, third President. James Madison — the 'Father of the Constitution,' fourth President. Alexander Hamilton — first Secretary of the Treasury. Benjamin Franklin — diplomat, inventor, first Postmaster General, founder of the first free public libraries."
+  ],
+  "U7-S04.cards": [
+    {
+      "word": "slavery",
+      "def": "owning people as property — forced work without freedom.",
+      "example": "The Civil War ended slavery."
+    },
+    {
+      "word": "union",
+      "def": "the states together as one country.",
+      "example": "Lincoln saved the Union."
+    },
+    {
+      "word": "discrimination",
+      "def": "treating people unfairly because of their group.",
+      "example": "The civil rights movement fought discrimination."
+    },
+    {
+      "word": "communism",
+      "def": "a system where one party controls the state and the economy.",
+      "example": "Communism was the main concern of the Cold War."
+    },
+    {
+      "word": "veteran",
+      "def": "a person who served in the military.",
+      "example": "Veterans Day honors all who served."
+    },
+    {
+      "word": "amendment",
+      "def": "an official change to the Constitution.",
+      "example": "Now watch the amendment work, again and again."
+    }
+  ],
+  "U7-S05.paragraphs": [
+    "Chapter 1 — The war over the promise.",
+    "First, the country grew: in 1803 the United States bought the Louisiana Territory from France, doubling its size — Jefferson's doing. But growth sharpened the question the founders had left open: slavery. The North and the South finally went to war over it — the Civil War, the war between the North and the South.",
+    "President Abraham Lincoln led the country through it. His Emancipation Proclamation freed the slaves in the Confederacy. He saved the Union — kept the country one country. The war's names — Gettysburg, Vicksburg, Appomattox — mark the hardest years America has had. The Civil War ended slavery."
+  ],
+  "U7-S06.paragraphs": [
+    "Chapter 2 — The promise, written into the rulebook.",
+    "After the war, the amendment tool went to work. The 14th Amendment wrote a new promise into the rulebook: all persons born or naturalized in the United States are U.S. citizens. Read that twice — or naturalized. Your certificate, when you receive it, will rest on those words.",
+    "The 15th Amendment (1870, after the Civil War): a male citizen of any race can vote. The 19th Amendment (1920): women can vote — remember the card from Lesson 1: your daughter votes because of it. Susan B. Anthony led that fight in the 1800s.",
+    "A century after the Civil War, the promise still was not fully kept — so the civil rights movement rose to end racial discrimination. Martin Luther King, Jr. led it: he fought for civil rights and worked for equality for all Americans."
+  ],
+  "U7-S07.paragraphs": [
+    "Chapter 3 — America in the world.",
+    "The 1900s took America into the world, and the test asks why each time — so learn the reasons, not just the names.",
+    "World War I. Germany attacked American ships. The United States entered the war.",
+    "The Great Depression began in 1929 when the stock market crashed. It was the longest economic downturn in modern history. Franklin Roosevelt was president during the Depression and through the next war.",
+    "World War II. Japan attacked Pearl Harbor. The United States entered the war. Dwight Eisenhower was an American general in this war. He later became the 34th president.",
+    "After World War II came the Cold War. America's main rival was the Soviet Union. The main concern was communism — and that one word is the answer to two test questions: why the U.S. entered the Korean War, and why it entered the Vietnam War. Both times, the answer is: to stop the spread of communism.",
+    "The Persian Gulf War. The United States entered to force the Iraqi military out of Kuwait.",
+    "September 11, 2001. Terrorists attacked the United States. The wars in Afghanistan and Iraq followed."
+  ],
+  "U7-S08.paragraphs": [
+    "Chapter 4 — The symbols you will stand under.",
+    "At your ceremony there will be a flag. Read it like a sentence: 13 stripes — the 13 original colonies, from the founding story. 50 stars — one for each state, from the growing story.",
+    "The capital: Washington, D.C. The Statue of Liberty stands in New York Harbor — for many immigrants before you, the first sight of America. The national anthem: The Star-Spangled Banner. And the nation's first motto, on the coins in your pocket: E Pluribus Unum — out of many, one. That has always included people who chose this country. It includes you.",
+    "The holidays mark the story you now know: Independence Day — the country's birthday, July 4. Memorial Day — honors soldiers who died in military service. Veterans Day — honors all who served."
+  ]
+}

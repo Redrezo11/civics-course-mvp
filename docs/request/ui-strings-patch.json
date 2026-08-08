@@ -1,0 +1,24 @@
+{
+  "_note": "Five outstanding `my` values for src/lib/content/ui-strings.json, section 1 of TRANSLATION-REQUEST.md. Keys given in the dotted form used by the request. Merge the `my` value only; leave every `en` untouched.",
+
+  "settings.coverage.en": {
+    "en": "The course is written in English.",
+    "my": "ဤသင်တန်းကို အင်္ဂလိပ်ဘာသာဖြင့် ရေးသားထားပါသည်။"
+  },
+  "settings.draftBadge": {
+    "en": "draft",
+    "my": "မူကြမ်း"
+  },
+  "settings.saved": {
+    "en": "Your choice is saved on this phone.",
+    "my": "သင့်ရွေးချယ်မှုကို ဤဖုန်းပေါ်တွင် သိမ်းဆည်းထားပါသည်။"
+  },
+  "settings.testStaysEnglish": {
+    "en": "Test questions and answers stay in English — that is the language of the real interview.",
+    "my": "စာမေးပွဲမေးခွန်းများနှင့် အဖြေများသည် အင်္ဂလိပ်ဘာသာဖြင့်သာ ရှိနေပါမည် — ၎င်းသည် အမှန်တကယ် အင်တာဗျူး၏ ဘာသာစကား ဖြစ်ပါသည်။"
+  },
+  "settings.title": {
+    "en": "Settings",
+    "my": "ဆက်တင်များ"
+  }
+}

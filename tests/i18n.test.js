@@ -4,10 +4,12 @@
  * Before this existed, selecting Burmese wrote a preference to localStorage and
  * nothing ever read it — the language could not change anything, in any browser.
  *
- * Two rules these tests hold to:
+ * Three rules these tests hold to:
  *   · Burmese appears where a translation exists.
  *   · Everywhere else falls back to ENGLISH, never to blanks. A partial
  *     translation must not break the course (v1.1 plan §5).
+ *   · Official question wording and accepted answers stay English even in
+ *     Burmese (G-3), because the interview is conducted in English.
  */
 
 import { describe, it, expect, beforeEach } from 'vitest';
@@ -16,9 +18,19 @@ import { get } from 'svelte/store';
 import Lesson from '../src/lib/screens/Lesson.svelte';
 import Settings from '../src/lib/screens/Settings.svelte';
 import { progress } from '../src/lib/stores/progress.js';
-import { t, localiseScreen } from '../src/lib/i18n.js';
+import { t, localiseScreen, translatedUnits } from '../src/lib/i18n.js';
+import uiStrings from '../src/lib/content/ui-strings.json';
+import unit0 from '../src/lib/content/unit0.json';
 import unit1 from '../src/lib/content/unit1.json';
 import unit2 from '../src/lib/content/unit2.json';
+import unit3 from '../src/lib/content/unit3.json';
+import unit4 from '../src/lib/content/unit4.json';
+import unit5 from '../src/lib/content/unit5.json';
+import unit6 from '../src/lib/content/unit6.json';
+import unit7 from '../src/lib/content/unit7.json';
+import myUnit1 from '../src/lib/content/translations/my/unit1.json';
+
+const UNITS = [unit0, unit1, unit2, unit3, unit4, unit5, unit6, unit7];
 
 const isBurmese = (s) => /[က-႟]/.test(s);
 const hasConsonant = (s) => /[က-ဟ]/.test(s);
@@ -45,39 +57,138 @@ describe('the overlay resolver', () => {
     expect(out.options).toHaveLength(s02.options.length);
   });
 
-  it('falls back to English for a unit with no translation', () => {
+  it('falls back to English for a unit that has no overlay at all', () => {
+    // Every real unit is now translated, so the fallback needs an id that is
+    // not in OVERLAYS. The rule still has to hold — it is what stops a new
+    // unit from rendering blank the day it is added.
     const s = unit2.screens.find((x) => x.type === 'hook');
-    expect(localiseScreen(s, 'U2', 'my')).toBe(s);
+    expect(localiseScreen(s, 'U9', 'my')).toBe(s);
   });
 
-  it('never returns an empty field where English had content', () => {
-    for (const screen of unit1.screens) {
-      const out = localiseScreen(screen, 'U1', 'my');
-      for (const [k, v] of Object.entries(screen)) {
-        if (typeof v === 'string' && v.length) {
-          expect(out[k], `${screen.id}.${k} blanked`).toBeTruthy();
+  it('falls back to English for a screen the overlay does not cover', () => {
+    // Every U1 screen happens to be covered right now, so the id is synthesised
+    // rather than searched for — the rule must hold whatever coverage reaches,
+    // and a test that quietly finds nothing to assert on is no test at all.
+    expect(myUnit1['U1-S99']).toBeUndefined();
+    const uncovered = { ...s02, id: 'U1-S99' };
+    expect(localiseScreen(uncovered, 'U1', 'my')).toBe(uncovered);
+  });
+
+  it('never returns an empty field where English had content, in any unit', () => {
+    for (const unit of UNITS) {
+      for (const screen of unit.screens) {
+        const out = localiseScreen(screen, unit.id, 'my');
+        for (const [k, v] of Object.entries(screen)) {
+          if (typeof v === 'string' && v.length) {
+            expect(out[k], `${screen.id}.${k} blanked`).toBeTruthy();
+          }
+          if (Array.isArray(v)) {
+            expect(out[k], `${screen.id}.${k} length changed`).toHaveLength(v.length);
+          }
         }
-        if (Array.isArray(v)) {
-          expect(out[k], `${screen.id}.${k} length changed`).toHaveLength(v.length);
+      }
+    }
+  });
+});
+
+describe('guided practice survives translation, in every unit', () => {
+  // A translated option list that lost an entry, or a sort item that lost its
+  // bucket index, scores the learner wrongly and looks completely normal doing
+  // it. This is the failure mode worth a test in all eight units, not just U1.
+  it('keeps correctIndex, kind and bucket indices intact', () => {
+    let checked = 0;
+    for (const unit of UNITS) {
+      for (const gp of unit.screens.filter((s) => s.type === 'guidedPractice')) {
+        const out = localiseScreen(gp, unit.id, 'my');
+        expect(out.items, `${gp.id} lost items`).toHaveLength(gp.items.length);
+        out.items.forEach((item, i) => {
+          const en = gp.items[i];
+          checked += 1;
+          expect(item.kind, `${gp.id}.items[${i}].kind`).toBe(en.kind);
+          if (en.correctIndex !== undefined) {
+            expect(item.correctIndex, `${gp.id}.items[${i}].correctIndex`).toBe(en.correctIndex);
+          }
+          if (en.options) {
+            expect(item.options, `${gp.id}.items[${i}].options`).toHaveLength(en.options.length);
+          }
+          if (en.sortItems) {
+            expect(item.sortItems).toHaveLength(en.sortItems.length);
+            item.sortItems.forEach((si, n) =>
+              expect(si.bucket, `${gp.id}.items[${i}].sortItems[${n}].bucket`).toBe(
+                en.sortItems[n].bucket
+              )
+            );
+          }
+          if (en.buckets) {
+            expect(item.buckets, `${gp.id}.items[${i}].buckets`).toHaveLength(en.buckets.length);
+          }
+        });
+      }
+    }
+    expect(checked).toBeGreaterThan(20);
+  });
+});
+
+describe('G-3 — official English survives the Burmese overlay', () => {
+  const questions = import.meta.glob('../src/lib/content/questions-u*.json', {
+    eager: true,
+    import: 'default',
+  });
+  const all = Object.values(questions).flat();
+  const official = all.map((q) => q.official).filter((s) => s.length > 15);
+  const accepted = new Set(all.flatMap((q) => q.acceptedAnswers).filter((s) => s.length > 12));
+
+  it('keeps every quoted official question in English', () => {
+    for (const unit of UNITS) {
+      for (const screen of unit.screens) {
+        const out = localiseScreen(screen, unit.id, 'my');
+        for (const [k, v] of Object.entries(screen)) {
+          if (typeof v !== 'string') continue;
+          for (const o of official) {
+            if (v.includes(o)) {
+              expect(String(out[k]), `${screen.id}.${k} translated away "${o}"`).toContain(o);
+            }
+          }
+        }
+        for (const [i, item] of (screen.items || []).entries()) {
+          const got = out.items[i];
+          for (const [k, v] of Object.entries(item)) {
+            if (typeof v !== 'string') continue;
+            for (const o of official) {
+              if (v.includes(o)) {
+                expect(String(got[k]), `${screen.id}.items[${i}].${k} translated away "${o}"`).toContain(o);
+              }
+            }
+          }
         }
       }
     }
   });
 
-  it('merges guided-practice items without losing correctIndex or kind', () => {
-    const gp = unit1.screens.find((s) => s.type === 'guidedPractice');
+  it('keeps any option that restates an accepted answer verbatim', () => {
+    for (const unit of UNITS) {
+      for (const screen of unit.screens) {
+        const out = localiseScreen(screen, unit.id, 'my');
+        for (const [i, item] of (screen.items || []).entries()) {
+          (item.options || []).forEach((opt, n) => {
+            if (accepted.has(opt.trim())) {
+              expect(out.items[i].options[n], `${screen.id}.items[${i}].options[${n}]`).toBe(opt);
+            }
+          });
+        }
+      }
+    }
+  });
+
+  it('keeps the interpret options English, with the gloss added rather than substituted', () => {
+    // ARCHITECTURE §1a. The skill is recognising an English test question under
+    // unfamiliar wording; a fully Burmese option list deletes it silently.
+    const gp = unit1.screens.find((s) => s.id === 'U1-S09');
+    const item = gp.items.findIndex((x) => x.kind === 'interpret');
     const out = localiseScreen(gp, 'U1', 'my');
-    out.items.forEach((item, i) => {
-      expect(item.kind).toBe(gp.items[i].kind);
-      if (gp.items[i].correctIndex !== undefined) {
-        expect(item.correctIndex).toBe(gp.items[i].correctIndex);
-      }
-      if (gp.items[i].sortItems) {
-        // bucket indices must survive, or the sort scores wrongly
-        item.sortItems.forEach((si, n) =>
-          expect(si.bucket).toBe(gp.items[i].sortItems[n].bucket)
-        );
-      }
+    out.items[item].options.forEach((opt, n) => {
+      expect(opt).toContain(gp.items[item].options[n]);
+      expect(isBurmese(opt), 'the Burmese gloss is missing').toBe(true);
     });
   });
 });
@@ -87,16 +198,16 @@ describe('the UI string lookup', () => {
     expect(get(t)('settings.title')).toBe('Settings');
   });
 
-  it('falls back to English when a string has no Burmese yet', () => {
-    progress.setLanguage('my');
-    // settings.title is deliberately untranslated (my: null).
-    expect(get(t)('settings.title')).toBe('Settings');
-  });
-
   it('returns Burmese where it exists', () => {
     progress.setLanguage('my');
-    const s = get(t)('settings.coverage.my');
-    expect(isBurmese(s)).toBe(true);
+    expect(isBurmese(get(t)('settings.coverage.my'))).toBe(true);
+  });
+
+  it('has Burmese for every key, so nothing silently falls back', () => {
+    const missing = Object.entries(uiStrings)
+      .filter(([k, v]) => k !== '_note' && !v.my)
+      .map(([k]) => k);
+    expect(missing).toEqual([]);
   });
 
   it('makes an unknown key VISIBLE rather than blank', () => {
@@ -106,39 +217,27 @@ describe('the UI string lookup', () => {
 });
 
 describe('a Burmese learner in the app', () => {
-  it('sees Burmese teaching text in Unit 1', async () => {
-    progress.setLanguage('my');
-    const { container } = render(Lesson, { props: { unitId: 'U1' } });
-    // U1-S01 has no overlay (source shape differs), but S02 onward do; walk in.
-    const next = [...container.querySelectorAll('button')].find((b) =>
-      /^(Begin|Next)$/.test(b.textContent.trim())
-    );
-    if (next) next.click();
-    await new Promise((r) => setTimeout(r, 0));
-    expect(hasConsonant(container.textContent)).toBe(true);
+  it('has an overlay registered for all eight units', () => {
+    expect(translatedUnits('my').sort()).toEqual(['U0', 'U1', 'U2', 'U3', 'U4', 'U5', 'U6', 'U7']);
   });
 
-  it('sees English CONTENT in Unit 2, not blanks, even though the chrome is Burmese', () => {
-    progress.setLanguage('my');
-    const { container } = render(Lesson, { props: { unitId: 'U2' } });
-
-    // Unit 2 has no content overlay, so its teaching text falls back to English
-    // rather than blanking — that is the rule the fallback exists for.
-    expect(container.textContent).toContain('Three branches');
-    expect(container.textContent.length).toBeGreaterThan(200);
-
-    // The nav chrome IS translated, and legitimately shows Burmese here: UI
-    // strings and course content are separate layers with separate coverage.
-    // An earlier version of this test asserted no Burmese anywhere on the
-    // screen, which stopped being true the moment the chrome was wired.
-    const bar = container.querySelector('button');
-    expect(hasConsonant(bar.textContent)).toBe(true);
-  });
+  for (const unitId of ['U1', 'U2', 'U7']) {
+    it(`sees Burmese teaching text in ${unitId}`, async () => {
+      progress.setLanguage('my');
+      const { container } = render(Lesson, { props: { unitId } });
+      const next = [...container.querySelectorAll('button')].find((b) =>
+        /^(Begin|Next|စတင်|ရှေ့သို့)/.test(b.textContent.trim())
+      );
+      if (next) next.click();
+      await new Promise((r) => setTimeout(r, 0));
+      expect(hasConsonant(container.textContent)).toBe(true);
+    });
+  }
 
   it('is told what is actually translated, and that Burmese is a draft', () => {
     progress.setLanguage('my');
     const { container } = render(Settings, {});
-    expect(container.textContent).toMatch(/draft/i);
+    expect(container.textContent).toMatch(/draft|မူကြမ်း/);
     // The old copy promised "Lessons and buttons change language", which was
     // false. It must not come back.
     expect(container.textContent).not.toMatch(/Lessons and buttons change language/);

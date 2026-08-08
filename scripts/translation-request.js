@@ -37,12 +37,30 @@ const SKIP = new Set([
   'companionPose', 'questionIds', 'fullBankOffer', 'unlocksReview', 'clueList',
 ]);
 
-const overlayPath = join(contentDir, 'translations', 'my', 'unit1.json');
-const overlay = existsSync(overlayPath) ? readJson(overlayPath) : {};
+// Every unit that already has an overlay, so translated fields are not asked
+// for twice. Was unit1-only when unit1 was the only overlay that existed.
+const overlays = Object.fromEntries(
+  UNITS.map((u) => {
+    const p = join(contentDir, 'translations', 'my', `${u}.json`);
+    return [u, existsSync(p) ? readJson(p) : {}];
+  })
+);
 
-const cell = (s) => {
+// A markdown table cell has a display width, so long values are clipped here.
+// That clipping is DISPLAY ONLY. The first delivery lost 23 fields — every
+// `cards` set and every multi-paragraph `paragraphs` — because the clipped text
+// was the only English on offer, so there was nothing to translate from.
+//
+// The untruncated value now goes to docs/translation-source.json, in its real
+// shape (array stays an array), and every clipped row points at it.
+const CLIP = 320;
+const clipped = new Set();
+
+const cell = (s, key) => {
   const flat = String(s).replace(/\|/g, '\\|').replace(/\s*\n\s*/g, ' ').trim();
-  return flat.length > 320 ? `${flat.slice(0, 320)}…` : flat;
+  if (flat.length <= CLIP) return flat;
+  if (key) clipped.add(key);
+  return `${flat.slice(0, CLIP)}… **[clipped — full text in \`translation-source.json\` under \`${key}\`]**`;
 };
 
 // Official wording and accepted answers, so rows that quote them can be
@@ -74,24 +92,40 @@ function warn(label, en) {
   return '';
 }
 
-/** Translatable fields on one screen, as [label, englishText]. */
+/**
+ * Translatable fields on one screen, as [label, displayText, rawValue].
+ *
+ * `displayText` is flattened for the markdown table. `rawValue` keeps the real
+ * shape — an array stays an array, `cards` stay objects — so the companion
+ * source file tells the translator exactly what to return.
+ */
 function fieldsOf(screen) {
   const out = [];
   for (const [k, v] of Object.entries(screen)) {
     if (SKIP.has(k)) continue;
-    if (typeof v === 'string' && PROSE.has(k)) out.push([k, v]);
-    else if (Array.isArray(v) && LISTS.has(k)) out.push([k, v.join(' | ')]);
-    else if (k === 'cards') out.push([k, v.map((c) => `${c.word}: ${c.def} — “${c.example}”`).join(' | ')]);
-    else if (k === 'termA' || k === 'termB') out.push([k, `${v.name} — ${v.def}`]);
-    else if (k === 'twoColumn') out.push([k, v.map((c) => `${c.heading || ''}: ${c.body || ''}`).join(' | ')]);
+    if (typeof v === 'string' && PROSE.has(k)) out.push([k, v, v]);
+    else if (Array.isArray(v) && LISTS.has(k)) out.push([k, v.join(' | '), v]);
+    else if (k === 'cards') out.push([k, v.map((c) => `${c.word}: ${c.def} — “${c.example}”`).join(' | '), v]);
+    else if (k === 'termA' || k === 'termB') out.push([k, `${v.name} — ${v.def}`, v]);
+    // twoColumn goes out as OBJECTS, not a flattened "heading: body" line.
+    // The first delivery returned it as one string per column with no
+    // separator, which cannot be split back into heading and body — the field
+    // had to be dropped. Only the translatable keys are sent; `image` is a
+    // filename and must not change.
+    else if (k === 'twoColumn')
+      out.push([
+        k,
+        v.map((c) => `${c.heading || ''}: ${c.body || ''}`).join(' | '),
+        v.map((c) => ({ heading: c.heading, body: c.body, ...(c.alt ? { alt: c.alt } : {}) })),
+      ]);
     else if (k === 'items') {
       v.forEach((it, i) => {
-        if (it.question) out.push([`items[${i}].question`, it.question]);
-        if (it.instructions) out.push([`items[${i}].instructions`, it.instructions]);
-        if (it.options) out.push([`items[${i}].options`, it.options.join(' | ')]);
-        if (it.sortItems) out.push([`items[${i}].sortItems`, it.sortItems.map((s) => s.text).join(' | ')]);
-        if (it.buckets) out.push([`items[${i}].buckets`, it.buckets.join(' | ')]);
-        if (it.orderItems) out.push([`items[${i}].orderItems`, it.orderItems.join(' | ')]);
+        if (it.question) out.push([`items[${i}].question`, it.question, it.question]);
+        if (it.instructions) out.push([`items[${i}].instructions`, it.instructions, it.instructions]);
+        if (it.options) out.push([`items[${i}].options`, it.options.join(' | '), it.options]);
+        if (it.sortItems) out.push([`items[${i}].sortItems`, it.sortItems.map((s) => s.text).join(' | '), it.sortItems.map((s) => s.text)]);
+        if (it.buckets) out.push([`items[${i}].buckets`, it.buckets.join(' | '), it.buckets]);
+        if (it.orderItems) out.push([`items[${i}].orderItems`, it.orderItems.join(' | '), it.orderItems]);
       });
     }
   }
@@ -106,16 +140,23 @@ const uiTotal = Object.keys(ui).filter((k) => k !== '_note').length;
 
 const sections = [];
 const counts = [];
+const source = {};
 
 for (const file of UNITS) {
   const unit = readJson(join(contentDir, `${file}.json`));
   const rows = [];
   for (const screen of unit.screens) {
-    const done = file === 'unit1' ? overlay[screen.id] || {} : {};
-    for (const [label, en] of fieldsOf(screen)) {
-      const base = label.split('[')[0].split('.')[0];
-      if (base in done) continue;
-      rows.push(`| \`${screen.id}\` | \`${label}\` | ${cell(en)}${warn(label, en)} |`);
+    const done = overlays[file]?.[screen.id] || {};
+    for (const [label, en, raw] of fieldsOf(screen)) {
+      // `items` overlays can be partial — item 0 translated, item 2 not — so
+      // resolve to the exact item and field rather than skipping the whole
+      // array the moment `items` appears. A coarse check here would silently
+      // drop untranslated items out of the request.
+      const m = /^items\[(\d+)\]\.(.+)$/.exec(label);
+      if (m ? done.items?.[Number(m[1])]?.[m[2]] !== undefined : label in done) continue;
+      const key = `${screen.id}.${label}`;
+      source[key] = raw;
+      rows.push(`| \`${screen.id}\` | \`${label}\` | ${cell(en, key)}${warn(label, en)} |`);
     }
   }
   counts.push([unit.id, unit.title, rows.length]);
@@ -139,6 +180,12 @@ no longer exists.
 Everything already translated is live and is **not** listed here, so nothing gets
 translated twice. Remaining: **${uiMissing.length} interface strings** and
 **${totalFields} content fields**.
+
+**Work from \`docs/translation-source.json\`, not from the tables below.** The
+tables clip long values to fit a markdown column; that JSON carries the full
+English for every field listed here, keyed \`screenId.field\`, in the exact shape
+the value must come back in. The first delivery lost 23 fields to that clipping,
+which was a defect in this generator rather than anything the translator did.
 
 ---
 
@@ -194,28 +241,26 @@ were lost this way before we worked out the cause.
 
 In \`src/lib/content/ui-strings.json\`. Fill the \`my\` value; leave \`en\` alone.
 
-| Key | English |
-|---|---|
-${uiMissing.map(([k, en]) => `| \`${k}\` | ${cell(en)} |`).join('\n')}
+${
+  uiMissing.length
+    ? `| Key | English |\n|---|---|\n${uiMissing.map(([k, en]) => `| \`${k}\` | ${cell(en)} |`).join('\n')}`
+    : `_All ${uiTotal} interface strings carry Burmese._ They remain \`draft-unreviewed\` and still need a native pass, but none is missing.`
+}
 
 ---
 
-## 2. Unit 1 — the 11 fields the existing source could not fill
+## 2. Fields that came back but could not be used
 
-Unit 1 is largely translated. These could **not** be taken from
-\`docs/translations/unit1.json\` because its paragraph splits differ from the
-build's, and splitting Burmese prose at a guessed sentence boundary is not
-something that can be done without reading it.
+Three cases from the last delivery. None is a translation error: two are shapes
+this document asked for badly, and one is a rule the older Unit 1 source
+predates. All three are listed in section 4 again, so they are covered by
+working through the tables — this section only explains why they reappear.
 
-| Screen | Why it did not map | What is needed |
+| Field | What happened | What is needed |
 |---|---|---|
-| \`U1-S01\` | source is one paragraph; the build has six separate fields | each field separately |
-| \`U1-S03\` | source has 3 paragraphs; \`bodyList\` expects 4 | re-split to 4 |
-| \`U1-S05\` | source has 5; \`paragraphs\` expects 3 | re-split to 3, plus \`handle\` and \`handleSub\` |
-| \`U1-S06b\` | source has 3; \`paragraphs\` expects 4 | re-split to 4 |
-| \`U1-S07b\` | source combines term and definition in one line | split into \`termA.name\` / \`termA.def\`, same for \`termB\` |
-| \`U1-S08\` | source is prose; build has \`twoColumn\` + \`closing\` | a heading and body per document, plus the closing line |
-| \`U1-S11\`–\`S15\` | source feedback opens "The correct answer is **X**." | **drop that opening sentence.** The app already prints it, so keeping it shows the answer twice. Only the explanation that follows is wanted. |
+| \`U1-S08.twoColumn\` | returned as one string per column. The build stores \`heading\` and \`body\` as separate fields, and a single string cannot be split back into them without guessing where the heading ends | return it as **objects**; \`translation-source.json\` now shows the shape |
+| \`U1-S05.paragraphs\`, \`U1-S06b.paragraphs\` | the older bilingual source divides this prose into a different number of paragraphs than the build has | re-split to the count shown in the source JSON |
+| \`U1-S09.items[0]\` \`question\` and \`options\` | translated in full — but that question **is** an official question, and option 0 **is** an accepted answer | both stay English. The build now drops any such translation automatically rather than shipping it, so nothing is at risk; the fields simply stay English until translated around |
 
 ---
 
@@ -235,6 +280,16 @@ Where a value below shows several parts separated by \` | \`, that field is a
 **list** — return the same number of items in the same order. A wrong count is
 caught by \`node scripts/build-translations.js unitN\` rather than shipped.
 
+Two list shapes are worth naming; both are visible in \`translation-source.json\`,
+which is the authority if this description and the JSON ever disagree:
+
+- **\`sortItems\`** goes out as plain strings and comes back as plain strings. The
+  build re-attaches each item's sorting bucket **by position**, so the order is
+  what makes the exercise score correctly. Translate in place; never reorder.
+- **\`twoColumn\` and \`cards\`** go out as objects and must come back as objects.
+  Flattening them loses the boundary between one field and the next, and it
+  cannot be recovered afterwards.
+
 | Unit | Fields outstanding |
 |---|---|
 ${counts.map(([id, title, n]) => `| ${id} ${title} | ${n} |`).join('\n')}
@@ -246,6 +301,29 @@ ${counts.map(([id, title, n]) => `| ${id} ${title} | ${n} |`).join('\n')}
 ${sections.join('')}`;
 
 writeFileSync(join(root, 'docs', 'TRANSLATION-REQUEST.md'), doc, 'utf8');
-console.log(`docs/TRANSLATION-REQUEST.md`);
+
+// The untruncated companion. Values keep their real shape, so a `paragraphs`
+// entry arrives as an array of 3 and must come back as an array of 3.
+writeFileSync(
+  join(root, 'docs', 'translation-source.json'),
+  `${JSON.stringify(
+    {
+      _note:
+        'Untruncated English for every field in TRANSLATION-REQUEST.md, keyed screenId.field. ' +
+        'The markdown clips long values for table display; these are the full ones. ' +
+        'Return each value in the same shape and, for lists, the same length and order. ' +
+        'The ⚠ rules in section 0 of the markdown still apply.',
+      _ui: Object.fromEntries(uiMissing),
+      ...source,
+    },
+    null,
+    2
+  )}\n`,
+  'utf8'
+);
+
+console.log('docs/TRANSLATION-REQUEST.md');
+console.log('docs/translation-source.json');
 console.log(`  ${uiMissing.length} interface strings, ${totalFields} content fields`);
+console.log(`  ${clipped.size} value(s) clipped in the table, full text in the JSON`);
 for (const [id, , n] of counts) console.log(`    ${id}: ${n}`);
