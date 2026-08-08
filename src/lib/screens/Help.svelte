@@ -21,7 +21,7 @@
 </script>
 
 <div class="min-h-screen max-w-md mx-auto px-5 py-6">
-  <button class="text-sm font-bold underline mb-6" on:click={() => navigate('/')}>‹ Back</button>
+  <button class="tap inline-flex items-center text-sm font-bold underline mb-6" on:click={() => navigate('/')}>‹ Back</button>
 
   <h1 class="text-heading font-bold mb-4">Help</h1>
 
@@ -49,7 +49,7 @@
   </div>
 
   {#if !confirmingReset}
-    <button class="text-xs text-ink-muted dark:text-dark-ink-muted underline mt-6" on:click={() => (confirmingReset = true)}>
+    <button class="tap inline-flex items-center text-xs text-ink-muted dark:text-dark-ink-muted underline mt-6" on:click={() => (confirmingReset = true)}>
       Start over (clears your progress)
     </button>
   {:else}

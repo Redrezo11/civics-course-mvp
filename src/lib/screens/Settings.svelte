@@ -15,7 +15,7 @@
 
 <div class="min-h-screen max-w-md mx-auto px-5 py-6">
   <div class="flex items-center mb-6">
-    <button class="text-sm font-bold underline" on:click={() => navigate('/')}>‹ Back</button>
+    <button class="tap inline-flex items-center text-sm font-bold underline" on:click={() => navigate('/')}>‹ Back</button>
   </div>
 
   <h1 class="text-heading font-bold mb-6">Settings</h1>

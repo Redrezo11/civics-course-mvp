@@ -34,7 +34,7 @@
     </div>
   {:else}
     <button
-      class="w-full text-left border border-border dark:border-dark-border rounded-card py-3 px-4 mb-2.5 font-bold text-sm"
+      class="tap flex items-center w-full text-left border border-border dark:border-dark-border rounded-card py-3 px-4 mb-2.5 font-bold text-sm"
       on:click={() => flip(i)}
     >
       {card.word}

@@ -29,6 +29,18 @@
 }
 
 @layer components {
+  /* 48px minimum tap target (storyboard §8, accessibility rules).
+     Every interactive control carries this. Controls that are already taller
+     are unaffected — min-height only ever grows a box, so applying it is safe
+     even where the padding already suffices.
+
+     Why a class rather than per-component padding: the rule is course-wide and
+     a build check enforces it (QA gate check 11). A shared class is something
+     the checker can actually look for; scattered padding values are not. */
+  .tap {
+    @apply min-h-[48px];
+  }
+
   /* Interactive border = "you can tap this" (G-16 rule, applies to build too).
      Never apply .border-interactive to non-tappable elements. */
   .btn-primary {

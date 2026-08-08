@@ -155,7 +155,7 @@
               <p class="text-sm mb-2">{si.text}</p>
               <div class="flex gap-2">
                 {#each item.buckets as b, bi}
-                  <button class="btn-secondary !py-1.5 !text-xs" on:click={() => assignBucket(i, si_i, bi)}>{b}</button>
+                  <button class="btn-secondary tap !py-1.5 !text-xs" on:click={() => assignBucket(i, si_i, bi)}>{b}</button>
                 {/each}
               </div>
             </div>
@@ -175,7 +175,7 @@
               {/each}
             {/if}
           </div>
-          <button class="text-xs underline text-ink-muted dark:text-dark-ink-muted mt-2" on:click={() => resetSort(i)}>
+          <button class="tap inline-flex items-center text-xs underline text-ink-muted dark:text-dark-ink-muted mt-2" on:click={() => resetSort(i)}>
             Try again
           </button>
           {#if i < items.length - 1}
@@ -206,13 +206,13 @@
           {#each scrambled(item.orderItems) as entry}
             {#if !(orderPicks[i] || []).includes(entry.i)}
               <button
-                class="block w-full text-left py-2.5 px-4 mb-2 rounded-card font-bold text-sm border-2 border-border-interactive dark:border-dark-border-interactive"
+                class="tap flex items-center w-full text-left py-2.5 px-4 mb-2 rounded-card font-bold text-sm border-2 border-border-interactive dark:border-dark-border-interactive"
                 on:click={() => pickOrder(i, entry.i)}
               >{entry.text}</button>
             {/if}
           {/each}
           {#if (orderPicks[i] || []).length > 0}
-            <button class="text-xs underline text-ink-muted dark:text-dark-ink-muted mt-1" on:click={() => resetOrder(i)}>
+            <button class="tap inline-flex items-center text-xs underline text-ink-muted dark:text-dark-ink-muted mt-1" on:click={() => resetOrder(i)}>
               Start over
             </button>
           {/if}
@@ -225,7 +225,7 @@
               {#each item.orderItems as t, n}<br />{n + 1}. {t}{/each}
             {/if}
           </div>
-          <button class="text-xs underline text-ink-muted dark:text-dark-ink-muted mt-2" on:click={() => resetOrder(i)}>
+          <button class="tap inline-flex items-center text-xs underline text-ink-muted dark:text-dark-ink-muted mt-2" on:click={() => resetOrder(i)}>
             Try again
           </button>
           {#if i < items.length - 1}
@@ -247,7 +247,7 @@
         {#each item.options as opt, oi}
           {@const answered = answers[i] !== undefined}
           <button
-            class="block w-full text-left py-2.5 px-4 mb-2 rounded-full font-bold text-sm border-2 transition-colors
+            class="tap flex items-center w-full text-left py-2.5 px-4 mb-2 rounded-full font-bold text-sm border-2 transition-colors
               {answered && oi === item.correctIndex ? 'bg-gotit-bg dark:bg-dark-gotit-bg border-gotit dark:border-dark-gotit' : ''}
               {answered && oi !== item.correctIndex ? 'border-border-interactive dark:border-dark-border-interactive opacity-55' : ''}
               {!answered ? 'border-border-interactive dark:border-dark-border-interactive' : ''}"

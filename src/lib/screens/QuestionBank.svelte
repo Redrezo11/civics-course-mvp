@@ -43,7 +43,7 @@
 
 <div class="min-h-screen max-w-md mx-auto flex flex-col">
   <div class="px-5 py-6 flex-1">
-    <button class="text-sm font-bold underline mb-4" on:click={() => navigate('/')}>‹ Back</button>
+    <button class="tap inline-flex items-center text-sm font-bold underline mb-4" on:click={() => navigate('/')}>‹ Back</button>
 
     <input
       type="text"
@@ -63,7 +63,7 @@
     {#each filtered as q (q.id)}
       <div class="border border-border dark:border-dark-border rounded-card mb-2 overflow-hidden">
         <button
-          class="w-full flex items-center justify-between py-2.5 px-4 text-left text-sm"
+          class="tap w-full flex items-center justify-between py-2.5 px-4 text-left text-sm"
           on:click={() => (expanded = expanded === q.id ? null : q.id)}
         >
           <span>{q.id.slice(1)}. {q.official}{q.star ? ' ★' : ''}</span>
@@ -99,7 +99,7 @@
             {/if}
             <div class="mt-2">
               <button
-                class="text-xs font-bold underline text-ink dark:text-dark-ink"
+                class="tap inline-flex items-center text-xs font-bold underline text-ink dark:text-dark-ink"
                 on:click={() => navigate(`/unit/${q.unit}`)}
               >
                 Why is this the answer? → {UNIT_NAMES[q.unit] || q.unit}
@@ -118,7 +118,7 @@
   </div>
 
   <div class="flex border-t border-border dark:border-dark-border bg-raised dark:bg-dark-raised">
-    <button class="flex-1 text-center py-3 text-sm text-ink-muted dark:text-dark-ink-muted" on:click={() => navigate('/')}>
+    <button class="tap flex-1 text-center py-3 text-sm text-ink-muted dark:text-dark-ink-muted" on:click={() => navigate('/')}>
       Learn
     </button>
     <div class="flex-1 text-center py-3 text-sm font-bold">All {TOTAL_QUESTIONS} questions</div>

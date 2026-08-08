@@ -29,7 +29,7 @@
 <div>
   {#each options as opt, i}
     <button
-      class="block w-full text-left py-2.5 px-4 mb-2.5 rounded-full font-bold text-sm border-2 transition-colors
+      class="tap flex items-center w-full text-left py-2.5 px-4 mb-2.5 rounded-full font-bold text-sm border-2 transition-colors
         {answered && i === correctIndex ? 'bg-gotit-bg dark:bg-dark-gotit-bg border-gotit dark:border-dark-gotit text-ink dark:text-dark-ink' : ''}
         {answered && i !== correctIndex ? 'border-border-interactive dark:border-dark-border-interactive text-ink-muted dark:text-dark-ink-muted opacity-60' : ''}
         {!answered ? 'border-border-interactive dark:border-dark-border-interactive text-ink dark:text-dark-ink' : ''}"

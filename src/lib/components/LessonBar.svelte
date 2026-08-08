@@ -28,7 +28,7 @@
 
 <div class="flex items-center justify-between px-4 py-2.5 border-b border-border dark:border-dark-border min-h-11">
   <button
-    class="text-sm font-bold underline underline-offset-2 text-ink dark:text-dark-ink py-1.5"
+    class="tap inline-flex items-center text-sm font-bold underline underline-offset-2 text-ink dark:text-dark-ink px-1"
     on:click={handleBack}
   >
     ‹ Back
@@ -37,7 +37,7 @@
     {unitLabel}{unitLabel && position ? ' · ' : ''}{position}
   </span>
   <button
-    class="text-sm font-bold underline underline-offset-2 text-ink dark:text-dark-ink py-1.5"
+    class="tap inline-flex items-center text-sm font-bold underline underline-offset-2 text-ink dark:text-dark-ink px-1"
     on:click={handleExit}
   >
     Exit ✕

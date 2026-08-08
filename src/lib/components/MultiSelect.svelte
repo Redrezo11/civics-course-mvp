@@ -44,7 +44,7 @@
     {@const reveal = answered && isCorrectOption(opt)}
     {@const wrongPick = answered && picked && !isCorrectOption(opt)}
     <button
-      class="block w-full text-left py-2.5 px-4 mb-2.5 rounded-card font-bold text-sm border-2 transition-colors
+      class="tap flex items-center w-full text-left py-2.5 px-4 mb-2.5 rounded-card font-bold text-sm border-2 transition-colors
         {reveal ? 'bg-gotit-bg dark:bg-dark-gotit-bg border-gotit dark:border-dark-gotit text-ink dark:text-dark-ink' : ''}
         {wrongPick ? 'border-border-interactive dark:border-dark-border-interactive text-ink-muted dark:text-dark-ink-muted' : ''}
         {!answered && picked ? 'border-ink dark:border-dark-ink text-ink dark:text-dark-ink' : ''}

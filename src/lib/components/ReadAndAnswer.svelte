@@ -31,12 +31,12 @@
   <p class="text-center text-ink-secondary dark:text-dark-ink-secondary mb-3">Did you get it right?</p>
   <div class="flex gap-2.5">
     <button
-      class="flex-1 py-2.5 rounded-full font-bold text-sm border-2
+      class="tap flex-1 py-2.5 rounded-full font-bold text-sm border-2
         {marked === 'got' ? 'bg-gotit-bg dark:bg-dark-gotit-bg border-gotit dark:border-dark-gotit' : 'border-border-interactive dark:border-dark-border-interactive'}"
       on:click={() => mark('got')}
     >✓ Got it</button>
     <button
-      class="flex-1 py-2.5 rounded-full font-bold text-sm border-2 border-border-interactive dark:border-dark-border-interactive"
+      class="tap flex-1 py-2.5 rounded-full font-bold text-sm border-2 border-border-interactive dark:border-dark-border-interactive"
       on:click={() => mark('notyet')}
     >↻ Not yet</button>
   </div>

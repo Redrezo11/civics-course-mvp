@@ -126,13 +126,205 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
   if (!current.checked) warn(check, 'current-answers.json has no "checked" date');
 }
 
-// --- 5. Distractor safety --------------------------------------------------
+// --- 4. Readability (G-15) -------------------------------------------------
+// "Short declarative sentences (aim ≤15 words average), high-frequency
+// vocabulary outside taught terms, present tense where meaning allows."
+//
+// Only OUR prose is measured. Official question wording and accepted answers
+// are verbatim USCIS text — we may not rewrite them, so scoring them would be
+// noise. cardText and pairedOfficial quote official wording and are excluded
+// for the same reason.
+//
+// The aim is a target, not a hard limit, and the teaching text is final copy
+// from the storyboard. So exceeding 15 warns with the number; only genuinely
+// unreadable prose fails.
+{
+  const check = '4 readability';
+  const PROSE_KEYS = new Set([
+    'body', 'closing', 'resolution', 'handle', 'handleSub', 'example',
+    'nonExample', 'takeaway', 'heading', 'afterQuote', 'afterTest',
+    'coverageLine', 'learnedLine', 'askSomeone', 'feedback', 'question',
+    'instructions', 'smallPrint', 'privacyLine', 'q14Note', 'def', 'unitLabel',
+  ]);
+  const LIST_KEYS = new Set(['bodyList', 'bodyList2', 'paragraphs']);
+
+  function harvest(node, out) {
+    if (Array.isArray(node)) {
+      node.forEach((n) => harvest(n, out));
+      return;
+    }
+    if (!node || typeof node !== 'object') return;
+    for (const [k, v] of Object.entries(node)) {
+      if (k === 'cardText' || k === 'pairedOfficial' || k === 'options') continue;
+      if (typeof v === 'string') {
+        if (PROSE_KEYS.has(k)) out.push(v);
+      } else if (LIST_KEYS.has(k) && Array.isArray(v)) {
+        v.forEach((s) => typeof s === 'string' && out.push(s));
+      } else {
+        harvest(v, out);
+      }
+    }
+  }
+
+  const syllables = (word) => {
+    const w = word.toLowerCase().replace(/[^a-z]/g, '');
+    if (!w) return 0;
+    if (w.length <= 3) return 1;
+    const groups = w
+      .replace(/(?:es|ed|[^laeiouy]e)$/, '')
+      .match(/[aeiouy]{1,2}/g);
+    return groups ? groups.length : 1;
+  };
+
+  const rows = [];
+  let hardFail = false;
+  for (const u of units) {
+    const prose = [];
+    harvest(u.screens, prose);
+    const text = prose.join(' ');
+    const sentences = text
+      .split(/(?<=[.!?])\s+/)
+      .map((s) => s.trim())
+      .filter((s) => s.split(/\s+/).length > 1);
+    const words = text.split(/\s+/).filter((w) => /[a-z]/i.test(w));
+    if (!sentences.length || !words.length) continue;
+
+    const avg = words.length / sentences.length;
+    const longest = sentences.reduce(
+      (a, s) => Math.max(a, s.split(/\s+/).length),
+      0
+    );
+    const syl = words.reduce((n, w) => n + syllables(w), 0);
+    // Flesch–Kincaid grade level.
+    const fk = 0.39 * avg + 11.8 * (syl / words.length) - 15.59;
+
+    rows.push({ unit: u.id, avg, longest, fk, sentences: sentences.length });
+
+    if (avg > 20) {
+      fail(check, `${u.id} averages ${avg.toFixed(1)} words per sentence (G-15 aims for ≤15; >20 is a failure)`);
+      hardFail = true;
+    }
+    if (longest > 45) {
+      fail(check, `${u.id} contains a ${longest}-word sentence — unreadable at this level`);
+      hardFail = true;
+    }
+  }
+
+  for (const r of rows) {
+    const note = `${r.unit}: ${r.avg.toFixed(1)} words/sentence, longest ${r.longest}, ~grade ${r.fk.toFixed(1)}`;
+    if (r.avg > 15) warn(check, `${note} — above the ≤15 aim`);
+  }
+  if (!hardFail) {
+    const worst = rows.reduce((a, b) => (b.avg > a.avg ? b : a), rows[0]);
+    pass(
+      check,
+      `all ${rows.length} units within the readable band (worst: ${worst.unit} at ${worst.avg.toFixed(1)} words/sentence)`
+    );
+  }
+  warn(check, 'grade level is indicative only — the storyboard\'s copy is final and is not rewritten to chase a score');
+}
+
+// --- 5. Contrast, audited twice --------------------------------------------
+// Light and dark are two separate audits (storyboard §8 / dark-theme build
+// requirement), not one palette passed through a filter. Text needs 4.5:1;
+// UI boundaries that carry meaning need 3:1.
+{
+  const check = '5 contrast';
+  const config = readFileSync(join(root, 'tailwind.config.js'), 'utf8');
+  const colors = {};
+  for (const m of config.matchAll(/'?([a-z-]+)'?\s*:\s*'(#[0-9A-Fa-f]{6})'/g)) {
+    colors[m[1]] = m[2];
+  }
+
+  const srgb = (h) =>
+    [1, 3, 5].map((i) => {
+      const v = parseInt(h.substr(i, 2), 16) / 255;
+      return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+    });
+  const lum = (h) => {
+    const [r, g, b] = srgb(h);
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  };
+  const ratio = (a, b) => {
+    const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x);
+    return (hi + 0.05) / (lo + 0.05);
+  };
+
+  // 'text' = 4.5:1. 'ui' = 3:1, for boundaries that MEAN something —
+  // border-interactive is the "you can tap this" signal (G-16), the focus ring
+  // must be findable, and the correct-answer marker must be distinguishable.
+  //
+  // The plain `border` token is deliberately absent: it draws decorative
+  // dividers and container edges that carry no state and no affordance, which
+  // WCAG 1.4.11 exempts. Listing it would manufacture a failure that means
+  // nothing — but note that this is exactly why `border` must never be used to
+  // signal that something is tappable.
+  const PAIRS = [
+    ['light', 'text', 'ink', 'surface'],
+    ['light', 'text', 'ink', 'raised'],
+    ['light', 'text', 'ink-secondary', 'surface'],
+    ['light', 'text', 'ink-secondary', 'raised'],
+    ['light', 'text', 'ink-muted', 'surface'],
+    ['light', 'text', 'ink-muted', 'raised'],
+    ['light', 'text', 'accent-ink', 'accent'],
+    ['light', 'text', 'ink', 'gotit-bg'],
+    ['light', 'text', 'gotit', 'gotit-bg'],
+    ['light', 'text', 'surface', 'ink'],
+    ['light', 'ui', 'border-interactive', 'surface'],
+    ['light', 'ui', 'border-interactive', 'raised'],
+    ['light', 'ui', 'border-interactive', 'gotit-bg'],
+    ['light', 'ui', 'accent', 'surface'],
+    ['light', 'ui', 'accent', 'raised'],
+    ['light', 'ui', 'gotit', 'gotit-bg'],
+    ['light', 'ui', 'ink', 'raised'],
+    ['dark', 'text', 'dark-ink', 'dark-surface'],
+    ['dark', 'text', 'dark-ink', 'dark-raised'],
+    ['dark', 'text', 'dark-ink-secondary', 'dark-surface'],
+    ['dark', 'text', 'dark-ink-secondary', 'dark-raised'],
+    ['dark', 'text', 'dark-ink-muted', 'dark-surface'],
+    ['dark', 'text', 'dark-ink-muted', 'dark-raised'],
+    ['dark', 'text', 'dark-accent-ink', 'dark-accent'],
+    ['dark', 'text', 'dark-ink', 'dark-gotit-bg'],
+    ['dark', 'text', 'dark-gotit', 'dark-gotit-bg'],
+    ['dark', 'text', 'dark-surface', 'dark-ink'],
+    ['dark', 'ui', 'dark-border-interactive', 'dark-surface'],
+    ['dark', 'ui', 'dark-border-interactive', 'dark-raised'],
+    ['dark', 'ui', 'dark-border-interactive', 'dark-gotit-bg'],
+    ['dark', 'ui', 'dark-accent', 'dark-surface'],
+    ['dark', 'ui', 'dark-accent', 'dark-raised'],
+    ['dark', 'ui', 'dark-gotit', 'dark-gotit-bg'],
+    ['dark', 'ui', 'dark-ink', 'dark-raised'],
+  ];
+
+  const worst = { light: Infinity, dark: Infinity };
+  for (const [theme, kind, fg, bg] of PAIRS) {
+    if (!colors[fg] || !colors[bg]) {
+      fail(check, `token missing from tailwind.config.js: ${!colors[fg] ? fg : bg}`);
+      continue;
+    }
+    const r = ratio(colors[fg], colors[bg]);
+    const min = kind === 'text' ? 4.5 : 3;
+    if (r < min) {
+      fail(check, `${theme}: ${fg} on ${bg} is ${r.toFixed(2)}:1, needs ${min}:1`);
+    }
+    worst[theme] = Math.min(worst[theme], r / min);
+  }
+  if (!errors.some((e) => e.startsWith(check))) {
+    pass(
+      check,
+      `${PAIRS.length} token pairs across two independent audits (light and dark) meet 4.5:1 / 3:1`
+    );
+  }
+  warn(check, 'photographs need a human glare check in dark mode — not measurable here');
+}
+
+// --- 9. Distractor safety --------------------------------------------------
 // Wrong-category rule: a distractor must not be a plausible false fact about
 // the same subject, because repeated exposure would teach the error. Full
 // judgement is human; what is mechanical is that a distractor must never be
 // one of the question's own accepted answers.
 {
-  const check = '5 distractor safety';
+  const check = '9 distractor safety';
   for (const q of questions) {
     if (!q.options || q.multiSelect) continue;
     q.options.forEach((opt, i) => {
@@ -155,11 +347,11 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
   }
 }
 
-// --- 6. Counter honesty ----------------------------------------------------
+// --- 7. Counter honesty ----------------------------------------------------
 // G-22: no screen may claim the learner "can answer N" questions they have
 // only been shown. Taught ≠ practiced.
 {
-  const check = '6 counter honesty';
+  const check = '7 counter honesty';
   const banned = /can answer \d+|you can answer/i;
   const hits = [
     ...sourceText.filter(({ text }) => banned.test(text)).map((o) => o.f.replace(root, '')),
@@ -171,9 +363,9 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
   else pass(check, 'no screen claims the learner "can answer" questions merely shown');
 }
 
-// --- 7. Alt text -----------------------------------------------------------
+// --- 6. Alt text -----------------------------------------------------------
 {
-  const check = '7 alt text';
+  const check = '6 alt text';
   // The storyboard is explicit: alt text is authored at storyboard stage and
   // "a missing alt fails QA". Not a warning.
   let missing = 0;
@@ -219,9 +411,9 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
   }
 }
 
-// --- 9. Screen/content integrity (not in §9.2b; added because it is cheap) --
+// --- 10. Screen/content integrity (extra; cheap and catches wiring slips) ---
 {
-  const check = '9 content wiring';
+  const check = '10 content wiring';
   const ids = new Set(questions.map((q) => q.id));
   const screenIds = new Set();
   for (const u of units) {
@@ -278,17 +470,60 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
 }
 
 // --- Human-only items, always reported -------------------------------------
+// --- 11. Tap targets -------------------------------------------------------
+// Storyboard §8: 48px tap targets. Enforced structurally — every button must
+// carry .tap (min-height 48px) or one of the .btn-* classes, which are taller
+// than 48px by construction.
+//
+// The exception list is deliberately tiny and named. WCAG 2.5.8 exempts a
+// target that sits inline within a sentence, because enlarging it would break
+// the line it lives in; Home's footer "Help · Settings" is exactly that case.
+// Anything not on this list must meet the rule.
+{
+  const check = '11 tap targets';
+  const INLINE_EXCEPTIONS = [
+    "navigate('/help')",
+    "navigate('/settings')",
+  ];
+  const offenders = [];
+  for (const { f, text } of sourceText) {
+    if (!f.endsWith('.svelte')) continue;
+    // NOT /<button[\s\S]*?>/ — an arrow function in on:click contains a ">",
+    // so a non-greedy match to the first ">" truncates the tag and loses the
+    // handler the exception list keys on. Take a fixed window instead.
+    const buttons = [...text.matchAll(/<button/g)].map((m) =>
+      text.slice(m.index, m.index + 320)
+    );
+    for (const b of buttons) {
+      if (/\btap\b|btn-primary|btn-secondary/.test(b)) continue;
+      if (INLINE_EXCEPTIONS.some((ex) => b.includes(ex))) continue;
+      const cls = (b.match(/class="([^"]*)"/) || [, '(no class)'])[1];
+      offenders.push(`${f.replace(root, '')} → ${cls.slice(0, 70)}`);
+    }
+  }
+  if (offenders.length) {
+    fail(check, `${offenders.length} control(s) without a 48px target:\n          ${offenders.join('\n          ')}`);
+  } else {
+    pass(check, 'every interactive control carries a 48px minimum target (.tap or .btn-*)');
+  }
+}
+
+// Contrast and readability USED to be listed here as human-only. They are not:
+// both are mechanical and are now checks 4 and 5. What genuinely cannot be
+// done in this script is anything requiring the source document or human
+// judgement about rendered output.
 warn('human', 'official wording and accepted answers must be confirmed against a freshly downloaded M-1778');
-warn('human', 'light and dark themes are two separate contrast audits (§8) — not checked here');
-warn('human', 'readability band (G-15) not checked here');
+warn('human', 'text at 200% zoom and with a screen reader needs a real device pass (WCAG 1.4.4 / 4.1.2)');
 
 // --- Report ----------------------------------------------------------------
 const warnOnly = process.argv.includes('--warn');
 
+const byNumber = (a, b) => (parseInt(a, 10) || 99) - (parseInt(b, 10) || 99);
+
 console.log('\nBuild-time QA gate — storyboard §9.2b\n');
-for (const p of passes) console.log(`  PASS  ${p}`);
-for (const w of warnings) console.log(`  WARN  ${w}`);
-for (const e of errors) console.log(`  FAIL  ${e}`);
+for (const p of [...passes].sort(byNumber)) console.log(`  PASS  ${p}`);
+for (const w of [...warnings].sort(byNumber)) console.log(`  WARN  ${w}`);
+for (const e of [...errors].sort(byNumber)) console.log(`  FAIL  ${e}`);
 
 console.log(
   `\n${passes.length} passed · ${warnings.length} warnings · ${errors.length} failures\n`

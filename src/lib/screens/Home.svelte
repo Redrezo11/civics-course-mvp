@@ -53,7 +53,7 @@
 
     {#if nextUnit}
       <button
-        class="w-full text-left bg-ink dark:bg-dark-accent text-surface dark:text-dark-accent-ink rounded-card p-4 mb-5"
+        class="tap w-full text-left bg-ink dark:bg-dark-accent text-surface dark:text-dark-accent-ink rounded-card p-4 mb-5"
         on:click={() => navigate(`/unit/${nextUnit.id}`)}
       >
         <div class="text-[10px] tracking-wide opacity-70 mb-1">CONTINUE</div>
@@ -69,7 +69,7 @@
         {@const built = builtUnits.includes(u.id)}
         {@const done = $progress.unitsCompleted.includes(u.id)}
         <button
-          class="w-full flex items-center justify-between py-2.5 border-b border-border dark:border-dark-border text-sm text-left disabled:opacity-45"
+          class="tap w-full flex items-center justify-between py-2.5 border-b border-border dark:border-dark-border text-sm text-left disabled:opacity-45"
           disabled={!built}
           on:click={() => built && navigate(`/unit/${u.id}`)}
         >
@@ -87,7 +87,7 @@
         {#each reviews as r}
           {@const done = $progress.reviewsDone.includes(r)}
           <button
-            class="w-full flex items-center justify-between py-2.5 border-b border-border dark:border-dark-border text-sm text-left"
+            class="tap w-full flex items-center justify-between py-2.5 border-b border-border dark:border-dark-border text-sm text-left"
             on:click={() => navigate(`/review/${r}`)}
           >
             <span class="flex-1">{REVIEWS[r].label} — questions from every lesson so far</span>
@@ -106,7 +106,7 @@
       <div class="border-t border-border dark:border-dark-border">
         {#each unfinishedBanks as u}
           <button
-            class="w-full flex items-center justify-between py-2.5 border-b border-border dark:border-dark-border text-sm text-left"
+            class="tap w-full flex items-center justify-between py-2.5 border-b border-border dark:border-dark-border text-sm text-left"
             on:click={() => navigate(`/practice/${u.id}`)}
           >
             <span class="flex-1">All {u.total} from {u.name}</span>
@@ -125,10 +125,10 @@
 
   <div class="flex border-t border-border dark:border-dark-border bg-raised dark:bg-dark-raised">
     <div class="flex-1 text-center py-3 text-sm font-bold">Learn</div>
-    <button class="flex-1 text-center py-3 text-sm text-ink-muted dark:text-dark-ink-muted" on:click={() => navigate('/rehearsal')}>
+    <button class="tap flex-1 text-center py-3 text-sm text-ink-muted dark:text-dark-ink-muted" on:click={() => navigate('/rehearsal')}>
       Rehearsal
     </button>
-    <button class="flex-1 text-center py-3 text-sm text-ink-muted dark:text-dark-ink-muted" on:click={() => navigate('/questions')}>
+    <button class="tap flex-1 text-center py-3 text-sm text-ink-muted dark:text-dark-ink-muted" on:click={() => navigate('/questions')}>
       All {TOTAL_QUESTIONS} questions
     </button>
   </div>

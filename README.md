@@ -30,13 +30,29 @@ Live: https://redrezo11.github.io/civics-course-mvp/
 npm run qa        # fails on any error — this is what CI runs, before the build
 npm run qa:warn   # report only
 ```
-Implements storyboard §9.2b as code: question integrity (128, gapless, unit
-counts), Q48 freshness, dynamic-answer isolation, distractor safety, counter
-honesty (G-22), alt-text completeness, zero external requests (G-11/G-12), and
-content wiring. Items that genuinely need a human — official wording against a
-freshly downloaded M-1778, the two contrast audits, the readability band — are
-printed as warnings every run so they stay visible. They are never reported as
-passes.
+Implements storyboard §9.2b and architecture-plan §9 as code — 11 checks,
+numbered to match the plan:
+
+| # | Check |
+|---|---|
+| 1 | Question integrity — 128, gapless, unit counts match the coverage matrix |
+| 2 | Q48 freshness — no Cabinet title hardcoded outside the question data |
+| 3 | Dynamic-answer isolation — ◆ items carry no fixed options |
+| 4 | Readability (G-15) — words/sentence and grade level, our prose only |
+| 5 | Contrast — 34 token pairs, light and dark audited independently |
+| 6 | Alt-text completeness |
+| 7 | Counter honesty (G-22) |
+| 8 | Zero external requests (G-11/G-12) |
+| 9 | Distractor safety |
+| 10 | Content wiring — every question reference resolves |
+| 11 | Tap targets — every control carries a 48px minimum |
+
+Checks 4, 5 and 11 were previously described as "human work". They are not:
+sentence length, WCAG contrast ratios and target sizes are all mechanical. What
+genuinely still needs a person is official wording against a freshly downloaded
+M-1778, a glare check on photographs in dark mode, and a real-device pass at
+200% zoom with a screen reader. Those print as warnings every run so they stay
+visible, and are never reported as passes.
 
 ## Architecture notes for whoever picks this up next
 

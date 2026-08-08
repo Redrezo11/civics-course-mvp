@@ -24,7 +24,13 @@ export default {
         'dark-ink-secondary': '#ADA69C',
         'dark-ink-muted': '#918A80',
         'dark-border': '#3A352D',
-        'dark-border-interactive': '#6B645A',
+        // Raised from #6B645A: the old value cleared 3:1 against dark-surface
+        // (3.13) but only reached 2.81 against dark-raised, and this token is
+        // the "you can tap this" affordance — it appears on .btn-secondary and
+        // on every option button, including inside raised containers. A UI
+        // boundary that carries meaning has to hold 3:1 on every background it
+        // is used on, not just the most favourable one. Now 3.37 / 3.74.
+        'dark-border-interactive': '#787065',
         'dark-accent': '#E3A257',
         'dark-accent-ink': '#17150F',
         'dark-gotit': '#86BE7F',
