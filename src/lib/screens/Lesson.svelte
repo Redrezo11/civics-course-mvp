@@ -317,21 +317,12 @@
         {/if}
 
       {:else if screen.type === 'lockItIn'}
+        <!-- No companion placeholder here. On a hook screen the striped circle
+             marks where the character will speak; on the finishing screen it is
+             a stand-in for nothing and makes a completed lesson look unbuilt. -->
         <h2 class="text-heading font-bold text-center mb-3">{screen.heading}</h2>
-        <div class="w-16 h-16 rounded-full mx-auto mb-4 bg-[repeating-linear-gradient(135deg,theme(colors.border),theme(colors.border)_6px,theme(colors.surface)_6px,theme(colors.surface)_12px)]"></div>
-        <p class="text-sm text-center mb-5">{screen.learnedLine}</p>
+        <p class="text-center mb-6">{screen.learnedLine}</p>
 
-        <!-- The one piece of real instruction that used to live on the removed
-             beat-8 screen: G-19, smallest safe answer. "Give exactly what is
-             asked", "any one is enough". Kept because it is test-taking advice
-             the learner cannot get anywhere else — the rest of that screen only
-             re-listed questions already reachable in the bank, in practice and
-             in the full-bank set. -->
-        {#if screen.strategyNote}
-          <div class="border border-border dark:border-dark-border rounded-card p-3 mb-4 text-sm leading-relaxed">
-            {screen.strategyNote}
-          </div>
-        {/if}
         <!-- G-08 entry point. Optional and non-blocking: it sits above the
              Next control, never in place of it, so it can never gate
              progression to the following unit. -->
@@ -349,7 +340,17 @@
             on:click={() => navigate(`/review/${screen.unlocksReview}`)}
           >Start {screen.unlocksReview} — {screen.unlocksReview === 'R3' ? '10' : '8'} mixed questions</button>
         {/if}
-        <p class="text-xs text-ink-muted dark:text-dark-ink-muted text-center mt-4">{screen.askSomeone}</p>
+        <!-- Beat 10's spaced-retrieval prompt. Telling someone the answer IS
+             studying, which is why it says "any language" — the retrieval is
+             the point, not the English. It was rendered as 12px muted text
+             under a button, where it read as a disclaimer rather than the last
+             instruction of the lesson. -->
+        {#if screen.askSomeone}
+          <div class="border border-border dark:border-dark-border rounded-card p-4 mt-6">
+            <p class="text-sm font-bold mb-1">Before you go</p>
+            <p class="leading-relaxed">{screen.askSomeone}</p>
+          </div>
+        {/if}
       {/if}
       {/key}
     </div>

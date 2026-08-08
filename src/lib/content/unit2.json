@@ -244,8 +244,7 @@
         "label": "Practice all 20 questions"
       },
       "askSomeone": "Point at a picture of the White House and ask someone: what is the job of the person who works here?",
-      "unlocksReview": "R1",
-      "strategyNote": "Q48 asks for two Cabinet-level positions. Three easy ones: Secretary of State, Secretary of War (Defense), Attorney General. Q57 — the Chief Justice — changes with appointments, so check the Current Answers page."
+      "unlocksReview": "R1"
     }
   ]
 }

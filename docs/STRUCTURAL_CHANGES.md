@@ -72,12 +72,32 @@ other practice screen has been: "The correct answer is ⟨…⟩."
 
 QA check 12 now blocks `readAndAnswer` from reappearing in unit content.
 
-### 1.3 Strings relocated — same text, new home
+### 1.3 The seven strategy tips are gone — do not translate them
 
-The seven per-unit strategy tips moved from the removed beat-8 screens onto each
-unit's `lockItIn` screen. The JSON key changed from `q14Note` to `strategyNote`
-(the old name was a misnomer — only U1's tip concerns Q14). **Text unchanged**,
-so an existing translation can be moved rather than redone.
+They were briefly moved from the removed beat-8 screens onto each unit's
+`lockItIn` (as `strategyNote`), then deleted. **Retire these strings entirely.**
+
+They were kept at first on the argument that they were the only instruction on
+the screens being removed. That was wrong once they were detached from the
+question list:
+
+- All seven address a reader looking at numbered questions — they open with or
+  cite Q14, Q48, Q57, Q65, Q67, Q81, Q117, Q118. The lesson path never shows a
+  question number, so on Lock it in they addressed nobody.
+- Two were broken English in the new location: "Five of **these** change with
+  elections" (U3) and "Two of **these** depend on where you live" (U4). *These*
+  was the deleted list.
+- The content is already delivered where it matters: MultiSelect states the
+  required count and marks every accepted answer ✓; every ◆ card warns that the
+  answer changes with elections.
+
+### 1.3b Lock it in — presentation changed, copy unchanged
+
+`askSomeone` (beat 10's spaced-retrieval prompt) was rendered as 12px muted
+centred text below a button, where it read as a disclaimer. It is now a labelled
+block — heading **"Before you go"**, prompt at body size. The prompt text itself
+is unchanged, so any existing translation still applies; the new heading is one
+short new string.
 
 ### 1.4 Screens added — entirely new strings
 
@@ -166,7 +186,7 @@ readability check measures:
 `resolution` · `handle` · `handleSub` · `example` · `nonExample` · `takeaway` ·
 `heading` · `afterQuote` · `afterTest` · `coverageLine` · `learnedLine` ·
 `askSomeone` · `feedback` · `question` · `instructions` · `smallPrint` ·
-`privacyLine` · `strategyNote` · `feedbackExplain` · `unitLabel`
+`privacyLine` · `feedbackExplain` · `unitLabel`
 
 Also translatable, nested: `cards[].word` / `.def` / `.example` (vocabulary),
 `termA`/`termB` `.name` and `.def` (confusable pairs), `sortItems[].text`,
@@ -208,7 +228,7 @@ the app substitutes at runtime; keep the placeholder in any translation.
 #### `src/lib/components/MultiSelect.svelte` — 5
 
 - Accepted answers are marked ✓.
-- Any ⟨…⟩ of them is enough — the officer asks for ⟨…⟩, so give ⟨…⟩ and stop.
+- Any ⟨…⟩ of them is enough — the officer asks for ⟨…⟩, so give ⟨…⟩ and stop. ⟨…⟩
 - Check my answer
 - Choose ⟨…⟩.
 - {chosen.length
@@ -305,8 +325,9 @@ the app substitutes at runtime; keep the placeholder in any translation.
 - English
 - You can change this anytime in Settings.
 
-#### `src/lib/screens/Lesson.svelte` — 10
+#### `src/lib/screens/Lesson.svelte` — 11
 
+- Before you go
 - Check at uscis.gov
 - Checked: ⟨…⟩
 - Current answer
@@ -397,7 +418,8 @@ the app substitutes at runtime; keep the placeholder in any translation.
 - Welcome.
 - companion character
 
-**Total: 157 strings across 18 files.**
+**Total: 158 strings across 18 files.**
+
 
 ---
 
@@ -411,7 +433,7 @@ and each one will stop the work dead.
 Architecture plan §4/§5 specifies `content/ui-strings.json` with `en` and `my`
 keys, and `content/units/en/` + `content/units/my/`. **Neither was ever built.**
 
-- Every UI string is hardcoded in a component (Part 2.2 — 157 of them).
+- Every UI string is hardcoded in a component (Part 2.2 — 158 of them).
 - Unit JSON has no language dimension: `unit1.json` is one file, not
   `en/unit1.json` and `my/unit1.json`.
 - There is no string-lookup function anywhere in the codebase.

@@ -173,46 +173,6 @@ describe('regressions that previously stranded a learner', () => {
     expect(getState().unitsCompleted).toContain('U1');
   }, 30000);
 
-  it('the strategy tips survived the removal of the beat-8 screen', async () => {
-    resetAll();
-    // U5's tip is the G-19 one: "give exactly what is asked". It used to live
-    // on the officialQuestions screen; it now belongs to Lock it in. Removing
-    // a redundant screen must not quietly take real instruction with it.
-    const { container } = render(Lesson, { props: { unitId: 'U5' } });
-
-    // U5 practises Q65, a "choose 3" multi-select, so the walk needs the same
-    // distinct-option tracking walkUnit uses — clicking the first control over
-    // and over just toggles one answer on and off.
-    let used = new Set();
-    let lastPos = null;
-    for (let i = 0; i < 400; i += 1) {
-      if (getState().unitsCompleted.includes('U5')) break;
-      if (/Give exactly what is asked/.test(container.textContent)) break;
-
-      const pos = position(container);
-      if (pos !== lastPos) {
-        lastPos = pos;
-        used = new Set();
-      }
-
-      const buttons = clickable(container);
-      if (!buttons.length) break;
-      const advances = buttons.filter((b) => ADVANCE.test(b.textContent.trim()));
-      let target;
-      if (advances.length) {
-        target = advances[advances.length - 1];
-      } else {
-        const unpicked = buttons.filter((b) => !/^●/.test(b.textContent.trim()));
-        const pool = unpicked.length ? unpicked : buttons;
-        target = pool.find((b) => !used.has(label(b))) || pool[0];
-        used.add(label(target));
-      }
-      await fireEvent.click(target);
-    }
-
-    expect(container.textContent).toMatch(/Give exactly what is asked/);
-  }, 30000);
-
   it('no unit still renders the removed beat-8 screen', async () => {
     for (const unitId of ['U1', 'U2', 'U5', 'U7']) {
       resetAll();
