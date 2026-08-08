@@ -1,0 +1,615 @@
+[
+  {
+    "id": "Q90",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "What territory did the United States buy from France in 1803?",
+    "acceptedAnswers": ["Louisiana Territory", "Louisiana"],
+    "options": ["Louisiana Territory", "Alaska", "Florida"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q91",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "Name one war fought by the United States in the 1800s.",
+    "acceptedAnswers": [
+      "War of 1812",
+      "Mexican-American War",
+      "Civil War",
+      "Spanish-American War"
+    ],
+    "options": ["War of 1812", "World War I", "The Revolutionary War"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q92",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "Name the U.S. war between the North and the South.",
+    "acceptedAnswers": ["The Civil War"],
+    "options": ["The Civil War", "The Revolutionary War", "World War I"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q93",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "The Civil War had many important events. Name one.",
+    "acceptedAnswers": [
+      "(Battle of) Fort Sumter",
+      "Emancipation Proclamation",
+      "(Battle of) Vicksburg",
+      "(Battle of) Gettysburg",
+      "Sherman's March",
+      "(Surrender at) Appomattox",
+      "(Battle of) Antietam/Sharpsburg",
+      "Lincoln was assassinated"
+    ],
+    "options": [
+      "(Battle of) Fort Sumter",
+      "The Boston Tea Party",
+      "The bombing of Pearl Harbor"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q94",
+    "unit": "U7",
+    "star": true,
+    "dynamic": false,
+    "official": "Abraham Lincoln is famous for many things. Name one.",
+    "acceptedAnswers": [
+      "Freed the slaves (Emancipation Proclamation)",
+      "Saved (or preserved) the Union",
+      "Led the United States during the Civil War",
+      "16th president of the United States",
+      "Delivered the Gettysburg Address"
+    ],
+    "options": [
+      "Freed the slaves (Emancipation Proclamation)",
+      "Wrote the Declaration of Independence",
+      "Was the first president"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q95",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "What did the Emancipation Proclamation do?",
+    "acceptedAnswers": [
+      "Freed the slaves",
+      "Freed slaves in the Confederacy",
+      "Freed slaves in the Confederate states",
+      "Freed slaves in most Southern states"
+    ],
+    "options": [
+      "Freed the slaves",
+      "Ended the Revolutionary War",
+      "Gave women the right to vote"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q96",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "What U.S. war ended slavery?",
+    "acceptedAnswers": ["The Civil War"],
+    "options": ["The Civil War", "The Revolutionary War", "World War II"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q97",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "What amendment says all persons born or naturalized in the United States, and subject to the jurisdiction thereof, are U.S. citizens?",
+    "acceptedAnswers": ["14th Amendment"],
+    "options": ["14th Amendment", "1st Amendment", "22nd Amendment"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q98",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "When did all men get the right to vote?",
+    "acceptedAnswers": [
+      "After the Civil War",
+      "During Reconstruction",
+      "(With the) 15th Amendment",
+      "1870"
+    ],
+    "options": [
+      "After the Civil War",
+      "After World War I",
+      "With the 19th Amendment"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q99",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "Name one leader of the women's rights movement in the 1800s.",
+    "acceptedAnswers": [
+      "Susan B. Anthony",
+      "Elizabeth Cady Stanton",
+      "Sojourner Truth",
+      "Harriet Tubman",
+      "Lucretia Mott",
+      "Lucy Stone"
+    ],
+    "options": ["Susan B. Anthony", "Abraham Lincoln", "Martin Luther King, Jr."],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q100",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "Name one war fought by the United States in the 1900s.",
+    "acceptedAnswers": [
+      "World War I",
+      "World War II",
+      "Korean War",
+      "Vietnam War",
+      "(Persian) Gulf War"
+    ],
+    "options": ["World War I", "The Civil War", "The Revolutionary War"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q101",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "Why did the United States enter World War I?",
+    "acceptedAnswers": [
+      "Because Germany attacked U.S. (civilian) ships",
+      "To support the Allied Powers (England, France, Italy, and Russia)",
+      "To oppose the Central Powers (Germany, Austria-Hungary, the Ottoman Empire, and Bulgaria)"
+    ],
+    "options": [
+      "Because Germany attacked U.S. (civilian) ships",
+      "To stop the spread of communism",
+      "To force the Iraqi military from Kuwait"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q102",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "When did all women get the right to vote?",
+    "acceptedAnswers": ["1920", "After World War I", "(With the) 19th Amendment"],
+    "options": ["1920", "1870", "1965"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q103",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "What was the Great Depression?",
+    "acceptedAnswers": ["Longest economic recession in modern history"],
+    "options": [
+      "Longest economic recession in modern history",
+      "A war fought in Europe",
+      "A movement to end segregation"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q104",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "When did the Great Depression start?",
+    "acceptedAnswers": ["The Great Crash (1929)", "Stock market crash of 1929"],
+    "options": ["The Great Crash (1929)", "1941", "1918"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q105",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "Who was president during the Great Depression and World War II?",
+    "acceptedAnswers": ["(Franklin) Roosevelt"],
+    "options": ["(Franklin) Roosevelt", "Dwight Eisenhower", "Abraham Lincoln"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q106",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "Why did the United States enter World War II?",
+    "acceptedAnswers": [
+      "(Bombing of) Pearl Harbor",
+      "Japanese attacked Pearl Harbor",
+      "To support the Allied Powers (England, France, and Russia)",
+      "To oppose the Axis Powers (Germany, Italy, and Japan)"
+    ],
+    "options": [
+      "(Bombing of) Pearl Harbor",
+      "To stop the spread of communism",
+      "Because Germany attacked U.S. ships"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q107",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "Dwight Eisenhower is famous for many things. Name one.",
+    "acceptedAnswers": [
+      "General during World War II",
+      "President at the end of (during) the Korean War",
+      "34th president of the United States",
+      "Signed the Federal-Aid Highway Act of 1956 (Created the Interstate System)"
+    ],
+    "options": [
+      "General during World War II",
+      "President during the Great Depression",
+      "Led the civil rights movement"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q108",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "Who was the United States' main rival during the Cold War?",
+    "acceptedAnswers": ["Soviet Union", "USSR", "Russia"],
+    "options": ["Soviet Union", "Germany", "Japan"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q109",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "During the Cold War, what was one main concern of the United States?",
+    "acceptedAnswers": ["Communism", "Nuclear war"],
+    "options": [
+      "Communism",
+      "Taxation without representation",
+      "The spread of slavery"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q110",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "Why did the United States enter the Korean War?",
+    "acceptedAnswers": ["To stop the spread of communism"],
+    "options": [
+      "To stop the spread of communism",
+      "Because Japan attacked Pearl Harbor",
+      "To force the Iraqi military from Kuwait"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q111",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "Why did the United States enter the Vietnam War?",
+    "acceptedAnswers": ["To stop the spread of communism"],
+    "options": [
+      "To stop the spread of communism",
+      "Because Germany attacked U.S. ships",
+      "To force the Iraqi military from Kuwait"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q112",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "What did the civil rights movement do?",
+    "acceptedAnswers": ["Fought to end racial discrimination"],
+    "options": [
+      "Fought to end racial discrimination",
+      "Ended the Civil War",
+      "Gave women the right to vote"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q113",
+    "unit": "U7",
+    "star": true,
+    "dynamic": false,
+    "official": "Martin Luther King, Jr. is famous for many things. Name one.",
+    "acceptedAnswers": [
+      "Fought for civil rights",
+      "Worked for equality for all Americans",
+      "Worked to ensure that people would not be judged by the color of their skin, but by the content of their character"
+    ],
+    "options": [
+      "Fought for civil rights",
+      "Wrote the Constitution",
+      "Was the first African American president"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q114",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "Why did the United States enter the Persian Gulf War?",
+    "acceptedAnswers": ["To force the Iraqi military from Kuwait"],
+    "options": [
+      "To force the Iraqi military from Kuwait",
+      "To stop the spread of communism",
+      "Because Japan attacked Pearl Harbor"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q115",
+    "unit": "U7",
+    "star": true,
+    "dynamic": false,
+    "official": "What major event happened on September 11, 2001 in the United States?",
+    "acceptedAnswers": [
+      "Terrorists attacked the United States",
+      "Terrorists took over two planes and crashed them into the World Trade Center in New York City",
+      "Terrorists took over a plane and crashed into the Pentagon in Arlington, Virginia",
+      "Terrorists took over a plane originally aimed at Washington, D.C., and crashed in a field in Pennsylvania"
+    ],
+    "options": [
+      "Terrorists attacked the United States",
+      "The stock market crashed",
+      "The Cold War ended"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q116",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "Name one U.S. military conflict after the September 11, 2001 attacks.",
+    "acceptedAnswers": [
+      "(Global) War on Terror",
+      "War in Afghanistan",
+      "War in Iraq"
+    ],
+    "options": ["(Global) War on Terror", "The Korean War", "The Vietnam War"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q117",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "Name one American Indian tribe in the United States.",
+    "acceptedAnswers": [
+      "Apache",
+      "Blackfeet",
+      "Cayuga",
+      "Cherokee",
+      "Cheyenne",
+      "Chippewa",
+      "Choctaw",
+      "Creek",
+      "Crow",
+      "Hopi",
+      "Huron",
+      "Inupiat",
+      "Lakota",
+      "Mohawk",
+      "Mohegan",
+      "Navajo",
+      "Oneida",
+      "Onondaga",
+      "Pueblo",
+      "Seminole",
+      "Seneca",
+      "Shawnee",
+      "Sioux",
+      "Teton",
+      "Tuscarora"
+    ],
+    "options": ["Apache", "Yorktown", "Saratoga"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q118",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "Name one example of an American innovation.",
+    "acceptedAnswers": [
+      "Light bulb",
+      "Automobile (cars, internal combustion engine)",
+      "Skyscrapers",
+      "Airplane",
+      "Assembly line",
+      "Landing on the moon",
+      "Integrated circuit (IC)"
+    ],
+    "options": ["Light bulb", "The printing press", "Gunpowder"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q119",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "What is the capital of the United States?",
+    "acceptedAnswers": ["Washington, D.C."],
+    "options": ["Washington, D.C.", "New York City", "Philadelphia"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q120",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "Where is the Statue of Liberty?",
+    "acceptedAnswers": ["New York (Harbor)", "Liberty Island"],
+    "options": ["New York (Harbor)", "Washington, D.C.", "Boston Harbor"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q121",
+    "unit": "U7",
+    "star": true,
+    "dynamic": false,
+    "official": "Why does the flag have 13 stripes?",
+    "acceptedAnswers": [
+      "(Because there were) 13 original colonies",
+      "(Because the stripes) represent the original colonies"
+    ],
+    "options": [
+      "(Because there were) 13 original colonies",
+      "For the 13 founding fathers",
+      "For the first 13 amendments"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q122",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "Why does the flag have 50 stars?",
+    "acceptedAnswers": [
+      "(Because there is) one star for each state",
+      "(Because) each star represents a state",
+      "(Because there are) 50 states"
+    ],
+    "options": [
+      "(Because there is) one star for each state",
+      "For 50 years of independence",
+      "For the 50 signers of the Constitution"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q123",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "What is the name of the national anthem?",
+    "acceptedAnswers": ["The Star-Spangled Banner"],
+    "options": [
+      "The Star-Spangled Banner",
+      "America the Beautiful",
+      "The Pledge of Allegiance"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q124",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "The Nation's first motto was “E Pluribus Unum.” What does that mean?",
+    "acceptedAnswers": ["Out of many, one", "We all become one"],
+    "options": ["Out of many, one", "Liberty for all", "In God we trust"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q125",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "What is Independence Day?",
+    "acceptedAnswers": [
+      "A holiday to celebrate U.S. independence (from Britain)",
+      "The country's birthday"
+    ],
+    "options": [
+      "A holiday to celebrate U.S. independence (from Britain)",
+      "A holiday to honor soldiers who died",
+      "A holiday to honor all who served"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q126",
+    "unit": "U7",
+    "star": true,
+    "dynamic": false,
+    "official": "Name three national U.S. holidays.",
+    "acceptedAnswers": [
+      "New Year's Day",
+      "Martin Luther King, Jr. Day",
+      "Presidents Day (Washington's Birthday)",
+      "Memorial Day",
+      "Juneteenth",
+      "Independence Day",
+      "Labor Day",
+      "Columbus Day",
+      "Veterans Day",
+      "Thanksgiving Day",
+      "Christmas Day"
+    ],
+    "multiSelect": 3,
+    "options": [
+      "New Year's Day",
+      "Martin Luther King, Jr. Day",
+      "Presidents Day (Washington's Birthday)",
+      "Memorial Day",
+      "Juneteenth",
+      "Flag Day",
+      "Election Day"
+    ]
+  },
+  {
+    "id": "Q127",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "What is Memorial Day?",
+    "acceptedAnswers": [
+      "A holiday to honor soldiers who died in military service"
+    ],
+    "options": [
+      "A holiday to honor soldiers who died in military service",
+      "A holiday to honor all who served in the military",
+      "A holiday to celebrate independence"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q128",
+    "unit": "U7",
+    "star": false,
+    "dynamic": false,
+    "official": "What is Veterans Day?",
+    "acceptedAnswers": [
+      "A holiday to honor people in the (U.S.) military",
+      "A holiday to honor people who have served (in the U.S. military)"
+    ],
+    "options": [
+      "A holiday to honor people in the (U.S.) military",
+      "A holiday to honor soldiers who died in military service",
+      "A holiday to celebrate independence"
+    ],
+    "correctIndex": 0
+  }
+]

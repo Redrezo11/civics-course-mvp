@@ -2,20 +2,42 @@
   import { onMount } from 'svelte';
   import { navigate } from '../router.js';
   import { progress, questionsPracticedCount } from '../stores/progress.js';
-  import { getQuestion } from '../content/questions.js';
+  import {
+    getQuestion,
+    presentOptions,
+    getCurrentAnswer,
+    ANSWERS_CHECKED,
+    USCIS_UPDATES_URL,
+  } from '../content/questions.js';
   import LessonBar from '../components/LessonBar.svelte';
   import QuestionCard from '../components/QuestionCard.svelte';
   import SingleSelect from '../components/SingleSelect.svelte';
+  import MultiSelect from '../components/MultiSelect.svelte';
   import VocabDeck from '../components/VocabDeck.svelte';
   import GuidedPractice from '../components/GuidedPractice.svelte';
   import ReadAndAnswer from '../components/ReadAndAnswer.svelte';
 
   import unit0 from '../content/unit0.json';
   import unit1 from '../content/unit1.json';
+  import unit2 from '../content/unit2.json';
+  import unit3 from '../content/unit3.json';
+  import unit4 from '../content/unit4.json';
+  import unit5 from '../content/unit5.json';
+  import unit6 from '../content/unit6.json';
+  import unit7 from '../content/unit7.json';
 
   export let unitId;
 
-  const units = { U0: unit0, U1: unit1 };
+  const units = {
+    U0: unit0,
+    U1: unit1,
+    U2: unit2,
+    U3: unit3,
+    U4: unit4,
+    U5: unit5,
+    U6: unit6,
+    U7: unit7,
+  };
   $: unit = units[unitId];
 
   let index = 0;
@@ -108,11 +130,13 @@
 
       {:else if screen.type === 'tryOne'}
         {@const q = getQuestion(screen.questionId)}
+        {@const p = presentOptions(q)}
         <p class="mb-3">{screen.body}</p>
         <QuestionCard text={q.official} />
         <SingleSelect
-          options={q.options}
-          correctIndex={q.correctIndex}
+          options={p.options}
+          correctIndex={p.correctIndex}
+          correctAnswerText={q.acceptedAnswers[0]}
           on:answer={(e) => { handleAnswer(q.id, e.detail.correct); interactionDone = true; }}
         />
 
@@ -229,12 +253,52 @@
 
       {:else if screen.type === 'practice'}
         {@const q = getQuestion(screen.questionId)}
+        <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-2">Practice — the official test question</p>
         <QuestionCard text={q.official} />
-        <SingleSelect
-          options={q.options}
-          correctIndex={q.correctIndex}
-          on:answer={(e) => { handleAnswer(q.id, e.detail.correct); interactionDone = true; }}
-        />
+
+        {#if q.dynamic}
+          <!-- ◆ Dynamic answers are never graded. A fixed distractor set would
+               go stale after an election, and an old distractor could later
+               become the true answer. Shown as a current-answer card instead. -->
+          {@const ca = getCurrentAnswer(q.id)}
+          <div class="border border-border dark:border-dark-border rounded-card p-4">
+            <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-1">{ca?.label || 'Current answer'}</p>
+            {#if ca && ca.verified && ca.value}
+              <p class="text-lg font-bold mb-2">{ca.value}</p>
+              <p class="text-xs text-ink-muted dark:text-dark-ink-muted">
+                Checked: {ANSWERS_CHECKED || 'not yet recorded'}
+              </p>
+            {:else}
+              <p class="font-bold mb-2">This answer has not been checked yet.</p>
+              <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary">
+                This one changes with elections or appointments. Look it up before
+                your interview — never rely on an old answer.
+              </p>
+            {/if}
+            <a
+              class="text-sm underline font-bold inline-block mt-2"
+              href={USCIS_UPDATES_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >Check at uscis.gov</a>
+          </div>
+        {:else if q.multiSelect}
+          {@const p = presentOptions(q)}
+          <MultiSelect
+            options={p.options}
+            acceptedAnswers={q.acceptedAnswers}
+            required={q.multiSelect}
+            on:answer={(e) => { handleAnswer(q.id, e.detail.correct); interactionDone = true; }}
+          />
+        {:else}
+          {@const p = presentOptions(q)}
+          <SingleSelect
+            options={p.options}
+            correctIndex={p.correctIndex}
+            correctAnswerText={q.acceptedAnswers[0]}
+            on:answer={(e) => { handleAnswer(q.id, e.detail.correct); interactionDone = true; }}
+          />
+        {/if}
 
       {:else if screen.type === 'readAndAnswer'}
         {@const q = getQuestion(screen.questionId)}

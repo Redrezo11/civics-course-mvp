@@ -1,0 +1,188 @@
+[
+  {
+    "id": "Q63",
+    "unit": "U5",
+    "star": false,
+    "dynamic": false,
+    "official": "There are four amendments to the U.S. Constitution about who can vote. Describe one of them.",
+    "acceptedAnswers": [
+      "Citizens eighteen (18) and older (can vote)",
+      "You don't have to pay (a poll tax) to vote",
+      "Any citizen can vote (Women and men can vote)",
+      "A male citizen of any race (can vote)"
+    ],
+    "options": [
+      "Citizens eighteen (18) and older (can vote)",
+      "Only people who own land can vote",
+      "Only people born in the United States can vote"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q64",
+    "unit": "U5",
+    "star": false,
+    "dynamic": false,
+    "official": "Who can vote in federal elections, run for federal office, and serve on a jury in the United States?",
+    "acceptedAnswers": ["Citizens", "Citizens of the United States", "U.S. citizens"],
+    "options": [
+      "Citizens",
+      "Everyone living in the United States",
+      "Only people born in the United States"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q65",
+    "unit": "U5",
+    "star": false,
+    "dynamic": false,
+    "official": "What are three rights of everyone living in the United States?",
+    "acceptedAnswers": [
+      "Freedom of expression",
+      "Freedom of speech",
+      "Freedom of assembly",
+      "Freedom to petition the government",
+      "Freedom of religion",
+      "The right to bear arms"
+    ],
+    "multiSelect": 3,
+    "options": [
+      "Freedom of expression",
+      "Freedom of speech",
+      "Freedom of assembly",
+      "Freedom to petition the government",
+      "Freedom of religion",
+      "The right to vote in federal elections",
+      "The right to a driver's license"
+    ]
+  },
+  {
+    "id": "Q66",
+    "unit": "U5",
+    "star": true,
+    "dynamic": false,
+    "official": "What do we show loyalty to when we say the Pledge of Allegiance?",
+    "acceptedAnswers": ["The United States", "The flag"],
+    "options": ["The United States", "The President", "Congress"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q67",
+    "unit": "U5",
+    "star": false,
+    "dynamic": false,
+    "official": "Name two promises that new citizens make in the Oath of Allegiance.",
+    "acceptedAnswers": [
+      "Give up loyalty to other countries",
+      "Defend the (U.S.) Constitution",
+      "Obey the laws of the United States",
+      "Serve in the military (if needed)",
+      "Serve (help, do important work for) the nation (if needed)",
+      "Be loyal to the United States"
+    ],
+    "multiSelect": 2,
+    "options": [
+      "Give up loyalty to other countries",
+      "Defend the (U.S.) Constitution",
+      "Obey the laws of the United States",
+      "Serve in the military (if needed)",
+      "Serve (help, do important work for) the nation (if needed)",
+      "Pay a yearly citizenship fee",
+      "Live in the same state for ten years"
+    ]
+  },
+  {
+    "id": "Q68",
+    "unit": "U5",
+    "star": false,
+    "dynamic": false,
+    "official": "How can people become United States citizens?",
+    "acceptedAnswers": [
+      "Be born in the United States, under the conditions set by the 14th Amendment",
+      "Naturalize",
+      "Derive citizenship (under conditions set by Congress)"
+    ],
+    "options": [
+      "Be born in the United States, under the conditions set by the 14th Amendment",
+      "Apply for a visa",
+      "Register to vote"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q69",
+    "unit": "U5",
+    "star": false,
+    "dynamic": false,
+    "official": "What are two examples of civic participation in the United States?",
+    "acceptedAnswers": [
+      "Vote",
+      "Run for office",
+      "Join a political party",
+      "Help with a campaign",
+      "Join a civic group",
+      "Join a community group",
+      "Give an elected official your opinion (on an issue)",
+      "Contact elected officials",
+      "Support or oppose an issue or policy",
+      "Write to a newspaper"
+    ],
+    "options": ["Vote", "Pay a fee to the government", "Move to a different state"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q70",
+    "unit": "U5",
+    "star": false,
+    "dynamic": false,
+    "official": "What is one way Americans can serve their country?",
+    "acceptedAnswers": [
+      "Vote",
+      "Pay taxes",
+      "Obey the law",
+      "Serve in the military",
+      "Run for office",
+      "Work for local, state, or federal government"
+    ],
+    "options": ["Vote", "Travel to other countries", "Buy American products only"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q71",
+    "unit": "U5",
+    "star": false,
+    "dynamic": false,
+    "official": "Why is it important to pay federal taxes?",
+    "acceptedAnswers": [
+      "Required by law",
+      "All people pay to fund the federal government",
+      "Required by the (U.S.) Constitution (16th Amendment)",
+      "Civic duty"
+    ],
+    "options": [
+      "Required by law",
+      "It is optional for citizens",
+      "It only applies to businesses"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q72",
+    "unit": "U5",
+    "star": false,
+    "dynamic": false,
+    "official": "It is important for all men age 18 through 25 to register for the Selective Service. Name one reason why.",
+    "acceptedAnswers": [
+      "Required by law",
+      "Civic duty",
+      "Makes the draft fair, if needed"
+    ],
+    "options": [
+      "Required by law",
+      "It is required in order to vote",
+      "It replaces paying taxes"
+    ],
+    "correctIndex": 0
+  }
+]

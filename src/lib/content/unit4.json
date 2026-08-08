@@ -1,0 +1,182 @@
+{
+  "id": "U4",
+  "title": "Federal and state",
+  "questionCount": 5,
+  "screens": [
+    {
+      "id": "U4-S01",
+      "type": "orient",
+      "unitLabel": "Unit 4",
+      "heading": "Federal and state",
+      "body": "The officer will ask which level of government does what — questions like:",
+      "sampleQuestionId": "Q59",
+      "afterQuote": "This lesson will help you answer those questions.",
+      "coverageLine": "Only 5 of the 128 — but they guard against easy mistakes.",
+      "afterTest": "After the test: this is why some offices are 'federal' and some are 'state' — and which one to call.",
+      "primaryLabel": "Begin"
+    },
+    {
+      "id": "U4-S02",
+      "type": "hook",
+      "companionPose": "thinking",
+      "question": "Who gave you your driver's license — the United States, or California?",
+      "options": ["The United States", "California", "Both together"],
+      "feedback": "California. Keep that card in your pocket; it unlocks this whole family of questions."
+    },
+    {
+      "id": "U4-S03",
+      "type": "connect",
+      "bodyList": [
+        "A big apartment building runs on two levels of rules.",
+        "The building management handles what must be the same for everyone — the roof, the water, the front door.",
+        "Each family runs its own home — meals, bedtimes, guests."
+      ],
+      "bodyList2": [
+        "Nobody wants management choosing their dinner, and no family can fix the roof alone."
+      ],
+      "closing": "America runs the same way: one country, fifty states, two levels, different jobs.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U4-S04",
+      "type": "vocab",
+      "cards": [
+        {
+          "word": "federal",
+          "def": "the national government — all fifty states together.",
+          "example": "Federal taxes are paid to the national government."
+        },
+        {
+          "word": "state",
+          "def": "one of the fifty.",
+          "example": "Yours is California."
+        },
+        {
+          "word": "treaty",
+          "def": "an official agreement between countries.",
+          "example": "Only the federal government can make a treaty."
+        },
+        {
+          "word": "zoning",
+          "def": "local rules about land — what can be built where.",
+          "example": "Zoning decides what can be built on an empty lot."
+        }
+      ],
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U4-S05",
+      "type": "bigIdea",
+      "image": "federal-state-two-levels.jpg",
+      "paragraphs": [
+        "Country-sized jobs go to the federal government.",
+        "These are jobs that only work if the whole country does them together: print paper money and mint coins (fifty different currencies would be chaos), declare war, create an army, make treaties with other countries, set foreign policy. One country must speak with one voice to the world.",
+        "Close-to-home jobs go to the states: schools, police, fire departments, driver's licenses, zoning. These need local knowledge — Sacramento knows California's roads; Washington does not.",
+        "And the leftover rule is written in the rulebook itself — the 10th Amendment: powers not given to the federal government belong to the states, or to the people."
+      ],
+      "resolution": "The federal government gets only what the Constitution gives it. Everything else stays close to home.",
+      "handle": "Country-sized jobs are federal. Close-to-home jobs are state.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U4-S06",
+      "type": "seeItNotIt",
+      "heading": "The size of the job decides the level of government.",
+      "example": "The United States declares war; California issues your driver's license. Each level, its own size of job.",
+      "nonExample": "Imagine California printing its own money — dollars that stop working at the Nevada border. Or imagine Washington, D.C. trying to give every person in America a driver's license — one office, for 330 million people.",
+      "takeaway": "Wrong-sized jobs fail. That is the whole logic.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U4-S07",
+      "type": "confusablePair",
+      "heading": "The trap to avoid.",
+      "termA": {
+        "name": "Federal",
+        "def": "does not mean 'more important.' It means country-sized."
+      },
+      "termB": {
+        "name": "State",
+        "def": "handles what is close to home — your school, your police, your roads."
+      },
+      "resolution": "Your school and your police are state matters — and they matter.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U4-S08",
+      "type": "guidedPractice",
+      "items": [
+        {
+          "kind": "compare",
+          "instructions": "Tap to sort each power into Federal or State.",
+          "buckets": ["Federal", "State"],
+          "sortItems": [
+            { "text": "Print money", "bucket": 0 },
+            { "text": "Give a driver's license", "bucket": 1 },
+            { "text": "Declare war", "bucket": 0 },
+            { "text": "Schools", "bucket": 1 },
+            { "text": "Make treaties", "bucket": 0 },
+            { "text": "Police", "bucket": 1 }
+          ]
+        },
+        {
+          "kind": "exemplify",
+          "question": "Name one power that is only for the federal government. Remember the handle: one voice to the world.",
+          "options": [
+            "Make treaties with other countries",
+            "Approve zoning for a new building",
+            "Issue driver's licenses"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "kind": "infer",
+          "question": "A city decides what can be built on an empty lot. Which level is that — and which word from this lesson names it?",
+          "options": [
+            "State — and the word is zoning",
+            "Federal — and the word is treaty",
+            "Federal — and the word is zoning"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "kind": "interpret",
+          "question": "The officer asks this. What does 'your state' tell you about the answer?",
+          "questionCard": true,
+          "cardText": "What is the capital of your state?",
+          "options": [
+            "The answer depends on where you live — for you, Sacramento",
+            "The answer is the same for everyone — Washington, D.C.",
+            "The answer is a reason, not a place"
+          ],
+          "correctIndex": 0,
+          "pairedOfficial": "What is the capital of your state?"
+        }
+      ],
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U4-S09",
+      "type": "officialQuestions",
+      "questionIds": ["Q58", "Q59", "Q60", "Q61", "Q62"],
+      "q14Note": "Two of these depend on where you live — your governor and your state capital. They are on the Current Answers page.",
+      "primaryLabel": "Next"
+    },
+    { "id": "U4-S10", "type": "practice", "questionId": "Q58" },
+    { "id": "U4-S11", "type": "practice", "questionId": "Q59" },
+    { "id": "U4-S12", "type": "practice", "questionId": "Q60" },
+    {
+      "id": "U4-S13",
+      "type": "lockItIn",
+      "heading": "Lesson 4 finished.",
+      "companionPose": "pleased",
+      "learnedLine": "You learned the ideas behind all 5 questions in this lesson, and practiced 3 of them.",
+      "fullBankOffer": {
+        "unit": "U4",
+        "total": 5,
+        "label": "Practice all 5 questions"
+      },
+      "askSomeone": "Ask at home: who fixes the roads on our street — the country, or California?"
+    }
+  ]
+}

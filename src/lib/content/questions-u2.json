@@ -1,0 +1,305 @@
+[
+  {
+    "id": "Q15",
+    "unit": "U2",
+    "star": false,
+    "dynamic": false,
+    "official": "There are three branches of government. Why?",
+    "acceptedAnswers": [
+      "So one part does not become too powerful",
+      "Checks and balances",
+      "Separation of powers"
+    ],
+    "options": [
+      "So one part does not become too powerful",
+      "So the government runs faster",
+      "So each state gets its own branch"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q16",
+    "unit": "U2",
+    "star": false,
+    "dynamic": false,
+    "official": "Name the three branches of government.",
+    "acceptedAnswers": [
+      "Legislative, executive, and judicial",
+      "Congress, president, and the courts"
+    ],
+    "options": [
+      "Legislative, executive, and judicial",
+      "Federal, state, and local",
+      "Senate, House, and Cabinet"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q17",
+    "unit": "U2",
+    "star": false,
+    "dynamic": false,
+    "official": "The President of the United States is in charge of which branch of government?",
+    "acceptedAnswers": ["Executive branch"],
+    "options": ["Executive branch", "Legislative branch", "Judicial branch"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q18",
+    "unit": "U2",
+    "star": false,
+    "dynamic": false,
+    "official": "What part of the federal government writes laws?",
+    "acceptedAnswers": [
+      "(U.S.) Congress",
+      "(U.S. or national) legislature",
+      "Legislative branch"
+    ],
+    "options": ["(U.S.) Congress", "The Supreme Court", "The Cabinet"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q41",
+    "unit": "U2",
+    "star": false,
+    "dynamic": false,
+    "official": "Name one power of the president.",
+    "acceptedAnswers": [
+      "Signs bills into law",
+      "Vetoes bills",
+      "Enforces laws",
+      "Commander in Chief (of the military)",
+      "Chief diplomat",
+      "Appoints federal judges"
+    ],
+    "options": [
+      "Signs bills into law",
+      "Writes new laws",
+      "Decides if a law is constitutional"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q42",
+    "unit": "U2",
+    "star": false,
+    "dynamic": false,
+    "official": "Who is Commander in Chief of the U.S. military?",
+    "acceptedAnswers": ["The President (of the United States)"],
+    "options": [
+      "The President (of the United States)",
+      "The Secretary of War (Defense)",
+      "A five-star general"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q43",
+    "unit": "U2",
+    "star": false,
+    "dynamic": false,
+    "official": "Who signs bills to become laws?",
+    "acceptedAnswers": ["The President (of the United States)"],
+    "options": [
+      "The President (of the United States)",
+      "The Speaker of the House",
+      "The Chief Justice"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q44",
+    "unit": "U2",
+    "star": true,
+    "dynamic": false,
+    "official": "Who vetoes bills?",
+    "acceptedAnswers": ["The President (of the United States)"],
+    "options": [
+      "The President (of the United States)",
+      "The Speaker of the House",
+      "The Chief Justice"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q45",
+    "unit": "U2",
+    "star": false,
+    "dynamic": false,
+    "official": "Who appoints federal judges?",
+    "acceptedAnswers": ["The President (of the United States)"],
+    "options": [
+      "The President (of the United States)",
+      "The Senate alone",
+      "The state governors"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q46",
+    "unit": "U2",
+    "star": false,
+    "dynamic": false,
+    "official": "The executive branch has many parts. Name one.",
+    "acceptedAnswers": [
+      "President (of the United States)",
+      "Cabinet",
+      "Federal departments and agencies"
+    ],
+    "options": [
+      "President (of the United States)",
+      "The Senate",
+      "The Supreme Court"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q47",
+    "unit": "U2",
+    "star": false,
+    "dynamic": false,
+    "official": "What does the President's Cabinet do?",
+    "acceptedAnswers": ["Advises the President (of the United States)"],
+    "options": [
+      "Advises the President (of the United States)",
+      "Writes the federal laws",
+      "Decides court cases"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q48",
+    "unit": "U2",
+    "star": false,
+    "dynamic": false,
+    "official": "What are two Cabinet-level positions?",
+    "acceptedAnswers": [
+      "Attorney General",
+      "Secretary of Agriculture",
+      "Secretary of Commerce",
+      "Secretary of Education",
+      "Secretary of Energy",
+      "Secretary of Health and Human Services",
+      "Secretary of Homeland Security",
+      "Secretary of Housing and Urban Development",
+      "Secretary of the Interior",
+      "Secretary of Labor",
+      "Secretary of State",
+      "Secretary of Transportation",
+      "Secretary of the Treasury",
+      "Secretary of Veterans Affairs",
+      "Secretary of War (Defense)",
+      "Vice-President",
+      "Administrator of the Environmental Protection Agency",
+      "Administrator of the Small Business Administration",
+      "Director of the Central Intelligence Agency",
+      "Director of the Office of Management and Budget",
+      "Director of National Intelligence",
+      "United States Trade Representative"
+    ],
+    "multiSelect": 2,
+    "options": [
+      "Attorney General",
+      "Secretary of Agriculture",
+      "Secretary of Commerce",
+      "Secretary of Education",
+      "Secretary of Energy",
+      "Speaker of the House",
+      "Chief Justice of the United States"
+    ]
+  },
+  {
+    "id": "Q50",
+    "unit": "U2",
+    "star": false,
+    "dynamic": false,
+    "official": "What is one part of the judicial branch?",
+    "acceptedAnswers": ["Supreme Court", "Federal Courts"],
+    "options": ["Supreme Court", "The Cabinet", "The Senate"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q51",
+    "unit": "U2",
+    "star": false,
+    "dynamic": false,
+    "official": "What does the judicial branch do?",
+    "acceptedAnswers": [
+      "Reviews laws",
+      "Explains laws",
+      "Resolves disputes (disagreements) about the law",
+      "Decides if a law goes against the (U.S.) Constitution"
+    ],
+    "options": ["Reviews laws", "Writes new laws", "Commands the military"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q52",
+    "unit": "U2",
+    "star": true,
+    "dynamic": false,
+    "official": "What is the highest court in the United States?",
+    "acceptedAnswers": ["Supreme Court"],
+    "options": ["Supreme Court", "The Federal Court", "The Court of Appeals"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q53",
+    "unit": "U2",
+    "star": false,
+    "dynamic": false,
+    "official": "How many seats are on the Supreme Court?",
+    "acceptedAnswers": ["Nine (9)"],
+    "options": ["Nine (9)", "Five (5)", "Twelve (12)"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q54",
+    "unit": "U2",
+    "star": false,
+    "dynamic": false,
+    "official": "How many Supreme Court justices are usually needed to decide a case?",
+    "acceptedAnswers": ["Five (5)"],
+    "options": ["Five (5)", "Nine (9)", "Three (3)"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q55",
+    "unit": "U2",
+    "star": false,
+    "dynamic": false,
+    "official": "How long do Supreme Court justices serve?",
+    "acceptedAnswers": [
+      "(For) life",
+      "Lifetime appointment",
+      "(Until) retirement"
+    ],
+    "options": ["(For) life", "Ten (10) years", "Until age sixty-five (65)"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q56",
+    "unit": "U2",
+    "star": false,
+    "dynamic": false,
+    "official": "Supreme Court justices serve for life. Why?",
+    "acceptedAnswers": [
+      "To be independent (of politics)",
+      "To limit outside (political) influence"
+    ],
+    "options": [
+      "To be independent (of politics)",
+      "Because the job is difficult to learn",
+      "Because there are only nine of them"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q57",
+    "unit": "U2",
+    "star": false,
+    "dynamic": true,
+    "official": "Who is the Chief Justice of the United States now?",
+    "acceptedAnswers": ["See Current Answers"]
+  }
+]

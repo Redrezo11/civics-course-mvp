@@ -1,0 +1,226 @@
+{
+  "id": "U3",
+  "title": "Who represents you",
+  "questionCount": 23,
+  "screens": [
+    {
+      "id": "U3-S01",
+      "type": "orient",
+      "unitLabel": "Unit 3",
+      "heading": "Who represents you",
+      "body": "The officer will ask about the people you will help elect — questions like:",
+      "sampleQuestionId": "Q21",
+      "afterQuote": "This lesson will help you answer those questions.",
+      "coverageLine": "It covers 23 of the 128 — the biggest single lesson.",
+      "afterTest": "After you naturalize, you vote for every one of these jobs.",
+      "primaryLabel": "Begin"
+    },
+    {
+      "id": "U3-S02",
+      "type": "hook",
+      "companionPose": "thinking",
+      "question": "California has about 39 million people. Wyoming has about half a million. In Congress, should California's voice be 78 times louder?",
+      "options": ["Yes", "No", "Both, somehow"],
+      "feedback": "In 1787 the states nearly walked away from each other over exactly this question. Their compromise built Congress — and it is worth understanding, because it explains six test answers at once."
+    },
+    {
+      "id": "U3-S03",
+      "type": "connect",
+      "bodyList": [
+        "Imagine five towns that share one road, one water supply, and one school.",
+        "One town is large; four are small. When they meet to decide things together, how should the voting work?",
+        "If every decision follows population, the four small towns are ignored forever — outvoted before they speak.",
+        "If every town gets one equal vote, the large town is outvoted by neighbours a fraction of its size."
+      ],
+      "bodyList2": [
+        "Neither rule alone is fair.",
+        "So groups like this often use both: some decisions counted one way, some the other."
+      ],
+      "closing": "America's Congress is that compromise, made permanent.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U3-S04",
+      "type": "vocab",
+      "cards": [
+        {
+          "word": "senator",
+          "def": "a member of the Senate.",
+          "example": "Each state has two senators."
+        },
+        {
+          "word": "representative",
+          "def": "a member of the House.",
+          "example": "A representative represents the people of one district."
+        },
+        {
+          "word": "district",
+          "def": "your area.",
+          "example": "Everyone on your street is in your district."
+        },
+        {
+          "word": "term",
+          "def": "how long a leader serves before the next election.",
+          "example": "A senator's term is six years."
+        },
+        {
+          "word": "elect",
+          "def": "to choose by voting.",
+          "example": "Citizens elect their senators."
+        }
+      ],
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U3-S05",
+      "type": "bigIdea",
+      "image": "capitol-two-chambers.jpg",
+      "paragraphs": [
+        "Inside the Capitol are two rooms, built on two opposite principles — on purpose.",
+        "The Senate: every state equal. Two senators per state, big or small. 50 states × 2 = 100 senators. A senator represents the people of their whole state and serves six years — a longer term than representatives get. Why two per state? Equal representation for small states — the deal that saved the union in 1787, called the Great Compromise.",
+        "The House of Representatives: every person equal. Seats follow population — more people, more representatives. 435 voting members. A representative serves the people of one district and serves only two years. Why so short? So they must face the voters constantly — to more closely follow public opinion."
+      ],
+      "handle": "One state, two kinds of voice.",
+      "handleSub": "Citizens elect both.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U3-S06",
+      "type": "bigIdea",
+      "paragraphs": [
+        "The President is elected for four years — and may serve only two terms.",
+        "Why the limit? The 22nd Amendment — and you already know the deeper reason: to keep the president from becoming too powerful. The fear of kings, again.",
+        "Who actually decides the winner? The Electoral College — a compromise between electing the president by popular vote and letting Congress choose."
+      ],
+      "resolution": "And if the President can no longer serve, the Vice President becomes President.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U3-S07",
+      "type": "seeItNotIt",
+      "heading": "Two rooms, two kinds of fairness — both true at once.",
+      "example": "Wyoming's two senators can stand equal to California's two — while in the House, California sends dozens of representatives, because it has far more people. Both truths, both rooms.",
+      "nonExample": "Imagine only one room, seats by population alone. The five biggest states could outvote the other forty-five on everything, forever. The small states saw that future in 1787 and refused it.",
+      "takeaway": "That refusal is why the Senate exists.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U3-S08",
+      "type": "confusablePair",
+      "heading": "Two jobs on the test sound alike. Do not mix them up.",
+      "termA": {
+        "name": "Senator",
+        "def": "represents an entire state. Two per state, six-year term."
+      },
+      "termB": {
+        "name": "Representative",
+        "def": "represents one district within a state. 435 in all, two-year term."
+      },
+      "resolution": "That is the difference the test cares about — everything else follows from it.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U3-S09",
+      "type": "guidedPractice",
+      "items": [
+        {
+          "kind": "compare",
+          "instructions": "Tap to sort each fact into the Senate or the House.",
+          "buckets": ["Senate", "House"],
+          "sortItems": [
+            { "text": "100 members", "bucket": 0 },
+            { "text": "435 members", "bucket": 1 },
+            { "text": "6-year term", "bucket": 0 },
+            { "text": "2-year term", "bucket": 1 },
+            { "text": "Two per state", "bucket": 0 },
+            { "text": "Based on population", "bucket": 1 }
+          ]
+        },
+        {
+          "kind": "infer",
+          "question": "Why do representatives serve shorter terms than senators?",
+          "options": [
+            "So they must face the voters more often",
+            "Because there are more of them",
+            "Because their work is easier"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "kind": "exemplify",
+          "question": "Who does a senator represent, and who does a representative represent?",
+          "options": [
+            "A senator: the whole state. A representative: one district",
+            "A senator: one district. A representative: the whole state",
+            "Both represent the whole country"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "kind": "interpret",
+          "question": "The officer asks this. Is he asking for a number, a name, or a reason?",
+          "questionCard": true,
+          "cardText": "Who is one of your state's U.S. senators now?",
+          "options": [
+            "A name — and it changes with elections",
+            "A number — there are two per state",
+            "A reason — equal representation for small states"
+          ],
+          "correctIndex": 0,
+          "pairedOfficial": "Who is one of your state's U.S. senators now?"
+        }
+      ],
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U3-S10",
+      "type": "officialQuestions",
+      "questionIds": [
+        "Q19",
+        "Q20",
+        "Q21",
+        "Q22",
+        "Q24",
+        "Q25",
+        "Q26",
+        "Q27",
+        "Q28",
+        "Q31",
+        "Q32",
+        "Q33",
+        "Q34",
+        "Q35",
+        "Q36",
+        "Q37",
+        "Q40",
+        "Q49",
+        "Q23",
+        "Q29",
+        "Q30",
+        "Q38",
+        "Q39"
+      ],
+      "q14Note": "Five of these change with elections — your senators, your representative, the Speaker, the President, and the Vice President. They are on the Current Answers page, with the date they were checked.",
+      "primaryLabel": "Next"
+    },
+    { "id": "U3-S11", "type": "practice", "questionId": "Q19" },
+    { "id": "U3-S12", "type": "practice", "questionId": "Q27" },
+    { "id": "U3-S13", "type": "practice", "questionId": "Q21" },
+    { "id": "U3-S14", "type": "practice", "questionId": "Q36" },
+    { "id": "U3-S15", "type": "practice", "questionId": "Q20" },
+    { "id": "U3-S16", "type": "practice", "questionId": "Q40" },
+    {
+      "id": "U3-S17",
+      "type": "lockItIn",
+      "heading": "Lesson 3 finished.",
+      "companionPose": "pleased",
+      "learnedLine": "You learned the ideas behind all 23 questions in this lesson, and practiced 6 of them. That is more than half of the government questions.",
+      "fullBankOffer": {
+        "unit": "U3",
+        "total": 23,
+        "label": "Practice all 23 questions"
+      },
+      "askSomeone": "Ask a neighbor: do you know who our representative is?"
+    }
+  ]
+}

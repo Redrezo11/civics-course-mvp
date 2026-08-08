@@ -1,0 +1,286 @@
+{
+  "id": "U7",
+  "title": "How America changed",
+  "questionCount": 39,
+  "screens": [
+    {
+      "id": "U7-S01",
+      "type": "orient",
+      "unitLabel": "Unit 7",
+      "heading": "How America changed",
+      "body": "The last lesson — and the biggest. The officer will ask about everything from the Civil War to the flag on the courthouse:",
+      "sampleQuestionId": "Q97",
+      "afterQuote": "One thread ties them together: the promise of 1776 — all people are created equal — being slowly, painfully kept.",
+      "coverageLine": "It covers 39 of the 128 on the test.",
+      "afterTest": "That promise is why your naturalization is possible. This is the story of how it grew.",
+      "primaryLabel": "Begin"
+    },
+    {
+      "id": "U7-S02",
+      "type": "hook",
+      "companionPose": "thinking",
+      "question": "In 1860, millions of people in America were enslaved — in the same country whose founding document said all people are created equal. A country cannot hold both forever. What happened?",
+      "options": ["The country split and fought", "The law changed quietly", "Nothing changed"],
+      "feedback": "The country split and fought — the Civil War. What followed is the story of a promise finally being kept, one amendment at a time."
+    },
+    {
+      "id": "U7-S03",
+      "type": "connect",
+      "bodyList": [
+        "You know the founding story: a country built on a promise it was not yet keeping.",
+        "And you know the tool for change — the amendment, from Lesson 1."
+      ],
+      "bodyList2": [
+        "This lesson is what happens when a country uses that tool on itself, again and again, until the promise reaches more and more people."
+      ],
+      "closing": "It ends with you: your citizenship will rest on one of these amendments.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U7-S04",
+      "type": "vocab",
+      "cards": [
+        {
+          "word": "slavery",
+          "def": "owning people as property — forced work without freedom.",
+          "example": "The Civil War ended slavery."
+        },
+        {
+          "word": "union",
+          "def": "the states together as one country.",
+          "example": "Lincoln saved the Union."
+        },
+        {
+          "word": "discrimination",
+          "def": "treating people unfairly because of their group.",
+          "example": "The civil rights movement fought discrimination."
+        },
+        {
+          "word": "communism",
+          "def": "a system where one party controls the state and the economy.",
+          "example": "Communism was the main concern of the Cold War."
+        },
+        {
+          "word": "veteran",
+          "def": "a person who served in the military.",
+          "example": "Veterans Day honors all who served."
+        },
+        {
+          "word": "amendment",
+          "def": "an official change to the Constitution.",
+          "example": "Now watch the amendment work, again and again."
+        }
+      ],
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U7-S05",
+      "type": "bigIdea",
+      "image": "civil-war.jpg",
+      "paragraphs": [
+        "Chapter 1 — The war over the promise.",
+        "First, the country grew: in 1803 the United States bought the Louisiana Territory from France, doubling its size — Jefferson's doing. But growth sharpened the question the founders had left open: slavery. The North and the South finally went to war over it — the Civil War, the war between the North and the South.",
+        "President Abraham Lincoln led the country through it. His Emancipation Proclamation freed the slaves in the Confederacy. He saved the Union — kept the country one country. The war's names — Gettysburg, Vicksburg, Appomattox — mark the hardest years America has had. The Civil War ended slavery."
+      ],
+      "resolution": "Lincoln was assassinated days after the fighting ended: the 16th president, remembered above all as the man who freed the slaves and preserved the Union.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U7-S06",
+      "type": "bigIdea",
+      "paragraphs": [
+        "Chapter 2 — The promise, written into the rulebook.",
+        "After the war, the amendment tool went to work. The 14th Amendment wrote a new promise into the rulebook: all persons born or naturalized in the United States are U.S. citizens. Read that twice — or naturalized. Your certificate, when you receive it, will rest on those words.",
+        "The 15th Amendment (1870, after the Civil War): a male citizen of any race can vote. The 19th Amendment (1920): women can vote — remember the card from Lesson 1: your daughter votes because of it. Susan B. Anthony led that fight in the 1800s.",
+        "A century after the Civil War, the promise still was not fully kept — so the civil rights movement rose to end racial discrimination. Martin Luther King, Jr. led it: he fought for civil rights and worked for equality for all Americans."
+      ],
+      "handle": "The promise of 1776, extended by amendment and by movement, decade after decade.",
+      "handleSub": "To any race, to women, to the discriminated-against — and through the 14th Amendment, to you.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U7-S07",
+      "type": "bigIdea",
+      "paragraphs": [
+        "Chapter 3 — America in the world.",
+        "The 1900s took America into the world, and the test asks why each time — so learn the reasons, not just the names.",
+        "World War I. Germany attacked American ships. The United States entered the war.",
+        "The Great Depression began in 1929 when the stock market crashed. It was the longest economic downturn in modern history. Franklin Roosevelt was president during the Depression and through the next war.",
+        "World War II. Japan attacked Pearl Harbor. The United States entered the war. Dwight Eisenhower was an American general in this war. He later became the 34th president.",
+        "After World War II came the Cold War. America's main rival was the Soviet Union. The main concern was communism — and that one word is the answer to two test questions: why the U.S. entered the Korean War, and why it entered the Vietnam War. Both times, the answer is: to stop the spread of communism.",
+        "The Persian Gulf War. The United States entered to force the Iraqi military out of Kuwait.",
+        "September 11, 2001. Terrorists attacked the United States. The wars in Afghanistan and Iraq followed."
+      ],
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U7-S08",
+      "type": "bigIdea",
+      "image": "flag-and-statue.jpg",
+      "paragraphs": [
+        "Chapter 4 — The symbols you will stand under.",
+        "At your ceremony there will be a flag. Read it like a sentence: 13 stripes — the 13 original colonies, from the founding story. 50 stars — one for each state, from the growing story.",
+        "The capital: Washington, D.C. The Statue of Liberty stands in New York Harbor — for many immigrants before you, the first sight of America. The national anthem: The Star-Spangled Banner. And the nation's first motto, on the coins in your pocket: E Pluribus Unum — out of many, one. That has always included people who chose this country. It includes you.",
+        "The holidays mark the story you now know: Independence Day — the country's birthday, July 4. Memorial Day — honors soldiers who died in military service. Veterans Day — honors all who served."
+      ],
+      "resolution": "For 'name three national holidays,' keep three you already live with: New Year's Day, Independence Day, Thanksgiving.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U7-S09",
+      "type": "seeItNotIt",
+      "heading": "These are not 39 separate facts.",
+      "example": "In 1776, America made a promise. The Civil War forced the country to face that promise. Amendments wrote it into law. Movements like the civil rights movement pushed until the law was real. And the 14th Amendment — the one that says born or naturalized — is how that promise reaches you.",
+      "nonExample": "Almost every 'why' question in this lesson has one of three answers. America was keeping its promise — the Civil War, the amendments, civil rights. America was attacked — the ships in World War I, Pearl Harbor, September 11. America was stopping communism — Korea, Vietnam, the Cold War.",
+      "takeaway": "One thread, three reasons. That is the whole lesson.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U7-S10",
+      "type": "confusablePair",
+      "heading": "Two holidays on the test sound alike. Do not mix them up.",
+      "termA": {
+        "name": "Memorial Day",
+        "def": "honors soldiers who died in military service."
+      },
+      "termB": {
+        "name": "Veterans Day",
+        "def": "honors all who served in the military."
+      },
+      "resolution": "Everyone who died in service was also a veteran — but not every veteran died. Memorial Day is for the ones who did not come home.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U7-S11",
+      "type": "confusablePair",
+      "heading": "Two amendments about voting. Keep them in order.",
+      "termA": {
+        "name": "15th Amendment",
+        "def": "any race can vote — 1870, after the Civil War."
+      },
+      "termB": {
+        "name": "19th Amendment",
+        "def": "women can vote — 1920, after World War I."
+      },
+      "resolution": "Race first, women fifty years later.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U7-S12",
+      "type": "guidedPractice",
+      "items": [
+        {
+          "kind": "order",
+          "instructions": "Tap these four events into the order they happened.",
+          "orderItems": [
+            "Civil War",
+            "15th Amendment (any race votes)",
+            "19th Amendment (women vote)",
+            "Civil rights movement"
+          ],
+          "feedbackCorrect": "One promise, kept in stages — each step widening who it reaches."
+        },
+        {
+          "kind": "compare",
+          "instructions": "Tap to sort each into the holiday it describes.",
+          "buckets": ["Memorial Day", "Veterans Day"],
+          "sortItems": [
+            { "text": "Honors soldiers who died", "bucket": 0 },
+            { "text": "Honors all who served", "bucket": 1 }
+          ]
+        },
+        {
+          "kind": "infer",
+          "question": "Korea and Vietnam have the same test answer. What is it?",
+          "options": [
+            "To stop the spread of communism",
+            "To defend Pearl Harbor",
+            "To free Kuwait"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "kind": "interpret",
+          "question": "Every 'Why did the United States enter…' question wants a reason — and this lesson gave you only three. Match World War II to its reason.",
+          "questionCard": true,
+          "cardText": "Why did the United States enter World War II?",
+          "options": [
+            "America was attacked — Pearl Harbor",
+            "America was stopping communism",
+            "America was keeping its promise"
+          ],
+          "correctIndex": 0,
+          "pairedOfficial": "Why did the United States enter World War II?"
+        }
+      ],
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U7-S13",
+      "type": "officialQuestions",
+      "questionIds": [
+        "Q90",
+        "Q91",
+        "Q92",
+        "Q93",
+        "Q94",
+        "Q95",
+        "Q96",
+        "Q97",
+        "Q98",
+        "Q99",
+        "Q100",
+        "Q101",
+        "Q102",
+        "Q103",
+        "Q104",
+        "Q105",
+        "Q106",
+        "Q107",
+        "Q108",
+        "Q109",
+        "Q110",
+        "Q111",
+        "Q112",
+        "Q113",
+        "Q114",
+        "Q115",
+        "Q116",
+        "Q117",
+        "Q118",
+        "Q119",
+        "Q120",
+        "Q121",
+        "Q122",
+        "Q123",
+        "Q124",
+        "Q125",
+        "Q126",
+        "Q127",
+        "Q128"
+      ],
+      "q14Note": "Q117 (tribes) and Q118 (innovations) accept any one from a long list — one is enough.",
+      "primaryLabel": "Next"
+    },
+    { "id": "U7-S14", "type": "practice", "questionId": "Q92" },
+    { "id": "U7-S15", "type": "practice", "questionId": "Q94" },
+    { "id": "U7-S16", "type": "practice", "questionId": "Q97" },
+    { "id": "U7-S17", "type": "practice", "questionId": "Q102" },
+    { "id": "U7-S18", "type": "practice", "questionId": "Q121" },
+    { "id": "U7-S19", "type": "practice", "questionId": "Q113" },
+    { "id": "U7-S20", "type": "practice", "questionId": "Q126" },
+    {
+      "id": "U7-S21",
+      "type": "lockItIn",
+      "heading": "Lesson 7 finished.",
+      "companionPose": "pleased",
+      "learnedLine": "You have now seen the ideas behind all 128 questions.",
+      "fullBankOffer": {
+        "unit": "U7",
+        "total": 39,
+        "label": "Practice all 39 questions"
+      },
+      "askSomeone": "Ask someone which holiday is next — and tell them what it honors."
+    }
+  ]
+}

@@ -1,0 +1,291 @@
+[
+  {
+    "id": "Q19",
+    "unit": "U3",
+    "star": false,
+    "dynamic": false,
+    "official": "What are the two parts of the U.S. Congress?",
+    "acceptedAnswers": ["Senate and House (of Representatives)"],
+    "options": [
+      "Senate and House (of Representatives)",
+      "House and Cabinet",
+      "Senate and Supreme Court"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q20",
+    "unit": "U3",
+    "star": true,
+    "dynamic": false,
+    "official": "Name one power of the U.S. Congress.",
+    "acceptedAnswers": ["Writes laws", "Declares war", "Makes the federal budget"],
+    "options": ["Writes laws", "Enforces laws", "Interprets laws"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q21",
+    "unit": "U3",
+    "star": false,
+    "dynamic": false,
+    "official": "How many U.S. senators are there?",
+    "acceptedAnswers": ["One hundred (100)"],
+    "options": [
+      "One hundred (100)",
+      "Fifty (50)",
+      "Four hundred thirty-five (435)"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q22",
+    "unit": "U3",
+    "star": false,
+    "dynamic": false,
+    "official": "How long is a term for a U.S. senator?",
+    "acceptedAnswers": ["Six (6) years"],
+    "options": ["Six (6) years", "Two (2) years", "Four (4) years"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q23",
+    "unit": "U3",
+    "star": false,
+    "dynamic": true,
+    "stateSpecific": true,
+    "official": "Who is one of your state's U.S. senators now?",
+    "acceptedAnswers": ["Answers will vary — see Current Answers"]
+  },
+  {
+    "id": "Q24",
+    "unit": "U3",
+    "star": false,
+    "dynamic": false,
+    "official": "How many voting members are in the House of Representatives?",
+    "acceptedAnswers": ["Four hundred thirty-five (435)"],
+    "options": [
+      "Four hundred thirty-five (435)",
+      "One hundred (100)",
+      "Fifty (50)"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q25",
+    "unit": "U3",
+    "star": false,
+    "dynamic": false,
+    "official": "How long is a term for a member of the House of Representatives?",
+    "acceptedAnswers": ["Two (2) years"],
+    "options": ["Two (2) years", "Six (6) years", "Four (4) years"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q26",
+    "unit": "U3",
+    "star": false,
+    "dynamic": false,
+    "official": "Why do U.S. representatives serve shorter terms than U.S. senators?",
+    "acceptedAnswers": ["To more closely follow public opinion"],
+    "options": [
+      "To more closely follow public opinion",
+      "Because there are more of them",
+      "Because their work is easier"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q27",
+    "unit": "U3",
+    "star": false,
+    "dynamic": false,
+    "official": "How many senators does each state have?",
+    "acceptedAnswers": ["Two (2)"],
+    "options": ["Two (2)", "One (1)", "It depends on population"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q28",
+    "unit": "U3",
+    "star": false,
+    "dynamic": false,
+    "official": "Why does each state have two senators?",
+    "acceptedAnswers": [
+      "Equal representation (for small states)",
+      "The Great Compromise (Connecticut Compromise)"
+    ],
+    "options": [
+      "Equal representation (for small states)",
+      "Because each state has two main cities",
+      "Because the Constitution has two parts"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q29",
+    "unit": "U3",
+    "star": false,
+    "dynamic": true,
+    "stateSpecific": true,
+    "official": "Name your U.S. representative.",
+    "acceptedAnswers": ["Answers will vary — see Current Answers"]
+  },
+  {
+    "id": "Q30",
+    "unit": "U3",
+    "star": true,
+    "dynamic": true,
+    "official": "What is the name of the Speaker of the House of Representatives now?",
+    "acceptedAnswers": ["See Current Answers"]
+  },
+  {
+    "id": "Q31",
+    "unit": "U3",
+    "star": false,
+    "dynamic": false,
+    "official": "Who does a U.S. senator represent?",
+    "acceptedAnswers": ["Citizens of their state", "People of their state"],
+    "options": [
+      "Citizens of their state",
+      "Only the people who voted for them",
+      "People in one district"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q32",
+    "unit": "U3",
+    "star": false,
+    "dynamic": false,
+    "official": "Who elects U.S. senators?",
+    "acceptedAnswers": ["Citizens from their state"],
+    "options": [
+      "Citizens from their state",
+      "The President",
+      "The state governor"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q33",
+    "unit": "U3",
+    "star": false,
+    "dynamic": false,
+    "official": "Who does a member of the House of Representatives represent?",
+    "acceptedAnswers": [
+      "Citizens in their (congressional) district",
+      "People from their (congressional) district"
+    ],
+    "options": [
+      "Citizens in their (congressional) district",
+      "Everyone in the state",
+      "Only members of their political party"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q34",
+    "unit": "U3",
+    "star": false,
+    "dynamic": false,
+    "official": "Who elects members of the House of Representatives?",
+    "acceptedAnswers": ["Citizens from their (congressional) district"],
+    "options": [
+      "Citizens from their (congressional) district",
+      "The Senate",
+      "The state legislature"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q35",
+    "unit": "U3",
+    "star": false,
+    "dynamic": false,
+    "official": "Some states have more representatives than other states. Why?",
+    "acceptedAnswers": [
+      "(Because of) the state's population",
+      "(Because) they have more people"
+    ],
+    "options": [
+      "(Because of) the state's population",
+      "Because they are larger in land area",
+      "Because they joined the country earlier"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q36",
+    "unit": "U3",
+    "star": true,
+    "dynamic": false,
+    "official": "The President of the United States is elected for how many years?",
+    "acceptedAnswers": ["Four (4) years"],
+    "options": ["Four (4) years", "Two (2) years", "Six (6) years"],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q37",
+    "unit": "U3",
+    "star": false,
+    "dynamic": false,
+    "official": "The President of the United States can serve only two terms. Why?",
+    "acceptedAnswers": [
+      "(Because of) the 22nd Amendment",
+      "To keep the president from becoming too powerful"
+    ],
+    "options": [
+      "(Because of) the 22nd Amendment",
+      "Because elections cost too much",
+      "Because the job requires a younger person"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q38",
+    "unit": "U3",
+    "star": true,
+    "dynamic": true,
+    "official": "What is the name of the President of the United States now?",
+    "acceptedAnswers": ["See Current Answers"]
+  },
+  {
+    "id": "Q39",
+    "unit": "U3",
+    "star": true,
+    "dynamic": true,
+    "official": "What is the name of the Vice President of the United States now?",
+    "acceptedAnswers": ["See Current Answers"]
+  },
+  {
+    "id": "Q40",
+    "unit": "U3",
+    "star": false,
+    "dynamic": false,
+    "official": "If the president can no longer serve, who becomes president?",
+    "acceptedAnswers": ["The Vice President (of the United States)"],
+    "options": [
+      "The Vice President (of the United States)",
+      "The Speaker of the House",
+      "The Chief Justice"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q49",
+    "unit": "U3",
+    "star": false,
+    "dynamic": false,
+    "official": "Why is the Electoral College important?",
+    "acceptedAnswers": [
+      "It decides who is elected president",
+      "It provides a compromise between the popular election of the president and congressional selection"
+    ],
+    "options": [
+      "It decides who is elected president",
+      "It chooses the Supreme Court justices",
+      "It writes the federal budget"
+    ],
+    "correctIndex": 0
+  }
+]

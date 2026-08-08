@@ -1,0 +1,213 @@
+{
+  "id": "U5",
+  "title": "Rights and responsibilities",
+  "questionCount": 10,
+  "screens": [
+    {
+      "id": "U5-S01",
+      "type": "orient",
+      "unitLabel": "Unit 5",
+      "heading": "Rights and responsibilities",
+      "body": "The officer will ask what citizens can do and must do — questions like:",
+      "sampleQuestionId": "Q67",
+      "afterQuote": "This lesson will help you answer those questions.",
+      "coverageLine": "It covers 10 of the 128 on the test.",
+      "afterTest": "And this lesson is different from every other one: it is about you. These are the rights you will hold and the promises you will make.",
+      "primaryLabel": "Begin"
+    },
+    {
+      "id": "U5-S02",
+      "type": "hook",
+      "companionPose": "thinking",
+      "question": "Which of these belongs to everyone living in America — citizen or not?",
+      "options": ["Freedom of speech", "Voting", "Both"],
+      "feedback": "Freedom of speech belongs to everyone here. Voting belongs to citizens. That line — everyone vs. citizens — is the key to this whole lesson."
+    },
+    {
+      "id": "U5-S03",
+      "type": "connect",
+      "bodyList": [
+        "Joining any organization changes your standing.",
+        "A guest at a community center is welcome and safe — but members vote at the meetings, and members pay the dues.",
+        "Belonging brings both: a louder voice, and real duties."
+      ],
+      "bodyList2": [
+        "Citizenship works the same way.",
+        "Living in America already gives you strong protections."
+      ],
+      "closing": "Becoming a citizen adds the member's voice — and the member's promises.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U5-S04",
+      "type": "vocab",
+      "cards": [
+        {
+          "word": "right",
+          "def": "a freedom the law protects for you.",
+          "example": "You have the right to speak freely."
+        },
+        {
+          "word": "responsibility",
+          "def": "a duty — something you must or should do.",
+          "example": "Paying taxes is a responsibility."
+        },
+        {
+          "word": "jury",
+          "def": "a group of citizens who decide a court case.",
+          "example": "Citizens serve on a jury."
+        },
+        {
+          "word": "oath",
+          "def": "an official, serious promise.",
+          "example": "At your ceremony you will take an oath."
+        },
+        {
+          "word": "loyalty",
+          "def": "faithfulness.",
+          "example": "The oath asks for loyalty to the United States."
+        }
+      ],
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U5-S05",
+      "type": "bigIdea",
+      "paragraphs": [
+        "Remember the Bill of Rights from the rulebook lesson — protections for people living in the United States, not only citizens.",
+        "Everyone here holds these: freedom of speech, freedom of expression, freedom of assembly (gathering in groups), freedom to petition the government (asking it to change something), freedom of religion, and the right to bear arms. These protect you today, before your ceremony.",
+        "Citizens hold three more, and they are the ones that steer the country: vote in federal elections, run for federal office, and serve on a jury. Notice what all three share — they are ways of having a say in how the country is run, not just living in it. Jury service is also a responsibility — it is both a right you hold and a duty you may be called to perform.",
+        "Voting itself was widened by four amendments — remember, changes to the rulebook: any race can vote, women and men can vote, no poll tax (you cannot be charged money to vote), and citizens eighteen and older can vote."
+      ],
+      "resolution": "The full story of that widening is Lesson 7.",
+      "handle": "Everyone here holds rights. Citizens hold the vote.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U5-S06",
+      "type": "bigIdea",
+      "paragraphs": [
+        "Belonging also asks.",
+        "Everyone who earns money here pays federal taxes — required by law, and it is how the country pays for what it does. Men aged 18 through 25 register for the Selective Service — a list, required by law, that makes a draft fair if one is ever needed.",
+        "And at your ceremony, you will stand and take the Oath of Allegiance — the member's promises: give up loyalty to other countries, defend the Constitution, obey the laws of the United States, serve the nation if needed, be loyal to the United States.",
+        "On the test, this is Question 67. In your life, it is the moment you become a citizen. It is the only test answer you will one day say out loud, with your hand raised, at your own ceremony.",
+        "How do people become citizens at all? Three doors: born in the United States (a promise written in the 14th Amendment — its story is in Lesson 7), naturalize — your door, the one this course walks you to — or derive citizenship through parents."
+      ],
+      "handle": "Rights and responsibilities are two halves of one standing.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U5-S07",
+      "type": "seeItNotIt",
+      "heading": "Rights protect you now. The member's voice comes at the ceremony.",
+      "example": "A permanent resident writes a letter to a newspaper criticizing a law — fully protected, citizen or not. The same person cannot yet vote on that law.",
+      "nonExample": "'Rights are things I get; responsibilities are optional.' No — they are two halves of one standing. The same oath that gives you the ballot asks for your loyalty.",
+      "takeaway": "Rights: yes, today. The member's voice: at the ceremony.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U5-S08",
+      "type": "confusablePair",
+      "heading": "Two words on the test sound alike. Do not mix them up.",
+      "termA": {
+        "name": "A right",
+        "def": "something the law protects for you — speech, religion, assembly."
+      },
+      "termB": {
+        "name": "A responsibility",
+        "def": "something the law or the community expects from you — taxes, jury service."
+      },
+      "resolution": "Voting is special — it is a right you hold and a responsibility worth exercising.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U5-S09",
+      "type": "guidedPractice",
+      "items": [
+        {
+          "kind": "compare",
+          "instructions": "Tap to sort each one into Everyone here or Citizens only.",
+          "buckets": ["Everyone here", "Citizens only"],
+          "sortItems": [
+            { "text": "Freedom of speech", "bucket": 0 },
+            { "text": "Vote in federal elections", "bucket": 1 },
+            { "text": "Freedom of religion", "bucket": 0 },
+            { "text": "Serve on a jury", "bucket": 1 },
+            { "text": "Run for federal office", "bucket": 1 },
+            { "text": "Freedom of assembly", "bucket": 0 }
+          ]
+        },
+        {
+          "kind": "exemplify",
+          "question": "What is one way Americans can serve their country? Many answers are accepted — pick one of them.",
+          "options": [
+            "Pay taxes",
+            "Travel to other countries",
+            "Buy American products only"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "kind": "infer",
+          "question": "Why do men aged 18–25 register for Selective Service when there is no draft?",
+          "options": [
+            "So that a draft, if ever needed, would be fair",
+            "Because they must join the military",
+            "Because it is required to vote"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "kind": "interpret",
+          "question": "The officer asks this. The question tells you the count — what should you do?",
+          "questionCard": true,
+          "cardText": "Name two promises that new citizens make in the Oath of Allegiance.",
+          "options": [
+            "Give two, then stop — extra answers only add chances for mistakes",
+            "Give as many as you can remember",
+            "Give one, because any one is enough"
+          ],
+          "correctIndex": 0,
+          "pairedOfficial": "Name two promises that new citizens make in the Oath of Allegiance."
+        }
+      ],
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U5-S10",
+      "type": "officialQuestions",
+      "questionIds": [
+        "Q63",
+        "Q64",
+        "Q65",
+        "Q66",
+        "Q67",
+        "Q68",
+        "Q69",
+        "Q70",
+        "Q71",
+        "Q72"
+      ],
+      "q14Note": "Q65 asks for three rights and Q67 for two promises — the screen will tell you the count each time. Give exactly what is asked.",
+      "primaryLabel": "Next"
+    },
+    { "id": "U5-S11", "type": "practice", "questionId": "Q64" },
+    { "id": "U5-S12", "type": "practice", "questionId": "Q65" },
+    { "id": "U5-S13", "type": "practice", "questionId": "Q71" },
+    { "id": "U5-S14", "type": "practice", "questionId": "Q66" },
+    { "id": "U5-S15", "type": "practice", "questionId": "Q68" },
+    {
+      "id": "U5-S16",
+      "type": "lockItIn",
+      "heading": "Lesson 5 finished.",
+      "companionPose": "pleased",
+      "learnedLine": "You learned the ideas behind all 10 questions in this lesson, and practiced 5 of them.",
+      "fullBankOffer": {
+        "unit": "U5",
+        "total": 10,
+        "label": "Practice all 10 questions"
+      },
+      "askSomeone": "Tell someone one promise from the Oath — in any language."
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+[
+  {
+    "id": "Q58",
+    "unit": "U4",
+    "star": false,
+    "dynamic": false,
+    "official": "Name one power that is only for the federal government.",
+    "acceptedAnswers": [
+      "Print paper money",
+      "Mint coins",
+      "Declare war",
+      "Create an army",
+      "Make treaties",
+      "Set foreign policy"
+    ],
+    "options": [
+      "Print paper money",
+      "Give a driver's license",
+      "Run public schools"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q59",
+    "unit": "U4",
+    "star": false,
+    "dynamic": false,
+    "official": "Name one power that is only for the states.",
+    "acceptedAnswers": [
+      "Provide schooling and education",
+      "Provide protection (police)",
+      "Provide safety (fire departments)",
+      "Give a driver's license",
+      "Approve zoning and land use"
+    ],
+    "options": [
+      "Provide schooling and education",
+      "Declare war",
+      "Print paper money"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q60",
+    "unit": "U4",
+    "star": false,
+    "dynamic": false,
+    "official": "What is the purpose of the 10th Amendment?",
+    "acceptedAnswers": [
+      "(It states that the) powers not given to the federal government belong to the states or to the people"
+    ],
+    "options": [
+      "(It states that the) powers not given to the federal government belong to the states or to the people",
+      "All power belongs to the federal government",
+      "States can override federal law"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "Q61",
+    "unit": "U4",
+    "star": true,
+    "dynamic": true,
+    "stateSpecific": true,
+    "official": "Who is the governor of your state now?",
+    "acceptedAnswers": ["Answers will vary — see Current Answers"]
+  },
+  {
+    "id": "Q62",
+    "unit": "U4",
+    "star": false,
+    "dynamic": true,
+    "stateSpecific": true,
+    "official": "What is the capital of your state?",
+    "acceptedAnswers": ["Answers will vary — see Current Answers"]
+  }
+]

@@ -155,7 +155,7 @@
     {
       "id": "U1-S10",
       "type": "officialQuestions",
-      "questionIds": ["Q2","Q3","Q5","Q6","Q7","Q13","Q8","Q9","Q10","Q11","Q12","Q14"],
+      "questionIds": ["Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q13","Q8","Q9","Q10","Q11","Q12","Q14"],
       "q14Note": "Q14 — Name a document that influenced the Constitution. You already know one: Declaration of Independence.",
       "primaryLabel": "Next"
     },

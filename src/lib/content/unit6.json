@@ -1,0 +1,215 @@
+{
+  "id": "U6",
+  "title": "How America began",
+  "questionCount": 17,
+  "screens": [
+    {
+      "id": "U6-S01",
+      "type": "orient",
+      "unitLabel": "Unit 6",
+      "heading": "How America began",
+      "body": "The officer will ask how the country began — questions like:",
+      "sampleQuestionId": "Q78",
+      "afterQuote": "This lesson will help you answer those questions.",
+      "coverageLine": "It covers 17 of the 128 on the test.",
+      "afterTest": "History can feel like a long list of names and dates to remember. Here it is one story — and the answers are part of it.",
+      "primaryLabel": "Begin"
+    },
+    {
+      "id": "U6-S02",
+      "type": "hook",
+      "companionPose": "thinking",
+      "question": "Imagine your paycheck is taxed by people you never chose, meeting in a room you may not enter, an ocean away. You may not vote for them or against them. What would you do?",
+      "options": ["Pay quietly", "Protest", "Leave"],
+      "feedback": "Thirteen colonies faced exactly that. Their answer created the United States — and it explains almost every question in this lesson."
+    },
+    {
+      "id": "U6-S03",
+      "type": "connect",
+      "bodyList": [
+        "You already know the ending of this story.",
+        "In Lesson 1 you learned what the founders built — a rulebook born from the fear of kings."
+      ],
+      "bodyList2": [
+        "This lesson is how they got there: who was here first, who came and why, what broke, and what they built from the pieces."
+      ],
+      "closing": "One story, three chapters.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U6-S04",
+      "type": "vocab",
+      "cards": [
+        {
+          "word": "colony",
+          "def": "a settlement ruled by a faraway country.",
+          "example": "The thirteen colonies were ruled by Britain."
+        },
+        {
+          "word": "independence",
+          "def": "being free — ruling yourself.",
+          "example": "The colonies declared independence in 1776."
+        },
+        {
+          "word": "revolution",
+          "def": "a fight to change who rules.",
+          "example": "The American Revolution won independence from Britain."
+        },
+        {
+          "word": "declare",
+          "def": "to say officially, in front of everyone.",
+          "example": "They declared the colonies free from Britain."
+        },
+        {
+          "word": "founder",
+          "def": "one of the people who started the country.",
+          "example": "George Washington was a founder."
+        }
+      ],
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U6-S05",
+      "type": "bigIdea",
+      "image": "colonial-america.jpg",
+      "paragraphs": [
+        "Chapter 1 — Before.",
+        "American Indians — Native Americans — lived on this land first, for thousands of years, in many nations: Cherokee, Navajo, Sioux, and hundreds more.",
+        "Then ships came from Europe. The colonists came for reasons you will recognize: freedom — religious freedom, political liberty — economic opportunity, and escape from persecution. Many crossed an ocean for the same kinds of hopes that bring people to America today.",
+        "And a hard truth belongs in this chapter, told plainly: Africans were taken from their homes, brought here by force, and sold as slaves."
+      ],
+      "resolution": "Their story does not end here — it returns in the next lesson, at the center of the country's greatest test.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U6-S06",
+      "type": "bigIdea",
+      "image": "declaration-signing.jpg",
+      "paragraphs": [
+        "Chapter 2 — The break.",
+        "The thirteen colonies were ruled by Britain, and Britain taxed them — the Stamp Act, the Tea Act — while giving them no vote and no voice in the decisions. The colonists gave their complaint a name that still rings: taxation without representation. Protest grew — the Boston Tea Party — and protest became war: the American Revolution.",
+        "In the middle of that war, the colonies put their reasons in writing for the whole world. Thomas Jefferson wrote the Declaration of Independence, adopted July 4, 1776 — the date America still celebrates as its birthday. It declared the colonies free from Britain, and it declared why: all people are created equal, with rights of their own — life, liberty, the pursuit of happiness.",
+        "The war was long — Bunker Hill, Washington crossing the Delaware, Valley Forge — but it ended with the British surrender at Yorktown."
+      ],
+      "resolution": "The colonies were free. Now they had to become a country.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U6-S07",
+      "type": "bigIdea",
+      "paragraphs": [
+        "Chapter 3 — The build.",
+        "The colonies were free — but they were struggling. The first loose arrangement between the states (the Articles of Confederation) proved too weak to work. So in 1787, the states sent their best minds to Philadelphia and wrote the Constitution — the rulebook you know, born from the two fears you know.",
+        "Not everyone was convinced. To persuade the doubters, James Madison, Alexander Hamilton, and John Jay wrote a series of essays — the Federalist Papers — explaining the Constitution and urging its passage.",
+        "Here are the most important founders and what they did: George Washington — general of the Continental Army, president of the Constitutional Convention, first President: the 'Father of Our Country.' Thomas Jefferson — writer of the Declaration, third President. James Madison — the 'Father of the Constitution,' fourth President. Alexander Hamilton — first Secretary of the Treasury. Benjamin Franklin — diplomat, inventor, first Postmaster General, founder of the first free public libraries."
+      ],
+      "handle": "1776 declares. 1787 designs.",
+      "handleSub": "You have now seen both dates from inside the story.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U6-S08",
+      "type": "seeItNotIt",
+      "heading": "The pattern to hold: six steps, one direction.",
+      "example": "The colonists had no voice, so they protested. Protest became war. In 1776 they declared independence. They won the war. In 1787 they designed the Constitution.",
+      "nonExample": "The Declaration did not create the government — it announced freedom. The Constitution did not declare independence — it wrote the rules for a working government. Eleven years and a war stand between them.",
+      "takeaway": "If a question mentions free from Britain — Declaration. If it mentions government, law, or 1787 — Constitution.",
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U6-S09",
+      "type": "guidedPractice",
+      "items": [
+        {
+          "kind": "order",
+          "instructions": "Tap these four events into the order they happened.",
+          "orderItems": [
+            "Colonies ruled by Britain",
+            "Declaration of Independence (1776)",
+            "Revolutionary War is won",
+            "Constitution is written (1787)"
+          ],
+          "feedbackCorrect": "Six steps, one direction — no voice, protest, war, declaration, victory, design."
+        },
+        {
+          "kind": "infer",
+          "question": "Why did 'taxation without representation' anger the colonists?",
+          "options": [
+            "They were taxed by a government they had no vote in",
+            "The taxes were the highest in the world",
+            "Britain refused to trade with them"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "kind": "exemplify",
+          "question": "Benjamin Franklin is famous for many things. Name one.",
+          "options": [
+            "Founded the first free public libraries",
+            "First president of the United States",
+            "Led the Union during the Civil War"
+          ],
+          "correctIndex": 0
+        },
+        {
+          "kind": "interpret",
+          "question": "Same document, two different first words. Which pair of answers is right?",
+          "questionCard": true,
+          "cardText": "Who wrote the Declaration of Independence? / When was the Declaration adopted?",
+          "options": [
+            "Who wants a person — Jefferson. When wants a date — July 4, 1776",
+            "Who wants a date — July 4, 1776. When wants a person — Jefferson",
+            "Both want the same answer — the Declaration of Independence"
+          ],
+          "correctIndex": 0,
+          "pairedOfficial": "Who wrote the Declaration of Independence?"
+        }
+      ],
+      "primaryLabel": "Next"
+    },
+    {
+      "id": "U6-S10",
+      "type": "officialQuestions",
+      "questionIds": [
+        "Q73",
+        "Q74",
+        "Q75",
+        "Q76",
+        "Q77",
+        "Q78",
+        "Q79",
+        "Q80",
+        "Q81",
+        "Q82",
+        "Q83",
+        "Q84",
+        "Q85",
+        "Q86",
+        "Q87",
+        "Q88",
+        "Q89"
+      ],
+      "q14Note": "Q81 asks you to name five of the 13 original states. Here are five: New York, New Jersey, Pennsylvania, Virginia, Georgia.",
+      "primaryLabel": "Next"
+    },
+    { "id": "U6-S11", "type": "practice", "questionId": "Q78" },
+    { "id": "U6-S12", "type": "practice", "questionId": "Q79" },
+    { "id": "U6-S13", "type": "practice", "questionId": "Q86" },
+    { "id": "U6-S14", "type": "practice", "questionId": "Q77" },
+    { "id": "U6-S15", "type": "practice", "questionId": "Q74" },
+    { "id": "U6-S16", "type": "practice", "questionId": "Q76" },
+    {
+      "id": "U6-S17",
+      "type": "lockItIn",
+      "heading": "Lesson 6 finished.",
+      "companionPose": "pleased",
+      "learnedLine": "You learned the ideas behind all 17 questions in this lesson, and practiced 6 of them.",
+      "fullBankOffer": {
+        "unit": "U6",
+        "total": 17,
+        "label": "Practice all 17 questions"
+      },
+      "askSomeone": "Tell someone the story of 1776 — in any language. Telling the story is studying."
+    }
+  ]
+}

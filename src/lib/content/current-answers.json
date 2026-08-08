@@ -1,0 +1,54 @@
+{
+  "_note": "The eight ◆ dynamic questions. Storyboard §9.3 and the Question Bank Companion both require these to be verified against a freshly downloaded M-1778 and the USCIS test-updates page before any build. An entry with verified:false renders as an instruction to check USCIS rather than as an answer — the course must never state an officeholder it cannot stand behind.",
+  "state": "California",
+  "checked": null,
+  "updatesUrl": "https://www.uscis.gov/citizenship/testupdates",
+  "answers": {
+    "Q23": {
+      "label": "One of your state's U.S. senators",
+      "value": null,
+      "verified": false,
+      "stateSpecific": true
+    },
+    "Q29": {
+      "label": "Your U.S. representative",
+      "value": null,
+      "verified": false,
+      "stateSpecific": true,
+      "note": "Depends on the learner's congressional district, not only the state."
+    },
+    "Q30": {
+      "label": "Speaker of the House of Representatives",
+      "value": null,
+      "verified": false
+    },
+    "Q38": {
+      "label": "President of the United States",
+      "value": null,
+      "verified": false
+    },
+    "Q39": {
+      "label": "Vice President of the United States",
+      "value": null,
+      "verified": false
+    },
+    "Q57": {
+      "label": "Chief Justice of the United States",
+      "value": null,
+      "verified": false
+    },
+    "Q61": {
+      "label": "Governor of your state",
+      "value": null,
+      "verified": false,
+      "stateSpecific": true
+    },
+    "Q62": {
+      "label": "Capital of your state",
+      "value": "Sacramento",
+      "verified": true,
+      "stateSpecific": true,
+      "note": "Included as verified because a state capital does not change with elections. Still state-specific: correct only for a learner in California."
+    }
+  }
+}

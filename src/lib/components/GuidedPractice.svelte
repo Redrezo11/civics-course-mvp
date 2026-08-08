@@ -9,6 +9,39 @@
   export let items = [];
   let current = 0;
   let sortAssignments = {}; // itemIndex -> { sortItemIndex: bucketIndex }
+  let orderPicks = {}; // itemIndex -> [orderItemIndex, ...] in the order tapped
+
+  // Tap-to-order (storyboard interaction type 3): 3–4 cards tapped into
+  // sequence. orderItems is authored in the CORRECT sequence; this scrambles
+  // the presentation deterministically so the answer is never just "top to
+  // bottom", without needing a second authored field.
+  function scrambled(list) {
+    return list
+      .map((text, i) => ({ text, i }))
+      .sort((a, b) => ((a.i * 7 + 3) % list.length) - ((b.i * 7 + 3) % list.length));
+  }
+
+  function pickOrder(itemIdx, orderItemIdx) {
+    const picks = orderPicks[itemIdx] || [];
+    if (picks.includes(orderItemIdx)) return;
+    orderPicks[itemIdx] = [...picks, orderItemIdx];
+    orderPicks = orderPicks;
+  }
+
+  function resetOrder(itemIdx) {
+    orderPicks[itemIdx] = [];
+    orderPicks = orderPicks;
+  }
+
+  function orderComplete(idx) {
+    const item = items[idx];
+    return (orderPicks[idx] || []).length === item.orderItems.length;
+  }
+
+  function orderCorrect(idx) {
+    const picks = orderPicks[idx] || [];
+    return picks.every((v, i) => v === i);
+  }
 
   function selectAnswer(item, optionIndex) {
     const correct = optionIndex === item.correctIndex;
@@ -27,6 +60,9 @@
     const item = items[idx];
     if (item.kind === 'compare') {
       return sortAssignments[idx] && Object.keys(sortAssignments[idx]).length === item.sortItems.length;
+    }
+    if (item.kind === 'order') {
+      return orderComplete(idx);
     }
     return item._answeredIndex !== undefined;
   }
@@ -70,6 +106,62 @@
         {/each}
         {#if itemDone(i) && i < items.length - 1}
           <button class="btn-primary mt-2" on:click={advance}>Next</button>
+        {/if}
+
+      {:else if item.kind === 'order'}
+        <p class="text-sm mb-3">{item.instructions}</p>
+
+        <!-- Chosen sequence, numbered. Position is stated as a number, not
+             implied by placement alone. -->
+        <div class="mb-3">
+          {#each orderPicks[i] || [] as pickIdx, slot}
+            {@const right = pickIdx === slot}
+            <div
+              class="flex items-start gap-2 border-2 rounded-card p-2.5 mb-2 text-sm
+                {orderComplete(i) && right ? 'bg-gotit-bg dark:bg-dark-gotit-bg border-gotit dark:border-dark-gotit' : ''}
+                {orderComplete(i) && !right ? 'border-border-interactive dark:border-dark-border-interactive text-ink-muted dark:text-dark-ink-muted' : ''}
+                {!orderComplete(i) ? 'border-border-interactive dark:border-dark-border-interactive' : ''}"
+            >
+              <span class="font-bold shrink-0">{slot + 1}.</span>
+              <span>{item.orderItems[pickIdx]}</span>
+              {#if orderComplete(i)}
+                <span class="ml-auto shrink-0 font-bold">{right ? '✓' : '✗'}</span>
+              {/if}
+            </div>
+          {/each}
+        </div>
+
+        {#if !orderComplete(i)}
+          {#each scrambled(item.orderItems) as entry}
+            {#if !(orderPicks[i] || []).includes(entry.i)}
+              <button
+                class="block w-full text-left py-2.5 px-4 mb-2 rounded-card font-bold text-sm border-2 border-border-interactive dark:border-dark-border-interactive"
+                on:click={() => pickOrder(i, entry.i)}
+              >{entry.text}</button>
+            {/if}
+          {/each}
+          {#if (orderPicks[i] || []).length > 0}
+            <button class="text-xs underline text-ink-muted dark:text-dark-ink-muted mt-1" on:click={() => resetOrder(i)}>
+              Start over
+            </button>
+          {/if}
+        {:else}
+          <div class="mt-1 p-3 rounded-card border border-border dark:border-dark-border text-sm leading-relaxed">
+            {#if orderCorrect(i)}
+              <span class="font-bold">Correct order.</span> {item.feedbackCorrect || ''}
+            {:else}
+              <!-- G-20: lead with the answer, then explain. -->
+              <span class="font-bold">The correct order is:</span>
+              {#each item.orderItems as t, n}<br />{n + 1}. {t}{/each}
+              {#if item.feedbackCorrect}<br /><br />{item.feedbackCorrect}{/if}
+            {/if}
+          </div>
+          <button class="text-xs underline text-ink-muted dark:text-dark-ink-muted mt-2" on:click={() => resetOrder(i)}>
+            Try again
+          </button>
+          {#if i < items.length - 1}
+            <button class="btn-primary mt-3" on:click={advance}>Next</button>
+          {/if}
         {/if}
 
       {:else}
