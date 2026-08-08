@@ -106,7 +106,23 @@
       onBack={back}
     />
 
+    <!--
+      Keyed on screen.id so every screen gets a FRESH component tree.
+
+      Without this, two consecutive screens of the same type render the same
+      template branch, so Svelte reuses the component instance and its internal
+      state comes with it. Unit 1 screens 13 and 14 are both `practice`: the
+      SingleSelect from Q2 arrived at Q7 still carrying answered=true, so Q7
+      rendered already-revealed and its click handler early-returned on
+      `if (answered) return`. It never dispatched, interactionDone never
+      flipped, and the learner was stranded with no Next button.
+
+      Keying here fixes the whole class at once — SingleSelect, MultiSelect,
+      VocabDeck's flipped set, ReadAndAnswer, the hook buttons — rather than
+      leaving each component to remember to reset itself.
+    -->
     <div class="flex-1 overflow-y-auto px-5 py-6">
+      {#key screen.id}
       {#if screen.type === 'info'}
         {#if screen.image}
           <div class="w-full aspect-video mb-4 rounded-photo bg-[repeating-linear-gradient(135deg,theme(colors.border),theme(colors.border)_10px,theme(colors.surface)_10px,theme(colors.surface)_20px)] flex items-center justify-center text-xs text-ink-muted" role="img" aria-label={screen.alt || screen.image}>
@@ -343,6 +359,7 @@
         {/if}
         <p class="text-xs text-ink-muted dark:text-dark-ink-muted text-center mt-4">{screen.askSomeone}</p>
       {/if}
+      {/key}
     </div>
 
     <!-- A ◆ dynamic practice screen has nothing to answer, so it would never
