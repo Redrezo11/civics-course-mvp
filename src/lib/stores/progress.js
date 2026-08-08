@@ -38,6 +38,26 @@ function createProgressStore() {
       storage.recordFullBankProgress(unitId, count);
       refresh();
     },
+    markFullBankDone(unitId) {
+      storage.markFullBankDone(unitId);
+      refresh();
+    },
+    markReviewDone(reviewId) {
+      storage.markReviewDone(reviewId);
+      refresh();
+    },
+    recordRehearsal(correct, passed) {
+      storage.recordRehearsal(correct, passed);
+      refresh();
+    },
+    markEpitomeSeen() {
+      storage.markEpitomeSeen();
+      refresh();
+    },
+    clearFromReviewQueue(ids) {
+      storage.clearFromReviewQueue(ids);
+      refresh();
+    },
     resetAll() {
       storage.resetAll();
       refresh();

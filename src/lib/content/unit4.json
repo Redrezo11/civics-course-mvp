@@ -20,7 +20,11 @@
       "type": "hook",
       "companionPose": "thinking",
       "question": "Who gave you your driver's license — the United States, or California?",
-      "options": ["The United States", "California", "Both together"],
+      "options": [
+        "The United States",
+        "California",
+        "Both together"
+      ],
       "feedback": "California. Keep that card in your pocket; it unlocks this whole family of questions."
     },
     {
@@ -76,7 +80,8 @@
       ],
       "resolution": "The federal government gets only what the Constitution gives it. Everything else stays close to home.",
       "handle": "Country-sized jobs are federal. Close-to-home jobs are state.",
-      "primaryLabel": "Next"
+      "primaryLabel": "Next",
+      "alt": "Two levels drawn as a diagram: a single national government above, and fifty state governments below it."
     },
     {
       "id": "U4-S06",
@@ -109,14 +114,35 @@
         {
           "kind": "compare",
           "instructions": "Tap to sort each power into Federal or State.",
-          "buckets": ["Federal", "State"],
+          "buckets": [
+            "Federal",
+            "State"
+          ],
           "sortItems": [
-            { "text": "Print money", "bucket": 0 },
-            { "text": "Give a driver's license", "bucket": 1 },
-            { "text": "Declare war", "bucket": 0 },
-            { "text": "Schools", "bucket": 1 },
-            { "text": "Make treaties", "bucket": 0 },
-            { "text": "Police", "bucket": 1 }
+            {
+              "text": "Print money",
+              "bucket": 0
+            },
+            {
+              "text": "Give a driver's license",
+              "bucket": 1
+            },
+            {
+              "text": "Declare war",
+              "bucket": 0
+            },
+            {
+              "text": "Schools",
+              "bucket": 1
+            },
+            {
+              "text": "Make treaties",
+              "bucket": 0
+            },
+            {
+              "text": "Police",
+              "bucket": 1
+            }
           ]
         },
         {
@@ -158,13 +184,31 @@
     {
       "id": "U4-S09",
       "type": "officialQuestions",
-      "questionIds": ["Q58", "Q59", "Q60", "Q61", "Q62"],
+      "questionIds": [
+        "Q58",
+        "Q59",
+        "Q60",
+        "Q61",
+        "Q62"
+      ],
       "q14Note": "Two of these depend on where you live — your governor and your state capital. They are on the Current Answers page.",
       "primaryLabel": "Next"
     },
-    { "id": "U4-S10", "type": "practice", "questionId": "Q58" },
-    { "id": "U4-S11", "type": "practice", "questionId": "Q59" },
-    { "id": "U4-S12", "type": "practice", "questionId": "Q60" },
+    {
+      "id": "U4-S10",
+      "type": "practice",
+      "questionId": "Q58"
+    },
+    {
+      "id": "U4-S11",
+      "type": "practice",
+      "questionId": "Q59"
+    },
+    {
+      "id": "U4-S12",
+      "type": "practice",
+      "questionId": "Q60"
+    },
     {
       "id": "U4-S13",
       "type": "lockItIn",

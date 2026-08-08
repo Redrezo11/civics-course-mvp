@@ -14,7 +14,8 @@
       "type": "info",
       "image": "ceremony-wide.jpg",
       "body": "The civics test is a conversation. An officer asks you questions out loud. You answer out loud. There are 128 possible questions. The officer asks up to 20.",
-      "primaryLabel": "Next"
+      "primaryLabel": "Next",
+      "alt": "A naturalization ceremony: rows of people standing with their right hands raised, small United States flags in their left hands."
     },
     {
       "id": "U0-S03",
@@ -35,13 +36,34 @@
       "type": "info",
       "heading": "The question's opening words tell you what kind of answer",
       "clueList": [
-        ["What", "a thing or a name"],
-        ["Who", "a person"],
-        ["When", "a date or year"],
-        ["How many", "a number"],
-        ["Why", "a reason"],
-        ["Name", "give the example(s)"],
-        ["Describe", "tell what it means"]
+        [
+          "What",
+          "a thing or a name"
+        ],
+        [
+          "Who",
+          "a person"
+        ],
+        [
+          "When",
+          "a date or year"
+        ],
+        [
+          "How many",
+          "a number"
+        ],
+        [
+          "Why",
+          "a reason"
+        ],
+        [
+          "Name",
+          "give the example(s)"
+        ],
+        [
+          "Describe",
+          "tell what it means"
+        ]
       ],
       "body": "The question's opening words tell you what kind of answer the officer wants.",
       "primaryLabel": "Next"

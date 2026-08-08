@@ -20,7 +20,11 @@
       "type": "hook",
       "companionPose": "thinking",
       "question": "In 1860, millions of people in America were enslaved — in the same country whose founding document said all people are created equal. A country cannot hold both forever. What happened?",
-      "options": ["The country split and fought", "The law changed quietly", "Nothing changed"],
+      "options": [
+        "The country split and fought",
+        "The law changed quietly",
+        "Nothing changed"
+      ],
       "feedback": "The country split and fought — the Civil War. What followed is the story of a promise finally being kept, one amendment at a time."
     },
     {
@@ -83,7 +87,8 @@
         "President Abraham Lincoln led the country through it. His Emancipation Proclamation freed the slaves in the Confederacy. He saved the Union — kept the country one country. The war's names — Gettysburg, Vicksburg, Appomattox — mark the hardest years America has had. The Civil War ended slavery."
       ],
       "resolution": "Lincoln was assassinated days after the fighting ended: the 16th president, remembered above all as the man who freed the slaves and preserved the Union.",
-      "primaryLabel": "Next"
+      "primaryLabel": "Next",
+      "alt": "Union and Confederate soldiers facing each other across an open field during the Civil War."
     },
     {
       "id": "U7-S06",
@@ -124,7 +129,8 @@
         "The holidays mark the story you now know: Independence Day — the country's birthday, July 4. Memorial Day — honors soldiers who died in military service. Veterans Day — honors all who served."
       ],
       "resolution": "For 'name three national holidays,' keep three you already live with: New Year's Day, Independence Day, Thanksgiving.",
-      "primaryLabel": "Next"
+      "primaryLabel": "Next",
+      "alt": "The United States flag with its thirteen stripes and fifty stars, and the Statue of Liberty standing in the harbour behind it."
     },
     {
       "id": "U7-S09",
@@ -183,10 +189,19 @@
         {
           "kind": "compare",
           "instructions": "Tap to sort each into the holiday it describes.",
-          "buckets": ["Memorial Day", "Veterans Day"],
+          "buckets": [
+            "Memorial Day",
+            "Veterans Day"
+          ],
           "sortItems": [
-            { "text": "Honors soldiers who died", "bucket": 0 },
-            { "text": "Honors all who served", "bucket": 1 }
+            {
+              "text": "Honors soldiers who died",
+              "bucket": 0
+            },
+            {
+              "text": "Honors all who served",
+              "bucket": 1
+            }
           ]
         },
         {
@@ -262,13 +277,41 @@
       "q14Note": "Q117 (tribes) and Q118 (innovations) accept any one from a long list — one is enough.",
       "primaryLabel": "Next"
     },
-    { "id": "U7-S14", "type": "practice", "questionId": "Q92" },
-    { "id": "U7-S15", "type": "practice", "questionId": "Q94" },
-    { "id": "U7-S16", "type": "practice", "questionId": "Q97" },
-    { "id": "U7-S17", "type": "practice", "questionId": "Q102" },
-    { "id": "U7-S18", "type": "practice", "questionId": "Q121" },
-    { "id": "U7-S19", "type": "practice", "questionId": "Q113" },
-    { "id": "U7-S20", "type": "practice", "questionId": "Q126" },
+    {
+      "id": "U7-S14",
+      "type": "practice",
+      "questionId": "Q92"
+    },
+    {
+      "id": "U7-S15",
+      "type": "practice",
+      "questionId": "Q94"
+    },
+    {
+      "id": "U7-S16",
+      "type": "practice",
+      "questionId": "Q97"
+    },
+    {
+      "id": "U7-S17",
+      "type": "practice",
+      "questionId": "Q102"
+    },
+    {
+      "id": "U7-S18",
+      "type": "practice",
+      "questionId": "Q121"
+    },
+    {
+      "id": "U7-S19",
+      "type": "practice",
+      "questionId": "Q113"
+    },
+    {
+      "id": "U7-S20",
+      "type": "practice",
+      "questionId": "Q126"
+    },
     {
       "id": "U7-S21",
       "type": "lockItIn",
@@ -280,7 +323,8 @@
         "total": 39,
         "label": "Practice all 39 questions"
       },
-      "askSomeone": "Ask someone which holiday is next — and tell them what it honors."
+      "askSomeone": "Ask someone which holiday is next — and tell them what it honors.",
+      "unlocksReview": "R3"
     }
   ]
 }

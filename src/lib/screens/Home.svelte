@@ -1,6 +1,8 @@
 <script>
   import { progress, questionsPracticedCount, lessonsFinishedCount } from '../stores/progress.js';
   import { navigate } from '../router.js';
+  import { getUnitQuestions, TOTAL_QUESTIONS } from '../content/questions.js';
+  import { REVIEWS, unlockedReviews } from '../select-review.js';
 
   const units = [
     { id: 'U0', name: 'Test day' },
@@ -19,6 +21,20 @@
 
   $: nextUnit = units.find((u) => !$progress.unitsCompleted.includes(u.id) && builtUnits.includes(u.id))
     || units.find((u) => builtUnits.includes(u.id));
+
+  // Reviews unlock after U2, U5 and U7 (§8). They are shown only once earned —
+  // an empty "Reviews" heading with nothing under it would be worse than
+  // nothing, and a locked row here would repeat the mistake G-16 warns about.
+  $: reviews = unlockedReviews($progress.unitsCompleted);
+
+  // G-08 entry stays open from Home for any unit whose set is unfinished, so
+  // full-bank practice is reachable without walking the lesson again.
+  $: unfinishedBanks = units
+    .filter((u) => u.id !== 'U0' && $progress.unitsCompleted.includes(u.id))
+    .filter((u) => !$progress.fullBankDone.includes(u.id))
+    .map((u) => ({ ...u, total: getUnitQuestions(u.id).length }));
+
+  $: unpractised = TOTAL_QUESTIONS - $questionsPracticedCount;
 </script>
 
 <div class="min-h-screen flex flex-col">
@@ -65,6 +81,41 @@
       {/each}
     </div>
 
+    {#if reviews.length}
+      <p class="text-sm font-bold mt-6 mb-2">Reviews</p>
+      <div class="border-t border-border dark:border-dark-border">
+        {#each reviews as r}
+          {@const done = $progress.reviewsDone.includes(r)}
+          <button
+            class="w-full flex items-center justify-between py-2.5 border-b border-border dark:border-dark-border text-sm text-left"
+            on:click={() => navigate(`/review/${r}`)}
+          >
+            <span class="flex-1">{REVIEWS[r].label} — questions from every lesson so far</span>
+            {#if done}<span class="text-ink-muted dark:text-dark-ink-muted mr-1.5">✓</span>{/if}
+            <span class="text-ink-muted dark:text-dark-ink-muted">›</span>
+          </button>
+        {/each}
+      </div>
+    {/if}
+
+    {#if unfinishedBanks.length}
+      <p class="text-sm font-bold mt-6 mb-1">Practice every question</p>
+      <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-2">
+        Optional. {unpractised} of {TOTAL_QUESTIONS} are still unpracticed.
+      </p>
+      <div class="border-t border-border dark:border-dark-border">
+        {#each unfinishedBanks as u}
+          <button
+            class="w-full flex items-center justify-between py-2.5 border-b border-border dark:border-dark-border text-sm text-left"
+            on:click={() => navigate(`/practice/${u.id}`)}
+          >
+            <span class="flex-1">All {u.total} from {u.name}</span>
+            <span class="text-ink-muted dark:text-dark-ink-muted">›</span>
+          </button>
+        {/each}
+      </div>
+    {/if}
+
     <p class="text-[10px] text-ink-muted dark:text-dark-ink-muted text-center mt-4">
       Answers checked: Aug 2026 ·
       <button class="underline font-bold text-ink dark:text-dark-ink" on:click={() => navigate('/help')}>Help</button> ·
@@ -74,8 +125,11 @@
 
   <div class="flex border-t border-border dark:border-dark-border bg-raised dark:bg-dark-raised">
     <div class="flex-1 text-center py-3 text-sm font-bold">Learn</div>
+    <button class="flex-1 text-center py-3 text-sm text-ink-muted dark:text-dark-ink-muted" on:click={() => navigate('/rehearsal')}>
+      Rehearsal
+    </button>
     <button class="flex-1 text-center py-3 text-sm text-ink-muted dark:text-dark-ink-muted" on:click={() => navigate('/questions')}>
-      All 128 questions
+      All {TOTAL_QUESTIONS} questions
     </button>
   </div>
 </div>

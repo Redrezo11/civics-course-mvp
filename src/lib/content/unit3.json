@@ -20,7 +20,11 @@
       "type": "hook",
       "companionPose": "thinking",
       "question": "California has about 39 million people. Wyoming has about half a million. In Congress, should California's voice be 78 times louder?",
-      "options": ["Yes", "No", "Both, somehow"],
+      "options": [
+        "Yes",
+        "No",
+        "Both, somehow"
+      ],
       "feedback": "In 1787 the states nearly walked away from each other over exactly this question. Their compromise built Congress — and it is worth understanding, because it explains six test answers at once."
     },
     {
@@ -82,7 +86,8 @@
       ],
       "handle": "One state, two kinds of voice.",
       "handleSub": "Citizens elect both.",
-      "primaryLabel": "Next"
+      "primaryLabel": "Next",
+      "alt": "The United States Capitol building, with its two wings marked as the Senate chamber and the House chamber."
     },
     {
       "id": "U3-S06",
@@ -126,14 +131,35 @@
         {
           "kind": "compare",
           "instructions": "Tap to sort each fact into the Senate or the House.",
-          "buckets": ["Senate", "House"],
+          "buckets": [
+            "Senate",
+            "House"
+          ],
           "sortItems": [
-            { "text": "100 members", "bucket": 0 },
-            { "text": "435 members", "bucket": 1 },
-            { "text": "6-year term", "bucket": 0 },
-            { "text": "2-year term", "bucket": 1 },
-            { "text": "Two per state", "bucket": 0 },
-            { "text": "Based on population", "bucket": 1 }
+            {
+              "text": "100 members",
+              "bucket": 0
+            },
+            {
+              "text": "435 members",
+              "bucket": 1
+            },
+            {
+              "text": "6-year term",
+              "bucket": 0
+            },
+            {
+              "text": "2-year term",
+              "bucket": 1
+            },
+            {
+              "text": "Two per state",
+              "bucket": 0
+            },
+            {
+              "text": "Based on population",
+              "bucket": 1
+            }
           ]
         },
         {
@@ -203,12 +229,36 @@
       "q14Note": "Five of these change with elections — your senators, your representative, the Speaker, the President, and the Vice President. They are on the Current Answers page, with the date they were checked.",
       "primaryLabel": "Next"
     },
-    { "id": "U3-S11", "type": "practice", "questionId": "Q19" },
-    { "id": "U3-S12", "type": "practice", "questionId": "Q27" },
-    { "id": "U3-S13", "type": "practice", "questionId": "Q21" },
-    { "id": "U3-S14", "type": "practice", "questionId": "Q36" },
-    { "id": "U3-S15", "type": "practice", "questionId": "Q20" },
-    { "id": "U3-S16", "type": "practice", "questionId": "Q40" },
+    {
+      "id": "U3-S11",
+      "type": "practice",
+      "questionId": "Q19"
+    },
+    {
+      "id": "U3-S12",
+      "type": "practice",
+      "questionId": "Q27"
+    },
+    {
+      "id": "U3-S13",
+      "type": "practice",
+      "questionId": "Q21"
+    },
+    {
+      "id": "U3-S14",
+      "type": "practice",
+      "questionId": "Q36"
+    },
+    {
+      "id": "U3-S15",
+      "type": "practice",
+      "questionId": "Q20"
+    },
+    {
+      "id": "U3-S16",
+      "type": "practice",
+      "questionId": "Q40"
+    },
     {
       "id": "U3-S17",
       "type": "lockItIn",

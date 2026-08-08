@@ -69,7 +69,12 @@
   function next() {
     if (isLast) {
       progress.markUnitComplete(unitId);
-      navigate('/');
+      // E-01 sits between U0 and U1 (§2) — it is the course's first teaching
+      // screen and every unit's Connect beat points back to it, so finishing
+      // orientation leads there rather than back to Home.
+      if (unitId === 'U0' && !$progress.epitomeSeen) navigate('/epitome');
+      else if (unitId === 'U7') navigate('/completion');
+      else navigate('/');
       return;
     }
     index += 1;
@@ -104,7 +109,7 @@
     <div class="flex-1 overflow-y-auto px-5 py-6">
       {#if screen.type === 'info'}
         {#if screen.image}
-          <div class="w-full aspect-video mb-4 rounded-photo bg-[repeating-linear-gradient(135deg,theme(colors.border),theme(colors.border)_10px,theme(colors.surface)_10px,theme(colors.surface)_20px)] flex items-center justify-center text-xs text-ink-muted">
+          <div class="w-full aspect-video mb-4 rounded-photo bg-[repeating-linear-gradient(135deg,theme(colors.border),theme(colors.border)_10px,theme(colors.surface)_10px,theme(colors.surface)_20px)] flex items-center justify-center text-xs text-ink-muted" role="img" aria-label={screen.alt || screen.image}>
             {screen.image}
           </div>
         {/if}
@@ -185,7 +190,7 @@
 
       {:else if screen.type === 'bigIdea'}
         {#if screen.image}
-          <div class="w-full aspect-video mb-4 rounded-photo bg-[repeating-linear-gradient(135deg,theme(colors.border),theme(colors.border)_10px,theme(colors.surface)_10px,theme(colors.surface)_20px)] flex items-center justify-center text-xs text-ink-muted">
+          <div class="w-full aspect-video mb-4 rounded-photo bg-[repeating-linear-gradient(135deg,theme(colors.border),theme(colors.border)_10px,theme(colors.surface)_10px,theme(colors.surface)_20px)] flex items-center justify-center text-xs text-ink-muted" role="img" aria-label={screen.alt || screen.image}>
             {screen.image}
           </div>
         {/if}
@@ -319,8 +324,22 @@
         <h2 class="text-heading font-bold text-center mb-3">{screen.heading}</h2>
         <div class="w-16 h-16 rounded-full mx-auto mb-4 bg-[repeating-linear-gradient(135deg,theme(colors.border),theme(colors.border)_6px,theme(colors.surface)_6px,theme(colors.surface)_12px)]"></div>
         <p class="text-sm text-center mb-5">{screen.learnedLine}</p>
+        <!-- G-08 entry point. Optional and non-blocking: it sits above the
+             Next control, never in place of it, so it can never gate
+             progression to the following unit. -->
         {#if screen.fullBankOffer}
-          <button class="btn-primary mb-2.5">Practice all {screen.fullBankOffer.total} questions</button>
+          <button
+            class="btn-secondary mb-2.5"
+            on:click={() => navigate(`/practice/${screen.fullBankOffer.unit}`)}
+          >Practice all {screen.fullBankOffer.total} questions</button>
+        {/if}
+
+        <!-- A review unlocks after U2, U5 and U7 (§8). -->
+        {#if screen.unlocksReview}
+          <button
+            class="btn-secondary mb-2.5"
+            on:click={() => navigate(`/review/${screen.unlocksReview}`)}
+          >Start {screen.unlocksReview} — {screen.unlocksReview === 'R3' ? '10' : '8'} mixed questions</button>
         {/if}
         <p class="text-xs text-ink-muted dark:text-dark-ink-muted text-center mt-4">{screen.askSomeone}</p>
       {/if}

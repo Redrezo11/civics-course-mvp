@@ -20,7 +20,11 @@
       "type": "hook",
       "companionPose": "thinking",
       "question": "Which of these belongs to everyone living in America — citizen or not?",
-      "options": ["Freedom of speech", "Voting", "Both"],
+      "options": [
+        "Freedom of speech",
+        "Voting",
+        "Both"
+      ],
       "feedback": "Freedom of speech belongs to everyone here. Voting belongs to citizens. That line — everyone vs. citizens — is the key to this whole lesson."
     },
     {
@@ -127,14 +131,35 @@
         {
           "kind": "compare",
           "instructions": "Tap to sort each one into Everyone here or Citizens only.",
-          "buckets": ["Everyone here", "Citizens only"],
+          "buckets": [
+            "Everyone here",
+            "Citizens only"
+          ],
           "sortItems": [
-            { "text": "Freedom of speech", "bucket": 0 },
-            { "text": "Vote in federal elections", "bucket": 1 },
-            { "text": "Freedom of religion", "bucket": 0 },
-            { "text": "Serve on a jury", "bucket": 1 },
-            { "text": "Run for federal office", "bucket": 1 },
-            { "text": "Freedom of assembly", "bucket": 0 }
+            {
+              "text": "Freedom of speech",
+              "bucket": 0
+            },
+            {
+              "text": "Vote in federal elections",
+              "bucket": 1
+            },
+            {
+              "text": "Freedom of religion",
+              "bucket": 0
+            },
+            {
+              "text": "Serve on a jury",
+              "bucket": 1
+            },
+            {
+              "text": "Run for federal office",
+              "bucket": 1
+            },
+            {
+              "text": "Freedom of assembly",
+              "bucket": 0
+            }
           ]
         },
         {
@@ -191,11 +216,31 @@
       "q14Note": "Q65 asks for three rights and Q67 for two promises — the screen will tell you the count each time. Give exactly what is asked.",
       "primaryLabel": "Next"
     },
-    { "id": "U5-S11", "type": "practice", "questionId": "Q64" },
-    { "id": "U5-S12", "type": "practice", "questionId": "Q65" },
-    { "id": "U5-S13", "type": "practice", "questionId": "Q71" },
-    { "id": "U5-S14", "type": "practice", "questionId": "Q66" },
-    { "id": "U5-S15", "type": "practice", "questionId": "Q68" },
+    {
+      "id": "U5-S11",
+      "type": "practice",
+      "questionId": "Q64"
+    },
+    {
+      "id": "U5-S12",
+      "type": "practice",
+      "questionId": "Q65"
+    },
+    {
+      "id": "U5-S13",
+      "type": "practice",
+      "questionId": "Q71"
+    },
+    {
+      "id": "U5-S14",
+      "type": "practice",
+      "questionId": "Q66"
+    },
+    {
+      "id": "U5-S15",
+      "type": "practice",
+      "questionId": "Q68"
+    },
     {
       "id": "U5-S16",
       "type": "lockItIn",
@@ -207,7 +252,8 @@
         "total": 10,
         "label": "Practice all 10 questions"
       },
-      "askSomeone": "Tell someone one promise from the Oath — in any language."
+      "askSomeone": "Tell someone one promise from the Oath — in any language.",
+      "unlocksReview": "R2"
     }
   ]
 }

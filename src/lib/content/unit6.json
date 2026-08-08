@@ -20,7 +20,11 @@
       "type": "hook",
       "companionPose": "thinking",
       "question": "Imagine your paycheck is taxed by people you never chose, meeting in a room you may not enter, an ocean away. You may not vote for them or against them. What would you do?",
-      "options": ["Pay quietly", "Protest", "Leave"],
+      "options": [
+        "Pay quietly",
+        "Protest",
+        "Leave"
+      ],
       "feedback": "Thirteen colonies faced exactly that. Their answer created the United States — and it explains almost every question in this lesson."
     },
     {
@@ -79,7 +83,8 @@
         "And a hard truth belongs in this chapter, told plainly: Africans were taken from their homes, brought here by force, and sold as slaves."
       ],
       "resolution": "Their story does not end here — it returns in the next lesson, at the center of the country's greatest test.",
-      "primaryLabel": "Next"
+      "primaryLabel": "Next",
+      "alt": "A colonial American settlement on a coastline, with wooden houses and a sailing ship anchored offshore."
     },
     {
       "id": "U6-S06",
@@ -92,7 +97,8 @@
         "The war was long — Bunker Hill, Washington crossing the Delaware, Valley Forge — but it ended with the British surrender at Yorktown."
       ],
       "resolution": "The colonies were free. Now they had to become a country.",
-      "primaryLabel": "Next"
+      "primaryLabel": "Next",
+      "alt": "The signing of the Declaration of Independence: men in eighteenth-century dress gathered around a desk in a meeting hall."
     },
     {
       "id": "U6-S07",
@@ -192,12 +198,36 @@
       "q14Note": "Q81 asks you to name five of the 13 original states. Here are five: New York, New Jersey, Pennsylvania, Virginia, Georgia.",
       "primaryLabel": "Next"
     },
-    { "id": "U6-S11", "type": "practice", "questionId": "Q78" },
-    { "id": "U6-S12", "type": "practice", "questionId": "Q79" },
-    { "id": "U6-S13", "type": "practice", "questionId": "Q86" },
-    { "id": "U6-S14", "type": "practice", "questionId": "Q77" },
-    { "id": "U6-S15", "type": "practice", "questionId": "Q74" },
-    { "id": "U6-S16", "type": "practice", "questionId": "Q76" },
+    {
+      "id": "U6-S11",
+      "type": "practice",
+      "questionId": "Q78"
+    },
+    {
+      "id": "U6-S12",
+      "type": "practice",
+      "questionId": "Q79"
+    },
+    {
+      "id": "U6-S13",
+      "type": "practice",
+      "questionId": "Q86"
+    },
+    {
+      "id": "U6-S14",
+      "type": "practice",
+      "questionId": "Q77"
+    },
+    {
+      "id": "U6-S15",
+      "type": "practice",
+      "questionId": "Q74"
+    },
+    {
+      "id": "U6-S16",
+      "type": "practice",
+      "questionId": "Q76"
+    },
     {
       "id": "U6-S17",
       "type": "lockItIn",

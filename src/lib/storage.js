@@ -20,8 +20,12 @@ const DEFAULT_STATE = {
   unitsCompleted: [],   // e.g. ['U0', 'U1']
   questionsAnswered: {},// { "Q2": true, "Q7": false, ... } — true = answered correctly at least once
   screenPosition: {},   // { "U1": "U1-S05" } — resume point per unit
-  reviewQueue: [],      // question ids marked "Not yet" or answered wrong, for spaced re-queue
-  fullBankProgress: {}, // { "U1": 5 } — how many of a unit's full-bank set have been done
+  reviewQueue: [],      // question ids answered wrong, drained first by the next review
+  fullBankProgress: {}, // { "U1": 5 } — resume position within a unit's G-08 set
+  fullBankDone: [],     // unit ids whose full-bank set has been completed end to end
+  reviewsDone: [],      // e.g. ['R1'] — which cumulative reviews are finished
+  rehearsal: { attempts: 0, bestCorrect: 0, lastResult: null },
+  epitomeSeen: false,   // E-01 is revealed once, then re-shown pre-revealed at U2/U4/U6
 };
 
 function read() {
@@ -109,6 +113,44 @@ export function recordFullBankProgress(unitId, count) {
 
 export function getFullBankProgress(unitId) {
   return read().fullBankProgress[unitId] || 0;
+}
+
+export function markFullBankDone(unitId) {
+  const s = read();
+  if (!s.fullBankDone.includes(unitId)) s.fullBankDone.push(unitId);
+  write(s);
+}
+
+export function markReviewDone(reviewId) {
+  const s = read();
+  if (!s.reviewsDone.includes(reviewId)) s.reviewsDone.push(reviewId);
+  write(s);
+}
+
+// Rehearsal keeps only an attempt count and a personal best. No score is ever
+// shown against the learner (G-1: nothing is counted against them); this
+// exists so the end screen can say "unlimited retries" truthfully and so the
+// learner can see their own improvement if they want it.
+export function recordRehearsal(correct, passed) {
+  const s = read();
+  s.rehearsal.attempts += 1;
+  if (correct > s.rehearsal.bestCorrect) s.rehearsal.bestCorrect = correct;
+  s.rehearsal.lastResult = passed ? 'passed' : 'ended';
+  write(s);
+}
+
+export function markEpitomeSeen() {
+  const s = read();
+  s.epitomeSeen = true;
+  write(s);
+}
+
+// Drains the re-queue as a review consumes it — objective re-queueing (v5.0):
+// an item enters on a wrong answer, not on a learner's self-report.
+export function clearFromReviewQueue(questionIds) {
+  const s = read();
+  s.reviewQueue = s.reviewQueue.filter((q) => !questionIds.includes(q));
+  write(s);
 }
 
 // Used only by the Help screen's "my lessons disappeared" troubleshooting —

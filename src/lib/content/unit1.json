@@ -20,7 +20,11 @@
       "type": "hook",
       "companionPose": "thinking",
       "question": "Who is the boss of America?",
-      "options": ["The President", "Congress", "The people"],
+      "options": [
+        "The President",
+        "Congress",
+        "The people"
+      ],
       "feedback": "In America, the answer is: the people. The Constitution starts with three words — We the People. But how can millions of people be the boss? That is what this lesson explains."
     },
     {
@@ -43,10 +47,26 @@
       "id": "U1-S04",
       "type": "vocab",
       "cards": [
-        { "word": "Constitution", "def": "the rulebook of the government.", "example": "The Constitution is the highest law in America." },
-        { "word": "supreme", "def": "highest.", "example": "Supreme means nothing is above it." },
-        { "word": "amendment", "def": "an official change or addition to the Constitution.", "example": "The 19th Amendment gave women the vote — your daughter votes because of it." },
-        { "word": "rights", "def": "freedoms the law protects for you.", "example": "You have the right to speak freely." }
+        {
+          "word": "Constitution",
+          "def": "the rulebook of the government.",
+          "example": "The Constitution is the highest law in America."
+        },
+        {
+          "word": "supreme",
+          "def": "highest.",
+          "example": "Supreme means nothing is above it."
+        },
+        {
+          "word": "amendment",
+          "def": "an official change or addition to the Constitution.",
+          "example": "The 19th Amendment gave women the vote — your daughter votes because of it."
+        },
+        {
+          "word": "rights",
+          "def": "freedoms the law protects for you.",
+          "example": "You have the right to speak freely."
+        }
       ],
       "primaryLabel": "Next"
     },
@@ -62,7 +82,8 @@
       "resolution": "The Constitution is their answer to both fears at once.",
       "handle": "It creates the government, limits it, and protects your rights.",
       "handleSub": "Three jobs, all born from the same fear of kings.",
-      "primaryLabel": "Next"
+      "primaryLabel": "Next",
+      "alt": "The handwritten first page of the United States Constitution on aged parchment, beginning with the large words We the People."
     },
     {
       "id": "U1-S06a",
@@ -82,7 +103,8 @@
         "They protect the basic rights of people living in the United States — not only citizens."
       ],
       "image": "doc-declaration.jpg",
-      "primaryLabel": "Next"
+      "primaryLabel": "Next",
+      "alt": "The handwritten Bill of Rights document on aged parchment, listing the first ten amendments."
     },
     {
       "id": "U1-S07",
@@ -97,8 +119,14 @@
       "id": "U1-S07b",
       "type": "confusablePair",
       "heading": "Two names on the test sound alike. Do not mix them up.",
-      "termA": { "name": "Supreme law of the land", "def": "the Constitution, the book of rules." },
-      "termB": { "name": "Supreme Court", "def": "the highest court, a group of nine judges." },
+      "termA": {
+        "name": "Supreme law of the land",
+        "def": "the Constitution, the book of rules."
+      },
+      "termB": {
+        "name": "Supreme Court",
+        "def": "the highest court, a group of nine judges."
+      },
       "resolution": "The judges must follow the Constitution. They cannot change it by themselves.",
       "primaryLabel": "Next"
     },
@@ -106,8 +134,18 @@
       "id": "U1-S08",
       "type": "bigIdea",
       "twoColumn": [
-        { "image": "doc-declaration.jpg", "heading": "Declaration of Independence — 1776", "body": "An announcement to the world: America is free from Britain. It says all people are created equal, with rights that belong to them — 'Life, Liberty, and the pursuit of Happiness.'" },
-        { "image": "doc-constitution.jpg", "heading": "Constitution — 1787", "body": "A rulebook. It builds: the government America still uses today." }
+        {
+          "image": "doc-declaration.jpg",
+          "heading": "Declaration of Independence — 1776",
+          "body": "An announcement to the world: America is free from Britain. It says all people are created equal, with rights that belong to them — 'Life, Liberty, and the pursuit of Happiness.'",
+          "alt": "Historical document photograph."
+        },
+        {
+          "image": "doc-constitution.jpg",
+          "heading": "Constitution — 1787",
+          "body": "A rulebook. It builds: the government America still uses today.",
+          "alt": "Historical document photograph."
+        }
       ],
       "closing": "First the country announced what it believed. Eleven years later, it wrote the rules to make those beliefs real. 1776 declares. 1787 designs. Remember those two dates — they answer several test questions.",
       "primaryLabel": "Next"
@@ -119,25 +157,51 @@
         {
           "kind": "exemplify",
           "question": "Name one thing the U.S. Constitution does.",
-          "options": ["Protects the rights of the people", "Chooses the President", "Collects taxes from each state"],
+          "options": [
+            "Protects the rights of the people",
+            "Chooses the President",
+            "Collects taxes from each state"
+          ],
           "correctIndex": 0
         },
         {
           "kind": "compare",
           "instructions": "Tap to sort into Declaration or Constitution.",
-          "buckets": ["Declaration", "Constitution"],
+          "buckets": [
+            "Declaration",
+            "Constitution"
+          ],
           "sortItems": [
-            { "text": "Says America is free from Britain", "bucket": 0 },
-            { "text": "The supreme law of the land", "bucket": 1 },
-            { "text": "Life, Liberty, and the pursuit of Happiness", "bucket": 0 },
-            { "text": "Written in 1787", "bucket": 1 },
-            { "text": "Has 27 amendments", "bucket": 1 }
+            {
+              "text": "Says America is free from Britain",
+              "bucket": 0
+            },
+            {
+              "text": "The supreme law of the land",
+              "bucket": 1
+            },
+            {
+              "text": "Life, Liberty, and the pursuit of Happiness",
+              "bucket": 0
+            },
+            {
+              "text": "Written in 1787",
+              "bucket": 1
+            },
+            {
+              "text": "Has 27 amendments",
+              "bucket": 1
+            }
           ]
         },
         {
           "kind": "infer",
           "question": "A new law is passed. Someone says it goes against the Constitution. Who decides — and what happens to the law if they agree?",
-          "options": ["A court decides; the law stops", "The President decides; the law continues", "No one can question a law"],
+          "options": [
+            "A court decides; the law stops",
+            "The President decides; the law continues",
+            "No one can question a law"
+          ],
           "correctIndex": 0
         },
         {
@@ -145,7 +209,11 @@
           "question": "Which question is asking the same thing as: \"What is the supreme law of the land?\"",
           "questionCard": true,
           "cardText": "What is the supreme law of the land?",
-          "options": ["What is the highest law in America?", "Who is the highest judge in America?", "What is the oldest law in America?"],
+          "options": [
+            "What is the highest law in America?",
+            "Who is the highest judge in America?",
+            "What is the oldest law in America?"
+          ],
           "correctIndex": 0,
           "pairedOfficial": "What is the supreme law of the land?"
         }
@@ -155,22 +223,61 @@
     {
       "id": "U1-S10",
       "type": "officialQuestions",
-      "questionIds": ["Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q13","Q8","Q9","Q10","Q11","Q12","Q14"],
+      "questionIds": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q6",
+        "Q7",
+        "Q13",
+        "Q8",
+        "Q9",
+        "Q10",
+        "Q11",
+        "Q12",
+        "Q14"
+      ],
       "q14Note": "Q14 — Name a document that influenced the Constitution. You already know one: Declaration of Independence.",
       "primaryLabel": "Next"
     },
-    { "id": "U1-S11", "type": "practice", "questionId": "Q2" },
-    { "id": "U1-S12", "type": "practice", "questionId": "Q7" },
-    { "id": "U1-S13", "type": "practice", "questionId": "Q13" },
-    { "id": "U1-S14", "type": "readAndAnswer", "questionId": "Q4" },
-    { "id": "U1-S15", "type": "readAndAnswer", "questionId": "Q5" },
+    {
+      "id": "U1-S11",
+      "type": "practice",
+      "questionId": "Q2"
+    },
+    {
+      "id": "U1-S12",
+      "type": "practice",
+      "questionId": "Q7"
+    },
+    {
+      "id": "U1-S13",
+      "type": "practice",
+      "questionId": "Q13"
+    },
+    {
+      "id": "U1-S14",
+      "type": "readAndAnswer",
+      "questionId": "Q4"
+    },
+    {
+      "id": "U1-S15",
+      "type": "readAndAnswer",
+      "questionId": "Q5"
+    },
     {
       "id": "U1-S16",
       "type": "lockItIn",
       "heading": "Lesson 1 finished.",
       "companionPose": "pleased",
       "learnedLine": "You learned the ideas behind all 14 questions in this lesson, and practiced 5 of them.",
-      "fullBankOffer": { "unit": "U1", "total": 14, "label": "Practice all 14 questions" },
+      "fullBankOffer": {
+        "unit": "U1",
+        "total": 14,
+        "label": "Practice all 14 questions"
+      },
       "askSomeone": "Ask someone: what are the first three words of the U.S. Constitution? — any language."
     }
   ]

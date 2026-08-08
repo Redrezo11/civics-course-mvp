@@ -20,7 +20,11 @@
       "type": "hook",
       "companionPose": "thinking",
       "question": "Imagine one person writes the rules, enforces the rules, AND judges everyone accused of breaking them. Good idea or bad idea?",
-      "options": ["Good idea", "Bad idea", "It depends"],
+      "options": [
+        "Good idea",
+        "Bad idea",
+        "It depends"
+      ],
       "feedback": "The founders' answer: very bad idea. They had just escaped a ruler with too much power. So they split the power into three."
     },
     {
@@ -82,7 +86,8 @@
       ],
       "handle": "Congress makes the laws. The President carries them out. The courts explain them.",
       "handleSub": "No branch can do another branch's job.",
-      "primaryLabel": "Next"
+      "primaryLabel": "Next",
+      "alt": "Three government buildings side by side: the domed Capitol, the White House, and the columned Supreme Court."
     },
     {
       "id": "U2-S06",
@@ -143,14 +148,36 @@
         {
           "kind": "compare",
           "instructions": "Tap to sort each job into the branch that does it.",
-          "buckets": ["Congress", "President", "Courts"],
+          "buckets": [
+            "Congress",
+            "President",
+            "Courts"
+          ],
           "sortItems": [
-            { "text": "Writes laws", "bucket": 0 },
-            { "text": "Vetoes bills", "bucket": 1 },
-            { "text": "Explains laws", "bucket": 2 },
-            { "text": "Commander in Chief", "bucket": 1 },
-            { "text": "Decides if a law goes against the Constitution", "bucket": 2 },
-            { "text": "The Cabinet", "bucket": 1 }
+            {
+              "text": "Writes laws",
+              "bucket": 0
+            },
+            {
+              "text": "Vetoes bills",
+              "bucket": 1
+            },
+            {
+              "text": "Explains laws",
+              "bucket": 2
+            },
+            {
+              "text": "Commander in Chief",
+              "bucket": 1
+            },
+            {
+              "text": "Decides if a law goes against the Constitution",
+              "bucket": 2
+            },
+            {
+              "text": "The Cabinet",
+              "bucket": 1
+            }
           ]
         },
         {
@@ -217,12 +244,36 @@
       "q14Note": "Q48 asks for two Cabinet-level positions. Three easy ones: Secretary of State, Secretary of War (Defense), Attorney General. Q57 — the Chief Justice — changes with appointments, so check the Current Answers page.",
       "primaryLabel": "Next"
     },
-    { "id": "U2-S12", "type": "practice", "questionId": "Q16" },
-    { "id": "U2-S13", "type": "practice", "questionId": "Q44" },
-    { "id": "U2-S14", "type": "practice", "questionId": "Q52" },
-    { "id": "U2-S15", "type": "practice", "questionId": "Q55" },
-    { "id": "U2-S16", "type": "practice", "questionId": "Q15" },
-    { "id": "U2-S17", "type": "practice", "questionId": "Q42" },
+    {
+      "id": "U2-S12",
+      "type": "practice",
+      "questionId": "Q16"
+    },
+    {
+      "id": "U2-S13",
+      "type": "practice",
+      "questionId": "Q44"
+    },
+    {
+      "id": "U2-S14",
+      "type": "practice",
+      "questionId": "Q52"
+    },
+    {
+      "id": "U2-S15",
+      "type": "practice",
+      "questionId": "Q55"
+    },
+    {
+      "id": "U2-S16",
+      "type": "practice",
+      "questionId": "Q15"
+    },
+    {
+      "id": "U2-S17",
+      "type": "practice",
+      "questionId": "Q42"
+    },
     {
       "id": "U2-S18",
       "type": "lockItIn",
@@ -234,7 +285,8 @@
         "total": 20,
         "label": "Practice all 20 questions"
       },
-      "askSomeone": "Point at a picture of the White House and ask someone: what is the job of the person who works here?"
+      "askSomeone": "Point at a picture of the White House and ask someone: what is the job of the person who works here?",
+      "unlocksReview": "R1"
     }
   ]
 }

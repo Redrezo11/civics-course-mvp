@@ -24,6 +24,10 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
+      # Build-time QA gate (storyboard §9.2b). Runs BEFORE the build so a
+      # content regression blocks the deploy rather than shipping.
+      - name: QA gate
+        run: npm run qa
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
