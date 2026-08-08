@@ -20,9 +20,23 @@ npm run build   # outputs to dist/
 ```
 
 ## Deploy
-Push to `main`. `.github/workflows/deploy.yml` builds and publishes to
-GitHub Pages automatically. Enable Pages in repo Settings → Pages → Source:
-GitHub Actions (one-time setup).
+Push to `main`. `.github/workflows/deploy.yml` runs the QA gate, builds, and
+publishes to GitHub Pages. Pages is already configured (Source: GitHub Actions).
+
+Live: https://redrezo11.github.io/civics-course-mvp/
+
+## QA gate
+```
+npm run qa        # fails on any error — this is what CI runs, before the build
+npm run qa:warn   # report only
+```
+Implements storyboard §9.2b as code: question integrity (128, gapless, unit
+counts), Q48 freshness, dynamic-answer isolation, distractor safety, counter
+honesty (G-22), alt-text completeness, zero external requests (G-11/G-12), and
+content wiring. Items that genuinely need a human — official wording against a
+freshly downloaded M-1778, the two contrast audits, the readability band — are
+printed as warnings every run so they stay visible. They are never reported as
+passes.
 
 ## Architecture notes for whoever picks this up next
 
@@ -39,33 +53,55 @@ screen's text, images, and interaction type. `Lesson.svelte` is a generic
 renderer that interprets that JSON. Adding or editing a screen's copy is a
 JSON edit; adding a new *type* of screen is a code change in `Lesson.svelte`.
 
-**Day-one scope.** Only Unit 0 and Unit 1 have full content (per storyboard
-v3.1 §14's day-one prototype scope). Units 2–7 render as visible, honestly
-locked cards on Home — never fake "coming soon" content. Adding a unit is:
-write `unitN.json` and `questions-uN.json`, import both, add the id to
-Home's `builtUnits` array.
+**Scope: all eight units are built.** Content is authored from Storyboard v5.3
+§5–6 and `Question_Bank_Companion.md` — all 128 questions, verified against the
+Companion's own build-note checksums. Adding a unit would be: write
+`unitN.json` and `questions-uN.json`, import both, add the id to Home's
+`builtUnits` array.
 
-**Known gaps, all flagged in-app or in the storyboard, none blocking:**
-- Companion character: placeholder box (Midjourney prompts already written,
-  see `Image_Asset_Plan_and_Prompts.md`)
-- Flag and voting photos: rejected/on hold pending re-sourcing
-  (see `ASSET_EXPORT_SPEC.md` — the sourced flag had 48 stars, not 50)
-- Burmese: language preference is stored and honoured in the UI chrome,
-  but lesson content stays English until native-reviewed translation lands
-- Completion-evidence method (G-05b) undecided — screen not yet built
-- `speechSynthesis` "Listen" button: cut from MVP entirely per explicit
-  decision, may return post-MVP as an accessibility feature
+Also built: G-08 full-bank practice (per unit, optional, non-blocking),
+R1–R3 cumulative reviews with objective re-queueing, Rehearsal mode, the E-01
+epitome, and the G-05b completion screen.
 
-## Testing note
+**Option order is permuted at render time, not in the data.** The Companion
+lists the correct option first in every entry — an authoring convention for
+human review. Transcribed literally that puts the correct answer at index 0 for
+all 128 questions, so a learner who always taps the first option scores 100%.
+The JSON stays faithful to the source so it can still be checked line-by-line
+against M-1778; `presentOptions()` in `content/questions.js` permutes with a
+per-question seed, so the order is stable across reloads but the answer moves.
 
-`svelte-check` passes clean (0 errors) with `checkJs` disabled in
-`jsconfig.json` — this project is plain JS by design (see tech stack
-decision), so TypeScript's implicit-any inference was pure noise on an
-unannotated codebase and has been turned off rather than chased.
+**Known gaps, none blocking:**
+- `current-answers.json` ships **unverified**. The eight ◆ dynamic questions
+  render as "not checked yet" with the USCIS link rather than asserting an
+  officeholder. Fill in the values and set `checked` before this is used by a
+  real learner — §9.3 and the Companion's "what still needs a human" note both
+  require it, and the QA gate warns on it every run.
+- Images are striped placeholders; alt text is authored, so the swap is a file
+  drop with no content edits.
+- Companion character: placeholder box.
+- Burmese: preference is stored and honoured in the UI chrome, but lesson
+  content stays English until native-reviewed translation lands.
+- G-05b method undecided — the screen is built to the storyboard's interim
+  shape and does not pretend to record anything.
+- `speechSynthesis` "Listen" button: cut from MVP per explicit decision.
 
-No headless-browser visual verification was possible in the build
-sandbox (its screenshot tool predates the `fetch` API and cannot execute
-either ES module or SystemJS-bundled JavaScript). The build was verified
-via successful compilation and a clean `svelte-check` pass; it has **not**
-been click-tested in a real browser. Do that before treating this as
-verified — `npm run dev` and walk through Unit 0 and Unit 1 end to end.
+## Testing note — read this before trusting the build
+
+What is verified: the QA gate passes (8 checks), the production build compiles,
+the question bank reconciles against the Companion's checksums, and the review
+and rehearsal selection logic is property-tested across hundreds of seeds.
+
+What is **not** verified: the app has still had only limited click-testing in a
+real browser. That gap has already cost real defects that compilation could not
+see — the tap-to-sort interaction was an unescapable dead-end for months
+because a Svelte reactive statement did not name the variable it depended on,
+which meant **Unit 1 was never completable by anyone**. Nothing about the build
+output looked wrong.
+
+The lesson: `npm run build` succeeding proves almost nothing about whether a
+learner can get through a screen. Walk each unit end to end after any change to
+`GuidedPractice`, `VocabDeck`, `FullBank`, `Review`, or `Rehearsal`.
+
+There is no automated browser test yet. Adding one is the highest-value next
+piece of work on this repo.
