@@ -120,6 +120,17 @@ All of it is removed; **none of it needs translating**:
 | Review end | the whole missed / nothing-to-bring-back paragraph |
 | Rehearsal end | "Unlimited retries. The real interview allows two attempts; practice here costs nothing." |
 | Home | the leading "Optional." (the count itself stays) |
+| U0-S07 | "Practice out loud, in private — no one hears your mistakes."; the after-the-test line about official letters, the news and voting; and "Everything you do here stays on your phone. No one can see your practice." |
+
+The U0-S07 removals retire the `smallPrint` and `privacyLine` keys entirely —
+that screen was the only user of either, so both are gone from the schema, from
+`Lesson.svelte`, and from the translatable-key list.
+
+Two of those lines were reassurance about being watched ("no one hears your
+mistakes", "no one can see your practice"), which reads as patronising to an
+adult who never raised the concern. **The privacy disclosure itself is not
+lost:** Help still carries "Your privacy: this course saves your progress only on
+your own phone", which is where the storyboard's G-06 puts it.
 
 **The rule, for anyone adding copy later:** a line earns its place only if it
 tells the learner something they cannot see on the screen or infer from the
@@ -215,8 +226,8 @@ readability check measures:
 `body` · `bodyList[]` · `bodyList2[]` · `paragraphs[]` · `closing` ·
 `resolution` · `handle` · `handleSub` · `example` · `nonExample` · `takeaway` ·
 `heading` · `afterQuote` · `afterTest` · `coverageLine` · `learnedLine` ·
-`feedback` · `question` · `instructions` · `smallPrint` ·
-`privacyLine` · `feedbackExplain` · `unitLabel`
+`feedback` · `question` · `instructions` · 
+`feedbackExplain` · `unitLabel`
 
 Also translatable, nested: `cards[].word` / `.def` / `.example` (vocabulary),
 `termA`/`termB` `.name` and `.def` (confusable pairs), `sortItems[].text`,

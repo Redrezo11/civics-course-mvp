@@ -150,10 +150,6 @@
         {:else if screen.body}
           <p class="mb-4">{screen.body}</p>
         {/if}
-        {#if screen.smallPrint}<p class="text-sm text-ink-secondary dark:text-dark-ink-secondary mb-3">{screen.smallPrint}</p>{/if}
-        {#if screen.privacyLine}
-          <p class="text-sm font-bold mb-4">{screen.privacyLine}</p>
-        {/if}
 
       {:else if screen.type === 'tryOne'}
         {@const q = getQuestion(screen.questionId)}

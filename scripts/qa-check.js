@@ -144,7 +144,7 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
     'body', 'closing', 'resolution', 'handle', 'handleSub', 'example',
     'nonExample', 'takeaway', 'heading', 'afterQuote', 'afterTest',
     'coverageLine', 'learnedLine', 'feedback', 'question',
-    'instructions', 'smallPrint', 'privacyLine', 'def', 'unitLabel',
+    'instructions', 'def', 'unitLabel',
     'feedbackExplain',
   ]);
   const LIST_KEYS = new Set(['bodyList', 'bodyList2', 'paragraphs']);
