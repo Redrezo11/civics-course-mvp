@@ -101,7 +101,7 @@
     {#if unfinishedBanks.length}
       <p class="text-sm font-bold mt-6 mb-1">Practice every question</p>
       <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-2">
-        Optional. {unpractised} of {TOTAL_QUESTIONS} are still unpracticed.
+        {unpractised} of {TOTAL_QUESTIONS} are still unpracticed.
       </p>
       <div class="border-t border-border dark:border-dark-border">
         {#each unfinishedBanks as u}

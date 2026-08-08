@@ -340,17 +340,6 @@
             on:click={() => navigate(`/review/${screen.unlocksReview}`)}
           >Start {screen.unlocksReview} — {screen.unlocksReview === 'R3' ? '10' : '8'} mixed questions</button>
         {/if}
-        <!-- Beat 10's spaced-retrieval prompt. Telling someone the answer IS
-             studying, which is why it says "any language" — the retrieval is
-             the point, not the English. It was rendered as 12px muted text
-             under a button, where it read as a disclaimer rather than the last
-             instruction of the lesson. -->
-        {#if screen.askSomeone}
-          <div class="border border-border dark:border-dark-border rounded-card p-4 mt-6">
-            <p class="text-sm font-bold mb-1">Before you go</p>
-            <p class="leading-relaxed">{screen.askSomeone}</p>
-          </div>
-        {/if}
       {/if}
       {/key}
     </div>

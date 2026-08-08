@@ -78,17 +78,9 @@
     {:else if finished}
       <h1 class="text-heading font-bold mb-3">Review finished.</h1>
       <p class="mb-4">Reviewed: {questions.length} questions.</p>
-      {#if missed.length}
-        <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary mb-4 leading-relaxed">
-          {missed.length === 1 ? 'One question' : `${missed.length} questions`} will come
-          back to you in your next review. That is how this is meant to work — nothing
-          is scored, and nothing is counted against you.
-        </p>
-      {:else}
-        <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary mb-4">
-          Nothing to bring back next time.
-        </p>
-      {/if}
+      <!-- Missed questions are re-queued silently. The learner does not need to
+           be told the mechanic, and telling them was an excuse to add a line
+           reassuring them that nothing is scored. -->
       {#if reviewId === 'R3'}
         <p class="font-bold">You have reviewed all seven lessons.</p>
       {/if}

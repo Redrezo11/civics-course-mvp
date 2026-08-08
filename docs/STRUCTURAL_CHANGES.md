@@ -91,13 +91,43 @@ question list:
   required count and marks every accepted answer ✓; every ◆ card warns that the
   answer changes with elections.
 
-### 1.3b Lock it in — presentation changed, copy unchanged
+### 1.3b The seven ask-someone prompts are gone — do not translate them
 
-`askSomeone` (beat 10's spaced-retrieval prompt) was rendered as 12px muted
-centred text below a button, where it read as a disclaimer. It is now a labelled
-block — heading **"Before you go"**, prompt at body size. The prompt text itself
-is unchanged, so any existing translation still applies; the new heading is one
-short new string.
+`askSomeone` is removed from all seven `lockItIn` screens, along with its
+container and the short-lived "Before you go" heading. **Retire these strings.**
+
+They were kept because the storyboard lists an "ask-someone prompt" in beat 10 —
+the existence of the beat was treated as reason enough for the copy inside it.
+It does not hold up:
+
+- Four of the seven read "Ask someone: ⟨question⟩", which makes the *other*
+  person do the retrieving. Retrieval practice requires the learner to retrieve.
+  Only U5 and U6 ("Tell someone…") did that, so the beat was written
+  inconsistently at source.
+- They instructed action outside the app, with no follow-up and nothing that
+  remembered it, aimed at a population the project describes as studying alone.
+
+### 1.3c Reassurance lines stripped across the app
+
+A house voice had crept in that reassured rather than informed — restating a
+heading, promising nothing was scored, congratulating the learner for finishing.
+All of it is removed; **none of it needs translating**:
+
+| Screen | Removed |
+|---|---|
+| Full-bank entry | the practised-so-far restatement, and "Nothing is scored and nothing is counted against you…" |
+| Full-bank exit | "Every question … has now been in front of you as a question, not just as an answer." |
+| Review end | the whole missed / nothing-to-bring-back paragraph |
+| Rehearsal end | "Unlimited retries. The real interview allows two attempts; practice here costs nothing." |
+| Home | the leading "Optional." (the count itself stays) |
+
+**The rule, for anyone adding copy later:** a line earns its place only if it
+tells the learner something they cannot see on the screen or infer from the
+controls. Kept on those grounds: MultiSelect's "Any ⟨n⟩ of them is enough — the
+officer asks for ⟨n⟩, so give ⟨n⟩ and stop" (G-19 strategy at the moment it
+applies), Rehearsal's statement of the real rules, the Completion privacy line
+(G-05b), Help's entries (G-06), and `learnedLine` (the G-22 taught-≠-practised
+claim).
 
 ### 1.4 Screens added — entirely new strings
 
@@ -185,7 +215,7 @@ readability check measures:
 `body` · `bodyList[]` · `bodyList2[]` · `paragraphs[]` · `closing` ·
 `resolution` · `handle` · `handleSub` · `example` · `nonExample` · `takeaway` ·
 `heading` · `afterQuote` · `afterTest` · `coverageLine` · `learnedLine` ·
-`askSomeone` · `feedback` · `question` · `instructions` · `smallPrint` ·
+`feedback` · `question` · `instructions` · `smallPrint` ·
 `privacyLine` · `feedbackExplain` · `unitLabel`
 
 Also translatable, nested: `cards[].word` / `.def` / `.example` (vocabulary),
@@ -271,19 +301,16 @@ the app substitutes at runtime; keep the placeholder in any translation.
 - Show the next line (⟨…⟩ of ⟨…⟩)
 - Start Unit 1
 
-#### `src/lib/screens/FullBank.svelte` — 13
+#### `src/lib/screens/FullBank.svelte` — 10
 
 - ) : navigate(
 - Back to lessons
 - Choose an answer to continue
 - Continue practice
-- Every question in this lesson has now been in front of you as a question, not just as an answer.
-- Nothing is scored and nothing is counted against you. You can stop at any time; this remembers your place.
 - Practice all ⟨…⟩ questions from this lesson
 - Skip for now
 - Start practice
 - You have now practiced ⟨…⟩ of ⟨…⟩ questions from this lesson.
-- You have practiced ⟨…⟩ so far. This covers every question in this lesson — take it now, or come back later.
 - You stopped at question ⟨…⟩. Starting there.
 - questions practiced
 
@@ -306,7 +333,6 @@ the app substitutes at runtime; keep the placeholder in any translation.
 - CONTINUE
 - Help
 - Learn
-- Optional. ⟨…⟩ of ⟨…⟩ are still unpracticed.
 - Or go to any lesson:
 - Practice every question
 - Rehearsal
@@ -315,6 +341,7 @@ the app substitutes at runtime; keep the placeholder in any translation.
 - Unit ⟨…⟩ — ⟨…⟩
 - lessons finished
 - questions practiced
+- ⟨…⟩ of ⟨…⟩ are still unpracticed.
 - ⟨…⟩ — questions from every lesson so far
 - ⟨…⟩Answers checked: ⟨…⟩⟨…⟩Some answers change — check uscis.gov⟨…⟩ ·
 
@@ -325,9 +352,8 @@ the app substitutes at runtime; keep the placeholder in any translation.
 - English
 - You can change this anytime in Settings.
 
-#### `src/lib/screens/Lesson.svelte` — 11
+#### `src/lib/screens/Lesson.svelte` — 10
 
-- Before you go
 - Check at uscis.gov
 - Checked: ⟨…⟩
 - Current answer
@@ -353,7 +379,7 @@ the app substitutes at runtime; keep the placeholder in any translation.
 - ‹ Back
 - ⟨…⟩ ⟨…⟩ of ⟨…⟩ questions match ⟨…⟩ All ⟨…⟩ official questions · ★ marks the 65/20 questions ⟨…⟩
 
-#### `src/lib/screens/Rehearsal.svelte` — 23
+#### `src/lib/screens/Rehearsal.svelte` — 22
 
 - Accepted answers
 - At the real interview you will
@@ -369,7 +395,6 @@ the app substitutes at runtime; keep the placeholder in any translation.
 - This practice asked ⟨…⟩ of the 128.
 - This practice test ended.
 - Try again
-- Unlimited retries. The real interview allows two attempts; practice here costs nothing.
 - You have practiced this ⟨…⟩ ⟨…⟩. Your best so far: ⟨…⟩ correct.
 - You passed this practice.
 - hear
@@ -379,21 +404,18 @@ the app substitutes at runtime; keep the placeholder in any translation.
 - ✗ Not yet
 - ⟨…⟩ questions asked — just like the real test, which can end early once you have ⟨…⟩ right.
 
-#### `src/lib/screens/Review.svelte` — 13
+#### `src/lib/screens/Review.svelte` — 10
 
 - Back to lessons
 - Choose an answer to continue
 - Continue
 - Finish review
-- Nothing to bring back next time.
-- One question
 - Preparing your review…
 - Questions from different lessons, mixed together on purpose.
 - Review finished.
 - Review not found.
 - Reviewed: ⟨…⟩ questions.
 - You have reviewed all seven lessons.
-- {missed.length === 1 ? 'One question' : `$⟨…⟩ questions`} will come back to you in your next review. That is how this is meant to work — nothing is scored, and nothing is counted against you.
 
 #### `src/lib/screens/Settings.svelte` — 11
 
@@ -418,7 +440,7 @@ the app substitutes at runtime; keep the placeholder in any translation.
 - Welcome.
 - companion character
 
-**Total: 158 strings across 18 files.**
+**Total: 150 strings across 18 files.**
 
 
 ---
@@ -433,7 +455,7 @@ and each one will stop the work dead.
 Architecture plan §4/§5 specifies `content/ui-strings.json` with `en` and `my`
 keys, and `content/units/en/` + `content/units/my/`. **Neither was ever built.**
 
-- Every UI string is hardcoded in a component (Part 2.2 — 158 of them).
+- Every UI string is hardcoded in a component (Part 2.2 — 150 of them).
 - Unit JSON has no language dimension: `unit1.json` is one file, not
   `en/unit1.json` and `my/unit1.json`.
 - There is no string-lookup function anywhere in the codebase.

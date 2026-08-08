@@ -158,11 +158,8 @@
           Try again anytime.
         </p>
       {/if}
+      <!-- No "unlimited retries" line: the Try again button below says it. -->
       <p class="mb-3">✓ {correct} right · ✗ {wrong} wrong</p>
-      <p class="mb-3 leading-relaxed">
-        Unlimited retries. The real interview allows two attempts; practice here costs
-        nothing.
-      </p>
       <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary">
         This practice asked {asked} of the 128.
       </p>

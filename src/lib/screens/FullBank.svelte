@@ -93,14 +93,9 @@
       <h1 class="text-heading font-bold mb-3">
         Practice all {questions.length} questions from this lesson
       </h1>
-      <p class="mb-4 leading-relaxed">
-        You have practiced {practisedHere} so far. This covers every question in this
-        lesson — take it now, or come back later.
-      </p>
-      <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary mb-4">
-        Nothing is scored and nothing is counted against you. You can stop at any
-        time; this remembers your place.
-      </p>
+      <!-- The heading names the set and the buttons say what to do with it, so
+           nothing else belongs here. The resume line stays: it is the one thing
+           on this screen the learner cannot work out for themselves. -->
       {#if resumeAt > 0 && resumeAt < questions.length}
         <p class="text-sm font-bold mb-4">
           You stopped at question {resumeAt + 1}. Starting there.
@@ -129,10 +124,6 @@
           questions practiced
         </div>
       </div>
-      <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary">
-        Every question in this lesson has now been in front of you as a question, not
-        just as an answer.
-      </p>
     {/if}
   </div>
 

@@ -143,7 +143,7 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
   const PROSE_KEYS = new Set([
     'body', 'closing', 'resolution', 'handle', 'handleSub', 'example',
     'nonExample', 'takeaway', 'heading', 'afterQuote', 'afterTest',
-    'coverageLine', 'learnedLine', 'askSomeone', 'feedback', 'question',
+    'coverageLine', 'learnedLine', 'feedback', 'question',
     'instructions', 'smallPrint', 'privacyLine', 'def', 'unitLabel',
     'feedbackExplain',
   ]);
