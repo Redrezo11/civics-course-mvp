@@ -20,6 +20,11 @@ const DEFAULT_STATE = {
   unitsCompleted: [],   // e.g. ['U0', 'U1']
   questionsAnswered: {},// { "Q2": true, "Q7": false, ... } — true = answered correctly at least once
   screenPosition: {},   // { "U1": "U1-S05" } — resume point per unit
+  lastUnit: null,       // the unit most recently opened — what "Continue" resumes.
+                        // screenPosition alone cannot answer "where was I last":
+                        // it is a per-unit map with no ordering, so Home had no
+                        // way to name the right unit (architecture plan §7's
+                        // `position.lastRoute`, which was never built).
   reviewQueue: [],      // question ids answered wrong, drained first by the next review
   fullBankProgress: {}, // { "U1": 5 } — resume position within a unit's G-08 set
   fullBankDone: [],     // unit ids whose full-bank set has been completed end to end
@@ -75,6 +80,10 @@ export function markUnitComplete(unitId) {
 export function saveScreenPosition(unitId, screenId) {
   const s = read();
   s.screenPosition[unitId] = screenId;
+  // Also the single "where was I last" pointer. Set here because this is
+  // already called on every lesson screen, so Continue stays correct without
+  // any new call sites.
+  s.lastUnit = unitId;
   write(s);
 }
 

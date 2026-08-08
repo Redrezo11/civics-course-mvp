@@ -19,8 +19,30 @@
   // and Question_Bank_Companion.md (all 128 questions).
   const builtUnits = ['U0', 'U1', 'U2', 'U3', 'U4', 'U5', 'U6', 'U7'];
 
-  $: nextUnit = units.find((u) => !$progress.unitsCompleted.includes(u.id) && builtUnits.includes(u.id))
-    || units.find((u) => builtUnits.includes(u.id));
+  // The primary card had a hardcoded "CONTINUE" label and picked the first unit
+  // the learner had not *completed* — it never read where they actually were.
+  // So on a fresh install it told a learner to continue something they had
+  // never opened, and if they jumped ahead to U3 it still said Unit 0 because
+  // no unit was complete yet.
+  //
+  // Three honest states instead.
+  $: allDone = builtUnits
+    .filter((id) => id !== 'U0')
+    .every((id) => $progress.unitsCompleted.includes(id));
+  $: started = Boolean($progress.lastUnit) || $progress.unitsCompleted.length > 0;
+
+  // Where Continue actually resumes: the unit last opened, if it is still a
+  // real unit. Falls back to the first unit not yet completed.
+  $: resumeUnit =
+    units.find((u) => u.id === $progress.lastUnit && builtUnits.includes(u.id)) ||
+    units.find((u) => !$progress.unitsCompleted.includes(u.id) && builtUnits.includes(u.id)) ||
+    units.find((u) => builtUnits.includes(u.id));
+
+  $: primary = allDone
+    ? { label: 'PRACTICE THE INTERVIEW', title: 'Rehearsal', href: '/rehearsal' }
+    : started
+      ? { label: 'CONTINUE', title: `Unit ${resumeUnit.id.slice(1)} — ${resumeUnit.name}`, href: `/unit/${resumeUnit.id}` }
+      : { label: 'START', title: `Unit ${resumeUnit.id.slice(1)} — ${resumeUnit.name}`, href: `/unit/${resumeUnit.id}` };
 
   // Reviews unlock after U2, U5 and U7 (§8). They are shown only once earned —
   // an empty "Reviews" heading with nothing under it would be worse than
@@ -51,13 +73,13 @@
       </div>
     </div>
 
-    {#if nextUnit}
+    {#if primary}
       <button
         class="tap w-full text-left bg-ink dark:bg-dark-accent text-surface dark:text-dark-accent-ink rounded-card p-4 mb-5"
-        on:click={() => navigate(`/unit/${nextUnit.id}`)}
+        on:click={() => navigate(primary.href)}
       >
-        <div class="text-[10px] tracking-wide opacity-70 mb-1">CONTINUE</div>
-        <div class="text-base font-bold">Unit {nextUnit.id.slice(1)} — {nextUnit.name}</div>
+        <div class="text-[10px] tracking-wide opacity-70 mb-1">{primary.label}</div>
+        <div class="text-base font-bold">{primary.title}</div>
       </button>
     {/if}
 
