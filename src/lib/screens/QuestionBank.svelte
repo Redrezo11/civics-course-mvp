@@ -1,4 +1,5 @@
 <script>
+  import { t } from '../i18n.js';
   // G-03 · the ungated reference to every official question. G-16 lists this
   // as one of the affordances a layout change may never remove.
   //
@@ -43,7 +44,7 @@
 
 <div class="min-h-screen max-w-md mx-auto flex flex-col">
   <div class="px-5 py-6 flex-1">
-    <button class="tap inline-flex items-center text-sm font-bold underline mb-4" on:click={() => navigate('/')}>‹ Back</button>
+    <button class="tap inline-flex items-center text-sm font-bold underline mb-4" on:click={() => navigate('/')}>{$t('common.back')}</button>
 
     <input
       type="text"
@@ -119,7 +120,7 @@
 
   <div class="flex border-t border-border dark:border-dark-border bg-raised dark:bg-dark-raised">
     <button class="tap flex-1 text-center py-3 text-sm text-ink-muted dark:text-dark-ink-muted" on:click={() => navigate('/')}>
-      Learn
+      {$t('nav.tabLearn')}
     </button>
     <div class="flex-1 text-center py-3 text-sm font-bold">All {TOTAL_QUESTIONS} questions</div>
   </div>

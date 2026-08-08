@@ -1,4 +1,5 @@
 <script>
+  import { t } from '../i18n.js';
   import { progress, questionsPracticedCount, lessonsFinishedCount } from '../stores/progress.js';
   import { navigate } from '../router.js';
   import { getUnitQuestions, TOTAL_QUESTIONS, ANSWERS_CHECKED } from '../content/questions.js';
@@ -69,11 +70,11 @@
     <div class="flex gap-2.5 mb-5">
       <div class="flex-1 text-center py-2.5 px-1.5 border border-border dark:border-dark-border rounded-card">
         <div class="text-xl font-bold">{$lessonsFinishedCount}<span class="text-xs font-normal text-ink-muted dark:text-dark-ink-muted"> of 8</span></div>
-        <div class="text-[10px] text-ink-muted dark:text-dark-ink-muted">lessons finished</div>
+        <div class="text-[10px] text-ink-muted dark:text-dark-ink-muted">{$t('home.counterLessons')}</div>
       </div>
       <div class="flex-1 text-center py-2.5 px-1.5 border border-border dark:border-dark-border rounded-card">
         <div class="text-xl font-bold">{$questionsPracticedCount}<span class="text-xs font-normal text-ink-muted dark:text-dark-ink-muted"> of 128</span></div>
-        <div class="text-[10px] text-ink-muted dark:text-dark-ink-muted">questions practiced</div>
+        <div class="text-[10px] text-ink-muted dark:text-dark-ink-muted">{$t('home.counterQuestions')}</div>
       </div>
     </div>
 
@@ -93,7 +94,7 @@
 
     <!-- G-16: this line states the free-navigation affordance in words, not
          only visually. Every unit is reachable, so the claim is now true. -->
-    <p class="text-sm font-bold mb-2">Or go to any lesson:</p>
+    <p class="text-sm font-bold mb-2">{$t('home.goToAnyLesson')}</p>
     <div class="border-t border-border dark:border-dark-border">
       {#each units as u}
         {@const built = builtUnits.includes(u.id)}
@@ -148,15 +149,15 @@
 
     <p class="text-[10px] text-ink-muted dark:text-dark-ink-muted text-center mt-4">
       {#if ANSWERS_CHECKED}Answers checked: {ANSWERS_CHECKED}{:else}Some answers change — check uscis.gov{/if} ·
-      <button class="underline font-bold text-ink dark:text-dark-ink" on:click={() => navigate('/help')}>Help</button> ·
-      <button class="underline font-bold text-ink dark:text-dark-ink" on:click={() => navigate('/settings')}>Settings</button>
+      <button class="underline font-bold text-ink dark:text-dark-ink" on:click={() => navigate('/help')}>{$t('footer.help')}</button> ·
+      <button class="underline font-bold text-ink dark:text-dark-ink" on:click={() => navigate('/settings')}>{$t('footer.settings')}</button>
     </p>
   </div>
 
   <div class="flex border-t border-border dark:border-dark-border bg-raised dark:bg-dark-raised">
-    <div class="flex-1 text-center py-3 text-sm font-bold">Learn</div>
+    <div class="flex-1 text-center py-3 text-sm font-bold">{$t('nav.tabLearn')}</div>
     <button class="tap flex-1 text-center py-3 text-sm text-ink-muted dark:text-dark-ink-muted" on:click={() => navigate('/rehearsal')}>
-      Rehearsal
+      {$t('nav.tabRehearsal')}
     </button>
     <button class="tap flex-1 text-center py-3 text-sm text-ink-muted dark:text-dark-ink-muted" on:click={() => navigate('/questions')}>
       All {TOTAL_QUESTIONS} questions

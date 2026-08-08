@@ -1,36 +1,108 @@
 {
   "_note": "UI chrome, keyed by screen. `my: null` means not yet translated — t() falls back to English, which is distinguishable from a deliberately empty string. Official question wording and accepted answers are NEVER here; they live in questions-uN.json and stay English (G-3). See docs/ARCHITECTURE.md.",
-  "settings.title": {
+  "common.back": {
+    "en": "‹ Back",
+    "my": "‹ နောက်သို့"
+  },
+  "common.continue": {
+    "en": "Continue",
+    "my": "ဆက်လုပ်ပါ"
+  },
+  "common.exit": {
+    "en": "Exit ✕",
+    "my": "ထွက်ရန် ✕"
+  },
+  "common.next": {
+    "en": "Next",
+    "my": "ရှေ့သို့"
+  },
+  "common.skip": {
+    "en": "Skip for now",
+    "my": "ယခုအတွက် ကျော်ပါ"
+  },
+  "common.start": {
+    "en": "Start",
+    "my": "စတင်ပါ"
+  },
+  "common.tryAgain": {
+    "en": "Try again",
+    "my": "ထပ်စမ်းကြည့်ပါ"
+  },
+  "footer.help": {
+    "en": "Help",
+    "my": "အကူအညီ"
+  },
+  "footer.settings": {
     "en": "Settings",
-    "my": null
+    "my": "ဆက်တင်များ"
+  },
+  "fullBank.heading": {
+    "en": "Practice all {n} questions from this lesson",
+    "my": "ဤသင်ခန်းစာမှ မေးခွန်း {n} ခုလုံးကို လေ့ကျင့်ပါ"
+  },
+  "fullBank.startPractice": {
+    "en": "Start practice",
+    "my": "လေ့ကျင့်ခန်း စတင်ပါ"
+  },
+  "help.heading": {
+    "en": "Help",
+    "my": "အကူအညီ"
+  },
+  "help.privacy": {
+    "en": "Your privacy: this course saves your progress only on your own phone.",
+    "my": "သင့်ကိုယ်ရေးကိုယ်တာ — ဤသင်တန်းသည် သင့်တိုးတက်မှုကို သင့်ဖုန်းပေါ်တွင်သာ သိမ်းဆည်းပါသည်။"
+  },
+  "home.counterLessons": {
+    "en": "lessons finished",
+    "my": "သင်ခန်းစာ ပြီးဆုံးပြီ"
+  },
+  "home.counterQuestions": {
+    "en": "questions practiced",
+    "my": "မေးခွန်း လေ့ကျင့်ပြီး"
+  },
+  "home.goToAnyLesson": {
+    "en": "Or go to any lesson:",
+    "my": "သို့မဟုတ် မည်သည့်သင်ခန်းစာသို့မဆို သွားနိုင်သည် —"
+  },
+  "language.changeLater": {
+    "en": "You can change this anytime in Settings.",
+    "my": "ဤအရာကို ဆက်တင်များတွင် အချိန်မရွေး ပြောင်းလဲနိုင်ပါသည်။"
+  },
+  "language.english": {
+    "en": "English",
+    "my": "English (အင်္ဂလိပ်)"
+  },
+  "language.heading": {
+    "en": "Choose your language.",
+    "my": "သင့်ဘာသာစကားကို ရွေးချယ်ပါ။"
+  },
+  "nav.tabLearn": {
+    "en": "Learn",
+    "my": "သင်ယူရန်"
+  },
+  "nav.tabRehearsal": {
+    "en": "Rehearsal",
+    "my": "စာမေးပွဲ လေ့ကျင့်ခန်း"
+  },
+  "practice.chooseCount": {
+    "en": "Choose {n}.",
+    "my": "{n} ခု ရွေးပါ။"
+  },
+  "rehearsal.checkMyAnswer": {
+    "en": "Check my answer",
+    "my": "ကျွန်ုပ်၏ အဖြေကို စစ်ဆေးပါ"
+  },
+  "rehearsal.didYouGetItRight": {
+    "en": "Did you get it right?",
+    "my": "မှန်ကန်စွာ ဖြေနိုင်ခဲ့ပါသလား?"
+  },
+  "rehearsal.heading": {
+    "en": "Rehearsal",
+    "my": "စာမေးပွဲ လေ့ကျင့်ခန်း"
   },
   "settings.back": {
     "en": "‹ Back",
     "my": "‹ နောက်သို့"
-  },
-  "settings.language": {
-    "en": "Language",
-    "my": "ဘာသာစကား"
-  },
-  "settings.theme": {
-    "en": "Theme",
-    "my": "အသွင်အပြင်"
-  },
-  "settings.light": {
-    "en": "Light",
-    "my": "အလင်း"
-  },
-  "settings.dark": {
-    "en": "Dark",
-    "my": "အမှောင်"
-  },
-  "settings.done": {
-    "en": "Done",
-    "my": "ပြီးပါပြီ"
-  },
-  "settings.saved": {
-    "en": "Your choice is saved on this phone.",
-    "my": null
   },
   "settings.coverage.en": {
     "en": "The course is written in English.",
@@ -40,12 +112,44 @@
     "en": "Burmese is a draft and covers part of Lesson 1 so far. Everything not yet translated stays in English.",
     "my": "မြန်မာဘာသာမှာ မူကြမ်းဖြစ်ပြီး ယခုအချိန်ထိ သင်ခန်းစာ ၁ ၏ တစ်စိတ်တစ်ပိုင်းကိုသာ လွှမ်းခြုံပါသည်။ မဘာသာပြန်ရသေးသည်များကို အင်္ဂလိပ်ဘာသာဖြင့် ဆက်လက်ဖော်ပြပါမည်။"
   },
+  "settings.dark": {
+    "en": "Dark",
+    "my": "အမှောင်"
+  },
+  "settings.done": {
+    "en": "Done",
+    "my": "ပြီးပါပြီ"
+  },
+  "settings.draftBadge": {
+    "en": "draft",
+    "my": null
+  },
+  "settings.heading": {
+    "en": "Settings",
+    "my": "ဆက်တင်များ"
+  },
+  "settings.language": {
+    "en": "Language",
+    "my": "ဘာသာစကား"
+  },
+  "settings.light": {
+    "en": "Light",
+    "my": "အလင်း"
+  },
+  "settings.saved": {
+    "en": "Your choice is saved on this phone.",
+    "my": null
+  },
   "settings.testStaysEnglish": {
     "en": "Test questions and answers stay in English — that is the language of the real interview.",
     "my": null
   },
-  "settings.draftBadge": {
-    "en": "draft",
+  "settings.theme": {
+    "en": "Theme",
+    "my": "အသွင်အပြင်"
+  },
+  "settings.title": {
+    "en": "Settings",
     "my": null
   }
 }

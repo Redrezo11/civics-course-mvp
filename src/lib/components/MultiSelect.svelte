@@ -1,4 +1,5 @@
 <script>
+  import { t } from '../i18n.js';
   // Multi-select — used by the six "any N of these" questions (Q10, Q48,
   // Q65, Q67, Q81, Q126). Storyboard: 5–6 options with the required count
   // stated on screen, per G-19 (never encourage more answers than asked).
@@ -37,7 +38,7 @@
   }
 </script>
 
-<p class="text-sm font-bold mb-3">Choose {required}.</p>
+<p class="text-sm font-bold mb-3">{$t('practice.chooseCount', { n: required })}</p>
 
 <div>
   {#each options as opt}

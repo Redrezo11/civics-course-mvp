@@ -1,4 +1,5 @@
 <script>
+  import { t } from '../i18n.js';
   import { navigate } from '../router.js';
   import { progress } from '../stores/progress.js';
   import { ANSWERS_CHECKED } from '../content/questions.js';
@@ -21,9 +22,9 @@
 </script>
 
 <div class="min-h-screen max-w-md mx-auto px-5 py-6">
-  <button class="tap inline-flex items-center text-sm font-bold underline mb-6" on:click={() => navigate('/')}>‹ Back</button>
+  <button class="tap inline-flex items-center text-sm font-bold underline mb-6" on:click={() => navigate('/')}>{$t('common.back')}</button>
 
-  <h1 class="text-heading font-bold mb-4">Help</h1>
+  <h1 class="text-heading font-bold mb-4">{$t('help.heading')}</h1>
 
   {#each entries as e}
     <div class="mb-3.5">
@@ -45,7 +46,7 @@
   </div>
 
   <div class="border border-border dark:border-dark-border rounded-card p-3 mt-3 text-center text-sm font-bold">
-    Your privacy: this course saves your progress only on your own phone.
+    {$t('help.privacy')}
   </div>
 
   {#if !confirmingReset}

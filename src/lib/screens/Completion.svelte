@@ -1,4 +1,5 @@
 <script>
+  import { t } from '../i18n.js';
   // G-05 closing screen + G-05b completion evidence. Storyboard §6.
   //
   // G-05b is required by the STUDY design, not by the instruction: completion
@@ -40,13 +41,13 @@
         <div class="text-xl font-bold">
           {$lessonsFinishedCount}<span class="text-xs font-normal text-ink-muted dark:text-dark-ink-muted"> of {TOTAL_UNITS}</span>
         </div>
-        <div class="text-[10px] text-ink-muted dark:text-dark-ink-muted">lessons finished</div>
+        <div class="text-[10px] text-ink-muted dark:text-dark-ink-muted">{$t('home.counterLessons')}</div>
       </div>
       <div class="flex-1 text-center py-2.5 px-1.5 border border-border dark:border-dark-border rounded-card">
         <div class="text-xl font-bold">
           {$questionsPracticedCount}<span class="text-xs font-normal text-ink-muted dark:text-dark-ink-muted"> of {TOTAL_QUESTIONS}</span>
         </div>
-        <div class="text-[10px] text-ink-muted dark:text-dark-ink-muted">questions practiced</div>
+        <div class="text-[10px] text-ink-muted dark:text-dark-ink-muted">{$t('home.counterQuestions')}</div>
       </div>
     </div>
 

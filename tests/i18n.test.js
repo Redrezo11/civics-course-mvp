@@ -118,11 +118,21 @@ describe('a Burmese learner in the app', () => {
     expect(hasConsonant(container.textContent)).toBe(true);
   });
 
-  it('sees clean English in Unit 2, not blanks', () => {
+  it('sees English CONTENT in Unit 2, not blanks, even though the chrome is Burmese', () => {
     progress.setLanguage('my');
     const { container } = render(Lesson, { props: { unitId: 'U2' } });
+
+    // Unit 2 has no content overlay, so its teaching text falls back to English
+    // rather than blanking — that is the rule the fallback exists for.
     expect(container.textContent).toContain('Three branches');
-    expect(hasConsonant(container.textContent)).toBe(false);
+    expect(container.textContent.length).toBeGreaterThan(200);
+
+    // The nav chrome IS translated, and legitimately shows Burmese here: UI
+    // strings and course content are separate layers with separate coverage.
+    // An earlier version of this test asserted no Burmese anywhere on the
+    // screen, which stopped being true the moment the chrome was wired.
+    const bar = container.querySelector('button');
+    expect(hasConsonant(bar.textContent)).toBe(true);
   });
 
   it('is told what is actually translated, and that Burmese is a draft', () => {

@@ -1,4 +1,5 @@
 <script>
+  import { t } from '../i18n.js';
   // Rotates through exemplify / compare / infer / interpret per item — this
   // is the fix for the "everything was classifying" defect found in the
   // Instructional Strategy Foundation audit. One item advances to the next;
@@ -176,7 +177,7 @@
             {/if}
           </div>
           <button class="tap inline-flex items-center text-xs underline text-ink-muted dark:text-dark-ink-muted mt-2" on:click={() => resetSort(i)}>
-            Try again
+            {$t('common.tryAgain')}
           </button>
           {#if i < items.length - 1}
             <button class="btn-primary mt-3" on:click={advance}>Next</button>

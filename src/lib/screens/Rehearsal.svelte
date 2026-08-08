@@ -1,4 +1,5 @@
 <script>
+  import { t } from '../i18n.js';
   // T · Rehearsal mode — the mock interview. Storyboard §8, unchanged by v5.0.
   //
   // This is the ONE deliberate exception to the v5.0 conversion. Every other
@@ -131,7 +132,7 @@
         <p class="font-bold text-center my-5 leading-relaxed">
           Do you know the answer?<br />Say it out loud to yourself before you look.
         </p>
-        <button class="btn-primary" on:click={() => (revealed = true)}>Check my answer</button>
+        <button class="btn-primary" on:click={() => (revealed = true)}>{$t('rehearsal.checkMyAnswer')}</button>
       {:else}
         <div class="border border-border dark:border-dark-border rounded-card p-4 my-4">
           <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-2">Accepted answers</p>
@@ -139,7 +140,7 @@
             <p class="font-bold mb-1">{a}</p>
           {/each}
         </div>
-        <p class="font-bold text-center mb-3">Did you get it right?</p>
+        <p class="font-bold text-center mb-3">{$t('rehearsal.didYouGetItRight')}</p>
         <button class="btn-secondary mb-2.5" on:click={() => selfMark(true)}>✓ Yes, I got it</button>
         <button class="btn-secondary" on:click={() => selfMark(false)}>✗ Not yet</button>
       {/if}

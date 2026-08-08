@@ -1,4 +1,5 @@
 <script>
+  import { t } from '../i18n.js';
   // G-08 · Full-bank practice, per unit. Storyboard §6 (v5.3) and G-22.
   //
   // Why this screen exists: the core path practices 39 of 128 questions — 30%.
@@ -132,7 +133,7 @@
       <button class="btn-primary mb-2.5" on:click={start}>
         {resumeAt > 0 && resumeAt < questions.length ? 'Continue practice' : 'Start practice'}
       </button>
-      <button class="btn-secondary" on:click={leave}>Skip for now</button>
+      <button class="btn-secondary" on:click={leave}>{$t('common.skip')}</button>
     {:else if phase === 'running'}
       {#if canAdvance}
         <button class="btn-primary" on:click={next}>

@@ -1,4 +1,5 @@
 <script>
+  import { t } from '../i18n.js';
   // G-18: every in-lesson screen must carry this. Added after a real design
   // failure — lesson screens originally had "Next" only, with no way back,
   // no way to Home, and therefore no way to Settings or Help mid-lesson.
@@ -31,7 +32,7 @@
     class="tap inline-flex items-center text-sm font-bold underline underline-offset-2 text-ink dark:text-dark-ink px-1"
     on:click={handleBack}
   >
-    ‹ Back
+    {$t('common.back')}
   </button>
   <span class="text-xs text-ink-muted dark:text-dark-ink-muted text-center flex-1 px-2">
     {unitLabel}{unitLabel && position ? ' · ' : ''}{position}
@@ -40,6 +41,6 @@
     class="tap inline-flex items-center text-sm font-bold underline underline-offset-2 text-ink dark:text-dark-ink px-1"
     on:click={handleExit}
   >
-    Exit ✕
+    {$t('common.exit')}
   </button>
 </div>
