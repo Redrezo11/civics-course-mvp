@@ -14,6 +14,8 @@
   import { progress } from '../stores/progress.js';
   import { navigate } from '../router.js';
   import LessonBar from '../components/LessonBar.svelte';
+  import NarrationButton from '../components/NarrationButton.svelte';
+  import { seg } from '../narration-text.js';
 
   export let rerun = false; // true when re-shown at U2/U4/U6: one tap to pass
 
@@ -50,6 +52,19 @@
   />
 
   <div class="flex-1 overflow-y-auto px-5 py-6">
+    <!-- Reads only the lines revealed so far — the screen builds up one at a
+         time, and narrating the unrevealed ones would give away the reveal. -->
+    <NarrationButton
+      segments={[
+        ...seg('How America works'),
+        ...lines.slice(0, revealed).map((l) => ({ text: l.text, lang: 'en' })),
+        ...(allRevealed
+          ? seg('Every lesson in this course explains one piece of this picture. By the end, you will see how all 128 test questions fit inside these four ideas.')
+          : []),
+      ]}
+      screenId="epitome"
+      wrapperClass="mb-4"
+    />
     <h1 class="text-heading font-bold mb-5">How America works</h1>
 
     {#each lines as line, i}

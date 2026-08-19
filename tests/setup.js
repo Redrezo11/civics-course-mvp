@@ -88,6 +88,11 @@ class FakeAudio {
     this.paused = true;
     this.onended = null;
     FakeAudio.instances.push(this);
+    // NOT reset between tests. narration.js keeps one long-lived element for
+    // the life of the page — iOS grants autoplay permission per element — so
+    // the count of elements ever constructed is the thing worth asserting on.
+    FakeAudio.constructed += 1;
+    FakeAudio.last = this;
   }
   play() {
     this.paused = false;
@@ -102,10 +107,19 @@ class FakeAudio {
   static reset() {
     FakeAudio.instances = [];
     FakeAudio.playRejects = false;
+    // The shared element survives; put it back to a clean state instead.
+    if (FakeAudio.last) {
+      FakeAudio.last.paused = true;
+      FakeAudio.last.currentTime = 0;
+      FakeAudio.last.onended = null;
+      FakeAudio.last.src = undefined;
+    }
   }
 }
 FakeAudio.instances = [];
 FakeAudio.playRejects = false;
+FakeAudio.constructed = 0;
+FakeAudio.last = null;
 window.Audio = FakeAudio;
 
 beforeEach(() => {

@@ -10,7 +10,7 @@
 import { writable } from 'svelte/store';
 import { route } from './router.js';
 import manifest from './content/audio-manifest.json';
-import { narrationHash, splitForSpeech } from './narration-text.js';
+import { flatten, narrationHash, splitForSpeech } from './narration-text.js';
 
 /**
  * Playback state, keyed by OWNER rather than global.
@@ -51,34 +51,133 @@ export function audioSourceFor(screenId, lang, text) {
   return `${BASE}audio/${lang}/${screenId}.mp3`;
 }
 
+/**
+ * An official question's recording. No language folder: the officer asks in
+ * English whatever the learner's language is (G-3), so one recording serves
+ * both — and it plays wherever that question is asked, including Rehearsal and
+ * the full-bank sets, which draw at random and could never have a per-screen
+ * recording.
+ */
+export function questionAudioFor(questionId, text) {
+  if (!questionId) return null;
+  const entry = manifest?.q?.[questionId];
+  if (!entry) return null;
+  if (entry.hash && entry.hash !== narrationHash(text)) return null;
+  return `${BASE}audio/q/${questionId}.mp3`;
+}
+
 // --- Engines ----------------------------------------------------------------
 
 /**
- * Speech synthesis, chunked by sentence.
+ * ONE audio element for the whole app, reused for every segment of every
+ * narration by swapping `src`.
  *
- * Chunking is not an optimisation. It is the only way to get past two defects
- * at once: desktop Chrome truncating any utterance longer than about fifteen
- * seconds, and Chrome for Android having no working pause() at all. Owning the
- * position means Pause can be implemented as cancel-and-remember, which works
- * everywhere, instead of a pause() that silently does nothing on the phone this
- * course is mostly read on.
+ * Not a micro-optimisation. iOS grants autoplay permission PER ELEMENT, unlocked
+ * by a user gesture. A playlist that constructed `new Audio(src)` per segment
+ * would create elements that never received a gesture, so segment two onward
+ * would silently fail — on iPhone only, after segment one had played perfectly.
+ * Reusing one unlocked element is the documented fix.
  */
-function speechEngine(text, lang, onEnd) {
+let sharedAudio = null;
+function audioElement() {
+  if (!sharedAudio && typeof Audio !== 'undefined') {
+    sharedAudio = new Audio();
+    sharedAudio.preload = 'none'; // fetched on tap, never ahead of it
+  }
+  return sharedAudio;
+}
+
+/**
+ * Play one recorded file to completion.
+ *
+ * Because the element is shared, a segment must only ever act on it while it
+ * still owns it. `stop()` settles the pending play promise first, so it can
+ * land AFTER the next narration has already started — without this claim check
+ * it would pause the playback that replaced it. A test caught exactly that.
+ */
+let audioOwner = 0;
+function fileSegment(src, onDone) {
+  const el = audioElement();
+  const claim = ++audioOwner;
+  const mine = () => audioOwner === claim;
+  let pending = null;
+  let stopped = false;
+
+  const settle = async () => {
+    try {
+      await pending;
+    } catch {
+      // play() rejects with NotAllowedError without a gesture and AbortError if
+      // a pause lands while it is still pending. Both are expected; neither
+      // should surface as an unhandled rejection.
+    }
+  };
+
+  const onEnded = () => {
+    if (!stopped && mine()) onDone();
+  };
+
+  return {
+    start() {
+      el.src = src;
+      el.currentTime = 0;
+      el.onended = onEnded;
+      pending = el.play();
+      if (pending?.catch) pending.catch(() => {});
+    },
+    async pause() {
+      await settle();
+      if (mine()) el.pause();
+    },
+    resume() {
+      if (!mine()) return;
+      pending = el.play(); // keeps currentTime — resumes mid-file
+      if (pending?.catch) pending.catch(() => {});
+    },
+    async stop() {
+      stopped = true;
+      await settle();
+      // Only if this segment still holds the element. Another narration may
+      // have claimed it while the promise above was settling.
+      if (mine()) {
+        el.onended = null;
+        el.pause();
+      }
+    },
+  };
+}
+
+/**
+ * Speak one segment, chunked by sentence.
+ *
+ * Chunking is not an optimisation. Desktop Chrome truncates any single
+ * utterance at about fifteen seconds with no error, and Chrome for Android has
+ * no working pause() — it ends the utterance and resume() does nothing. Owning
+ * the chunk index solves both, and needs no UA sniffing.
+ */
+function speechSegment(text, lang, onDone) {
   const chunks = splitForSpeech(text);
   let index = 0;
   let live = null; // GC guard — see below
-
-  // Engine-local, and deliberately NOT the module's session token. Pausing has
-  // to invalidate the in-flight chunk callback without invalidating the
-  // session's onEnd, or the narration could never report that it finished and
-  // the button would never reach "Listen again".
   let gen = 0;
+
+  // Finishing has to be idempotent. The NEXT segment's start() calls
+  // speechSynthesis.cancel(), and browsers that fire `end` from cancel() then
+  // re-run this segment's handler — which would report it finished a second
+  // time and skip the playlist to the end. Cost one test to find.
+  let finished = false;
+  const done = () => {
+    if (finished) return;
+    finished = true;
+    gen += 1; // nothing from this segment may fire again
+    live = null;
+    onDone();
+  };
 
   const speakFrom = (from) => {
     index = from;
     if (index >= chunks.length) {
-      live = null;
-      onEnd();
+      done();
       return;
     }
 
@@ -89,9 +188,9 @@ function speechEngine(text, lang, onEnd) {
     utterance.lang = lang === 'my' ? 'my-MM' : 'en-US';
 
     const advance = () => {
-      // cancel() fires `end` on some browsers and not others. Without this
-      // check, pausing would immediately start the next sentence — the pause
-      // would look like a skip.
+      // cancel() fires `end` on some browsers and not others. Without this the
+      // pause would immediately start the next sentence — Pause would read as
+      // Skip.
       if (mine !== gen) return;
       speakFrom(index + 1);
     };
@@ -99,21 +198,18 @@ function speechEngine(text, lang, onEnd) {
     utterance.onerror = advance;
 
     // Chrome can garbage-collect an utterance mid-speech, after which `end`
-    // never fires and the button stays on "Pause" for good. Holding the
-    // reference for the utterance's lifetime is the documented fix.
+    // never fires and the button stays on "Pause" for good.
     live = utterance;
     window.speechSynthesis.speak(utterance);
   };
 
   return {
-    play() {
-      // Also the documented prophylactic for the first speak() after a page
-      // load failing silently.
-      window.speechSynthesis.cancel();
+    start() {
+      window.speechSynthesis.cancel(); // also the fix for the first speak() failing
       speakFrom(0);
     },
     pause() {
-      gen += 1; // invalidate the in-flight `end` so it cannot advance
+      gen += 1;
       window.speechSynthesis.cancel();
     },
     resume() {
@@ -128,53 +224,72 @@ function speechEngine(text, lang, onEnd) {
   };
 }
 
-/** Recorded audio. None of the speech defects apply; this one just works. */
-function audioEngine(src, onEnd) {
-  const el = new Audio(src);
-  el.preload = 'none'; // fetched on tap, never ahead of it — prepaid data
-  let pending = null;
+/**
+ * A narration: a list of segments played end to end, each resolving on its own
+ * to a recording or to speech.
+ *
+ * That independence is what lets recorded audio arrive piecemeal. The 128
+ * official questions can be recorded once and reused everywhere they are asked
+ * — including Rehearsal and the full-bank sets, which draw at random and could
+ * never have a per-screen recording — while everything around them stays
+ * synthesised until someone records it.
+ */
+function playlist(segments, onEnd) {
+  let at = 0;
+  let currentSegment = null;
   let stopped = false;
 
-  el.onended = () => {
-    if (!stopped) onEnd();
-  };
-
-  const start = () => {
-    // play() rejects with NotAllowedError without a user gesture, and with
-    // AbortError if a pause() lands while it is still pending. Both are
-    // expected here, neither should reach the console as an unhandled rejection.
-    pending = el.play();
-    if (pending?.catch) pending.catch(() => {});
-  };
-
-  const settle = async () => {
-    try {
-      await pending;
-    } catch {
-      /* already handled above */
+  const startAt = (i) => {
+    at = i;
+    if (stopped) return;
+    if (at >= segments.length) {
+      currentSegment = null;
+      onEnd();
+      return;
     }
+    const s = segments[at];
+    const src = s.audioSrc || null;
+    currentSegment = src
+      ? fileSegment(src, () => startAt(at + 1))
+      : speechSegment(s.text, s.lang, () => startAt(at + 1));
+    currentSegment.start();
   };
 
   return {
-    play() {
-      el.currentTime = 0;
-      start();
-    },
-    async pause() {
-      await settle(); // pausing a pending play() is what triggers AbortError
-      el.pause();
-    },
-    resume: start,
+    play: () => startAt(0),
+    pause: () => currentSegment?.pause(),
+    resume: () => currentSegment?.resume(),
     async stop() {
       stopped = true;
-      await settle();
-      el.pause();
-      el.currentTime = 0;
+      await currentSegment?.stop();
+      currentSegment = null;
     },
   };
 }
 
 // --- Public interface -------------------------------------------------------
+
+/**
+ * Attach a recording to any segment that has one.
+ *
+ * Screen prose resolves by screen id and language; an official question
+ * resolves by question id with no language at all, because official wording is
+ * English in every language and recording it twice would be wrong.
+ */
+function resolve(segments, { screenId, lang }) {
+  return segments.map((s) => {
+    if (s.audioSrc) return s;
+    if (s.questionId) {
+      const src = questionAudioFor(s.questionId, s.text);
+      return src ? { ...s, audioSrc: src } : s;
+    }
+    if (s.screenPart && screenId) {
+      const src = audioSourceFor(screenId, lang, s.text);
+      return src ? { ...s, audioSrc: src } : s;
+    }
+    return s;
+  });
+}
 
 /**
  * Start narrating. Cancels whatever was playing first, which is what makes
@@ -184,20 +299,29 @@ function audioEngine(src, onEnd) {
  * awaiting anything before speak()/play() loses the user activation that iOS
  * and Chrome both require.
  */
-export function play({ owner, screenId, text, audioSrc, lang = 'en' }) {
+export function play({ owner, screenId, segments, text, audioSrc, lang = 'en' }) {
   cancel();
 
-  const src = audioSrc || audioSourceFor(screenId, lang, text);
-  if (!src && !(text && hasSpeech())) return;
+  // A bare string is still accepted — a one-segment narration.
+  let list = segments && segments.length ? segments : text ? [{ text, lang, screenPart: true }] : [];
+  if (audioSrc && list.length) list = [{ ...list[0], audioSrc }];
+  if (!list.length) return;
+
+  list = resolve(list, { screenId, lang });
+  if (!list.some((s) => s.audioSrc) && !hasSpeech()) return;
+
+  // iOS wants the first speak() inside the gesture, and later segments start
+  // from an `end` handler. Priming here means the handoff is never the first
+  // call the engine has seen.
+  if (hasSpeech() && list.some((s) => !s.audioSrc)) window.speechSynthesis.cancel();
 
   const mine = ++token;
-  const onEnd = () => {
+  const engine = playlist(list, () => {
     if (mine !== token) return;
     current = null;
     narration.set({ owner, state: 'ended' });
-  };
+  });
 
-  const engine = src ? audioEngine(src, onEnd) : speechEngine(text, lang, onEnd);
   current = { owner, engine };
   engine.play();
   narration.set({ owner, state: 'playing' });
@@ -223,11 +347,14 @@ export function cancel() {
   narration.set({ owner: null, state: 'idle' });
 }
 
-/** Whether a source exists at all — the button does not render without one. */
-export function canNarrate({ text, audioSrc, screenId, lang = 'en' }) {
+/** Whether there is anything to play at all — the button does not render without one. */
+export function canNarrate({ segments, text, audioSrc, screenId, lang = 'en' }) {
   if (audioSrc) return true;
-  if (audioSourceFor(screenId, lang, text)) return true;
-  return Boolean(text) && hasSpeech();
+  const list = segments && segments.length ? segments : text ? [{ text }] : [];
+  if (!list.length) return false;
+  if (list.some((s) => s.questionId && questionAudioFor(s.questionId, s.text))) return true;
+  if (screenId && audioSourceFor(screenId, lang, flatten(list))) return true;
+  return hasSpeech();
 }
 
 // --- Cleanup ----------------------------------------------------------------

@@ -23,7 +23,18 @@ import {
 } from '../src/lib/storage.js';
 import { getUnitQuestions, TOTAL_QUESTIONS } from '../src/lib/content/questions.js';
 
-const NOT_FORWARD = [/^‹\s*Back/, /^Exit/, /Try again/i, /Start over/i, /Skip for now/i, /Cancel/i];
+const NOT_FORWARD = [
+  /^‹\s*Back/,
+  /^Exit/,
+  /Try again/i,
+  /Start over/i,
+  /Skip for now/i,
+  /Cancel/i,
+  // Narration never advances anything, and its label cycles between four
+  // values, so a driver that tracks "controls already tried" by label would
+  // treat each press as a new control.
+  /^(Listen|Pause|Resume|Listen again)$/,
+];
 const isForward = (b) => !NOT_FORWARD.some((re) => re.test(b.textContent.trim()));
 const label = (b) => b.textContent.trim().replace(/^[○●✓✗]\s*/, '');
 const ADVANCE =

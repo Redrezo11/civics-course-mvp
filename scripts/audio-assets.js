@@ -36,7 +36,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 import { localiseWith } from '../src/lib/localise.js';
-import { narrationFor, narrationHash, NARRATED_FIELDS } from '../src/lib/narration-text.js';
+import { flatten, narrationFor, narrationHash, NARRATED_FIELDS } from '../src/lib/narration-text.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
@@ -45,6 +45,13 @@ const audioDir = join(root, 'public', 'audio');
 const readJson = (p) => JSON.parse(readFileSync(p, 'utf8'));
 
 const LANGS = ['en', 'my'];
+
+// Official question wording, recorded ONCE with no language folder. The officer
+// asks in English whatever the learner reads (G-3), so a second copy would be
+// wrong — and one file serves every screen that asks the question, including
+// Rehearsal and the full-bank sets, which draw at random and could never have a
+// per-screen recording.
+const QUESTION_DIR = 'q';
 const UNITS = ['unit0', 'unit1', 'unit2', 'unit3', 'unit4', 'unit5', 'unit6', 'unit7'];
 
 /**
@@ -81,9 +88,12 @@ function expected(lang) {
     for (const raw of unit.screens) {
       if (!NARRATED_FIELDS[raw.type]) continue;
       const screen = overlay[raw.id] ? localiseWith(raw, overlay[raw.id]) : raw;
-      const text = narrationFor(screen, {
-        officialQuestion: raw.sampleQuestionId ? questions[raw.sampleQuestionId] : '',
-      });
+      const text = flatten(
+        narrationFor(screen, {
+          officialQuestion: raw.sampleQuestionId ? questions[raw.sampleQuestionId] : '',
+          lang,
+        })
+      );
       if (!text) continue;
       out.push({
         id: raw.id,
@@ -132,8 +142,18 @@ const manifest = {
 const rows = {};
 const totals = {};
 
-for (const lang of LANGS) {
-  const items = expected(lang);
+/** The 128 official questions, as their own recording set. */
+function expectedQuestions() {
+  return Object.entries(questions).map(([id, official]) => ({
+    id,
+    unit: 'Official questions — English only, one recording each',
+    text: official,
+    untranslated: false,
+  }));
+}
+
+for (const lang of [...LANGS, QUESTION_DIR]) {
+  const items = lang === QUESTION_DIR ? expectedQuestions() : expected(lang);
   const byId = Object.fromEntries(items.map((i) => [i.id, i]));
   const files = recordings(lang);
   const seen = new Set();
@@ -199,7 +219,7 @@ const script = {
     'screen id — the same key as the filename. AUDIO-ASSETS.md clips these to fit ' +
     'a table; this file does not. Work from this one.',
 };
-for (const lang of LANGS) {
+for (const lang of [...LANGS, QUESTION_DIR]) {
   script[lang] = Object.fromEntries(rows[lang].map((r) => [r.id, r.text]));
 }
 writeFileSync(join(root, 'docs', 'narration-script.json'), `${JSON.stringify(script, null, 2)}\n`);
@@ -212,7 +232,16 @@ function section(lang) {
   const byUnit = {};
   for (const r of rows[lang]) (byUnit[r.unit] ||= []).push(r);
 
-  let out = `\n## ${lang === 'en' ? 'English' : 'Burmese'} — \`public/audio/${lang}/\`\n\n`;
+  const title =
+    lang === 'en'
+      ? 'English teaching and assessment prose'
+      : lang === 'my'
+        ? 'Burmese teaching and assessment prose'
+        : 'Official question wording — one recording each, no language folder';
+  let out = `
+## ${title} — \`public/audio/${lang}/\`
+
+`;
   out += `**${t.recorded} recorded · ${t.stale} need re-recording · ${t.missing} not yet recorded** (${t.total} total)\n`;
 
   if (t.orphans.length) {
@@ -309,7 +338,7 @@ delivery lost 23 fields.
 
 Read the text as written. It is derived from what is on the screen, so the
 learner who listens and the learner who reads get the same course.
-${LANGS.map(section).join('\n---\n')}`;
+${[...LANGS, QUESTION_DIR].map(section).join('\n---\n')}`;
 
 if (!existsSync(join(root, 'docs'))) mkdirSync(join(root, 'docs'), { recursive: true });
 writeFileSync(join(root, 'docs', 'AUDIO-ASSETS.md'), doc, 'utf8');
@@ -317,7 +346,7 @@ writeFileSync(join(root, 'docs', 'AUDIO-ASSETS.md'), doc, 'utf8');
 // --- Report -----------------------------------------------------------------
 
 console.log('\nAudio assets\n');
-for (const lang of LANGS) {
+for (const lang of [...LANGS, QUESTION_DIR]) {
   const t = totals[lang];
   console.log(`  ${lang}: ${t.recorded} recorded · ${t.stale} stale · ${t.missing} missing  (of ${t.total})`);
   for (const o of t.orphans) console.log(`       ✗ ${lang}/${o} matches no screen — it will never play`);

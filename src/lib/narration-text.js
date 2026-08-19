@@ -50,6 +50,48 @@ export const NARRATED_TYPES = Object.keys(NARRATED_FIELDS);
 const TERMINATORS = '.!?။၊';
 const endsSentence = (s) => TERMINATORS.includes(s.trim().slice(-1));
 
+// --- Segments ---------------------------------------------------------------
+//
+// Narration is a list of { text, lang } rather than one string, because an
+// assessment screen in Burmese is genuinely bilingual: Burmese prose around an
+// ENGLISH official question, because the officer asks in English (G-3). One
+// utterance carries one language — `my-MM` mangles the English, `en-US` mangles
+// the Burmese — so the language has to travel with the text.
+
+/** One segment, or none if the text is empty. */
+export function seg(text, lang = 'en') {
+  const s = String(text ?? '').trim();
+  return s ? [{ text: s, lang }] : [];
+}
+
+/** Everything spoken, as one string — for hashing and for the recording script. */
+export function flatten(segments) {
+  if (typeof segments === 'string') return segments;
+  return (segments || []).map((s) => s.text).join(' ');
+}
+
+/**
+ * Answer options, spoken in the order they are DISPLAYED.
+ *
+ * The caller passes the array the buttons render, never `q.options`.
+ * `presentOptions()` shuffles per question, so reading the authored order would
+ * speak them in a different order from the screen — for a learner who cannot
+ * see them, worse than no audio at all.
+ *
+ * Nothing here distinguishes the correct option. The ✓/✗ markers only exist in
+ * the answered branch of the templates, and no accepted-answer list is consulted.
+ *
+ * Numbered because four unlabelled choices in a row are hard to hold by ear.
+ * The buttons carry no visible numbers, so this is the one place narration adds
+ * text rather than reading it.
+ */
+export function optionSegments(options, { glosses = [], lang = 'en' } = {}) {
+  return (options || []).flatMap((opt, i) => [
+    ...seg(`${i + 1}. ${opt}`, 'en'),
+    ...(glosses[i] ? seg(glosses[i], lang) : []),
+  ]);
+}
+
 /** One field's visible text, flattened in the order it appears on screen. */
 function fieldText(screen, field, officialQuestion) {
   if (field === '@question') return officialQuestion || '';
@@ -86,21 +128,134 @@ function fieldText(screen, field, officialQuestion) {
  * @param screen           a screen object, ideally already localised
  * @param officialQuestion the official wording for an `orient` screen's card
  */
-export function narrationFor(screen, { officialQuestion = '' } = {}) {
-  if (!screen) return '';
-  if (screen.narrationText) return String(screen.narrationText).trim();
+export function narrationFor(screen, { officialQuestion = '', lang = 'en' } = {}) {
+  if (!screen) return [];
+  if (screen.narrationText) return seg(screen.narrationText, lang);
 
   const fields = NARRATED_FIELDS[screen.type];
-  if (!fields) return '';
+  if (!fields) return [];
 
-  let out = '';
+  const out = [];
+  let prose = '';
+  const flush = () => {
+    if (prose) out.push(...seg(prose, lang));
+    prose = '';
+  };
+
   for (const field of fields) {
+    // The official question stays English even inside Burmese teaching prose,
+    // so it breaks the run and becomes its own segment.
+    if (field === '@question') {
+      flush();
+      out.push(...seg(officialQuestion, 'en'));
+      continue;
+    }
     const part = fieldText(screen, field, officialQuestion).trim();
     if (!part) continue;
-    if (!out) out = part;
-    else out += `${endsSentence(out) ? ' ' : '. '}${part}`;
+    prose += prose ? `${endsSentence(prose) ? ' ' : '. '}${part}` : part;
   }
-  return out.trim();
+  flush();
+  return out;
+}
+
+// --- Assessment surfaces ----------------------------------------------------
+//
+// The rule is the same everywhere: narrate exactly what is on screen right now.
+// Anything only rendered after an answer is only narrated after an answer, so
+// the pre-answer narration cannot give the answer away — it does not have it.
+
+/**
+ * One official test question, as rendered by PracticeItem: lesson practice,
+ * the full-bank sets, and R1–R3.
+ */
+export function practiceSegments({
+  label = '',
+  official = '',
+  questionId = '',
+  presented = null,
+  multiSelectCount = 0,
+  answered = false,
+  correctAnswerText = '',
+  explain = '',
+  currentAnswer = null,
+  lang = 'en',
+} = {}) {
+  // The official question is tagged with its id, so the playlist can find a
+  // recording for it. One file per question serves every screen that asks it —
+  // including Rehearsal and the full-bank sets, which draw at random.
+  const out = [...seg(label, lang), ...seg(official, 'en').map((x) => ({ ...x, questionId }))];
+
+  // ◆ Dynamic questions have no options at all — a current-answer card instead,
+  // which may say the answer has not been checked. Read what is there; never
+  // present an unverified value as fact.
+  if (currentAnswer !== null) {
+    if (currentAnswer?.verified && currentAnswer?.value) {
+      out.push(...seg(currentAnswer.label || 'Current answer', lang), ...seg(currentAnswer.value, 'en'));
+    } else {
+      out.push(
+        ...seg('This answer has not been checked yet.', lang),
+        ...seg(
+          'This one changes with elections or appointments. Look it up before your interview — never rely on an old answer.',
+          lang
+        )
+      );
+    }
+    return out;
+  }
+
+  if (multiSelectCount) out.push(...seg(`Choose ${multiSelectCount}.`, lang));
+  out.push(...optionSegments(presented?.options, { lang }));
+
+  if (answered) {
+    out.push(
+      ...(multiSelectCount
+        ? seg('Accepted answers are marked with a tick.', lang)
+        : seg('The correct answer is', lang)),
+      ...(multiSelectCount ? [] : seg(correctAnswerText, 'en')),
+      ...seg(explain, lang)
+    );
+  }
+  return out;
+}
+
+/**
+ * Rehearsal, which is self-scored: the learner answers from memory, then
+ * reveals. Narrating the accepted answers before the reveal would destroy the
+ * exercise, so they only exist here once `revealed`.
+ */
+export function rehearsalSegments({ official = '', questionId = '', revealed = false, accepted = [], lang = 'en' } = {}) {
+  const out = seg(official, 'en').map((x) => ({ ...x, questionId }));
+  if (!revealed) return out;
+  out.push(...seg('Accepted answers', lang));
+  for (const a of accepted) out.push(...seg(a, 'en'));
+  return out;
+}
+
+/** One guided-practice item, in whichever of its four shapes it takes. */
+export function guidedItemSegments(item, { answered = false, lang = 'en' } = {}) {
+  if (!item) return [];
+  const out = [...seg(item.instructions, lang), ...seg(item.question, lang)];
+  if (item.cardText) out.push(...seg(item.cardText, 'en'));
+
+  if (item.buckets) {
+    out.push(...seg('Categories:', lang), ...optionSegments(item.buckets, { glosses: item.bucketsGloss || [], lang }));
+  }
+  if (item.sortItems) {
+    out.push(
+      ...seg('Items to sort:', lang),
+      ...optionSegments(item.sortItems.map((s) => s.text), { glosses: item.sortItemsGloss || [], lang })
+    );
+  }
+  if (item.orderItems) {
+    out.push(...seg('Put these in order:', lang), ...optionSegments(item.orderItems, { glosses: item.orderItemsGloss || [], lang }));
+  }
+  if (item.options) {
+    out.push(...optionSegments(item.options, { glosses: item.optionsGloss || [], lang }));
+  }
+  if (answered && item.pairedOfficial) {
+    out.push(...seg('It asks the same thing as the official question:', lang), ...seg(item.pairedOfficial, 'en'));
+  }
+  return out;
 }
 
 // --- Chunking ---------------------------------------------------------------
@@ -183,7 +338,7 @@ export function splitForSpeech(text, max = SPEECH_CHUNK_MAX) {
  * the words must.
  */
 export function narrationHash(text) {
-  const normalised = String(text ?? '')
+  const normalised = flatten(text)
     .toLowerCase()
     .replace(/[^\p{L}\p{N}]+/gu, ' ')
     .trim();

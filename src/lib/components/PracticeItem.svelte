@@ -13,6 +13,9 @@
 
   import { createEventDispatcher } from 'svelte';
   import QuestionCard from './QuestionCard.svelte';
+  import NarrationButton from './NarrationButton.svelte';
+  import { practiceSegments } from '../narration-text.js';
+  import { progress } from '../stores/progress.js';
   import SingleSelect from './SingleSelect.svelte';
   import MultiSelect from './MultiSelect.svelte';
   import {
@@ -36,13 +39,47 @@
   $: presented = q && !q.dynamic ? presentOptions(q) : null;
   $: currentAnswer = q && q.dynamic ? getCurrentAnswer(q.id) : null;
 
+  // Reset when the question changes, so a submitted answer on one item does not
+  // make the next item narrate its feedback before it has been answered.
+  // Compared against the question itself, not written on every reactive pass —
+  // `submitted = false` in a block that also depends on `submitted` would undo
+  // the answer the instant it was recorded.
+  let loadedFor = null;
+  let submitted = false;
+  $: if (q !== loadedFor) {
+    loadedFor = q;
+    submitted = false;
+  }
+
   function answered(correct) {
+    submitted = true;
     dispatch('answer', { id: q.id, correct });
   }
+
+  // The narration reads what is rendered, in the order it is rendered. The
+  // options come from `presented` — the same shuffled array the buttons use —
+  // never from q.options, or the spoken order would differ from the visible one
+  // and mislead exactly the learner this is for.
+  $: lang = $progress.language || 'en';
+  $: narration = q
+    ? practiceSegments({
+        label,
+        official: q.official,
+        questionId: q.id,
+        presented,
+        multiSelectCount: q.multiSelect || 0,
+        answered: submitted,
+        correctAnswerText: q.acceptedAnswers?.[0] || '',
+        explain,
+        currentAnswer: q.dynamic ? currentAnswer : null,
+        lang,
+      })
+    : [];
 </script>
 
 {#if q}
   {#key q.id}
+    <NarrationButton segments={narration} {lang} wrapperClass="mb-3" />
     <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-2">{label}</p>
     <QuestionCard text={q.official} />
 

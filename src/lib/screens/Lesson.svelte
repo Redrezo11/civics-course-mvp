@@ -10,7 +10,7 @@
     USCIS_UPDATES_URL,
   } from '../content/questions.js';
   import { localiseScreen } from '../i18n.js';
-  import { narrationFor } from '../narration-text.js';
+  import { narrationFor, practiceSegments, seg, optionSegments } from '../narration-text.js';
   import LessonBar from '../components/LessonBar.svelte';
   import NarrationButton from '../components/NarrationButton.svelte';
   import QuestionCard from '../components/QuestionCard.svelte';
@@ -112,13 +112,33 @@
   // with no second set of strings to author and keep in step. An `orient`
   // screen shows an official question card, which is part of what the learner
   // reads, so it is part of what they hear.
+  // hook and tryOne are assessment shapes that live in the unit JSON rather
+  // than in PracticeItem, so they derive their own segments here.
+  $: assessmentNarration =
+    screen?.type === 'hook'
+      ? [
+          ...seg(screen.question, lang),
+          ...optionSegments(screen.options, { glosses: screen.optionsGloss || [], lang }),
+          ...(interactionDone ? seg(screen.feedback, lang) : []),
+        ]
+      : screen?.type === 'tryOne'
+        ? practiceSegments({
+            label: screen.body,
+            official: getQuestion(screen.questionId)?.official || '',
+            questionId: screen.questionId,
+            presented: presentOptions(getQuestion(screen.questionId)),
+            lang,
+          })
+        : [];
+
   $: narrationText = screen
     ? narrationFor(screen, {
         officialQuestion: screen.sampleQuestionId
           ? getQuestion(screen.sampleQuestionId)?.official
           : '',
+        lang,
       })
-    : '';
+    : [];
 
   // Guided-practice and single-item practice screens all funnel answers
   // through here, into the one storage chokepoint (storage.js note).
@@ -159,10 +179,10 @@
         and its onDestroy cancels the narration — so Next and Back stop the
         audio without either of them having to know narration exists.
       -->
-      {#if narrationText}
+      {#if narrationText.length || assessmentNarration.length}
         <NarrationButton
-          text={narrationText}
-          screenId={screen.id}
+          segments={narrationText.length ? narrationText : assessmentNarration}
+          screenId={narrationText.length ? screen.id : ''}
           {lang}
           wrapperClass="mb-4"
         />

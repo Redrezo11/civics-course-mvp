@@ -19,6 +19,9 @@
 
   import { createEventDispatcher } from 'svelte';
   import AnswerLabel from './AnswerLabel.svelte';
+  import NarrationButton from './NarrationButton.svelte';
+  import { guidedItemSegments } from '../narration-text.js';
+  import { progress } from '../stores/progress.js';
   const dispatch = createEventDispatcher();
 
   export let items = [];
@@ -123,6 +126,16 @@
 
 {#each items as item, i}
   {#if i === current}
+    <!-- Re-derived per item, so advancing to the next one narrates the next
+         one rather than continuing to read the last. -->
+    <NarrationButton
+      segments={guidedItemSegments(item, {
+        answered: doneFlags[i],
+        lang: $progress.language || 'en',
+      })}
+      lang={$progress.language || 'en'}
+      wrapperClass="mb-3"
+    />
     <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-2">
       Practice {i + 1} of {items.length} — not an official test question
     </p>

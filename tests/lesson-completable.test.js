@@ -25,7 +25,18 @@ import { getQuestion } from '../src/lib/content/questions.js';
 
 // Controls that do NOT move a learner forward. Clicking these in the driver
 // would either leave the unit or undo work.
-const NOT_FORWARD = [/^‹\s*Back/, /^Exit/, /Try again/i, /Start over/i, /Skip for now/i];
+const NOT_FORWARD = [
+  /^‹\s*Back/,
+  /^Exit/,
+  /Try again/i,
+  /Start over/i,
+  /Skip for now/i,
+  // Narration. Never advances, and worse for this driver than a plain no-op:
+  // its label cycles Listen → Pause → Resume, so "controls already tried" —
+  // which is keyed on label text — would see a fresh control every click and
+  // spend the whole budget on it before ever reaching an answer option.
+  /^(Listen|Pause|Resume|Listen again)$/,
+];
 
 // Labels that advance the screen. Includes every primaryLabel used in content.
 const ADVANCE = /^(Next|Begin|Start|Finish|Continue|Start Unit 1|Start practice|Continue practice)$/;

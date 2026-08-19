@@ -13,7 +13,11 @@
   import { onDestroy } from 'svelte';
   import { t } from '../i18n.js';
   import { narration, play, pause, resume, cancel, canNarrate } from '../narration.js';
+  import { flatten } from '../narration-text.js';
 
+  /** Language-tagged segments — the normal input. A bare `text` string still
+      works and becomes a one-segment narration. */
+  export let segments = null;
   export let text = '';
   export let screenId = '';
   export let lang = 'en';
@@ -28,7 +32,18 @@
   const me = {};
 
   $: state = $narration.owner === me ? $narration.state : 'idle';
-  $: available = canNarrate({ text, audioSrc, screenId, lang });
+  $: available = canNarrate({ segments, text, audioSrc, screenId, lang });
+
+  // What is on screen changes as the learner works: an answer is submitted and
+  // feedback appears, Rehearsal reveals its answers, a guided item advances.
+  // Narration must never keep reading the previous state — same rule as a stale
+  // recording. Reset to idle so the button offers to read what is there NOW.
+  $: signature = flatten(segments || []) + text;
+  let lastSignature = null;
+  $: if (signature !== lastSignature) {
+    if (lastSignature !== null && $narration.owner === me) cancel();
+    lastSignature = signature;
+  }
 
   $: label =
     state === 'playing'
@@ -42,7 +57,7 @@
   function activate() {
     if (state === 'playing') pause();
     else if (state === 'paused') resume();
-    else play({ owner: me, screenId, text, audioSrc, lang });
+    else play({ owner: me, screenId, segments, text, audioSrc, lang });
   }
 
   // Leaving the screen stops the narration. Lesson renders this inside its
@@ -101,7 +116,15 @@
           </svg>
         {/if}
       </span>
-      <span aria-live="polite">{label}</span>
+      <!--
+        No aria-live. Changing a button's accessible NAME is the correct pattern
+        for play/pause — aria-pressed would have a screen reader announce "play
+        button, off" while showing a pause icon. But a focused button announces
+        its own name change already, so a live region on top of it says
+        everything twice. That is worse on assessment screens, where submitting
+        an answer changes the feedback and resets this button at the same moment.
+      -->
+      <span>{label}</span>
     </button>
   </div>
 {/if}

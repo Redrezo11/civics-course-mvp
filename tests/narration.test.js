@@ -19,12 +19,17 @@ import NarrationButton from '../src/lib/components/NarrationButton.svelte';
 import Lesson from '../src/lib/screens/Lesson.svelte';
 import Home from '../src/lib/screens/Home.svelte';
 import Welcome from '../src/lib/screens/Welcome.svelte';
-import { narration, cancel, audioSourceFor } from '../src/lib/narration.js';
+import { narration, cancel, audioSourceFor, questionAudioFor } from '../src/lib/narration.js';
 import { route } from '../src/lib/router.js';
 import manifest from '../src/lib/content/audio-manifest.json';
 import {
+  flatten,
   narrationFor,
   narrationHash,
+  practiceSegments,
+  rehearsalSegments,
+  guidedItemSegments,
+  optionSegments,
   splitForSpeech,
   SPEECH_CHUNK_MAX,
   NARRATED_FIELDS,
@@ -235,13 +240,15 @@ describe('only one narration at a time', () => {
     const b = render(NarrationButton, { props: { text: LONG, screenId: 'B', audioSrc: 'b.mp3' } });
 
     await fireEvent.click(a.container.querySelector('button'));
-    expect(window.Audio.instances[0].paused).toBe(false);
+    expect(window.Audio.last.src).toBe('a.mp3');
 
     await fireEvent.click(b.container.querySelector('button'));
     await new Promise((r) => setTimeout(r, 0)); // stop() settles the play promise
 
-    expect(window.Audio.instances[0].paused, 'the first is still playing').toBe(true);
-    expect(window.Audio.instances[1].paused, 'the second never started').toBe(false);
+    // One element, so "the first stopped" means its source was replaced and it
+    // is playing the second — there is no second element left running.
+    expect(window.Audio.last.src, 'the second never started').toBe('b.mp3');
+    expect(window.Audio.last.paused, 'nothing is playing').toBe(false);
   });
 
   it('stops a speaking engine before starting the next', async () => {
@@ -287,9 +294,8 @@ describe('recorded audio', () => {
     await fireEvent.click(container.querySelector('button'));
 
     expect(speech().spoken.length).toBe(0); // nothing was synthesised
-    expect(window.Audio.instances.length).toBe(1);
-    expect(window.Audio.instances[0].src).toBe('audio/en/T-1.mp3');
-    expect(window.Audio.instances[0].preload).toBe('none'); // never preloaded
+    expect(window.Audio.last.src).toBe('audio/en/T-1.mp3');
+    expect(window.Audio.last.preload).toBe('none'); // never preloaded
     expect(label(container)).toBe('Pause');
   });
 
@@ -298,7 +304,7 @@ describe('recorded audio', () => {
       props: { text: SHORT, screenId: 'T-1', audioSrc: 'audio/en/T-1.mp3' },
     });
     await fireEvent.click(container.querySelector('button'));
-    window.Audio.instances[0].finish();
+    window.Audio.last.finish();
     await tick();
     expect(label(container)).toBe('Listen again');
   });
@@ -378,7 +384,7 @@ describe('where the button appears', () => {
 describe('what gets narrated', () => {
   it('derives an orient screen in render order, including its question card', () => {
     const orient = unit1.screens.find((s) => s.type === 'orient');
-    const text = narrationFor(orient, { officialQuestion: 'What is the supreme law of the land?' });
+    const text = flatten(narrationFor(orient, { officialQuestion: 'What is the supreme law of the land?' }));
     expect(text).toContain(orient.heading);
     expect(text).toContain(orient.body);
     expect(text).toContain('What is the supreme law of the land?');
@@ -386,23 +392,23 @@ describe('what gets narrated', () => {
   });
 
   it('prefers an authored narrationText when a screen has one', () => {
-    expect(narrationFor({ type: 'info', heading: 'Shown', narrationText: 'Spoken' })).toBe('Spoken');
+    expect(flatten(narrationFor({ type: 'info', heading: 'Shown', narrationText: 'Spoken' }))).toBe('Spoken');
   });
 
   it('says nothing on assessment screens', () => {
     for (const type of ['practice', 'hook', 'tryOne', 'guidedPractice', 'vocab']) {
-      expect(narrationFor({ type, heading: 'x', question: 'y' }), type).toBe('');
+      expect(narrationFor({ type, heading: 'x', question: 'y' }), type).toEqual([]);
     }
   });
 
   it('never reads interface controls', () => {
-    const text = narrationFor({
+    const text = flatten(narrationFor({
       type: 'lockItIn',
       heading: 'What you learned',
       learnedLine: 'The Constitution is the supreme law.',
       primaryLabel: 'Next',
       fullBankOffer: { label: 'Practice all 14 questions' },
-    });
+    }));
     expect(text).not.toContain('Next');
     expect(text).not.toContain('Practice all');
   });
@@ -413,7 +419,7 @@ describe('what gets narrated', () => {
       for (const screen of unit.screens) {
         if (!NARRATED_FIELDS[screen.type]) continue;
         count += 1;
-        const text = narrationFor(screen, { officialQuestion: 'Q' });
+        const text = flatten(narrationFor(screen, { officialQuestion: 'Q' }));
         expect(text.length, `${screen.id} narrates as empty`).toBeGreaterThan(20);
       }
     }

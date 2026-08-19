@@ -1,5 +1,6 @@
 <script>
   import { t } from '../i18n.js';
+  import NarrationButton from '../components/NarrationButton.svelte';
   // G-05 closing screen + G-05b completion evidence. Storyboard §6.
   //
   // G-05b is required by the STUDY design, not by the instruction: completion
@@ -30,6 +31,14 @@
       ceremony.jpg
     </div>
 
+    <NarrationButton
+      segments={[
+        { text: 'Your ceremony. Your oath. You are almost there.', lang: 'en' },
+        { text: `You have finished ${$lessonsFinishedCount} of ${TOTAL_UNITS} lessons and practiced ${$questionsPracticedCount} of ${TOTAL_QUESTIONS} questions.`, lang: 'en' },
+      ]}
+      screenId="completion"
+      wrapperClass="mb-4"
+    />
     <h1 class="text-heading font-bold mb-3">
       Your ceremony. Your oath. You are almost there.
     </h1>

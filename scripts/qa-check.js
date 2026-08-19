@@ -834,14 +834,20 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
 {
   const check = '17 recorded narration resolves';
   const audioDir = join(root, 'public', 'audio');
-  const LANGS = ['en', 'my'];
+  // 'q' holds official question wording, recorded once with no language folder:
+  // the officer asks in English whatever the learner reads (G-3), and one file
+  // serves every screen that asks it — including Rehearsal and the full-bank
+  // sets, which draw at random.
+  const LANGS = ['en', 'my', 'q'];
 
-  const narratable = new Set(['welcome']);
+  const narratable = new Set(['welcome', 'epitome', 'completion']);
   for (const unit of units) {
     for (const screen of unit.screens) {
       if (NARRATED_FIELDS[screen.type]) narratable.add(screen.id);
     }
   }
+  const questionIds = new Set(questions.map((q) => q.id));
+  const validFor = (lang) => (lang === 'q' ? questionIds : narratable);
 
   let manifest = {};
   try {
@@ -876,13 +882,14 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
       }
       files += 1;
       const id = name.slice(0, -4);
-      if (!narratable.has(id)) {
-        const nearly = [...narratable].find((k) => k.toLowerCase() === id.toLowerCase());
+      const valid = validFor(lang);
+      if (!valid.has(id)) {
+        const nearly = [...valid].find((k) => k.toLowerCase() === id.toLowerCase());
         fail(
           check,
           nearly
             ? `public/audio/${lang}/${name} should be "${nearly}.mp3" — case must match exactly, or it 404s once deployed`
-            : `public/audio/${lang}/${name} matches no narrated screen — it will never play`
+            : `public/audio/${lang}/${name} matches no ${lang === 'q' ? 'official question' : 'narrated screen'} — it will never play`
         );
       } else if (!manifest[lang]?.[id]) {
         warn(check, `public/audio/${lang}/${name} is not in the manifest — run "npm run audio"`);

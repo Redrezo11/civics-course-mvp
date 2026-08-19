@@ -25,6 +25,8 @@
   import { getCurrentAnswer, ANSWERS_CHECKED } from '../content/questions.js';
   import LessonBar from '../components/LessonBar.svelte';
   import QuestionCard from '../components/QuestionCard.svelte';
+  import NarrationButton from '../components/NarrationButton.svelte';
+  import { rehearsalSegments } from '../narration-text.js';
 
   const PASS_AT = 12;
   const FAIL_AT = 9;
@@ -126,6 +128,25 @@
         ✓ {correct} right · ✗ {wrong} wrong
       </p>
 
+      <!--
+        Gated on `revealed`. Before the reveal this narrates the question and
+        nothing else: the learner is answering from memory, and reading the
+        accepted answers to them would destroy the exercise.
+
+        This is also the screen narration helps most. Its own intro says "at the
+        real interview you will hear these questions" — now they can.
+      -->
+      <NarrationButton
+        segments={rehearsalSegments({
+          official: current.official,
+          questionId: current.id,
+          revealed,
+          accepted: acceptedFor(current),
+          lang: $progress.language || 'en',
+        })}
+        lang={$progress.language || 'en'}
+        wrapperClass="mb-3"
+      />
       <QuestionCard text={current.official} />
 
       {#if !revealed}

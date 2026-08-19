@@ -71,7 +71,7 @@ delivery lost 23 fields.
 Read the text as written. It is derived from what is on the screen, so the
 learner who listens and the learner who reads get the same course.
 
-## English — `public/audio/en/`
+## English teaching and assessment prose — `public/audio/en/`
 
 **0 recorded · 0 need re-recording · 60 not yet recorded** (60 total)
 
@@ -182,7 +182,7 @@ learner who listens and the learner who reads get the same course.
 
 ---
 
-## Burmese — `public/audio/my/`
+## Burmese teaching and assessment prose — `public/audio/my/`
 
 **0 recorded · 0 need re-recording · 60 not yet recorded** (60 total)
 
@@ -293,3 +293,142 @@ learner who listens and the learner who reads get the same course.
 | | File | Screen | Script |
 |---|---|---|---|
 | ○ | `welcome.mp3` | `welcome` ⚠ | Welcome. This course covers all 128 questions on the U.S. ci… |
+
+---
+
+## Official question wording — one recording each, no language folder — `public/audio/q/`
+
+**0 recorded · 0 need re-recording · 128 not yet recorded** (128 total)
+
+### Official questions — English only, one recording each
+
+| | File | Screen | Script |
+|---|---|---|---|
+| ○ | `Q1.mp3` | `Q1` | What is the form of government of the United States? |
+| ○ | `Q2.mp3` | `Q2` | What is the supreme law of the land? |
+| ○ | `Q3.mp3` | `Q3` | Name one thing the U.S. Constitution does. |
+| ○ | `Q4.mp3` | `Q4` | The U.S. Constitution starts with the words “We the People.”… |
+| ○ | `Q5.mp3` | `Q5` | How are changes made to the U.S. Constitution? |
+| ○ | `Q6.mp3` | `Q6` | What does the Bill of Rights protect? |
+| ○ | `Q7.mp3` | `Q7` | How many amendments does the U.S. Constitution have? |
+| ○ | `Q8.mp3` | `Q8` | Why is the Declaration of Independence important? |
+| ○ | `Q9.mp3` | `Q9` | What founding document said the American colonies were free … |
+| ○ | `Q10.mp3` | `Q10` | Name two important ideas from the Declaration of Independenc… |
+| ○ | `Q11.mp3` | `Q11` | The words “Life, Liberty, and the pursuit of Happiness” are … |
+| ○ | `Q12.mp3` | `Q12` | What is the economic system of the United States? |
+| ○ | `Q13.mp3` | `Q13` | What is the rule of law? |
+| ○ | `Q14.mp3` | `Q14` | Many documents influenced the U.S. Constitution. Name one. |
+| ○ | `Q15.mp3` | `Q15` | There are three branches of government. Why? |
+| ○ | `Q16.mp3` | `Q16` | Name the three branches of government. |
+| ○ | `Q17.mp3` | `Q17` | The President of the United States is in charge of which bra… |
+| ○ | `Q18.mp3` | `Q18` | What part of the federal government writes laws? |
+| ○ | `Q41.mp3` | `Q41` | Name one power of the president. |
+| ○ | `Q42.mp3` | `Q42` | Who is Commander in Chief of the U.S. military? |
+| ○ | `Q43.mp3` | `Q43` | Who signs bills to become laws? |
+| ○ | `Q44.mp3` | `Q44` | Who vetoes bills? |
+| ○ | `Q45.mp3` | `Q45` | Who appoints federal judges? |
+| ○ | `Q46.mp3` | `Q46` | The executive branch has many parts. Name one. |
+| ○ | `Q47.mp3` | `Q47` | What does the President's Cabinet do? |
+| ○ | `Q48.mp3` | `Q48` | What are two Cabinet-level positions? |
+| ○ | `Q50.mp3` | `Q50` | What is one part of the judicial branch? |
+| ○ | `Q51.mp3` | `Q51` | What does the judicial branch do? |
+| ○ | `Q52.mp3` | `Q52` | What is the highest court in the United States? |
+| ○ | `Q53.mp3` | `Q53` | How many seats are on the Supreme Court? |
+| ○ | `Q54.mp3` | `Q54` | How many Supreme Court justices are usually needed to decide… |
+| ○ | `Q55.mp3` | `Q55` | How long do Supreme Court justices serve? |
+| ○ | `Q56.mp3` | `Q56` | Supreme Court justices serve for life. Why? |
+| ○ | `Q57.mp3` | `Q57` | Who is the Chief Justice of the United States now? |
+| ○ | `Q19.mp3` | `Q19` | What are the two parts of the U.S. Congress? |
+| ○ | `Q20.mp3` | `Q20` | Name one power of the U.S. Congress. |
+| ○ | `Q21.mp3` | `Q21` | How many U.S. senators are there? |
+| ○ | `Q22.mp3` | `Q22` | How long is a term for a U.S. senator? |
+| ○ | `Q23.mp3` | `Q23` | Who is one of your state's U.S. senators now? |
+| ○ | `Q24.mp3` | `Q24` | How many voting members are in the House of Representatives? |
+| ○ | `Q25.mp3` | `Q25` | How long is a term for a member of the House of Representati… |
+| ○ | `Q26.mp3` | `Q26` | Why do U.S. representatives serve shorter terms than U.S. se… |
+| ○ | `Q27.mp3` | `Q27` | How many senators does each state have? |
+| ○ | `Q28.mp3` | `Q28` | Why does each state have two senators? |
+| ○ | `Q29.mp3` | `Q29` | Name your U.S. representative. |
+| ○ | `Q30.mp3` | `Q30` | What is the name of the Speaker of the House of Representati… |
+| ○ | `Q31.mp3` | `Q31` | Who does a U.S. senator represent? |
+| ○ | `Q32.mp3` | `Q32` | Who elects U.S. senators? |
+| ○ | `Q33.mp3` | `Q33` | Who does a member of the House of Representatives represent? |
+| ○ | `Q34.mp3` | `Q34` | Who elects members of the House of Representatives? |
+| ○ | `Q35.mp3` | `Q35` | Some states have more representatives than other states. Why… |
+| ○ | `Q36.mp3` | `Q36` | The President of the United States is elected for how many y… |
+| ○ | `Q37.mp3` | `Q37` | The President of the United States can serve only two terms.… |
+| ○ | `Q38.mp3` | `Q38` | What is the name of the President of the United States now? |
+| ○ | `Q39.mp3` | `Q39` | What is the name of the Vice President of the United States … |
+| ○ | `Q40.mp3` | `Q40` | If the president can no longer serve, who becomes president? |
+| ○ | `Q49.mp3` | `Q49` | Why is the Electoral College important? |
+| ○ | `Q58.mp3` | `Q58` | Name one power that is only for the federal government. |
+| ○ | `Q59.mp3` | `Q59` | Name one power that is only for the states. |
+| ○ | `Q60.mp3` | `Q60` | What is the purpose of the 10th Amendment? |
+| ○ | `Q61.mp3` | `Q61` | Who is the governor of your state now? |
+| ○ | `Q62.mp3` | `Q62` | What is the capital of your state? |
+| ○ | `Q63.mp3` | `Q63` | There are four amendments to the U.S. Constitution about who… |
+| ○ | `Q64.mp3` | `Q64` | Who can vote in federal elections, run for federal office, a… |
+| ○ | `Q65.mp3` | `Q65` | What are three rights of everyone living in the United State… |
+| ○ | `Q66.mp3` | `Q66` | What do we show loyalty to when we say the Pledge of Allegia… |
+| ○ | `Q67.mp3` | `Q67` | Name two promises that new citizens make in the Oath of Alle… |
+| ○ | `Q68.mp3` | `Q68` | How can people become United States citizens? |
+| ○ | `Q69.mp3` | `Q69` | What are two examples of civic participation in the United S… |
+| ○ | `Q70.mp3` | `Q70` | What is one way Americans can serve their country? |
+| ○ | `Q71.mp3` | `Q71` | Why is it important to pay federal taxes? |
+| ○ | `Q72.mp3` | `Q72` | It is important for all men age 18 through 25 to register fo… |
+| ○ | `Q73.mp3` | `Q73` | The colonists came to America for many reasons. Name one. |
+| ○ | `Q74.mp3` | `Q74` | Who lived in America before the Europeans arrived? |
+| ○ | `Q75.mp3` | `Q75` | What group of people was taken and sold as slaves? |
+| ○ | `Q76.mp3` | `Q76` | What war did the Americans fight to win independence from Br… |
+| ○ | `Q77.mp3` | `Q77` | Name one reason why the Americans declared independence from… |
+| ○ | `Q78.mp3` | `Q78` | Who wrote the Declaration of Independence? |
+| ○ | `Q79.mp3` | `Q79` | When was the Declaration of Independence adopted? |
+| ○ | `Q80.mp3` | `Q80` | The American Revolution had many important events. Name one. |
+| ○ | `Q81.mp3` | `Q81` | There were 13 original states. Name five. |
+| ○ | `Q82.mp3` | `Q82` | What founding document was written in 1787? |
+| ○ | `Q83.mp3` | `Q83` | The Federalist Papers supported the passage of the U.S. Cons… |
+| ○ | `Q84.mp3` | `Q84` | Why were the Federalist Papers important? |
+| ○ | `Q85.mp3` | `Q85` | Benjamin Franklin is famous for many things. Name one. |
+| ○ | `Q86.mp3` | `Q86` | George Washington is famous for many things. Name one. |
+| ○ | `Q87.mp3` | `Q87` | Thomas Jefferson is famous for many things. Name one. |
+| ○ | `Q88.mp3` | `Q88` | James Madison is famous for many things. Name one. |
+| ○ | `Q89.mp3` | `Q89` | Alexander Hamilton is famous for many things. Name one. |
+| ○ | `Q90.mp3` | `Q90` | What territory did the United States buy from France in 1803… |
+| ○ | `Q91.mp3` | `Q91` | Name one war fought by the United States in the 1800s. |
+| ○ | `Q92.mp3` | `Q92` | Name the U.S. war between the North and the South. |
+| ○ | `Q93.mp3` | `Q93` | The Civil War had many important events. Name one. |
+| ○ | `Q94.mp3` | `Q94` | Abraham Lincoln is famous for many things. Name one. |
+| ○ | `Q95.mp3` | `Q95` | What did the Emancipation Proclamation do? |
+| ○ | `Q96.mp3` | `Q96` | What U.S. war ended slavery? |
+| ○ | `Q97.mp3` | `Q97` | What amendment says all persons born or naturalized in the U… |
+| ○ | `Q98.mp3` | `Q98` | When did all men get the right to vote? |
+| ○ | `Q99.mp3` | `Q99` | Name one leader of the women's rights movement in the 1800s. |
+| ○ | `Q100.mp3` | `Q100` | Name one war fought by the United States in the 1900s. |
+| ○ | `Q101.mp3` | `Q101` | Why did the United States enter World War I? |
+| ○ | `Q102.mp3` | `Q102` | When did all women get the right to vote? |
+| ○ | `Q103.mp3` | `Q103` | What was the Great Depression? |
+| ○ | `Q104.mp3` | `Q104` | When did the Great Depression start? |
+| ○ | `Q105.mp3` | `Q105` | Who was president during the Great Depression and World War … |
+| ○ | `Q106.mp3` | `Q106` | Why did the United States enter World War II? |
+| ○ | `Q107.mp3` | `Q107` | Dwight Eisenhower is famous for many things. Name one. |
+| ○ | `Q108.mp3` | `Q108` | Who was the United States' main rival during the Cold War? |
+| ○ | `Q109.mp3` | `Q109` | During the Cold War, what was one main concern of the United… |
+| ○ | `Q110.mp3` | `Q110` | Why did the United States enter the Korean War? |
+| ○ | `Q111.mp3` | `Q111` | Why did the United States enter the Vietnam War? |
+| ○ | `Q112.mp3` | `Q112` | What did the civil rights movement do? |
+| ○ | `Q113.mp3` | `Q113` | Martin Luther King, Jr. is famous for many things. Name one. |
+| ○ | `Q114.mp3` | `Q114` | Why did the United States enter the Persian Gulf War? |
+| ○ | `Q115.mp3` | `Q115` | What major event happened on September 11, 2001 in the Unite… |
+| ○ | `Q116.mp3` | `Q116` | Name one U.S. military conflict after the September 11, 2001… |
+| ○ | `Q117.mp3` | `Q117` | Name one American Indian tribe in the United States. |
+| ○ | `Q118.mp3` | `Q118` | Name one example of an American innovation. |
+| ○ | `Q119.mp3` | `Q119` | What is the capital of the United States? |
+| ○ | `Q120.mp3` | `Q120` | Where is the Statue of Liberty? |
+| ○ | `Q121.mp3` | `Q121` | Why does the flag have 13 stripes? |
+| ○ | `Q122.mp3` | `Q122` | Why does the flag have 50 stars? |
+| ○ | `Q123.mp3` | `Q123` | What is the name of the national anthem? |
+| ○ | `Q124.mp3` | `Q124` | The Nation's first motto was “E Pluribus Unum.” What does th… |
+| ○ | `Q125.mp3` | `Q125` | What is Independence Day? |
+| ○ | `Q126.mp3` | `Q126` | Name three national U.S. holidays. |
+| ○ | `Q127.mp3` | `Q127` | What is Memorial Day? |
+| ○ | `Q128.mp3` | `Q128` | What is Veterans Day? |

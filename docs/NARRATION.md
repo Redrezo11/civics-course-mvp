@@ -7,8 +7,16 @@ This course is for people preparing for an interview conducted in English, many
 with limited reading fluency in either language. A page that can be heard is a
 page they can use, so narration is a reach feature rather than a convenience.
 
-Every instructional screen carries a **Listen** control. Assessment screens do
-not: reading a question and its options aloud would answer it.
+**Every screen that teaches or tests carries a Listen control** — teaching
+screens, every assessment, the question bank, and the end-of-course screens.
+
+Assessment was excluded at first, on the reasoning that reading a question and
+its options aloud would answer it. That was wrong. The civics test is an *oral*
+interview: the officer speaks the question. Reading the options to someone who
+cannot read them is parity with a reader, not an advantage over one — and
+excluding assessment locked non-readers out of every question in the course.
+
+The one remaining gap is the **vocab flip-card decks**.
 
 ---
 
@@ -17,10 +25,18 @@ not: reading a question and its options aloud would answer it.
 `src/lib/narration.js` owns a single active playback and resolves what to play
 in three steps:
 
+A narration is a list of **segments**, and each one resolves on its own:
+
 1. an explicit `audioSrc`, if a caller passes one;
-2. **by convention** — a recording named after the screen, if the manifest lists
-   one and its text has not changed since (§3);
-3. otherwise **speech synthesis** of the derived text.
+2. **by convention** — a recording named after the screen, or after the question
+   for an official one, if the manifest lists it and its text has not changed
+   since (§3);
+3. otherwise **speech synthesis** of that segment's text.
+
+Segments carry their own language, because an assessment screen in Burmese is
+genuinely bilingual: Burmese prose around an English official question. One
+utterance carries one language — `my-MM` mangles the English, `en-US` mangles
+the Burmese — so the language travels with the text.
 
 Nothing above the seam knows which engine ran. **Adding recorded narration is a
 data change, not a code change** — drop the files in, run `npm run audio`, done.
@@ -33,12 +49,26 @@ engine, and every one of them disappears when a recording exists.
 ## 2. Naming
 
 ```
-public/audio/<lang>/<screen-id>.mp3
+public/audio/<lang>/<screen-id>.mp3     screen prose, per language
+public/audio/q/<question-id>.mp3        official question wording, English only
 
 public/audio/en/U1-S01.mp3      public/audio/my/U1-S01.mp3
 public/audio/en/U1-S06b.mp3     public/audio/my/U1-S06b.mp3
 public/audio/en/welcome.mp3     public/audio/my/welcome.mp3
+public/audio/q/Q1.mp3 … public/audio/q/Q128.mp3
 ```
+
+**`q/` has no language folder, on purpose.** The officer asks in English
+whatever the learner reads, so recording a question twice would be wrong. One
+file plays wherever that question is asked — lesson practice, the full-bank
+sets, R1–R3, Rehearsal, the question bank.
+
+It also makes recording incremental and ordered by value. The 128 questions are
+the single highest-value set, and each starts working everywhere the moment it
+lands. Nothing else has to exist first.
+
+Answer options are deliberately **not** recorded: they are shuffled per render,
+would be roughly 500 more files, and are English, where synthesis is reliable.
 
 `<lang>` is `en` or `my` — the same codes as `LANGUAGES` and
 `content/translations/my/`. `<screen-id>` is the screen's `id` verbatim from the
@@ -107,8 +137,19 @@ anything that should be spoken differently from how it reads.
 **Narrated:** `info`, `orient`, `connect`, `bigIdea`, `seeItNotIt`,
 `confusablePair`, `lockItIn`, plus Welcome. 60 screens per language.
 
-**Not narrated:** `practice`, `hook`, `tryOne`, `guidedPractice` — assessment;
-and `vocab`, a flip-card deck whose whole interaction is progressive reveal.
+**Assessment screens** derive their narration from what is rendered at that
+moment, so the pre-answer narration cannot give the answer away — it does not
+contain it. Options are read in the order they are **displayed**, from the same
+shuffled array the buttons use; reading the authored order would speak them in a
+different order from the screen, which is worse than no audio for someone who
+cannot see it. Options are numbered when spoken, the one place narration adds
+text rather than reading it.
+
+Rehearsal is gated on its reveal: the question before, the accepted answers
+after. Narrating them early would destroy an exercise built on recall.
+
+**Not narrated:** `vocab`, a flip-card deck whose whole interaction is
+progressive reveal.
 
 Interface controls are excluded *by construction*: `narrationFor` names the
 content fields it reads, so Back, Exit, Next, `primaryLabel` and the full-bank
@@ -152,6 +193,19 @@ the truncation bug, in the language whose support is already worst.
 utterance mid-speech, after which `end` never fires and the button stays on
 "Pause" for good.
 
+**One `<audio>` element for the whole app, with its `src` swapped.** iOS grants
+autoplay permission per element, unlocked by a user gesture. A playlist that
+built a new element per segment would create one that never received a gesture,
+so segment two onward would silently fail — on iPhone only, after segment one
+had played perfectly.
+
+**Finishing a segment is idempotent, and the element is claimed.** The next
+segment's `start()` calls `cancel()`, which re-fires the previous utterance's
+`end` on some browsers — without a guard the playlist skips to the finish. And
+because the element is shared, a segment's async `stop()` can land after the
+next narration has started; without an ownership check it would pause the
+playback that replaced it. Both cost a test to find.
+
 **A generation counter guards chunk advance.** `cancel()` fires `end` on some
 browsers and not others; without the guard, pausing would immediately start the
 next sentence, so Pause would read as Skip.
@@ -162,6 +216,11 @@ both require.
 
 ### When a learner says "the Listen button does nothing"
 
+0. **A screen reader is already running.** Narration is only ever
+   user-initiated — nothing speaks unless tapped — so it never fights VoiceOver
+   or TalkBack unasked. But a learner running both will hear both. There is no
+   reliable way to detect a screen reader from a browser, and guessing would be
+   worse than the honest design.
 1. **iPhone with the ring/silent switch on.** Safari silences speech synthesis
    entirely; Chrome on iOS ignores the switch. This is the most common cause and
    cannot be detected in code.

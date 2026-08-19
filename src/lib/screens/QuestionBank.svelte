@@ -9,6 +9,7 @@
   // learner asking about the Civil War into the Constitution lesson.
 
   import { navigate } from '../router.js';
+  import NarrationButton from '../components/NarrationButton.svelte';
   import {
     getAllQuestions,
     TOTAL_QUESTIONS,
@@ -72,6 +73,16 @@
         </button>
         {#if expanded === q.id}
           <div class="px-4 pb-4 text-sm">
+            <!-- Only the expanded row has a control, so there is never more
+                 than one on screen. The question is what the officer will say,
+                 which makes hearing it the point of this reference. -->
+            <NarrationButton
+              segments={[
+                { text: q.official, lang: 'en', questionId: q.id },
+                ...(q.dynamic ? [] : q.acceptedAnswers.map((a) => ({ text: a, lang: 'en' }))),
+              ]}
+              wrapperClass="mb-3"
+            />
             {#if q.dynamic}
               <!-- ◆ This answer changes with elections or appointments, so the
                    reference must not print a stale name as though it were fact. -->
