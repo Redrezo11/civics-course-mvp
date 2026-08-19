@@ -1,8 +1,13 @@
 {
   "_note": "Untruncated English for every field in TRANSLATION-REQUEST.md, keyed screenId.field. The markdown clips long values for table display; these are the full ones. Return each value in the same shape and, for lists, the same length and order. The ⚠ rules in section 0 of the markdown still apply.",
   "_ui": {
+    "narration.listen": "Listen",
+    "narration.listenAgain": "Listen again",
+    "narration.pause": "Pause",
+    "narration.resume": "Resume",
     "settings.answersStayEnglish": "Answer choices show English first, with the Burmese underneath."
   },
+  "U0-S04.body": "Here is a real test question. Choose the answer you would give.",
   "U1-S05.paragraphs": [
     "In 1787, the thirteen states had just finished a long war against a king. They needed a government — but they were afraid of two opposite things at the same time.",
     "They were afraid of having no government. Without one, nobody could defend the country, settle arguments between states, or pay for anything.",

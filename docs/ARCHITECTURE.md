@@ -148,6 +148,45 @@ the status is anything other than `reviewed`.
 Both source formats live in `docs/` and are read only by the build script. QA
 check 13 asserts nothing under `src/` imports from `docs/translations/`.
 
+### 2bb. Freshness — is this still a translation of THIS English?
+
+A translation outlives the English it was made from, and then says what the page
+no longer says. Nothing 404s, nothing blanks, and only a Burmese reader would
+ever notice — the same silent failure a recording has when its screen text is
+rewritten, and it is guarded the same way.
+
+`src/lib/content/translations/freshness.json` records **two** hashes per
+translated field: the English it was translated from, and the translation
+itself.
+
+Both, deliberately. Recording only the English would re-baseline the instant the
+copy was edited — storing the *new* English against the *old* translation and
+declaring it fresh. Keeping the translation's own hash tells the two cases
+apart:
+
+| On rebuild | Meaning |
+|---|---|
+| no record | first translation — baseline both |
+| the translation changed | a new one arrived — re-baseline both |
+| translation same, English moved | **stale** — keep the old English hash |
+
+A stale field **falls back to English** at render (`localiseWith`), appears in
+`TRANSLATION-REQUEST.md` without anyone remembering to add it, and warns on
+every `npm run qa`. `--accept` exists for an edit that genuinely needed no
+retranslation, though normalised hashing already ignores punctuation and case.
+
+The hash is `src/lib/text-hash.js`, shared with recorded audio — one function
+answering one question for both.
+
+**What it cannot do** is detect drift that already happened. The baseline was
+taken against the English as it stood when the mechanism was added.
+
+**What prompted it:** `U0-S04` told the learner to "read it, and answer out
+loud" while rendering three tappable options — and its Burmese said so too.
+Fixing the English alone would have left the Burmese wrong indefinitely.
+
+---
+
 ### 2c. What goes out — `docs/translation-source.json`
 
 `TRANSLATION-REQUEST.md` clips long values to fit a markdown table. That is

@@ -27,7 +27,7 @@
     {
       "id": "U0-S04",
       "type": "tryOne",
-      "body": "Here is a real test question. Read it, and answer out loud.",
+      "body": "Here is a real test question. Choose the answer you would give.",
       "questionId": "Q2",
       "primaryLabel": "Next"
     },

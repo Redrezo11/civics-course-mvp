@@ -39,6 +39,7 @@ const readJson = (p) => JSON.parse(readFileSync(p, 'utf8'));
 // Shared with the app and with scripts/audio-assets.js, so 'which screens are
 // narrated' has exactly one definition.
 import { NARRATED_FIELDS } from '../src/lib/narration-text.js';
+import { textHash } from '../src/lib/text-hash.js';
 
 const UNIT_IDS = ['U1', 'U2', 'U3', 'U4', 'U5', 'U6', 'U7'];
 const EXPECTED_COUNTS = { U1: 14, U2: 20, U3: 23, U4: 5, U5: 10, U6: 17, U7: 39 };
@@ -696,6 +697,38 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
       }
     }
   }
+  // Freshness. An overlay can be structurally perfect and still be a
+  // translation of English that has since been rewritten — nothing errors, and
+  // only a Burmese reader would ever notice. Warned rather than failed, so
+  // ordinary copy editing never blocks a deploy.
+  try {
+    const freshness = readJson(join(contentDir, 'translations', 'freshness.json'));
+    const stale = [];
+    for (const [lang, unitsIn] of Object.entries(freshness)) {
+      if (lang.startsWith('_')) continue;
+      for (const [unitFile, screens] of Object.entries(unitsIn)) {
+        const byId = Object.fromEntries(
+          readJson(join(contentDir, `${unitFile}.json`)).screens.map((s) => [s.id, s])
+        );
+        for (const [screenId, fields] of Object.entries(screens)) {
+          for (const [field, known] of Object.entries(fields)) {
+            if (known.en !== textHash(byId[screenId]?.[field])) {
+              stale.push(`${lang}/${screenId}.${field}`);
+            }
+          }
+        }
+      }
+    }
+    if (stale.length) {
+      warn(
+        check,
+        `${stale.length} translation(s) are of English that has since changed — they fall back to English and are listed in TRANSLATION-REQUEST.md: ${stale.join(', ')}`
+      );
+    }
+  } catch {
+    // No freshness record yet.
+  }
+
   if (!errors.some((e) => e.startsWith(check))) {
     pass(check, `${checked} overlay field(s) resolve to real English fields`);
   }

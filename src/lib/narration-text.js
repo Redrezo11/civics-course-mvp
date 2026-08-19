@@ -7,6 +7,8 @@
 // would drift, and the drift would only surface as a recording that quietly no
 // longer matches its screen.
 
+import { textHash } from './text-hash.js';
+
 /**
  * Screens that get narration, and the fields read on each — in render order,
  * so the audio follows the eye down the page.
@@ -331,24 +333,11 @@ export function splitForSpeech(text, max = SPEECH_CHUNK_MAX) {
  * A recording keeps playing after its screen's text is rewritten. Nothing 404s
  * and nothing errors — the audio simply says something the page no longer says,
  * silently and indefinitely, so a learner who listens gets different content
- * from one who reads. This hash is how that is detected.
+ * from one who reads.
  *
- * Normalised first: lowercased, punctuation and symbols stripped, whitespace
- * collapsed. Fixing a comma or a capital must not cost a re-record; changing
- * the words must.
+ * Shared with translation freshness, which has the identical problem: see
+ * src/lib/text-hash.js.
  */
 export function narrationHash(text) {
-  const normalised = flatten(text)
-    .toLowerCase()
-    .replace(/[^\p{L}\p{N}]+/gu, ' ')
-    .trim();
-
-  // FNV-1a, the same one the option shuffler uses. Not cryptographic — it only
-  // has to notice that two strings differ.
-  let h = 0x811c9dc5;
-  for (let i = 0; i < normalised.length; i += 1) {
-    h ^= normalised.charCodeAt(i);
-    h = Math.imul(h, 0x01000193);
-  }
-  return (h >>> 0).toString(16).padStart(8, '0');
+  return textHash(flatten(text));
 }

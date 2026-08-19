@@ -6,8 +6,8 @@ content change rather than editing this file, or it will describe a course that
 no longer exists.
 
 Everything already translated is live and is **not** listed here, so nothing gets
-translated twice. Remaining: **1 interface strings** and
-**29 content fields**.
+translated twice. Remaining: **5 interface strings** and
+**30 content fields**.
 
 **Work from `docs/translation-source.json`, not from the tables below.** The
 tables clip long values to fit a markdown column; that JSON carries the full
@@ -65,12 +65,16 @@ were lost this way before we worked out the cause.
 
 ---
 
-## 1. Interface strings — 1 of 39 remaining
+## 1. Interface strings — 5 of 43 remaining
 
 In `src/lib/content/ui-strings.json`. Fill the `my` value; leave `en` alone.
 
 | Key | English |
 |---|---|
+| `narration.listen` | Listen |
+| `narration.listenAgain` | Listen again |
+| `narration.pause` | Pause |
+| `narration.resume` | Resume |
 | `settings.answersStayEnglish` | Answer choices show English first, with the Burmese underneath. |
 
 ---
@@ -118,7 +122,7 @@ which is the authority if this description and the JSON ever disagree:
 
 | Unit | Fields outstanding |
 |---|---|
-| U0 Test day | 0 |
+| U0 Test day | 1 |
 | U1 We the People | 5 |
 | U2 Three branches | 3 |
 | U3 Who represents you | 4 |
@@ -126,7 +130,7 @@ which is the authority if this description and the JSON ever disagree:
 | U5 Rights and responsibilities | 3 |
 | U6 How America began | 5 |
 | U7 How America changed | 7 |
-| **Total** | **29** |
+| **Total** | **30** |
 
 ---
 
@@ -134,9 +138,11 @@ which is the authority if this description and the JSON ever disagree:
 
 ### U0 — Test day
 
-**0 fields.**
+**1 fields.**
 
-_Fully translated._
+| Screen | Field | English |
+|---|---|---|
+| `U0-S04` | `body` | Here is a real test question. Choose the answer you would give. |
 
 ### U1 — We the People
 

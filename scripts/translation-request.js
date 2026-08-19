@@ -16,6 +16,7 @@
  */
 
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { textHash } from '../src/lib/text-hash.js';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -39,6 +40,12 @@ const SKIP = new Set([
 
 // Every unit that already has an overlay, so translated fields are not asked
 // for twice. Was unit1-only when unit1 was the only overlay that existed.
+// Which English each translated field was made from. A field whose English has
+// since been rewritten is treated as untranslated here, so a corrected string
+// reappears in this document without anyone remembering to add it.
+const freshnessPath = join(contentDir, 'translations', 'freshness.json');
+const freshness = existsSync(freshnessPath) ? readJson(freshnessPath) : {};
+
 const overlays = Object.fromEntries(
   UNITS.map((u) => {
     const p = join(contentDir, 'translations', 'my', `${u}.json`);
@@ -153,7 +160,12 @@ for (const file of UNITS) {
       // array the moment `items` appears. A coarse check here would silently
       // drop untranslated items out of the request.
       const m = /^items\[(\d+)\]\.(.+)$/.exec(label);
-      if (m ? done.items?.[Number(m[1])]?.[m[2]] !== undefined : label in done) continue;
+      const translated = m
+        ? done.items?.[Number(m[1])]?.[m[2]] !== undefined
+        : label in done;
+      const known = freshness.my?.[file]?.[screen.id]?.[label.split('[')[0].split('.')[0]];
+      const stale = known && known.en !== textHash(screen[label.split('[')[0].split('.')[0]]);
+      if (translated && !stale) continue;
       const key = `${screen.id}.${label}`;
       source[key] = raw;
       rows.push(`| \`${screen.id}\` | \`${label}\` | ${cell(en, key)}${warn(label, en)} |`);

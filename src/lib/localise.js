@@ -6,7 +6,9 @@
 // text the app renders, or the recording script it generates would list English
 // where the learner sees Burmese.
 //
-// Nothing in here imports anything.
+// The one import is the shared text hash, which is itself import-free.
+
+import { textHash } from './text-hash.js';
 
 /**
  * Answer surfaces, which are NEVER replaced by their translation.
@@ -57,10 +59,29 @@ export function applyFields(english, fields) {
  * Anything it does not carry stays English — a partial translation must never
  * break the course.
  */
-export function localiseWith(screen, fields) {
+export function localiseWith(screen, fields, freshness = null) {
   if (!screen || !fields) return screen;
 
-  const { items, ...rest } = fields;
+  // Drop any field whose English has been rewritten since it was translated.
+  //
+  // A translation outlives the English it was made from and then says what the
+  // page no longer says — nothing errors, nothing blanks, and only a Burmese
+  // reader would ever notice. English is always current, so it takes over until
+  // the translation catches up. The same choice recorded audio already makes,
+  // for the same reason.
+  //
+  // U0-S04 is why this exists: its copy told the learner to answer out loud
+  // while rendering three tappable options, and its Burmese said so too.
+  const usable = freshness
+    ? Object.fromEntries(
+        Object.entries(fields).filter(([field]) => {
+          const known = freshness[field];
+          return !known || known.en === textHash(screen[field]);
+        })
+      )
+    : fields;
+
+  const { items, ...rest } = usable;
   const out = applyFields(screen, rest);
 
   // `items` (guided practice) is a list of objects, so merge item by item

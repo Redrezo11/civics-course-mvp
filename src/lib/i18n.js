@@ -20,6 +20,7 @@
 import { derived } from 'svelte/store';
 import { progress } from './stores/progress.js';
 import { localiseWith } from './localise.js';
+import freshness from './content/translations/freshness.json';
 import uiStrings from './content/ui-strings.json';
 import myUnit0 from './content/translations/my/unit0.json';
 import myUnit1 from './content/translations/my/unit1.json';
@@ -90,7 +91,12 @@ export function localiseScreen(screen, unitId, lang) {
   if (!screen || !lang || lang === 'en') return screen;
   const fields = OVERLAYS[lang]?.[unitId]?.[screen.id];
   if (!fields) return screen;
-  return localiseWith(screen, fields);
+
+  // Which English each field was translated from. A field whose English has
+  // moved since falls back to English rather than showing a translation of text
+  // that no longer exists — see localiseWith.
+  const unit = `unit${unitId.slice(1)}`;
+  return localiseWith(screen, fields, freshness[lang]?.[unit]?.[screen.id] || null);
 }
 
 /** Reactive helper for components: `$localise(screen, 'U1')`. */
