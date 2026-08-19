@@ -76,6 +76,22 @@
     "en": "Choose your language.",
     "my": "သင့်ဘာသာစကားကို ရွေးချယ်ပါ။"
   },
+  "narration.listen": {
+    "en": "Listen",
+    "my": null
+  },
+  "narration.listenAgain": {
+    "en": "Listen again",
+    "my": null
+  },
+  "narration.pause": {
+    "en": "Pause",
+    "my": null
+  },
+  "narration.resume": {
+    "en": "Resume",
+    "my": null
+  },
   "nav.tabLearn": {
     "en": "Learn",
     "my": "သင်ယူရန်"

@@ -1,5 +1,18 @@
 <script>
   import { navigate } from '../router.js';
+  import NarrationButton from '../components/NarrationButton.svelte';
+
+  // Passed literally rather than through narrationFor(), because this screen's
+  // copy is hardcoded in the markup below rather than coming from page data.
+  //
+  // That is a pre-existing gap, not one narration introduced: Welcome does not
+  // use $t at all, so it renders English in both languages. Moving it onto UI
+  // strings is worth doing, separately. Until then this text and the markup
+  // have to be kept in step by hand — the only place in the app where that is
+  // true.
+  const NARRATION =
+    'Welcome. This course covers all 128 questions on the U.S. citizenship ' +
+    'civics test, in short lessons you can fit around your day.';
 </script>
 
 <div class="min-h-screen flex flex-col max-w-md mx-auto px-6 py-8">
@@ -15,6 +28,11 @@
       This course covers all 128 questions on the U.S. citizenship civics test,
       in short lessons you can fit around your day.
     </p>
+    <NarrationButton
+      text={NARRATION}
+      screenId="welcome"
+      wrapperClass="flex justify-center mb-6"
+    />
     <button class="btn-primary" on:click={() => navigate('/')}>Start</button>
   </div>
   <p class="text-[11px] text-ink-muted dark:text-dark-ink-muted text-center mt-6">

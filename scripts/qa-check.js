@@ -36,6 +36,10 @@ const pass = (check, msg) => passes.push(`${check}: ${msg}`);
 
 const readJson = (p) => JSON.parse(readFileSync(p, 'utf8'));
 
+// Shared with the app and with scripts/audio-assets.js, so 'which screens are
+// narrated' has exactly one definition.
+import { NARRATED_FIELDS } from '../src/lib/narration-text.js';
+
 const UNIT_IDS = ['U1', 'U2', 'U3', 'U4', 'U5', 'U6', 'U7'];
 const EXPECTED_COUNTS = { U1: 14, U2: 20, U3: 23, U4: 5, U5: 10, U6: 17, U7: 39 };
 
@@ -812,6 +816,93 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
   // screen instead, which is the thing a learner actually sees.
   if (!errors.some((e) => e.startsWith(check))) {
     pass(check, `${checked} overlay field(s) preserve every official sentence and accepted answer in their English source`);
+  }
+}
+
+// --- 17. Recorded narration resolves ---------------------------------------
+// Audio is addressed by convention — public/audio/<lang>/<screen-id>.mp3 — so a
+// filename is the whole contract. Two ways it breaks, both invisible locally:
+//
+//   · GitHub Pages is case-sensitive and Windows is not, so `u1-s01.mp3` plays
+//     perfectly on the machine that made it and 404s for every learner.
+//   · The manifest is what the app trusts. If it lists a recording that is not
+//     on disk, the app requests a file that does not exist instead of falling
+//     back to speech.
+//
+// Neither produces a visible error in development, which is exactly why they
+// are checked here rather than left to be noticed.
+{
+  const check = '17 recorded narration resolves';
+  const audioDir = join(root, 'public', 'audio');
+  const LANGS = ['en', 'my'];
+
+  const narratable = new Set(['welcome']);
+  for (const unit of units) {
+    for (const screen of unit.screens) {
+      if (NARRATED_FIELDS[screen.type]) narratable.add(screen.id);
+    }
+  }
+
+  let manifest = {};
+  try {
+    manifest = readJson(join(contentDir, 'audio-manifest.json'));
+  } catch {
+    // Not generated yet.
+  }
+
+  let files = 0;
+  let langDirs = [];
+  try {
+    langDirs = readdirSync(audioDir);
+  } catch {
+    langDirs = []; // no audio yet — nothing to check, which is a pass
+  }
+
+  for (const lang of langDirs) {
+    if (!LANGS.includes(lang)) {
+      fail(check, `public/audio/${lang}/ is not a supported language — use ${LANGS.join(' or ')}`);
+      continue;
+    }
+    let names = [];
+    try {
+      names = readdirSync(join(audioDir, lang)).filter((n) => !n.startsWith('.'));
+    } catch {
+      continue;
+    }
+    for (const name of names) {
+      if (!name.endsWith('.mp3')) {
+        fail(check, `public/audio/${lang}/${name} is not an .mp3 — nothing will play it`);
+        continue;
+      }
+      files += 1;
+      const id = name.slice(0, -4);
+      if (!narratable.has(id)) {
+        const nearly = [...narratable].find((k) => k.toLowerCase() === id.toLowerCase());
+        fail(
+          check,
+          nearly
+            ? `public/audio/${lang}/${name} should be "${nearly}.mp3" — case must match exactly, or it 404s once deployed`
+            : `public/audio/${lang}/${name} matches no narrated screen — it will never play`
+        );
+      } else if (!manifest[lang]?.[id]) {
+        warn(check, `public/audio/${lang}/${name} is not in the manifest — run "npm run audio"`);
+      }
+    }
+
+    for (const id of Object.keys(manifest[lang] || {})) {
+      if (!names.includes(`${id}.mp3`)) {
+        fail(check, `the manifest lists ${lang}/${id}.mp3 but it is not on disk — the app would request a missing file`);
+      }
+    }
+  }
+
+  if (!errors.some((e) => e.startsWith(check))) {
+    pass(
+      check,
+      files
+        ? `${files} recording(s) resolve to a narrated screen, with exact-case filenames`
+        : 'no recordings yet — every narrated screen falls back to speech'
+    );
   }
 }
 

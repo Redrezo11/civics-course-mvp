@@ -10,7 +10,8 @@
     "qa": "node scripts/qa-check.js",
     "qa:warn": "node scripts/qa-check.js --warn",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "audio": "node scripts/audio-assets.js"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^7.2.0",

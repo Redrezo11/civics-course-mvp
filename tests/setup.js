@@ -28,6 +28,88 @@ if (typeof window.localStorage?.clear !== 'function') {
   });
 }
 
+// jsdom provides no Web Speech API at all, so narration needs a fake — and a
+// CONTROLLABLE one, not a set of no-op spies. The bugs worth testing here are
+// about what happens between utterances: whether a cancelled chunk advances to
+// the next, whether resume starts from the remembered chunk. That can only be
+// asserted if the test decides when each utterance ends.
+class FakeUtterance {
+  constructor(text) {
+    this.text = text;
+    this.lang = '';
+    this.onend = null;
+    this.onerror = null;
+  }
+}
+
+function fakeSpeech() {
+  return {
+    spoken: [], // every utterance ever passed to speak(), in order
+    cancelled: 0,
+    speaking: false,
+    /** Fire `end` on the most recent utterance, as a real engine would. */
+    finishCurrent() {
+      const last = this.spoken[this.spoken.length - 1];
+      this.speaking = false;
+      last?.onend?.();
+    },
+    /** What a browser that fires `end` on cancel() does — several do. */
+    cancel() {
+      this.cancelled += 1;
+      const last = this.spoken[this.spoken.length - 1];
+      this.speaking = false;
+      last?.onend?.();
+    },
+    speak(u) {
+      this.spoken.push(u);
+      this.speaking = true;
+    },
+    pause() {},
+    resume() {},
+    getVoices: () => [],
+    reset() {
+      this.spoken = [];
+      this.cancelled = 0;
+      this.speaking = false;
+    },
+  };
+}
+
+window.speechSynthesis = fakeSpeech();
+window.SpeechSynthesisUtterance = FakeUtterance;
+
+// Recorded audio. `play()` returns a promise in real browsers and the code
+// depends on that, so the fake must too.
+class FakeAudio {
+  constructor(src) {
+    this.src = src;
+    this.preload = '';
+    this.currentTime = 0;
+    this.paused = true;
+    this.onended = null;
+    FakeAudio.instances.push(this);
+  }
+  play() {
+    this.paused = false;
+    return FakeAudio.playRejects ? Promise.reject(new DOMException('interrupted', 'AbortError')) : Promise.resolve();
+  }
+  pause() {
+    this.paused = true;
+  }
+  finish() {
+    this.onended?.();
+  }
+  static reset() {
+    FakeAudio.instances = [];
+    FakeAudio.playRejects = false;
+  }
+}
+FakeAudio.instances = [];
+FakeAudio.playRejects = false;
+window.Audio = FakeAudio;
+
 beforeEach(() => {
   window.localStorage.clear();
+  window.speechSynthesis.reset();
+  FakeAudio.reset();
 });

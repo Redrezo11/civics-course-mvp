@@ -19,6 +19,7 @@
 
 import { derived } from 'svelte/store';
 import { progress } from './stores/progress.js';
+import { localiseWith } from './localise.js';
 import uiStrings from './content/ui-strings.json';
 import myUnit0 from './content/translations/my/unit0.json';
 import myUnit1 from './content/translations/my/unit1.json';
@@ -80,52 +81,6 @@ export const t = derived(progress, ($p) => {
 });
 
 /**
- * Answer surfaces, which are NEVER replaced by their translation.
- *
- * Anything the learner picks as an answer stays English and gains the Burmese
- * as a secondary gloss line beneath it. The officer conducts the interview in
- * English, so an answer the learner has only ever met in Burmese is an answer
- * they cannot give — translating these away deletes the thing being practised.
- *
- * The teaching prose around them is still translated normally; this is only
- * about the things you tap.
- *
- * A second benefit falls out of it. `correctIndex` indexes into `options`, and
- * each `sortItems` entry carries the `bucket` it scores against. Because these
- * arrays are no longer touched at render, a translation can no longer shift or
- * shorten them. That is not hypothetical — a delivery of `sortItems` as plain
- * strings silently erased every bucket index in five units.
- */
-const GLOSS_FIELDS = {
-  options: 'optionsGloss',
-  buckets: 'bucketsGloss',
-  orderItems: 'orderItemsGloss',
-  sortItems: 'sortItemsGloss', // list of strings, aligned by index with sortItems[].text
-};
-
-/**
- * Split overlay fields into ones that replace and ones that gloss.
- *
- * A gloss is always a flat list of strings, so the components have one contract
- * to render. `sortItems` is the exception worth naming: the English entries are
- * `{ text, bucket }` objects, and a translation of one may arrive as a bare
- * string or as an object carrying the same shape. Both reduce to the text here
- * rather than in nine template branches.
- */
-function applyFields(english, fields) {
-  const out = { ...english };
-  for (const [key, value] of Object.entries(fields)) {
-    const glossKey = GLOSS_FIELDS[key];
-    if (glossKey && Array.isArray(english[key]) && Array.isArray(value)) {
-      out[glossKey] = value.map((v) => (typeof v === 'string' ? v : v?.text));
-    } else if (!glossKey) {
-      out[key] = value;
-    }
-  }
-  return out;
-}
-
-/**
  * Merge a language overlay over an English screen.
  *
  * Shallow by field: an overlay supplies whole values (a string, a full list),
@@ -135,16 +90,7 @@ export function localiseScreen(screen, unitId, lang) {
   if (!screen || !lang || lang === 'en') return screen;
   const fields = OVERLAYS[lang]?.[unitId]?.[screen.id];
   if (!fields) return screen;
-
-  const { items, ...rest } = fields;
-  const out = applyFields(screen, rest);
-
-  // `items` (guided practice) is a list of objects, so merge item by item
-  // rather than replacing the array and losing correctIndex/kind/bucket.
-  if (items && Array.isArray(screen.items)) {
-    out.items = screen.items.map((item, i) => applyFields(item, items[i] || {}));
-  }
-  return out;
+  return localiseWith(screen, fields);
 }
 
 /** Reactive helper for components: `$localise(screen, 'U1')`. */

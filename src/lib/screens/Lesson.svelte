@@ -10,7 +10,9 @@
     USCIS_UPDATES_URL,
   } from '../content/questions.js';
   import { localiseScreen } from '../i18n.js';
+  import { narrationFor } from '../narration-text.js';
   import LessonBar from '../components/LessonBar.svelte';
+  import NarrationButton from '../components/NarrationButton.svelte';
   import QuestionCard from '../components/QuestionCard.svelte';
   import AnswerLabel from '../components/AnswerLabel.svelte';
   import SingleSelect from '../components/SingleSelect.svelte';
@@ -106,6 +108,18 @@
   // re-ran it — the bar sat on "1 of 18" for an entire unit.
   $: positionLabel = unit ? `${index + 1} of ${unit.screens.length}` : '';
 
+  // Derived from the LOCALISED screen, so the narration follows the translation
+  // with no second set of strings to author and keep in step. An `orient`
+  // screen shows an official question card, which is part of what the learner
+  // reads, so it is part of what they hear.
+  $: narrationText = screen
+    ? narrationFor(screen, {
+        officialQuestion: screen.sampleQuestionId
+          ? getQuestion(screen.sampleQuestionId)?.official
+          : '',
+      })
+    : '';
+
   // Guided-practice and single-item practice screens all funnel answers
   // through here, into the one storage chokepoint (storage.js note).
   function handleAnswer(questionId, correct) {
@@ -140,6 +154,19 @@
     -->
     <div class="flex-1 overflow-y-auto px-5 py-6">
       {#key screen.id}
+      <!--
+        Inside the key block on purpose. A screen change destroys this button,
+        and its onDestroy cancels the narration — so Next and Back stop the
+        audio without either of them having to know narration exists.
+      -->
+      {#if narrationText}
+        <NarrationButton
+          text={narrationText}
+          screenId={screen.id}
+          {lang}
+          wrapperClass="mb-4"
+        />
+      {/if}
       {#if screen.type === 'info'}
         {#if screen.image}
           <div class="w-full aspect-video mb-4 rounded-photo bg-[repeating-linear-gradient(135deg,theme(colors.border),theme(colors.border)_10px,theme(colors.surface)_10px,theme(colors.surface)_20px)] flex items-center justify-center text-xs text-ink-muted" role="img" aria-label={screen.alt || screen.image}>

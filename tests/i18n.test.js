@@ -302,7 +302,13 @@ describe('the UI string lookup', () => {
     // slip in the moment an old one was translated, which is exactly when
     // nobody is looking. Anything appearing here that is not on this list is a
     // gap someone introduced without requesting the translation.
-    const AWAITING = ['settings.answersStayEnglish'];
+    const AWAITING = [
+      'narration.listen',
+      'narration.listenAgain',
+      'narration.pause',
+      'narration.resume',
+      'settings.answersStayEnglish',
+    ];
     const missing = Object.entries(uiStrings)
       .filter(([k, v]) => k !== '_note' && !v.my)
       .map(([k]) => k);
