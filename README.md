@@ -54,6 +54,30 @@ M-1778, a glare check on photographs in dark mode, and a real-device pass at
 200% zoom with a screen reader. Those print as warnings every run so they stay
 visible, and are never reported as passes.
 
+## Converting this to cmi5 / xAPI for an LMS
+
+**Read [`docs/CMI5-CONVERSION.md`](docs/CMI5-CONVERSION.md) first.** It is
+written for someone — very possibly an LLM — who is reading this repository in
+order to build a cmi5 package from it, and has never seen the codebase.
+
+It covers the three things already done for you (hash routing, relative asset
+paths, and a single persistence seam with exactly one consumer), the nine-AU
+course structure, and — the part worth its length — **what the AU must not
+report**, because most of that is invisible in the code:
+
+- guided practice is deliberately unrecorded, and reporting it inflates the one
+  counter the course is careful about;
+- the eight dynamic questions are never graded, because their answers change
+  with elections;
+- **Rehearsal is self-scored**, so a `Passed` statement from it is attested
+  rather than measured. Anyone treating it as a proctored result would be
+  claiming something about a person's readiness for a citizenship interview
+  that the course never measured.
+
+A ready course manifest is generated at `docs/cmi5/cmi5.xml` by
+`npm run cmi5` — generated, so unit ids and titles cannot drift from the
+course.
+
 ## Architecture notes for whoever picks this up next
 
 **`src/lib/storage.js` is the only file that touches `localStorage`.**
