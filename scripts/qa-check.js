@@ -40,6 +40,7 @@ const readJson = (p) => JSON.parse(readFileSync(p, 'utf8'));
 // narrated' has exactly one definition.
 import { NARRATED_FIELDS } from '../src/lib/narration-text.js';
 import { textHash } from '../src/lib/text-hash.js';
+import { STANDALONE_NARRATION } from '../src/lib/content/standalone-narration.js';
 
 const UNIT_IDS = ['U1', 'U2', 'U3', 'U4', 'U5', 'U6', 'U7'];
 const EXPECTED_COUNTS = { U1: 14, U2: 20, U3: 23, U4: 5, U5: 10, U6: 17, U7: 39 };
@@ -873,7 +874,16 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
   // sets, which draw at random.
   const LANGS = ['en', 'my', 'q'];
 
-  const narratable = new Set(['welcome', 'epitome', 'completion']);
+  // From the shared registry, and RECORDABLE ones only. This list and the audio
+  // script's used to be maintained separately; they drifted immediately, and a
+  // file named for a screen the map did not know about passed this check and
+  // then silently never played.
+  const narratable = new Set(
+    Object.entries(STANDALONE_NARRATION).filter(([, v]) => v.recordable).map(([id]) => id)
+  );
+  const speechOnly = new Set(
+    Object.entries(STANDALONE_NARRATION).filter(([, v]) => !v.recordable).map(([id]) => id)
+  );
   for (const unit of units) {
     for (const screen of unit.screens) {
       if (NARRATED_FIELDS[screen.type]) narratable.add(screen.id);
@@ -916,7 +926,12 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
       files += 1;
       const id = name.slice(0, -4);
       const valid = validFor(lang);
-      if (!valid.has(id)) {
+      if (speechOnly.has(id)) {
+        fail(
+          check,
+          `public/audio/${lang}/${name} is for a screen whose narration contains live values — it cannot be recorded, and would read one learner's numbers to everybody`
+        );
+      } else if (!valid.has(id)) {
         const nearly = [...valid].find((k) => k.toLowerCase() === id.toLowerCase());
         fail(
           check,

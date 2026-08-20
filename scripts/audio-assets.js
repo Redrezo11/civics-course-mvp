@@ -37,6 +37,7 @@ import { dirname, join } from 'node:path';
 
 import { localiseWith } from '../src/lib/localise.js';
 import { flatten, narrationFor, narrationHash, NARRATED_FIELDS } from '../src/lib/narration-text.js';
+import { STANDALONE_NARRATION } from '../src/lib/content/standalone-narration.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
@@ -55,19 +56,21 @@ const QUESTION_DIR = 'q';
 const UNITS = ['unit0', 'unit1', 'unit2', 'unit3', 'unit4', 'unit5', 'unit6', 'unit7'];
 
 /**
- * Screens with no unit JSON of their own. Welcome's copy is hardcoded in the
- * component rather than authored as page data, so its narration is kept in step
- * by hand — the only place in the app where that is true.
+ * Screens with no unit JSON of their own, taken from the shared registry that
+ * the app and the QA gate also read.
+ *
+ * Only the RECORDABLE ones. The rest narrate live values — a score, a count,
+ * how much of a screen has been revealed — so a recording could never match
+ * them, and listing a filename would invite somebody to record one learner's
+ * tally and ship it to everybody.
  */
-const STANDALONE = [
-  {
-    id: 'welcome',
-    unit: 'Welcome screen',
-    text:
-      'Welcome. This course covers all 128 questions on the U.S. citizenship ' +
-      'civics test, in short lessons you can fit around your day.',
-  },
-];
+const STANDALONE = Object.entries(STANDALONE_NARRATION)
+  .filter(([, v]) => v.recordable)
+  .map(([id, v]) => ({
+    id,
+    unit: v.label,
+    text: v.segments.map((seg) => seg.text).join(' '),
+  }));
 
 // --- What the course expects ------------------------------------------------
 

@@ -8,7 +8,13 @@ with limited reading fluency in either language. A page that can be heard is a
 page they can use, so narration is a reach feature rather than a convenience.
 
 **Every screen that teaches or tests carries a Listen control** — teaching
-screens, every assessment, the question bank, and the end-of-course screens.
+screens, every assessment including its entry and result screens, the question
+bank, the language chooser and the end-of-course screens.
+
+`tests/narration-coverage.test.js` states where the control belongs and fails if
+it is missing. That test exists because Rehearsal's intro shipped without one
+and nothing noticed: a missing control breaks nothing, so every other test still
+passed.
 
 Assessment was excluded at first, on the reasoning that reading a question and
 its options aloud would answer it. That was wrong. The civics test is an *oral*
@@ -157,11 +163,39 @@ offer cannot be picked up by accident. A test asserts every field on a narrated
 screen is either narrated or explicitly listed as not — so a new content field
 fails the suite rather than being silently dropped from the audio.
 
-Welcome is the one exception: its copy is hardcoded in the component rather than
-authored as page data, so its narration is a literal string in
-`Welcome.svelte` and in `scripts/audio-assets.js`, kept in step by hand. That is
-a pre-existing gap — the screen does not use `$t` either, and renders English in
-both languages. Worth fixing separately.
+### Screens that are not unit page data
+
+Welcome, Language, Rehearsal, the full-bank sets, Review, Epitome and Completion
+have their prose in the markup rather than in unit JSON, so they need a
+registry: **`src/lib/content/standalone-narration.js`**, read by the components,
+by `scripts/audio-assets.js` and by QA check 17.
+
+One list, because there used to be three and they drifted immediately —
+`epitome` and `completion` were added to the QA list and not to the audio
+script, so a recording named `epitome.mp3` passed the gate, never reached the
+manifest, and would have silently never played.
+
+**Recordable, or speech only.** Each entry declares which:
+
+| | Screens |
+|---|---|
+| recordable | `welcome`, `language`, `rehearsal-intro` |
+| speech only | `epitome`, `rehearsal-end`, `fullbank-entry`, `fullbank-end`, `review-end`, `completion` |
+
+The speech-only ones narrate **live values** — a score, a count, how far through
+a reveal the learner is. A recording of those is one learner's tally read aloud
+to everybody, and the freshness hash cannot catch it, because the text varies
+per learner rather than per edit. QA check 17 rejects a file named for one.
+
+**The Language screen is narrated in both languages at once**, the only place in
+the app that happens. Nobody has chosen a language yet, so there is no current
+language to fall back to — and on that screen, English may be exactly the
+problem. Segments made it a four-line entry rather than a feature.
+
+A test asserts the registry's Welcome text still matches what the screen
+renders, and that the Language entry matches the UI strings — the registry holds
+literals so Node scripts can read it without JSON import attributes, and those
+literals must not drift.
 
 ---
 

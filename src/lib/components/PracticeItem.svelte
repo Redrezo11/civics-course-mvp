@@ -29,6 +29,9 @@
 
   export let q;
   export let label = 'Practice — the official test question';
+  /** Text the PARENT renders directly above this component. Narrated here so it
+      is spoken in the order it is read; this component does not render it. */
+  export let lead = '';
   // Course-authored explanation for this item. Comes from the SCREEN in unit
   // JSON, never from the question file: question files hold verbatim USCIS
   // wording and are the never-translate boundary, whereas this is our prose
@@ -62,7 +65,9 @@
   // and mislead exactly the learner this is for.
   $: lang = $progress.language || 'en';
   $: narration = q
-    ? practiceSegments({
+    ? [
+        ...(lead ? [{ lang, text: lead }] : []),
+        ...practiceSegments({
         label,
         official: q.official,
         questionId: q.id,
@@ -71,9 +76,10 @@
         answered: submitted,
         correctAnswerText: q.acceptedAnswers?.[0] || '',
         explain,
-        currentAnswer: q.dynamic ? currentAnswer : null,
-        lang,
-      })
+          currentAnswer: q.dynamic ? currentAnswer : null,
+          lang,
+        }),
+      ]
     : [];
 </script>
 

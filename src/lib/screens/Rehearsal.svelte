@@ -27,6 +27,7 @@
   import QuestionCard from '../components/QuestionCard.svelte';
   import NarrationButton from '../components/NarrationButton.svelte';
   import { rehearsalSegments } from '../narration-text.js';
+  import { STANDALONE_NARRATION } from '../content/standalone-narration.js';
 
   const PASS_AT = 12;
   const FAIL_AT = 9;
@@ -104,6 +105,11 @@
 
   <div class="flex-1 overflow-y-auto px-5 py-6">
     {#if phase === 'intro'}
+      <NarrationButton
+        segments={STANDALONE_NARRATION['rehearsal-intro'].segments}
+        screenId="rehearsal-intro"
+        wrapperClass="mb-4"
+      />
       <div class="w-16 h-16 rounded-full mx-auto mb-4 bg-[repeating-linear-gradient(135deg,theme(colors.border),theme(colors.border)_6px,theme(colors.surface)_6px,theme(colors.surface)_12px)]"></div>
       <h1 class="text-heading font-bold mb-4">This is practice for the real interview.</h1>
       <p class="mb-3 leading-relaxed">
@@ -167,6 +173,22 @@
       {/if}
 
     {:else}
+      <!--
+        Speech only, never a recording: the tally below is this learner's, so a
+        recorded file would read somebody else's score.
+      -->
+      <NarrationButton
+        segments={[
+          {
+            lang: 'en',
+            text: passed
+              ? `You passed this practice. ${asked} questions asked — just like the real test, which can end early once you have ${PASS_AT} right.`
+              : 'This practice test ended. The real one would too. Every question you missed is now in your review list. Try again anytime.',
+          },
+          { lang: 'en', text: `${correct} right, ${wrong} wrong. This practice asked ${asked} of the 128.` },
+        ]}
+        wrapperClass="mb-4"
+      />
       {#if passed}
         <h1 class="text-heading font-bold mb-3">You passed this practice.</h1>
         <p class="mb-3 leading-relaxed">

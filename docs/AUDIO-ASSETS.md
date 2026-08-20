@@ -73,7 +73,7 @@ learner who listens and the learner who reads get the same course.
 
 ## English teaching and assessment prose — `public/audio/en/`
 
-**0 recorded · 0 need re-recording · 60 not yet recorded** (60 total)
+**0 recorded · 0 need re-recording · 62 not yet recorded** (62 total)
 
 ### U0 — Test day
 
@@ -180,13 +180,25 @@ learner who listens and the learner who reads get the same course.
 |---|---|---|---|
 | ○ | `welcome.mp3` | `welcome` | Welcome. This course covers all 128 questions on the U.S. ci… |
 
+### Language choice — the first screen
+
+| | File | Screen | Script |
+|---|---|---|---|
+| ○ | `language.mp3` | `language` | Choose your language. သင့်ဘာသာစကားကို ရွေးချယ်ပါ။ You can ch… |
+
+### Rehearsal — the rules
+
+| | File | Screen | Script |
+|---|---|---|---|
+| ○ | `rehearsal-intro.mp3` | `rehearsal-intro` | This is practice for the real interview. At the real intervi… |
+
 ---
 
 ## Burmese teaching and assessment prose — `public/audio/my/`
 
-**0 recorded · 0 need re-recording · 60 not yet recorded** (60 total)
+**0 recorded · 0 need re-recording · 62 not yet recorded** (62 total)
 
-> **3 screen(s) below still show English**, because their Burmese has not arrived.
+> **5 screen(s) below still show English**, because their Burmese has not arrived.
 > They are marked ⚠ — recording those now is wasted work; the words change when the translation lands.
 
 ### U0 — Test day
@@ -293,6 +305,18 @@ learner who listens and the learner who reads get the same course.
 | | File | Screen | Script |
 |---|---|---|---|
 | ○ | `welcome.mp3` | `welcome` ⚠ | Welcome. This course covers all 128 questions on the U.S. ci… |
+
+### Language choice — the first screen
+
+| | File | Screen | Script |
+|---|---|---|---|
+| ○ | `language.mp3` | `language` ⚠ | Choose your language. သင့်ဘာသာစကားကို ရွေးချယ်ပါ။ You can ch… |
+
+### Rehearsal — the rules
+
+| | File | Screen | Script |
+|---|---|---|---|
+| ○ | `rehearsal-intro.mp3` | `rehearsal-intro` ⚠ | This is practice for the real interview. At the real intervi… |
 
 ---
 

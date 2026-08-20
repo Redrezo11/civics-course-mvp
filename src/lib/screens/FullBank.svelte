@@ -22,6 +22,7 @@
   import { getUnitQuestions, TOTAL_QUESTIONS } from '../content/questions.js';
   import LessonBar from '../components/LessonBar.svelte';
   import PracticeItem from '../components/PracticeItem.svelte';
+  import NarrationButton from '../components/NarrationButton.svelte';
 
   export let unitId;
 
@@ -91,6 +92,15 @@
 
   <div class="flex-1 overflow-y-auto px-5 py-6">
     {#if phase === 'entry'}
+      <NarrationButton
+        segments={[
+          { lang: 'en', text: `Practice all ${questions.length} questions from this lesson.` },
+          ...(resumeAt > 0 && resumeAt < questions.length
+            ? [{ lang: 'en', text: `You stopped at question ${resumeAt + 1}. Starting there.` }]
+            : []),
+        ]}
+        wrapperClass="mb-4"
+      />
       <h1 class="text-heading font-bold mb-3">
         Practice all {questions.length} questions from this lesson
       </h1>
@@ -111,6 +121,15 @@
       />
 
     {:else}
+      <NarrationButton
+        segments={[
+          {
+            lang: 'en',
+            text: `You have now practiced ${questions.length} of ${questions.length} questions from this lesson. That is ${$questionsPracticedCount} of ${TOTAL_QUESTIONS} questions practiced altogether.`,
+          },
+        ]}
+        wrapperClass="mb-4"
+      />
       <h1 class="text-heading font-bold mb-3">
         You have now practiced {questions.length} of {questions.length} questions from
         this lesson.

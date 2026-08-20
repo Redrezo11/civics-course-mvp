@@ -1,18 +1,12 @@
 <script>
   import { navigate } from '../router.js';
   import NarrationButton from '../components/NarrationButton.svelte';
+  import { STANDALONE_NARRATION } from '../content/standalone-narration.js';
 
-  // Passed literally rather than through narrationFor(), because this screen's
-  // copy is hardcoded in the markup below rather than coming from page data.
-  //
-  // That is a pre-existing gap, not one narration introduced: Welcome does not
-  // use $t at all, so it renders English in both languages. Moving it onto UI
-  // strings is worth doing, separately. Until then this text and the markup
-  // have to be kept in step by hand — the only place in the app where that is
-  // true.
-  const NARRATION =
-    'Welcome. This course covers all 128 questions on the U.S. citizenship ' +
-    'civics test, in short lessons you can fit around your day.';
+  // The narration text lives in the shared registry, which is also what the
+  // audio script and the QA gate read — so a recording can never be named for a
+  // screen the app does not narrate, or vice versa. A test asserts this text
+  // still matches what the markup below renders.
 </script>
 
 <div class="min-h-screen flex flex-col max-w-md mx-auto px-6 py-8">
@@ -29,7 +23,7 @@
       in short lessons you can fit around your day.
     </p>
     <NarrationButton
-      text={NARRATION}
+      segments={STANDALONE_NARRATION.welcome.segments}
       screenId="welcome"
       wrapperClass="flex justify-center mb-6"
     />

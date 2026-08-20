@@ -60,7 +60,9 @@
     "U7-S10": "Two holidays on the test sound alike. Do not mix them up. Memorial Day: honors soldiers who died in military service. Veterans Day: honors all who served in the military. Everyone who died in service was also a veteran — but not every veteran died. Memorial Day is for the ones who did not come home.",
     "U7-S11": "Two amendments about voting. Keep them in order. 15th Amendment: any race can vote — 1870, after the Civil War. 19th Amendment: women can vote — 1920, after World War I. Race first, women fifty years later.",
     "U7-S21": "Lesson 7 finished. You have now seen the ideas behind all 128 questions.",
-    "welcome": "Welcome. This course covers all 128 questions on the U.S. citizenship civics test, in short lessons you can fit around your day."
+    "welcome": "Welcome. This course covers all 128 questions on the U.S. citizenship civics test, in short lessons you can fit around your day.",
+    "language": "Choose your language. သင့်ဘာသာစကားကို ရွေးချယ်ပါ။ You can change this anytime in Settings. ဤအရာကို ဆက်တင်များတွင် အချိန်မရွေး ပြောင်းလဲနိုင်ပါသည်။",
+    "rehearsal-intro": "This is practice for the real interview. At the real interview you will hear these questions. Here you read them — and answer out loud, the same way. No choices, no hints. Then check yourself. The rules are the real rules: up to 20 questions. 12 right passes. 9 wrong stops."
   },
   "my": {
     "U0-S01": "ကြိုဆိုပါသည်. ဤသင်တန်းသည် အမေရိကန် နိုင်ငံသားခံယူခြင်း civics စာမေးပွဲရှိ မေးခွန်း ၁၂၈ ခုလုံးကို သင့်နေ့စဉ်ဘဝနှင့် အဆင်ပြေအောင် ချိန်ညှိနိုင်သည့် သင်ခန်းစာတိုများဖြင့် လွှမ်းခြုံပါသည်။",
@@ -122,7 +124,9 @@
     "U7-S10": "စာမေးပွဲရှိ အားလပ်ရက် နှစ်ခုသည် အသံတူသည်။ မရောထွေးပါနှင့်။ Memorial Day — စစ်မှုထမ်းရင်း ကျဆုံးခဲ့သော စစ်သည်များကို ဂုဏ်ပြုသည်။ Veterans Day — စစ်မှုထမ်းခဲ့သူ အားလုံးကို ဂုဏ်ပြုသည်။ စစ်မှုထမ်းရင်း ကျဆုံးခဲ့သူတိုင်းသည် စစ်မှုထမ်းဟောင်းလည်း ဖြစ်ခဲ့သည် — သို့သော် စစ်မှုထမ်းဟောင်းတိုင်း ကျဆုံးခဲ့သည် မဟုတ်ပါ။ Memorial Day သည် ပြန်မလာခဲ့သူများအတွက် ဖြစ်ပါသည်။",
     "U7-S11": "မဲပေးခြင်းဆိုင်ရာ ပြင်ဆင်ချက် နှစ်ခု။ အစီအစဉ်အတိုင်း မှတ်ထားပါ။ 15th Amendment — မည်သည့်လူမျိုးမဆို မဲပေးနိုင်သည် — ၁၈၇၀၊ ပြည်တွင်းစစ်အပြီး။ 19th Amendment — အမျိုးသမီးများ မဲပေးနိုင်သည် — ၁၉၂၀၊ ပထမကမ္ဘာစစ်အပြီး။ လူမျိုး ဦးစွာ၊ အမျိုးသမီးများ ငါးဆယ်နှစ်အကြာတွင်။",
     "U7-S21": "သင်ခန်းစာ ၇ ပြီးဆုံးပါပြီ။ ယခုအခါ မေးခွန်း ၁၂၈ ခုလုံး၏ နောက်ကွယ်မှ အယူအဆများကို သင် မြင်တွေ့ပြီး ဖြစ်ပါသည်။",
-    "welcome": "Welcome. This course covers all 128 questions on the U.S. citizenship civics test, in short lessons you can fit around your day."
+    "welcome": "Welcome. This course covers all 128 questions on the U.S. citizenship civics test, in short lessons you can fit around your day.",
+    "language": "Choose your language. သင့်ဘာသာစကားကို ရွေးချယ်ပါ။ You can change this anytime in Settings. ဤအရာကို ဆက်တင်များတွင် အချိန်မရွေး ပြောင်းလဲနိုင်ပါသည်။",
+    "rehearsal-intro": "This is practice for the real interview. At the real interview you will hear these questions. Here you read them — and answer out loud, the same way. No choices, no hints. Then check yourself. The rules are the real rules: up to 20 questions. 12 right passes. 9 wrong stops."
   },
   "q": {
     "Q1": "What is the form of government of the United States?",

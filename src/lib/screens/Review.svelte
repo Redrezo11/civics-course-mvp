@@ -19,6 +19,7 @@
   import { REVIEWS, buildReviewPool } from '../select-review.js';
   import LessonBar from '../components/LessonBar.svelte';
   import PracticeItem from '../components/PracticeItem.svelte';
+  import NarrationButton from '../components/NarrationButton.svelte';
 
   export let reviewId;
 
@@ -76,6 +77,13 @@
       <p>Preparing your review…</p>
 
     {:else if finished}
+      <NarrationButton
+        segments={[
+          { lang: 'en', text: `Review finished. Reviewed: ${questions.length} questions.` },
+          ...(reviewId === 'R3' ? [{ lang: 'en', text: 'You have reviewed all seven lessons.' }] : []),
+        ]}
+        wrapperClass="mb-4"
+      />
       <h1 class="text-heading font-bold mb-3">Review finished.</h1>
       <p class="mb-4">Reviewed: {questions.length} questions.</p>
       <!-- Missed questions are re-queued silently. The learner does not need to
@@ -91,6 +99,7 @@
       </p>
       <PracticeItem
         q={current}
+        lead="Questions from different lessons, mixed together on purpose."
         label="Question {index + 1} of {questions.length}"
         on:answer={onAnswer}
       />
