@@ -77,6 +77,7 @@
         correctAnswerText: q.acceptedAnswers?.[0] || '',
         explain,
           currentAnswer: q.dynamic ? currentAnswer : null,
+          checked: ANSWERS_CHECKED,
           lang,
         }),
       ]

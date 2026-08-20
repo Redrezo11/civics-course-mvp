@@ -180,6 +180,7 @@ export function practiceSegments({
   correctAnswerText = '',
   explain = '',
   currentAnswer = null,
+  checked = '',
   lang = 'en',
 } = {}) {
   // The official question is tagged with its id, so the playlist can find a
@@ -192,7 +193,13 @@ export function practiceSegments({
   // present an unverified value as fact.
   if (currentAnswer !== null) {
     if (currentAnswer?.verified && currentAnswer?.value) {
-      out.push(...seg(currentAnswer.label || 'Current answer', lang), ...seg(currentAnswer.value, 'en'));
+      out.push(
+        ...seg(currentAnswer.label || 'Current answer', lang),
+        ...seg(currentAnswer.value, 'en'),
+        // How old the answer is — the line telling a learner how far to trust
+        // what they just heard, on the eight questions that go out of date.
+        ...seg(`Checked: ${checked || 'not yet recorded'}`, lang)
+      );
     } else {
       out.push(
         ...seg('This answer has not been checked yet.', lang),
@@ -211,7 +218,10 @@ export function practiceSegments({
   if (answered) {
     out.push(
       ...(multiSelectCount
-        ? seg('Accepted answers are marked with a tick.', lang)
+        ? seg(
+            `Accepted answers are marked with a tick. Any ${multiSelectCount} of them is enough — the officer asks for ${multiSelectCount}, so give ${multiSelectCount} and stop.`,
+            lang
+          )
         : seg('The correct answer is', lang)),
       ...(multiSelectCount ? [] : seg(correctAnswerText, 'en')),
       ...seg(explain, lang)
@@ -225,18 +235,45 @@ export function practiceSegments({
  * reveals. Narrating the accepted answers before the reveal would destroy the
  * exercise, so they only exist here once `revealed`.
  */
-export function rehearsalSegments({ official = '', questionId = '', revealed = false, accepted = [], lang = 'en' } = {}) {
-  const out = seg(official, 'en').map((x) => ({ ...x, questionId }));
-  if (!revealed) return out;
+export function rehearsalSegments({
+  official = '',
+  questionId = '',
+  revealed = false,
+  accepted = [],
+  correct = 0,
+  wrong = 0,
+  lang = 'en',
+} = {}) {
+  const out = [];
+
+  // The running tally, which is on screen above the question. Skipped at 0/0 so
+  // the first question does not open with "zero right, zero wrong".
+  if (correct || wrong) out.push(...seg(`${correct} right, ${wrong} wrong.`, lang));
+
+  out.push(...seg(official, 'en').map((x) => ({ ...x, questionId })));
+
+  if (!revealed) {
+    // The instruction. Previously omitted, which left the narration reading the
+    // question and then stopping — no indication of what to do with it.
+    return [...out, ...seg('Do you know the answer? Say it out loud to yourself before you look.', lang)];
+  }
+
   out.push(...seg('Accepted answers', lang));
   for (const a of accepted) out.push(...seg(a, 'en'));
+  out.push(...seg('Did you get it right?', lang));
   return out;
 }
 
 /** One guided-practice item, in whichever of its four shapes it takes. */
-export function guidedItemSegments(item, { answered = false, lang = 'en' } = {}) {
+export function guidedItemSegments(
+  item,
+  { answered = false, lang = 'en', position = '', feedback = [] } = {}
+) {
   if (!item) return [];
-  const out = [...seg(item.instructions, lang), ...seg(item.question, lang)];
+  // "Practice N of M — not an official test question". The disclaimer is the
+  // G-22 honesty line separating authored items from the official 128, and it
+  // was never spoken.
+  const out = [...seg(position, lang), ...seg(item.instructions, lang), ...seg(item.question, lang)];
   if (item.cardText) out.push(...seg(item.cardText, 'en'));
 
   if (item.buckets) {
@@ -257,6 +294,12 @@ export function guidedItemSegments(item, { answered = false, lang = 'en' } = {})
   if (answered && item.pairedOfficial) {
     out.push(...seg('It asks the same thing as the official question:', lang), ...seg(item.pairedOfficial, 'en'));
   }
+
+  // Feedback ONLY once answered. The compare feedback names the correct bucket
+  // for every misplaced item, so speaking it early would read the answers aloud
+  // — the same failure the Rehearsal reveal gate exists to prevent. The caller
+  // gates it too; this is the second lock.
+  if (answered) for (const line of feedback) out.push(...seg(line, lang));
   return out;
 }
 

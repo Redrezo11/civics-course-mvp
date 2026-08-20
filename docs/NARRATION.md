@@ -11,7 +11,19 @@ page they can use, so narration is a reach feature rather than a convenience.
 screens, every assessment including its entry and result screens, the question
 bank, the language chooser and the end-of-course screens.
 
-`tests/narration-coverage.test.js` states where the control belongs and fails if
+**Narration reads every non-control text on the screen.** Not the heading and
+then silence — the instruction, the running tally, the feedback after an answer,
+the date a dynamic answer was checked. If a learner can read it, they can hear
+it; the only exclusions are controls (buttons and links) and decorative content
+(`aria-hidden`).
+
+`tests/narration-coverage.test.js` enforces both halves: that a control is
+offered, and that what it says covers what is rendered. The second half compares
+**per sentence**, on letters and digits only — `<br />` runs sentences together
+in `textContent`, and the screen uses symbols (`✓ 2 right · ✗ 1 wrong`) that
+have no spoken form.
+
+It states where the control belongs and fails if
 it is missing. That test exists because Rehearsal's intro shipped without one
 and nothing noticed: a missing control breaks nothing, so every other test still
 passed.

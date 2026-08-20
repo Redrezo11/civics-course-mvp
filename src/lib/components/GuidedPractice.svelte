@@ -117,6 +117,30 @@
       .filter(({ si, si_i }) => a[si_i] !== si.bucket);
   });
 
+  // What the feedback panels below actually say, so narration reads the same
+  // words. Built per item and only consumed once the item is done — the compare
+  // feedback names the correct bucket for every misplaced item, so speaking it
+  // early would hand over the answers.
+  $: feedbackFor = items.map((item, i) => {
+    if (!doneFlags[i]) return [];
+    if (item.kind === 'compare') {
+      if (!sortWrong[i].length) return ['All sorted correctly.'];
+      return [
+        sortWrong[i].length === 1
+          ? 'One belongs somewhere else:'
+          : `${sortWrong[i].length} belong somewhere else:`,
+        ...sortWrong[i].map((w) => `${w.si.text} goes in ${item.buckets[w.si.bucket]}.`),
+      ];
+    }
+    if (item.kind === 'order') {
+      return orderCorrect[i]
+        ? ['Correct order.', item.feedbackCorrect || '']
+        : ['The correct order is:', ...item.orderItems.map((t, n) => `${n + 1}. ${t}`)];
+    }
+    if (answers[i] !== undefined) return [`The correct answer is ${item.options[item.correctIndex]}.`];
+    return [];
+  });
+
   $: orderCorrect = items.map((item, i) =>
     item.kind === 'order' && doneFlags[i]
       ? (orderPicks[i] || []).every((v, n) => v === n)
@@ -131,6 +155,8 @@
     <NarrationButton
       segments={guidedItemSegments(item, {
         answered: doneFlags[i],
+        position: `Practice ${i + 1} of ${items.length} — not an official test question.`,
+        feedback: feedbackFor[i],
         lang: $progress.language || 'en',
       })}
       lang={$progress.language || 'en'}

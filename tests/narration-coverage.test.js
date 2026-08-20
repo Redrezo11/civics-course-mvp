@@ -18,6 +18,11 @@ import Rehearsal from '../src/lib/screens/Rehearsal.svelte';
 import FullBank from '../src/lib/screens/FullBank.svelte';
 import Epitome from '../src/lib/screens/Epitome.svelte';
 import Home from '../src/lib/screens/Home.svelte';
+import Lesson from '../src/lib/screens/Lesson.svelte';
+import PracticeItem from '../src/lib/components/PracticeItem.svelte';
+import unit1 from '../src/lib/content/unit1.json';
+import { presentOptions } from '../src/lib/content/questions.js';
+import { practiceSegments, rehearsalSegments, guidedItemSegments } from '../src/lib/narration-text.js';
 import NarrationButton from '../src/lib/components/NarrationButton.svelte';
 
 import { progress } from '../src/lib/stores/progress.js';
@@ -165,5 +170,189 @@ describe('Welcome still says what it narrates', () => {
       const s = sentence.replace(/\.$/, '').trim();
       if (s.length > 12) expect(rendered).toContain(s);
     }
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Does the narration say what the screen says?
+//
+// Every other narration test asks whether narration WORKS. This asks whether
+// what it says matches what is rendered — which is the question none of them
+// asked, and why the Rehearsal prompt, the guided-practice feedback, the
+// multi-select rule and the checked date were all silently missing.
+// ---------------------------------------------------------------------------
+
+/**
+ * Text the learner can read, excluding what narration deliberately skips:
+ * controls (buttons and links) and decorative content (aria-hidden).
+ */
+function readableText(container) {
+  const clone = container.cloneNode(true);
+  for (const el of clone.querySelectorAll('button, a, [aria-hidden="true"]')) el.remove();
+  return clone.textContent || '';
+}
+
+// Letters and digits only. Whitespace cannot be trusted — `<br />` makes
+// textContent run two sentences together with no space — and the screen uses
+// symbols the narration has no way to speak (✓ 2 right · ✗ 1 wrong).
+const norm = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+/** Sentence by sentence: whole-block comparison fails where this passes. */
+const sentences = (s) =>
+  s
+    .split(/(?<=[.!?])/)
+    .map((x) => x.trim())
+    .filter((x) => norm(x).length >= 12);
+
+function assertCovered(container, segments, where) {
+  const spoken = norm(segments.map((x) => x.text).join(' '));
+  for (const sentence of sentences(readableText(container))) {
+    expect(spoken, `${where} does not narrate: "${sentence.trim()}"`).toContain(norm(sentence));
+  }
+}
+
+describe('narration covers what is rendered', () => {
+  const q = {
+    id: 'Q2',
+    official: 'What is the supreme law of the land?',
+    options: ['the Constitution', 'the flag', 'the President'],
+    correctIndex: 0,
+    acceptedAnswers: ['the Constitution'],
+    unit: 'U1',
+  };
+
+  it('a practice question, before answering', () => {
+    const { container } = render(PracticeItem, { props: { q } });
+    assertCovered(container, practiceSegments({
+      label: 'Practice — the official test question',
+      official: q.official,
+      questionId: q.id,
+      presented: presentOptions(q),
+    }), 'PracticeItem');
+  });
+
+  it('a Rehearsal question — the reported bug', () => {
+    // Read the question and stop, and the learner never hears the instruction.
+    const segments = rehearsalSegments({
+      official: q.official,
+      questionId: q.id,
+      revealed: false,
+      correct: 2,
+      wrong: 1,
+    });
+    const spoken = norm(segments.map((s) => s.text).join(' '));
+    expect(spoken).toContain(norm('2 right'));
+    expect(spoken).toContain(norm('1 wrong'));
+    expect(spoken).toContain(norm('Do you know the answer?'));
+    expect(spoken).toContain(norm('Say it out loud to yourself before you look.'));
+  });
+
+  it('a Rehearsal question after the reveal', () => {
+    const spoken = norm(
+      rehearsalSegments({
+        official: q.official,
+        revealed: true,
+        accepted: q.acceptedAnswers,
+        correct: 2,
+        wrong: 1,
+      })
+        .map((s) => s.text)
+        .join(' ')
+    );
+    expect(spoken).toContain(norm('Did you get it right?'));
+  });
+
+  it('a guided-practice item, including its disclaimer', () => {
+    const gp = unit1.screens.find((s) => s.type === 'guidedPractice');
+    const spoken = norm(
+      guidedItemSegments(gp.items[0], {
+        position: `Practice 1 of ${gp.items.length} — not an official test question.`,
+      })
+        .map((s) => s.text)
+        .join(' ')
+    );
+    // G-22: these are authored items, not the official 128, and the screen says so.
+    expect(spoken).toContain(norm('not an official test question'));
+  });
+
+  it('a multi-select keeps the rule that is the point of the item', () => {
+    const multi = { ...q, multiSelect: 2 };
+    const spoken = norm(
+      practiceSegments({
+        official: multi.official,
+        presented: presentOptions(multi),
+        multiSelectCount: 2,
+        answered: true,
+      })
+        .map((s) => s.text)
+        .join(' ')
+    );
+    // G-19 — never encourage more answers than the officer asked for.
+    expect(spoken).toContain(norm('Any 2 of them is enough'));
+    expect(spoken).toContain(norm('so give 2 and stop'));
+  });
+
+  it('a dynamic answer says when it was checked', () => {
+    const spoken = norm(
+      practiceSegments({
+        official: 'Who is the President?',
+        currentAnswer: { verified: true, value: 'Someone', label: 'Current answer' },
+        checked: 'Aug 2026',
+      })
+        .map((s) => s.text)
+        .join(' ')
+    );
+    expect(spoken).toContain(norm('Checked: Aug 2026'));
+  });
+});
+
+describe('guided-practice feedback is not spoken early', () => {
+  it('does NOT read the sort answers before the item is done', () => {
+    // The compare feedback names the correct bucket for every misplaced item.
+    // Spoken before answering, it hands the exercise over — the same failure
+    // the Rehearsal reveal gate exists to prevent.
+    const gp = unit1.screens.find((s) => s.type === 'guidedPractice');
+    const compare = gp.items.find((i) => i.kind === 'compare');
+    const leak = ['One belongs somewhere else:', `${compare.sortItems[0].text} goes in ${compare.buckets[0]}.`];
+
+    const before = norm(guidedItemSegments(compare, { answered: false, feedback: leak }).map((s) => s.text).join(' '));
+    const after = norm(guidedItemSegments(compare, { answered: true, feedback: leak }).map((s) => s.text).join(' '));
+
+    expect(before).not.toContain(norm('goes in'));
+    expect(after).toContain(norm('goes in'));
+  });
+});
+
+describe('every practice screen offers narration', () => {
+  it('a lesson practice screen has a Listen control', () => {
+    // 38 screens had none: Lesson rendered its own copy of PracticeItem's
+    // markup, so adding narration to the component missed all of them.
+    const idx = unit1.screens.findIndex((s) => s.type === 'practice');
+    expect(idx, 'expected a practice screen in U1').toBeGreaterThan(-1);
+    progress.saveScreenPosition('U1', unit1.screens[idx].id);
+    const { container } = render(Lesson, { props: { unitId: 'U1' } });
+
+    // Assert we ARRIVED on the practice screen before asserting about it.
+    // The first version of this test checked only for a Listen control and
+    // passed against a broken build, because it never left screen 1 — an
+    // `orient` screen, which has a control of its own.
+    expect(container.textContent, 'never reached a practice screen').toContain(
+      'Practice — the official test question'
+    );
+    expect(labels(container)).toContain('Listen');
+  });
+
+  it('resumes on the screen the learner left, rather than restarting the unit', () => {
+    // Found while fixing the above. Lesson's reactive save runs during
+    // initialisation, while index is still 0, so it overwrote the stored
+    // position with screen 1 before onMount could read it — and onMount then
+    // restored the value it had just clobbered.
+    //
+    // U0-S07 promises "stop anytime, the course remembers your place". It did
+    // not. Nothing caught it because every other test starts at screen 1, which
+    // is precisely what the bug produced.
+    progress.saveScreenPosition('U1', 'U1-S11');
+    const { container } = render(Lesson, { props: { unitId: 'U1' } });
+    expect(container.querySelector('span').textContent).toContain('12 of 17');
   });
 });

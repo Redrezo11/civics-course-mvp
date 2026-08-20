@@ -5,18 +5,15 @@
   import {
     getQuestion,
     presentOptions,
-    getCurrentAnswer,
-    ANSWERS_CHECKED,
-    USCIS_UPDATES_URL,
   } from '../content/questions.js';
   import { localiseScreen } from '../i18n.js';
   import { narrationFor, practiceSegments, seg, optionSegments } from '../narration-text.js';
   import LessonBar from '../components/LessonBar.svelte';
   import NarrationButton from '../components/NarrationButton.svelte';
+  import PracticeItem from '../components/PracticeItem.svelte';
   import QuestionCard from '../components/QuestionCard.svelte';
   import AnswerLabel from '../components/AnswerLabel.svelte';
   import SingleSelect from '../components/SingleSelect.svelte';
-  import MultiSelect from '../components/MultiSelect.svelte';
   import VocabDeck from '../components/VocabDeck.svelte';
   import GuidedPractice from '../components/GuidedPractice.svelte';
 
@@ -54,6 +51,16 @@
   // content. QA check 12 keeps it out.
   const selfPaced = new Set(['vocab', 'guidedPractice', 'tryOne', 'practice', 'hook']);
 
+  // Nothing may be written back until the saved position has been read.
+  //
+  // The reactive save below runs during initialisation, while index is still 0,
+  // so it used to overwrite the stored position with screen 1 BEFORE onMount
+  // read it — and then onMount restored the value it had just clobbered. Resume
+  // never worked, and U0-S07 promises "stop anytime, the course remembers your
+  // place". No test caught it because every test starts at screen 1 anyway,
+  // which is exactly what the bug produces.
+  let restored = false;
+
   onMount(() => {
     // Resume at the saved position, if any (G-5 — progress saves every screen).
     const saved = $progress.screenPosition[unitId];
@@ -61,6 +68,7 @@
       const i = unit.screens.findIndex((s) => s.id === saved);
       if (i >= 0) index = i;
     }
+    restored = true;
   });
 
   // The English screen is the structural source of truth; a language overlay is
@@ -81,7 +89,7 @@
   $: isLast = unit && index === unit.screens.length - 1;
   $: if (screen) { interactionDone = false; }
 
-  $: if (screen) {
+  $: if (screen && restored) {
     progress.saveScreenPosition(unitId, screen.id);
   }
 
@@ -323,55 +331,21 @@
         />
 
       {:else if screen.type === 'practice'}
-        {@const q = getQuestion(screen.questionId)}
-        <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-2">Practice — the official test question</p>
-        <QuestionCard text={q.official} />
-
-        {#if q.dynamic}
-          <!-- ◆ Dynamic answers are never graded. A fixed distractor set would
-               go stale after an election, and an old distractor could later
-               become the true answer. Shown as a current-answer card instead. -->
-          {@const ca = getCurrentAnswer(q.id)}
-          <div class="border border-border dark:border-dark-border rounded-card p-4">
-            <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-1">{ca?.label || 'Current answer'}</p>
-            {#if ca && ca.verified && ca.value}
-              <p class="text-lg font-bold mb-2">{ca.value}</p>
-              <p class="text-xs text-ink-muted dark:text-dark-ink-muted">
-                Checked: {ANSWERS_CHECKED || 'not yet recorded'}
-              </p>
-            {:else}
-              <p class="font-bold mb-2">This answer has not been checked yet.</p>
-              <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary">
-                This one changes with elections or appointments. Look it up before
-                your interview — never rely on an old answer.
-              </p>
-            {/if}
-            <a
-              class="text-sm underline font-bold inline-block mt-2"
-              href={USCIS_UPDATES_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >Check at uscis.gov</a>
-          </div>
-        {:else if q.multiSelect}
-          {@const p = presentOptions(q)}
-          <MultiSelect
-            options={p.options}
-            acceptedAnswers={q.acceptedAnswers}
-            required={q.multiSelect}
-            feedbackExplain={screen.feedbackExplain || ''}
-            on:answer={(e) => { handleAnswer(q.id, e.detail.correct); interactionDone = true; }}
-          />
-        {:else}
-          {@const p = presentOptions(q)}
-          <SingleSelect
-            options={p.options}
-            correctIndex={p.correctIndex}
-            correctAnswerText={q.acceptedAnswers[0]}
-            feedbackExplain={screen.feedbackExplain || ''}
-            on:answer={(e) => { handleAnswer(q.id, e.detail.correct); interactionDone = true; }}
-          />
-        {/if}
+        <!--
+          PracticeItem, not a copy of it. This branch used to render its own
+          label, question card, dynamic-answer card and SingleSelect/MultiSelect
+          — the same markup as the component, duplicated. That duplication is
+          why all 38 practice screens had no Listen control: narration was added
+          to the component, and lessons were not using it.
+        -->
+        <PracticeItem
+          q={getQuestion(screen.questionId)}
+          explain={screen.feedbackExplain || ''}
+          on:answer={(e) => {
+            handleAnswer(e.detail.id, e.detail.correct);
+            interactionDone = true;
+          }}
+        />
 
       {:else if screen.type === 'lockItIn'}
         <!-- No companion placeholder here. On a hook screen the striped circle

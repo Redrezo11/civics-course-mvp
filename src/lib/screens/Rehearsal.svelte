@@ -148,6 +148,8 @@
           questionId: current.id,
           revealed,
           accepted: acceptedFor(current),
+          correct,
+          wrong,
           lang: $progress.language || 'en',
         })}
         lang={$progress.language || 'en'}

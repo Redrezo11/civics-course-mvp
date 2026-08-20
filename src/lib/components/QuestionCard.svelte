@@ -7,6 +7,12 @@
 </script>
 
 <div class="question-card">
-  <span class="question-tag">Q</span>
+  <!--
+    Decorative. The "Q" is a visual register marker — it is how the heavy-border
+    card announces "this is verbatim official wording" at a glance. Spoken, it
+    is a bare letter before every question, which tells a screen-reader user
+    nothing and interrupts the question itself.
+  -->
+  <span class="question-tag" aria-hidden="true">Q</span>
   <p class="text-base font-bold leading-snug m-0">{text}</p>
 </div>
