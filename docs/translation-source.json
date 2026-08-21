@@ -7,12 +7,14 @@
     "narration.resume": "Resume",
     "settings.answersStayEnglish": "Answer choices show English first, with the Burmese underneath."
   },
+  "U0-S02.alt": "New citizens at a naturalization ceremony, standing close together, smiling and waving small United States flags, ceremony programmes in their hands.",
   "U0-S04.body": "Here is a real test question. Choose the answer you would give.",
   "U1-S05.paragraphs": [
     "In 1787, the thirteen states had just finished a long war against a king. They needed a government — but they were afraid of two opposite things at the same time.",
     "They were afraid of having no government. Without one, nobody could defend the country, settle arguments between states, or pay for anything.",
     "They were also afraid of a government so strong it would act like the king they had just escaped."
   ],
+  "U1-S05.alt": "The first page of the United States Constitution on aged parchment, beginning with the large words We the People.",
   "U1-S06b.paragraphs": [
     "Can the rulebook change? Yes — by amendment. But the writers made changing it slow and difficult on purpose. A rulebook that is easy to change is not much of a limit on anyone.",
     "In more than 230 years, it has changed only 27 times. That small number is the point.",
@@ -23,12 +25,12 @@
     {
       "heading": "Declaration of Independence — 1776",
       "body": "An announcement to the world: America is free from Britain. It says all people are created equal, with rights that belong to them — 'Life, Liberty, and the pursuit of Happiness.'",
-      "alt": "Historical document photograph."
+      "alt": "The Declaration of Independence on aged parchment, headed In Congress, July 4, 1776."
     },
     {
       "heading": "Constitution — 1787",
       "body": "A rulebook. It builds: the government America still uses today.",
-      "alt": "Historical document photograph."
+      "alt": "The first page of the Constitution on aged parchment, headed We the People."
     }
   ],
   "U1-S09.items[0].question": "Name one thing the U.S. Constitution does.",
@@ -110,11 +112,13 @@
     "The Senate: every state equal. Two senators per state, big or small. 50 states × 2 = 100 senators. A senator represents the people of their whole state and serves six years — a longer term than representatives get. Why two per state? Equal representation for small states — the deal that saved the union in 1787, called the Great Compromise.",
     "The House of Representatives: every person equal. Seats follow population — more people, more representatives. 435 voting members. A representative serves the people of one district and serves only two years. Why so short? So they must face the voters constantly — to more closely follow public opinion."
   ],
+  "U3-S05.alt": "The United States Capitol, where Congress meets: a white dome above a long front with a wing to each side.",
   "U3-S06.paragraphs": [
     "The President is elected for four years — and may serve only two terms.",
     "Why the limit? The 22nd Amendment — and you already know the deeper reason: to keep the president from becoming too powerful. The fear of kings, again.",
     "Who actually decides the winner? The Electoral College — a compromise between electing the president by popular vote and letting Congress choose."
   ],
+  "U3-S06.alt": "The White House seen across its lawn, the curved columns of the South Portico at its centre.",
   "U4-S04.cards": [
     {
       "word": "federal",
@@ -183,6 +187,7 @@
     "On the test, this is Question 67. In your life, it is the moment you become a citizen. It is the only test answer you will one day say out loud, with your hand raised, at your own ceremony.",
     "How do people become citizens at all? Three doors: born in the United States (a promise written in the 14th Amendment — its story is in Lesson 7), naturalize — your door, the one this course walks you to — or derive citizenship through parents."
   ],
+  "U5-S06.alt": "A polling place: a Vote Here sign beside open voting booths, with people filling in ballots.",
   "U6-S04.cards": [
     {
       "word": "colony",
@@ -276,6 +281,7 @@
     "The 15th Amendment (1870, after the Civil War): a male citizen of any race can vote. The 19th Amendment (1920): women can vote — remember the card from Lesson 1: your daughter votes because of it. Susan B. Anthony led that fight in the 1800s.",
     "A century after the Civil War, the promise still was not fully kept — so the civil rights movement rose to end racial discrimination. Martin Luther King, Jr. led it: he fought for civil rights and worked for equality for all Americans."
   ],
+  "U7-S06.alt": "Civil rights marchers walking arm in arm along a road, United States flags carried among them.",
   "U7-S07.paragraphs": [
     "Chapter 3 — America in the world.",
     "The 1900s took America into the world, and the test asks why each time — so learn the reasons, not just the names.",

@@ -101,7 +101,9 @@
       ],
       "handle": "The promise of 1776, extended by amendment and by movement, decade after decade.",
       "handleSub": "To any race, to women, to the discriminated-against — and through the 14th Amendment, to you.",
-      "primaryLabel": "Next"
+      "primaryLabel": "Next",
+      "image": "civil-rights-march.webp",
+      "alt": "Civil rights marchers walking arm in arm along a road, United States flags carried among them."
     },
     {
       "id": "U7-S07",
@@ -121,7 +123,6 @@
     {
       "id": "U7-S08",
       "type": "bigIdea",
-      "image": "flag-and-statue.jpg",
       "paragraphs": [
         "Chapter 4 — The symbols you will stand under.",
         "At your ceremony there will be a flag. Read it like a sentence: 13 stripes — the 13 original colonies, from the founding story. 50 stars — one for each state, from the growing story.",
@@ -130,7 +131,16 @@
       ],
       "resolution": "For 'name three national holidays,' keep three you already live with: New Year's Day, Independence Day, Thanksgiving.",
       "primaryLabel": "Next",
-      "alt": "The United States flag with its thirteen stripes and fifty stars, and the Statue of Liberty standing in the harbour behind it."
+      "imageRow": [
+        {
+          "image": "us-flag.webp",
+          "alt": "A United States flag laid flat: alternating red and white stripes, with a blue canton of white stars in the corner."
+        },
+        {
+          "image": "statue-of-liberty.webp",
+          "alt": "The Statue of Liberty on her stone pedestal, torch raised above her crown against a blue sky."
+        }
+      ]
     },
     {
       "id": "U7-S09",

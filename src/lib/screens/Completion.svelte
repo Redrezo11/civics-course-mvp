@@ -1,6 +1,7 @@
 <script>
   import { t } from '../i18n.js';
   import NarrationButton from '../components/NarrationButton.svelte';
+  import ScreenImage from '../components/ScreenImage.svelte';
   // G-05 closing screen + G-05b completion evidence. Storyboard §6.
   //
   // G-05b is required by the STUDY design, not by the instruction: completion
@@ -27,10 +28,11 @@
   <LessonBar unitLabel="Finishing up" onBack={() => navigate('/')} />
 
   <div class="flex-1 overflow-y-auto px-5 py-6">
-    <div class="w-full aspect-video mb-5 rounded-photo bg-[repeating-linear-gradient(135deg,theme(colors.border),theme(colors.border)_10px,theme(colors.surface)_10px,theme(colors.surface)_20px)] flex items-center justify-center text-xs text-ink-muted">
-      ceremony.jpg
-    </div>
-
+    <ScreenImage
+      image="naturalization-ceremony-close.webp"
+      alt="New citizens at a naturalization ceremony, smiling and waving small United States flags."
+      wrapperClass="mb-5"
+    />
     <NarrationButton
       segments={[
         { text: 'Your ceremony. Your oath. You are almost there.', lang: 'en' },

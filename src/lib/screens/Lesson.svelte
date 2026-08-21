@@ -11,6 +11,7 @@
   import LessonBar from '../components/LessonBar.svelte';
   import NarrationButton from '../components/NarrationButton.svelte';
   import PracticeItem from '../components/PracticeItem.svelte';
+  import ScreenImage from '../components/ScreenImage.svelte';
   import QuestionCard from '../components/QuestionCard.svelte';
   import AnswerLabel from '../components/AnswerLabel.svelte';
   import SingleSelect from '../components/SingleSelect.svelte';
@@ -197,9 +198,7 @@
       {/if}
       {#if screen.type === 'info'}
         {#if screen.image}
-          <div class="w-full aspect-video mb-4 rounded-photo bg-[repeating-linear-gradient(135deg,theme(colors.border),theme(colors.border)_10px,theme(colors.surface)_10px,theme(colors.surface)_20px)] flex items-center justify-center text-xs text-ink-muted" role="img" aria-label={screen.alt || screen.image}>
-            {screen.image}
-          </div>
+          <ScreenImage image={screen.image} alt={screen.alt} />
         {/if}
         {#if screen.heading}<h1 class="text-thesis font-bold mb-3">{screen.heading}</h1>{/if}
         {#if screen.clueList}
@@ -274,8 +273,21 @@
 
       {:else if screen.type === 'bigIdea'}
         {#if screen.image}
-          <div class="w-full aspect-video mb-4 rounded-photo bg-[repeating-linear-gradient(135deg,theme(colors.border),theme(colors.border)_10px,theme(colors.surface)_10px,theme(colors.surface)_20px)] flex items-center justify-center text-xs text-ink-muted" role="img" aria-label={screen.alt || screen.image}>
-            {screen.image}
+          <ScreenImage image={screen.image} alt={screen.alt} />
+        {/if}
+        <!--
+          A row of images rather than one composite. The delivered composite
+          letterboxed each building with blurred fill, so most of the frame was
+          blur and it got worse as the container narrowed. Three clean files in
+          a flex row stay sharp and stack on a narrow phone.
+        -->
+        {#if screen.imageRow}
+          <div class="flex flex-wrap gap-2 mb-4">
+            {#each screen.imageRow as pic}
+              <div class="flex-1 min-w-[8rem]">
+                <ScreenImage image={pic.image} alt={pic.alt} wrapperClass="" />
+              </div>
+            {/each}
           </div>
         {/if}
         {#if screen.paragraphs}
@@ -287,7 +299,7 @@
           <div class="space-y-4 mb-4">
             {#each screen.twoColumn as col}
               <div>
-                <div class="w-full aspect-video mb-2 rounded-photo bg-[repeating-linear-gradient(135deg,theme(colors.border),theme(colors.border)_10px,theme(colors.surface)_10px,theme(colors.surface)_20px)] flex items-center justify-center text-xs text-ink-muted">{col.image}</div>
+                <ScreenImage image={col.image} alt={col.alt} wrapperClass="mb-2" />
                 <p class="font-bold mb-1">{col.heading}</p>
                 <p class="text-sm">{col.body}</p>
               </div>

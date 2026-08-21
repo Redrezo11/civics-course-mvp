@@ -7,7 +7,7 @@ no longer exists.
 
 Everything already translated is live and is **not** listed here, so nothing gets
 translated twice. Remaining: **5 interface strings** and
-**30 content fields**.
+**36 content fields**.
 
 **Work from `docs/translation-source.json`, not from the tables below.** The
 tables clip long values to fit a markdown column; that JSON carries the full
@@ -122,15 +122,15 @@ which is the authority if this description and the JSON ever disagree:
 
 | Unit | Fields outstanding |
 |---|---|
-| U0 Test day | 1 |
-| U1 We the People | 5 |
+| U0 Test day | 2 |
+| U1 We the People | 6 |
 | U2 Three branches | 3 |
-| U3 Who represents you | 4 |
+| U3 Who represents you | 6 |
 | U4 Federal and state | 2 |
-| U5 Rights and responsibilities | 3 |
+| U5 Rights and responsibilities | 4 |
 | U6 How America began | 5 |
-| U7 How America changed | 7 |
-| **Total** | **30** |
+| U7 How America changed | 8 |
+| **Total** | **36** |
 
 ---
 
@@ -138,19 +138,21 @@ which is the authority if this description and the JSON ever disagree:
 
 ### U0 — Test day
 
-**1 fields.**
+**2 fields.**
 
 | Screen | Field | English |
 |---|---|---|
+| `U0-S02` | `alt` | New citizens at a naturalization ceremony, standing close together, smiling and waving small United States flags, ceremony programmes in their hands. |
 | `U0-S04` | `body` | Here is a real test question. Choose the answer you would give. |
 
 ### U1 — We the People
 
-**5 fields.**
+**6 fields.**
 
 | Screen | Field | English |
 |---|---|---|
 | `U1-S05` | `paragraphs` | In 1787, the thirteen states had just finished a long war against a king. They needed a government — but they were afraid of two opposite things at the same time. \| They were afraid of having no government. Without one, nobody could defend the country, settle arguments between states, or pay for anything. \| They were… **[clipped — full text in `translation-source.json` under `U1-S05.paragraphs`]** |
+| `U1-S05` | `alt` | The first page of the United States Constitution on aged parchment, beginning with the large words We the People. |
 | `U1-S06b` | `paragraphs` | Can the rulebook change? Yes — by amendment. But the writers made changing it slow and difficult on purpose. A rulebook that is easy to change is not much of a limit on anyone. \| In more than 230 years, it has changed only 27 times. That small number is the point. \| Many people worried that the new Constitution did n… **[clipped — full text in `translation-source.json` under `U1-S06b.paragraphs`]** |
 | `U1-S08` | `twoColumn` | Declaration of Independence — 1776: An announcement to the world: America is free from Britain. It says all people are created equal, with rights that belong to them — 'Life, Liberty, and the pursuit of Happiness.' \| Constitution — 1787: A rulebook. It builds: the government America still uses today. |
 | `U1-S09` | `items[0].question` | Name one thing the U.S. Constitution does. **⚠ keep the quoted official question in English**; translate only the words around it |
@@ -168,14 +170,16 @@ which is the authority if this description and the JSON ever disagree:
 
 ### U3 — Who represents you
 
-**4 fields.**
+**6 fields.**
 
 | Screen | Field | English |
 |---|---|---|
 | `U3-S03` | `bodyList` | Imagine five towns that share one road, one water supply, and one school. \| One town is large; four are small. When they meet to decide things together, how should the voting work? \| If every decision follows population, the four small towns are ignored forever — outvoted before they speak. \| If every town gets one … **[clipped — full text in `translation-source.json` under `U3-S03.bodyList`]** |
 | `U3-S04` | `cards` | senator: a member of the Senate. — “Each state has two senators.” \| representative: a member of the House. — “A representative represents the people of one district.” \| district: your area. — “Everyone on your street is in your district.” \| term: how long a leader serves before the next election. — “A senator's term… **[clipped — full text in `translation-source.json` under `U3-S04.cards`]** |
 | `U3-S05` | `paragraphs` | Inside the Capitol are two rooms, built on two opposite principles — on purpose. \| The Senate: every state equal. Two senators per state, big or small. 50 states × 2 = 100 senators. A senator represents the people of their whole state and serves six years — a longer term than representatives get. Why two per state? Eq… **[clipped — full text in `translation-source.json` under `U3-S05.paragraphs`]** |
+| `U3-S05` | `alt` | The United States Capitol, where Congress meets: a white dome above a long front with a wing to each side. |
 | `U3-S06` | `paragraphs` | The President is elected for four years — and may serve only two terms. \| Why the limit? The 22nd Amendment — and you already know the deeper reason: to keep the president from becoming too powerful. The fear of kings, again. \| Who actually decides the winner? The Electoral College — a compromise between electing the… **[clipped — full text in `translation-source.json` under `U3-S06.paragraphs`]** |
+| `U3-S06` | `alt` | The White House seen across its lawn, the curved columns of the South Portico at its centre. |
 
 ### U4 — Federal and state
 
@@ -188,13 +192,14 @@ which is the authority if this description and the JSON ever disagree:
 
 ### U5 — Rights and responsibilities
 
-**3 fields.**
+**4 fields.**
 
 | Screen | Field | English |
 |---|---|---|
 | `U5-S04` | `cards` | right: a freedom the law protects for you. — “You have the right to speak freely.” \| responsibility: a duty — something you must or should do. — “Paying taxes is a responsibility.” \| jury: a group of citizens who decide a court case. — “Citizens serve on a jury.” \| oath: an official, serious promise. — “At your cere… **[clipped — full text in `translation-source.json` under `U5-S04.cards`]** |
 | `U5-S05` | `paragraphs` | Remember the Bill of Rights from the rulebook lesson — protections for people living in the United States, not only citizens. \| Everyone here holds these: freedom of speech, freedom of expression, freedom of assembly (gathering in groups), freedom to petition the government (asking it to change something), freedom of … **[clipped — full text in `translation-source.json` under `U5-S05.paragraphs`]** |
 | `U5-S06` | `paragraphs` | Belonging also asks. \| Everyone who earns money here pays federal taxes — required by law, and it is how the country pays for what it does. Men aged 18 through 25 register for the Selective Service — a list, required by law, that makes a draft fair if one is ever needed. \| And at your ceremony, you will stand and tak… **[clipped — full text in `translation-source.json` under `U5-S06.paragraphs`]** |
+| `U5-S06` | `alt` | A polling place: a Vote Here sign beside open voting booths, with people filling in ballots. |
 
 ### U6 — How America began
 
@@ -210,13 +215,14 @@ which is the authority if this description and the JSON ever disagree:
 
 ### U7 — How America changed
 
-**7 fields.**
+**8 fields.**
 
 | Screen | Field | English |
 |---|---|---|
 | `U7-S04` | `cards` | slavery: owning people as property — forced work without freedom. — “The Civil War ended slavery.” \| union: the states together as one country. — “Lincoln saved the Union.” \| discrimination: treating people unfairly because of their group. — “The civil rights movement fought discrimination.” \| communism: a system wh… **[clipped — full text in `translation-source.json` under `U7-S04.cards`]** |
 | `U7-S05` | `paragraphs` | Chapter 1 — The war over the promise. \| First, the country grew: in 1803 the United States bought the Louisiana Territory from France, doubling its size — Jefferson's doing. But growth sharpened the question the founders had left open: slavery. The North and the South finally went to war over it — the Civil War, the w… **[clipped — full text in `translation-source.json` under `U7-S05.paragraphs`]** |
 | `U7-S06` | `paragraphs` | Chapter 2 — The promise, written into the rulebook. \| After the war, the amendment tool went to work. The 14th Amendment wrote a new promise into the rulebook: all persons born or naturalized in the United States are U.S. citizens. Read that twice — or naturalized. Your certificate, when you receive it, will rest on t… **[clipped — full text in `translation-source.json` under `U7-S06.paragraphs`]** |
+| `U7-S06` | `alt` | Civil rights marchers walking arm in arm along a road, United States flags carried among them. |
 | `U7-S07` | `paragraphs` | Chapter 3 — America in the world. \| The 1900s took America into the world, and the test asks why each time — so learn the reasons, not just the names. \| World War I. Germany attacked American ships. The United States entered the war. \| The Great Depression began in 1929 when the stock market crashed. It was the long… **[clipped — full text in `translation-source.json` under `U7-S07.paragraphs`]** |
 | `U7-S08` | `paragraphs` | Chapter 4 — The symbols you will stand under. \| At your ceremony there will be a flag. Read it like a sentence: 13 stripes — the 13 original colonies, from the founding story. 50 stars — one for each state, from the growing story. \| The capital: Washington, D.C. The Statue of Liberty stands in New York Harbor — for m… **[clipped — full text in `translation-source.json` under `U7-S08.paragraphs`]** |
 | `U7-S12` | `items[1].buckets` | Memorial Day \| Veterans Day |

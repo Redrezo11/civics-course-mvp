@@ -78,7 +78,7 @@
     {
       "id": "U3-S05",
       "type": "bigIdea",
-      "image": "capitol-two-chambers.jpg",
+      "image": "us-capitol.webp",
       "paragraphs": [
         "Inside the Capitol are two rooms, built on two opposite principles — on purpose.",
         "The Senate: every state equal. Two senators per state, big or small. 50 states × 2 = 100 senators. A senator represents the people of their whole state and serves six years — a longer term than representatives get. Why two per state? Equal representation for small states — the deal that saved the union in 1787, called the Great Compromise.",
@@ -87,7 +87,7 @@
       "handle": "One state, two kinds of voice.",
       "handleSub": "Citizens elect both.",
       "primaryLabel": "Next",
-      "alt": "The United States Capitol building, with its two wings marked as the Senate chamber and the House chamber."
+      "alt": "The United States Capitol, where Congress meets: a white dome above a long front with a wing to each side."
     },
     {
       "id": "U3-S06",
@@ -98,7 +98,9 @@
         "Who actually decides the winner? The Electoral College — a compromise between electing the president by popular vote and letting Congress choose."
       ],
       "resolution": "And if the President can no longer serve, the Vice President becomes President.",
-      "primaryLabel": "Next"
+      "primaryLabel": "Next",
+      "image": "white-house.webp",
+      "alt": "The White House seen across its lawn, the curved columns of the South Portico at its centre."
     },
     {
       "id": "U3-S07",

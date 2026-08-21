@@ -422,6 +422,12 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
           fail(check, `${s.id} two-column image "${col.image}" has no alt text`);
         }
       }
+      for (const pic of s.imageRow || []) {
+        if (pic.image && !pic.alt) {
+          missing += 1;
+          fail(check, `${s.id} row image "${pic.image}" has no alt text`);
+        }
+      }
     }
   }
   if (missing === 0) pass(check, 'every asset-bearing screen carries alt text');
@@ -957,6 +963,66 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
       files
         ? `${files} recording(s) resolve to a narrated screen, with exact-case filenames`
         : 'no recordings yet — every narrated screen falls back to speech'
+    );
+  }
+}
+
+// --- 18. Every image reference resolves -------------------------------------
+// A slot whose file is absent renders its placeholder, which is deliberate and
+// honest — the artwork is commissioned after the slots exist. But a slot whose
+// file is absent because the NAME is wrong looks identical, and says nothing.
+//
+// Case is the specific trap, again: GitHub Pages is case-sensitive and Windows
+// is not, so US-Capitol.webp works on the machine that made it and 404s for
+// every learner. That failure is invisible in development.
+{
+  const check = '18 image references resolve';
+  const imageDir = join(root, 'public', 'images');
+
+  let onDisk = [];
+  try {
+    onDisk = readdirSync(imageDir).filter((n) => !n.startsWith('.'));
+  } catch {
+    // No images yet.
+  }
+
+  const wanted = [];
+  for (const u of units) {
+    for (const s of u.screens) {
+      if (s.image) wanted.push([s.id, s.image]);
+      for (const pic of s.imageRow || []) wanted.push([s.id, pic.image]);
+      for (const col of s.twoColumn || []) if (col.image) wanted.push([s.id, col.image]);
+    }
+  }
+
+  let resolved = 0;
+  for (const [screenId, name] of wanted) {
+    if (onDisk.includes(name)) {
+      resolved += 1;
+      continue;
+    }
+    // Only a CASE mismatch is a failure. A genuinely absent file is a slot
+    // waiting for artwork, which the placeholder states honestly.
+    const nearly = onDisk.find((f) => f.toLowerCase() === String(name).toLowerCase());
+    if (nearly) {
+      fail(
+        check,
+        `${screenId} references "${name}" but the file is "${nearly}" — case must match exactly, or it 404s once deployed`
+      );
+    }
+  }
+
+  for (const name of onDisk) {
+    if (!/\.(webp|png|jpg|jpeg|avif|svg)$/i.test(name)) {
+      fail(check, `public/images/${name} is not an image format the app renders`);
+    }
+  }
+
+  if (!errors.some((e) => e.startsWith(check))) {
+    const waiting = wanted.length - resolved;
+    pass(
+      check,
+      `${resolved} of ${wanted.length} image slots resolve${waiting ? `; ${waiting} still awaiting artwork, each showing its placeholder` : ''}`
     );
   }
 }

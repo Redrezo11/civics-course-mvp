@@ -77,7 +77,6 @@
     {
       "id": "U2-S05",
       "type": "bigIdea",
-      "image": "three-buildings-row.jpg",
       "paragraphs": [
         "Three buildings. Three jobs.",
         "The Capitol: Congress works here — it writes the laws. Congress has two parts, the Senate and the House of Representatives; you will meet them closely in the next lesson.",
@@ -87,7 +86,20 @@
       "handle": "Congress makes the laws. The President carries them out. The courts explain them.",
       "handleSub": "No branch can do another branch's job.",
       "primaryLabel": "Next",
-      "alt": "Three government buildings side by side: the domed Capitol, the White House, and the columned Supreme Court."
+      "imageRow": [
+        {
+          "image": "us-capitol.webp",
+          "alt": "The United States Capitol, its white dome above a long colonnaded front."
+        },
+        {
+          "image": "white-house.webp",
+          "alt": "The White House behind its lawn, with the curved columns of the South Portico."
+        },
+        {
+          "image": "us-supreme-court.webp",
+          "alt": "The Supreme Court building, a white marble front of tall columns under a carved pediment."
+        }
+      ]
     },
     {
       "id": "U2-S06",

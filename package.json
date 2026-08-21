@@ -12,7 +12,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "audio": "node scripts/audio-assets.js",
-    "cmi5": "node scripts/cmi5-manifest.js"
+    "cmi5": "node scripts/cmi5-manifest.js",
+    "images": "node scripts/image-assets.js"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^7.2.0",

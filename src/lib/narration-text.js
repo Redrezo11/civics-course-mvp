@@ -45,6 +45,9 @@ export const NOT_NARRATED = [
   'sampleQuestionId', 'questionId', 'unlocksReview', 'fullBankOffer',
   'items', 'options', 'optionsGloss', 'cards', 'feedback', 'feedbackExplain',
   'question', 'narrationText', 'audioSrc',
+  // Photographs. Their alt text is for assistive technology, which reads it
+  // already — narration reading it too would describe the picture twice.
+  'imageRow',
 ];
 
 export const NARRATED_TYPES = Object.keys(NARRATED_FIELDS);

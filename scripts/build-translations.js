@@ -438,7 +438,7 @@ function prepareGlosses(overlay, buildById, notes) {
 // error, so they are refusals, not warnings.
 // ---------------------------------------------------------------------------
 
-function validate(overlay, buildById, unit) {
+function validate(overlay, buildById, unit, obsolete = []) {
   const errors = [];
 
   const checkList = (where, value, english) => {
@@ -458,7 +458,13 @@ function validate(overlay, buildById, unit) {
     }
     for (const [field, value] of Object.entries(fields)) {
       if (!(field in en)) {
-        errors.push(`${screenId}.${field}: does not exist on the English screen`);
+        // The English screen no longer HAS this field — the content changed
+        // under the translation. Dropped rather than fatal: the guard exists so
+        // the overlay never carries a field the renderer will not read, and
+        // dropping achieves that. Failing the unit would block a legitimate
+        // content edit behind a translation the edit made obsolete.
+        delete fields[field];
+        obsolete.push(`${screenId}.${field}: the English screen no longer has this field`);
         continue;
       }
       if (field === 'items') {
@@ -534,7 +540,8 @@ function buildUnit(unit) {
     return !fieldSpec.split('/').some((f) => overlay[screenId]?.[f] !== undefined);
   });
 
-  const errors = validate(overlay, buildById, unit);
+  const obsolete = [];
+  const errors = validate(overlay, buildById, unit, obsolete);
   if (errors.length) return { unit, errors };
 
   const outDir = join(root, 'src', 'lib', 'content', 'translations', LANG);
@@ -558,6 +565,7 @@ function buildUnit(unit) {
     gaps: stillMissing,
     notes,
     dropped,
+    obsolete,
     unusable,
     stale: stale.map((s) => `${unit}: ${s}`),
   };
@@ -634,6 +642,7 @@ for (const r of results) {
     console.log(`${r.unit}: ${r.screens} screens, ${r.fields} fields`);
     for (const n of r.notes || []) console.log(`    · ${n}`);
     for (const d of r.dropped || []) console.log(`    ✗ G-3 — ${d}`);
+    for (const o of r.obsolete || []) console.log(`    · dropped — ${o}`);
     for (const u of r.unusable || []) console.log(`    ✗ shape — ${u}`);
     for (const g of r.gaps || []) console.log(`    ! not mapped — ${g}`);
   }
