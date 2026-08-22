@@ -41,6 +41,7 @@ const readJson = (p) => JSON.parse(readFileSync(p, 'utf8'));
 import { NARRATED_FIELDS } from '../src/lib/narration-text.js';
 import { textHash } from '../src/lib/text-hash.js';
 import { STANDALONE_NARRATION } from '../src/lib/content/standalone-narration.js';
+import { xmlProblems } from './lib/xml-check.js';
 
 const UNIT_IDS = ['U1', 'U2', 'U3', 'U4', 'U5', 'U6', 'U7'];
 const EXPECTED_COUNTS = { U1: 14, U2: 20, U3: 23, U4: 5, U5: 10, U6: 17, U7: 39 };
@@ -1296,6 +1297,24 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
   if (!repeats.length) {
     pass(check, `${sites.size} passages, each written once (${SHARED_COPY.length} shared frames allowed)`);
   }
+}
+
+// --- 22. The cmi5 manifest is well-formed XML -------------------------------
+//
+// It was not, and the reason is worth keeping: a comment in the generator's
+// template read "Regenerate ... : --ns https://your.domain/civics", and a
+// double hyphen is illegal inside an XML comment. Every value the generator
+// interpolates is escaped, so the DATA was never the risk — the prose around it
+// was, and nothing looked at that.
+//
+// An LMS importer rejects an ill-formed manifest outright and reports a line
+// number in a file nobody hand-wrote. This costs a millisecond instead.
+{
+  const check = '22 cmi5 manifest is well-formed';
+  const manifestPath = join(root, 'docs', 'cmi5', 'cmi5.xml');
+  const problems = xmlProblems(readFileSync(manifestPath, 'utf8'));
+  for (const p of problems) fail(check, p);
+  if (!problems.length) pass(check, 'docs/cmi5/cmi5.xml parses as XML');
 }
 
 // Contrast and readability USED to be listed here as human-only. They are not:

@@ -33,6 +33,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 import { writeZip, readZipEntryNames } from './lib/zip.js';
+import { xmlProblems } from './lib/xml-check.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = join(here, '..');
@@ -125,12 +126,23 @@ const manifestAtRoot = entryNames.includes('cmi5.xml');
 const appAtAu = entryNames.includes('au/index.html');
 const anyBackslash = entryNames.filter((n) => n.includes('\\'));
 
+// The manifest is checked again HERE, on the copy that is actually in the zip.
+// The generator checks its own output, but this is the file an LMS parses, and
+// the two have been different before — the archive had backslash paths while
+// the folder it came from did not.
+const packagedManifest = files.find((f) => f.name === 'cmi5.xml');
+const manifestProblems = packagedManifest
+  ? xmlProblems(packagedManifest.data.toString('utf8'))
+  : ['no cmi5.xml in the archive'];
+
 console.log(`\n  read back from the archive itself:`);
 console.log(`    cmi5.xml at the root          ${manifestAtRoot ? 'yes' : 'NO — the import will fail'}`);
 console.log(`    au/index.html present         ${appAtAu ? 'yes' : 'NO — the AU has nothing to launch'}`);
 console.log(`    forward-slash paths           ${anyBackslash.length ? `NO — ${anyBackslash.length} bad entries` : 'yes'}`);
+console.log(`    manifest is well-formed XML   ${manifestProblems.length ? 'NO' : 'yes'}`);
+for (const p of manifestProblems) console.log(`      ${p}`);
 
-if (!manifestAtRoot || !appAtAu || anyBackslash.length) process.exit(1);
+if (!manifestAtRoot || !appAtAu || anyBackslash.length || manifestProblems.length) process.exit(1);
 
 if (!NS) {
   console.log(
