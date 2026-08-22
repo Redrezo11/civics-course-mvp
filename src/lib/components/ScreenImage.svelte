@@ -31,20 +31,6 @@
    * an empty alt means in HTML, rather than an oversight.
    */
   export let decorative = false;
-  /**
-   * `head` crops to the face for small round avatars.
-   *
-   * The companion art is a head-and-torso portrait: the head is roughly the top
-   * 57% of the square, so dropped whole into a 64px circle the face renders
-   * about 35px with its shoulders clipped by the circle. The delivery included
-   * hand-made 64×64 crops for two poses precisely because the full portraits do
-   * not survive avatar size — see assets-source/companion/previews/.
-   *
-   * Rather than use those for two poses and leave the third broken, the crop is
-   * derived here for all of them: show the top ~62% of the image, centred, so
-   * head and shoulders fill the frame. One rule, every pose, no new assets.
-   */
-  export let crop = 'none';
 
   const BASE = import.meta.env?.BASE_URL ?? './';
 
@@ -57,27 +43,10 @@
 
   // An uncropped portrait at full column width is 448px of face above three
   // lines of text. Photographs are 16:9 and full width is what they are for.
-  $: cap = w === h && crop === 'none' ? 'max-w-[240px] mx-auto' : '';
+  $: cap = w === h ? 'max-w-[240px] mx-auto' : '';
 </script>
 
-{#if have && crop === 'head'}
-  <!--
-    Scaled to 160% and anchored to the top, so the visible window is the top
-    62.5% of the artwork, horizontally centred. That is the framing of the
-    supplied 64px crops, applied to every pose.
-  -->
-  <div class="relative w-full {box} overflow-hidden {wrapperClass}">
-    <img
-      src="{BASE}images/{image}"
-      alt={decorative ? '' : alt}
-      width={w}
-      height={h}
-      loading="lazy"
-      decoding="async"
-      class="absolute top-0 left-[-30%] w-[160%] h-[160%] max-w-none object-cover"
-    />
-  </div>
-{:else if have}
+{#if have}
   <!--
     Lazy, so a learner pays for the screens they actually reach — the binding
     constraint on this course is prepaid mobile data. Width and height are the

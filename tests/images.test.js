@@ -290,43 +290,55 @@ describe('an image is sized from the image', () => {
   });
 });
 
-describe('small round avatars are cropped to the head', () => {
-  it('every companion in a box under 96px asks for the head crop', () => {
-    // A head-and-torso portrait dropped whole into a 64px circle renders the
-    // face at about 35px with its shoulders clipped away. The delivery shipped
-    // hand-made 64px crops for two poses because of exactly this.
-    const sources = ['Lesson', 'Rehearsal', 'Welcome'].map((n) => [
+describe('the companion is rendered big enough to see', () => {
+  const MIN_PX = 128;
+
+  it('never lands in a box narrower than 128px', () => {
+    // The defect this replaces was a 64px circle — smaller than the Listen
+    // button beside it — with the head crop zoomed into the face, so a
+    // tightly-cropped head rendered tiny.
+    //
+    // The previous guard asked whether small avatars were CROPPED, which
+    // enforced the workaround rather than catching the cause. Nothing asked
+    // whether the picture was big enough to look at.
+    const sources = ['Lesson', 'Rehearsal', 'Welcome', 'Completion'].map((n) => [
       n,
       readFileSync(`src/lib/screens/${n}.svelte`, 'utf8'),
     ]);
+
+    let checked = 0;
     for (const [name, text] of sources) {
-      // Any wrapper sized below 96px (w-16 = 64px, w-20 = 80px) holding a
-      // companion must pass crop="head".
-      const smallBoxes = text.match(/<div class="w-(1[0-9]|2[0-3]) [^"]*"[\s\S]{0,240}?<\/div>/g) || [];
-      for (const block of smallBoxes) {
-        if (!block.includes('companion-')) continue;
-        expect(block, `${name}: a small companion avatar is missing crop="head"`).toMatch(/crop="head"/);
+      // The div that DIRECTLY wraps a companion, not any ancestor that happens
+      // to contain one — an outer flex container has no width of its own and
+      // would read as "unstated" while the real wrapper was fine.
+      const wrappers = [...text.matchAll(/<div class="([^"]*)">\s*<ScreenImage[\s\S]{0,200}?companion-/g)];
+      for (const [, cls] of wrappers) {
+        checked += 1;
+
+        const tailwind = cls.match(/(?:^|\s)w-(\d+)(?:\s|$)/);
+        const explicit = cls.match(/max-w-\[(\d+)px\]/);
+        const px = tailwind ? Number(tailwind[1]) * 4 : explicit ? Number(explicit[1]) : null;
+
+        expect(px, `${name}: a companion sits in a box with no stated width ("${cls}")`).not.toBeNull();
+        expect(
+          px,
+          `${name}: a companion renders at ${px}px — below the ${MIN_PX}px floor, where the face becomes a smudge`
+        ).toBeGreaterThanOrEqual(MIN_PX);
       }
     }
+    expect(checked, 'found no companion sites to check').toBeGreaterThan(2);
   });
 
-  it('shows the top of the artwork, where the head is', () => {
+  it('shows the whole figure, because the gesture is the pose', () => {
+    // thinking is a hand on the chin, speaking an open hand, pleased a plain
+    // smile. Cropping to the head deletes the only thing that distinguishes
+    // seven poses from one.
     const { container } = render(ScreenImage, {
-      props: { image: 'companion-thinking.webp', decorative: true, crop: 'head', wrapperClass: '' },
+      props: { image: 'companion-thinking.webp', decorative: true, wrapperClass: '' },
     });
     const img = container.querySelector('img');
-    // Anchored to the top and scaled past the box, so the visible window is the
-    // upper part of the portrait rather than the whole figure shrunk down.
-    expect(img.className).toMatch(/top-0/);
-    expect(img.className).toMatch(/w-\[160%\]/);
-    expect(container.querySelector('div').className).toMatch(/overflow-hidden/);
-  });
-
-  it('leaves Welcome uncropped — it is a portrait, not an avatar', () => {
-    const text = readFileSync('src/lib/screens/Welcome.svelte', 'utf8');
-    expect(text).toMatch(/companion-welcome\.webp/);
-    expect(text, 'Welcome shows the whole figure at 200px').not.toMatch(
-      /companion-welcome\.webp"[^>]*crop="head"/
-    );
+    expect(img.className).toMatch(/aspect-square/);
+    expect(img.className, 'the image is being scaled past its box again').not.toMatch(/w-\[1[0-9]{2}%\]/);
+    expect(container.querySelector('div'), 'no overflow wrapper should remain').toBeNull();
   });
 });

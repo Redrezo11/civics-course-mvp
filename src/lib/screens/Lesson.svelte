@@ -249,10 +249,9 @@
           sighted learner and nothing at all to a screen reader. companionPose
           was authored on this screen the whole time and read by nobody.
         -->
-        <div class="w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden">
+        <div class="w-40 mx-auto mb-4">
           <ScreenImage
             image="companion-{screen.companionPose || 'thinking'}.webp"
-            crop="head"
             decorative
             wrapperClass=""
           />
@@ -379,10 +378,9 @@
       {:else if screen.type === 'lockItIn'}
         <!-- These screens have specified a pose since they were written; it has
              simply never been drawn. -->
-        <div class="w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden">
+        <div class="w-40 mx-auto mb-4">
           <ScreenImage
             image="companion-{screen.companionPose || 'pleased'}.webp"
-            crop="head"
             decorative
             wrapperClass=""
           />
