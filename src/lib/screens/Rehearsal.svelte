@@ -26,6 +26,7 @@
   import LessonBar from '../components/LessonBar.svelte';
   import QuestionCard from '../components/QuestionCard.svelte';
   import NarrationButton from '../components/NarrationButton.svelte';
+  import ScreenImage from '../components/ScreenImage.svelte';
   import { rehearsalSegments } from '../narration-text.js';
   import { STANDALONE_NARRATION } from '../content/standalone-narration.js';
 
@@ -110,7 +111,9 @@
         screenId="rehearsal-intro"
         wrapperClass="mb-4"
       />
-      <div class="w-16 h-16 rounded-full mx-auto mb-4 bg-[repeating-linear-gradient(135deg,theme(colors.border),theme(colors.border)_6px,theme(colors.surface)_6px,theme(colors.surface)_12px)]"></div>
+      <div class="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden">
+        <ScreenImage image="companion-speaking.webp" shape="square" decorative wrapperClass="" />
+      </div>
       <h1 class="text-heading font-bold mb-4">This is practice for the real interview.</h1>
       <p class="mb-3 leading-relaxed">
         At the real interview you will <em>hear</em> these questions. Here you read them

@@ -412,9 +412,17 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
   let missing = 0;
   for (const u of units) {
     for (const s of u.screens) {
-      if (s.image && !s.alt) {
+      // An empty alt is CORRECT for decoration — it is how HTML says "this
+      // picture carries no information". But it looks identical to a forgotten
+      // one, so the screen has to SAY it is decorative. Silence is the failure,
+      // not emptiness.
+      if (s.image && !s.alt && !s.decorative) {
         missing += 1;
-        fail(check, `${s.id} has image "${s.image}" with no alt text`);
+        fail(check, `${s.id} has image "${s.image}" with no alt text and no decorative flag`);
+      }
+      if (s.decorative && s.alt) {
+        missing += 1;
+        fail(check, `${s.id} is marked decorative but also carries alt text — a screen reader would announce a picture that carries nothing`);
       }
       for (const col of s.twoColumn || []) {
         if (col.image && !col.alt) {
@@ -430,7 +438,9 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
       }
     }
   }
-  if (missing === 0) pass(check, 'every asset-bearing screen carries alt text');
+  if (missing === 0) {
+    pass(check, 'every asset-bearing screen carries alt text, or declares itself decorative');
+  }
 }
 
 // --- 8. Zero external requests ---------------------------------------------
@@ -990,6 +1000,9 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
   for (const u of units) {
     for (const s of u.screens) {
       if (s.image) wanted.push([s.id, s.image]);
+      // Derived from companionPose rather than authored, so nothing else here
+      // would notice a pose with no artwork behind it.
+      if (s.companionPose) wanted.push([s.id, `companion-${s.companionPose}.webp`]);
       for (const pic of s.imageRow || []) wanted.push([s.id, pic.image]);
       for (const col of s.twoColumn || []) if (col.image) wanted.push([s.id, col.image]);
     }
@@ -1009,6 +1022,8 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
         check,
         `${screenId} references "${name}" but the file is "${nearly}" — case must match exactly, or it 404s once deployed`
       );
+    } else if (/^companion-/.test(String(name))) {
+      fail(check, `${screenId} has a companionPose with no artwork: "${name}"`);
     }
   }
 
@@ -1024,6 +1039,60 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
       check,
       `${resolved} of ${wanted.length} image slots resolve${waiting ? `; ${waiting} still awaiting artwork, each showing its placeholder` : ''}`
     );
+  }
+}
+
+// --- 19. Nothing oversized in public/ ---------------------------------------
+// Vite copies public/ verbatim into dist/, so anything left there ships.
+//
+// The companion delivery landed in public/ as 6.8 MB of PNG masters and
+// previews — thirteen times the whole application — and came within one build
+// of deploying to people paying for data by the megabyte. Nothing failed,
+// nothing warned; the folder simply got bigger.
+//
+// Source assets belong in assets-source/, outside the served tree.
+{
+  const check = '19 public/ carries only what ships';
+  const publicDir = join(root, 'public');
+  // Generous: the Myanmar font subset is 154 KB and legitimately lives here.
+  const MAX_KB = 400;
+  const SERVED = /\.(webp|png|jpg|jpeg|avif|svg|mp3|woff2|ico|json|txt|xml)$/i;
+
+  const walk = (dir, rel = '') => {
+    let out = [];
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      if (e.name.startsWith('.')) continue;
+      const p = join(dir, e.name);
+      const r = rel ? `${rel}/${e.name}` : e.name;
+      if (e.isDirectory()) out = out.concat(walk(p, r));
+      else out.push({ path: p, rel: r });
+    }
+    return out;
+  };
+
+  let files = [];
+  try {
+    files = walk(publicDir);
+  } catch {
+    files = [];
+  }
+
+  let bytes = 0;
+  for (const f of files) {
+    const size = readFileSync(f.path).length;
+    bytes += size;
+    if (!SERVED.test(f.rel)) {
+      fail(check, `public/${f.rel} is not a format the app serves — source assets belong in assets-source/`);
+    } else if (size / 1024 > MAX_KB) {
+      fail(
+        check,
+        `public/${f.rel} is ${(size / 1024).toFixed(0)} KB, over the ${MAX_KB} KB ceiling — ship an export, keep the master in assets-source/`
+      );
+    }
+  }
+
+  if (!errors.some((e) => e.startsWith(check))) {
+    pass(check, `${files.length} file(s) in public/, ${(bytes / 1024).toFixed(0)} KB total, none oversized`);
   }
 }
 

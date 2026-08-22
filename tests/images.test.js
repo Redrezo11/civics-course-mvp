@@ -13,10 +13,13 @@
 
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/svelte';
-import { readdirSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 
 import ScreenImage from '../src/lib/components/ScreenImage.svelte';
 import manifest from '../src/lib/content/image-manifest.json';
+import Lesson from '../src/lib/screens/Lesson.svelte';
+import LevelsDiagram from '../src/lib/components/LevelsDiagram.svelte';
+import { progress } from '../src/lib/stores/progress.js';
 
 import unit0 from '../src/lib/content/unit0.json';
 import unit1 from '../src/lib/content/unit1.json';
@@ -34,7 +37,7 @@ function slots() {
   const out = [];
   for (const unit of UNITS) {
     for (const s of unit.screens) {
-      if (s.image) out.push({ screen: s.id, image: s.image, alt: s.alt });
+      if (s.image) out.push({ screen: s.id, image: s.image, alt: s.alt, decorative: s.decorative });
       for (const pic of s.imageRow || []) out.push({ screen: s.id, image: pic.image, alt: pic.alt, row: true });
       for (const col of s.twoColumn || []) {
         if (col.image) out.push({ screen: s.id, image: col.image, alt: col.alt, column: true });
@@ -55,8 +58,14 @@ describe('the image manifest', () => {
 });
 
 describe('every image slot', () => {
-  it('carries alt text', () => {
+  it('carries alt text, or declares itself decorative', () => {
+    // An empty alt is correct for decoration and identical to a forgotten one.
+    // The screen has to say which it means.
     for (const s of slots()) {
+      if (s.decorative) {
+        expect(s.alt, `${s.screen} is decorative and should carry no alt`).toBeFalsy();
+        continue;
+      }
       expect(s.alt, `${s.screen} → ${s.image} has no alt`).toBeTruthy();
       expect(s.alt.length, `${s.screen} alt is too short to describe anything`).toBeGreaterThan(20);
     }
@@ -129,5 +138,111 @@ describe('a slot with a file', () => {
     expect(container.querySelector('img').getAttribute('alt')).toBe('');
     // An empty alt is valid HTML for decoration, but no image in this course is
     // decorative — QA check 6 fails the build before this could ship.
+  });
+});
+
+// ---------------------------------------------------------------------------
+// The companion character
+// ---------------------------------------------------------------------------
+
+describe('the companion character', () => {
+  it('has artwork for every pose the content asks for', () => {
+    // companionPose was authored on 14 screens and read by nothing, so half of
+    // them drew an anonymous circle and half drew nothing at all. The artwork
+    // could not arrive because the image map never asked for it.
+    const poses = new Set();
+    for (const unit of UNITS) {
+      for (const s of unit.screens) if (s.companionPose) poses.add(s.companionPose);
+    }
+    expect(poses.size).toBeGreaterThan(0);
+    for (const pose of poses) {
+      expect(manifest.images, `no artwork for companionPose "${pose}"`).toContain(`companion-${pose}.webp`);
+    }
+  });
+
+  it('renders on a hook screen', () => {
+    const idx = unit1.screens.findIndex((s) => s.type === 'hook');
+    progress.saveScreenPosition('U1', unit1.screens[idx].id);
+    const { container } = render(Lesson, { props: { unitId: 'U1' } });
+    const img = [...container.querySelectorAll('img')].find((i) => /companion-/.test(i.getAttribute('src')));
+    expect(img, 'no companion on the hook screen').toBeTruthy();
+  });
+
+  it('renders on a lock-it-in screen, which it never has', () => {
+    const idx = unit1.screens.findIndex((s) => s.type === 'lockItIn');
+    expect(idx).toBeGreaterThan(-1);
+    progress.saveScreenPosition('U1', unit1.screens[idx].id);
+    const { container } = render(Lesson, { props: { unitId: 'U1' } });
+    const img = [...container.querySelectorAll('img')].find((i) => /companion-pleased/.test(i.getAttribute('src')));
+    expect(img, 'lock-it-in screens specified a pose and drew nothing').toBeTruthy();
+  });
+
+  it('is decorative — empty alt, and nothing announced', () => {
+    const { container } = render(ScreenImage, {
+      props: { image: 'companion-thinking.webp', alt: 'ignored', decorative: true, shape: 'square' },
+    });
+    const img = container.querySelector('img');
+    expect(img.getAttribute('alt')).toBe('');
+    expect(img.getAttribute('width')).toBe('512');
+    expect(img.getAttribute('height')).toBe('512');
+  });
+
+  it('hides its placeholder from assistive technology too', () => {
+    const { container } = render(ScreenImage, {
+      props: { image: 'companion-nonexistent.webp', alt: '', decorative: true, shape: 'square' },
+    });
+    const box = container.querySelector('div');
+    expect(box.getAttribute('aria-hidden')).toBe('true');
+    expect(box.getAttribute('role')).toBeNull();
+  });
+});
+
+describe('no screen is left showing a placeholder', () => {
+  it('every image reference in the course resolves to a real file', () => {
+    // The point of this pass: after it, nothing anywhere renders a striped
+    // rectangle naming a file that will never arrive.
+    const onDisk = readdirSync('public/images');
+    const unresolved = [];
+    for (const unit of UNITS) {
+      for (const s of unit.screens) {
+        const refs = [
+          s.image,
+          s.companionPose && `companion-${s.companionPose}.webp`,
+          ...(s.imageRow || []).map((p) => p.image),
+          ...(s.twoColumn || []).map((c) => c.image),
+        ].filter(Boolean);
+        for (const r of refs) if (!onDisk.includes(r)) unresolved.push(`${s.id} → ${r}`);
+      }
+    }
+    expect(unresolved).toEqual([]);
+  });
+
+  it('no bare unlabelled striped div survives in a screen component', () => {
+    // The hook circle was one of these: a div with no text, alt, role or label.
+    // A blob to a sighted learner and nothing at all to a screen reader.
+    const files = readdirSync('src/lib/screens').filter((f) => f.endsWith('.svelte'));
+    for (const f of files) {
+      const text = readFileSync(`src/lib/screens/${f}`, 'utf8');
+      const bare = text.match(/<div class="[^"]*repeating-linear-gradient[^"]*"><\/div>/g);
+      expect(bare, `${f} still has an unlabelled placeholder div`).toBeNull();
+    }
+  });
+});
+
+describe('the drawn diagram', () => {
+  it('U4-S05 asks for a diagram, not a file', () => {
+    const s = unit4.screens.find((x) => x.id === 'U4-S05');
+    expect(s.diagram).toBe('federal-state-two-levels');
+    expect(s.image, 'a drawn diagram must not also want a file').toBeUndefined();
+  });
+
+  it('describes itself for assistive technology', () => {
+    const { container } = render(LevelsDiagram, {});
+    const fig = container.querySelector('[role="img"]');
+    expect(fig).toBeTruthy();
+    expect(fig.getAttribute('aria-label')).toMatch(/federal/i);
+    expect(fig.getAttribute('aria-label')).toMatch(/state/i);
+    // The SVG itself is hidden: the label above already says what it shows.
+    expect(container.querySelector('svg').getAttribute('aria-hidden')).toBe('true');
   });
 });

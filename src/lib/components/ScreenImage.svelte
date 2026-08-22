@@ -12,9 +12,25 @@
   export let alt = '';
   /** Extra classes on the wrapper — callers control spacing and width. */
   export let wrapperClass = 'mb-4';
+  /** 'video' for photographs (960×540), 'square' for the companion (512×512). */
+  export let shape = 'video';
+  /**
+   * Decoration carries tone, not information.
+   *
+   * The companion character is the case: every screen's meaning is in its text,
+   * and announcing "an illustrated man looking thoughtful" before each of seven
+   * hook screens is noise for someone using a screen reader. Decorative images
+   * take an empty alt and their placeholder is hidden outright — which is what
+   * empty alt means in HTML, rather than an oversight.
+   */
+  export let decorative = false;
 
   const BASE = import.meta.env?.BASE_URL ?? './';
+  const DIMS = { video: [960, 540], square: [512, 512] };
+
   $: have = image && manifest.images.includes(image);
+  $: [w, h] = DIMS[shape] || DIMS.video;
+  $: box = shape === 'square' ? 'aspect-square' : 'aspect-video';
 </script>
 
 {#if have}
@@ -26,18 +42,19 @@
   -->
   <img
     src="{BASE}images/{image}"
-    {alt}
-    width="960"
-    height="540"
+    alt={decorative ? '' : alt}
+    width={w}
+    height={h}
     loading="lazy"
     decoding="async"
-    class="w-full aspect-video object-cover rounded-photo {wrapperClass}"
+    class="w-full {box} object-cover {shape === 'square' ? '' : 'rounded-photo'} {wrapperClass}"
   />
 {:else if image}
   <div
-    class="w-full aspect-video {wrapperClass} rounded-photo bg-[repeating-linear-gradient(135deg,theme(colors.border),theme(colors.border)_10px,theme(colors.surface)_10px,theme(colors.surface)_20px)] flex items-center justify-center text-xs text-ink-muted"
-    role="img"
-    aria-label={alt || image}
+    class="w-full {box} {wrapperClass} rounded-photo bg-[repeating-linear-gradient(135deg,theme(colors.border),theme(colors.border)_10px,theme(colors.surface)_10px,theme(colors.surface)_20px)] flex items-center justify-center text-center text-xs text-ink-muted p-2"
+    role={decorative ? undefined : 'img'}
+    aria-hidden={decorative ? 'true' : undefined}
+    aria-label={decorative ? undefined : alt || image}
   >
     {image}
   </div>

@@ -7,7 +7,10 @@
       "type": "info",
       "heading": "Welcome",
       "body": "This course covers all 128 questions on the U.S. citizenship civics test, in short lessons you can fit around your day.",
-      "primaryLabel": "Start"
+      "primaryLabel": "Start",
+      "image": "companion-seated-phone.webp",
+      "alt": "",
+      "decorative": true
     },
     {
       "id": "U0-S02",
@@ -81,7 +84,10 @@
         "Short lessons — 8 minutes each.",
         "Stop anytime. The course remembers your place."
       ],
-      "primaryLabel": "Start Unit 1"
+      "primaryLabel": "Start Unit 1",
+      "image": "companion-studying-phone.webp",
+      "alt": "",
+      "decorative": true
     }
   ]
 }

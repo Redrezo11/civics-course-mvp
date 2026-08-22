@@ -1,6 +1,7 @@
 <script>
   import { navigate } from '../router.js';
   import NarrationButton from '../components/NarrationButton.svelte';
+  import ScreenImage from '../components/ScreenImage.svelte';
   import { STANDALONE_NARRATION } from '../content/standalone-narration.js';
 
   // The narration text lives in the shared registry, which is also what the
@@ -14,8 +15,8 @@
     <!-- Companion character placeholder — asset not yet generated. Exact
          footprint reserved so dropping the real illustration in later
          causes no layout shift (Colour_Scheme_and_Asset_Direction.md §5). -->
-    <div class="w-full aspect-square max-w-[200px] mx-auto mb-6 rounded-card bg-[repeating-linear-gradient(135deg,theme(colors.border),theme(colors.border)_10px,theme(colors.surface)_10px,theme(colors.surface)_20px)] flex items-center justify-center text-center text-xs text-ink-muted p-2">
-      companion character<br />(placeholder)
+    <div class="w-full max-w-[200px] mx-auto mb-6">
+      <ScreenImage image="companion-welcome.webp" shape="square" decorative wrapperClass="" />
     </div>
     <h1 class="text-heading font-bold text-center mb-3">Welcome.</h1>
     <p class="text-base text-center mb-8">

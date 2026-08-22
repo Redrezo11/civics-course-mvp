@@ -75,7 +75,6 @@
     {
       "id": "U6-S05",
       "type": "bigIdea",
-      "image": "colonial-america.jpg",
       "paragraphs": [
         "Chapter 1 — Before.",
         "American Indians — Native Americans — lived on this land first, for thousands of years, in many nations: Cherokee, Navajo, Sioux, and hundreds more.",
@@ -83,13 +82,12 @@
         "And a hard truth belongs in this chapter, told plainly: Africans were taken from their homes, brought here by force, and sold as slaves."
       ],
       "resolution": "Their story does not end here — it returns in the next lesson, at the center of the country's greatest test.",
-      "primaryLabel": "Next",
-      "alt": "A colonial American settlement on a coastline, with wooden houses and a sailing ship anchored offshore."
+      "primaryLabel": "Next"
     },
     {
       "id": "U6-S06",
       "type": "bigIdea",
-      "image": "declaration-signing.jpg",
+      "image": "declaration-of-independence.webp",
       "paragraphs": [
         "Chapter 2 — The break.",
         "The thirteen colonies were ruled by Britain, and Britain taxed them — the Stamp Act, the Tea Act — while giving them no vote and no voice in the decisions. The colonists gave their complaint a name that still rings: taxation without representation. Protest grew — the Boston Tea Party — and protest became war: the American Revolution.",
@@ -98,7 +96,7 @@
       ],
       "resolution": "The colonies were free. Now they had to become a country.",
       "primaryLabel": "Next",
-      "alt": "The signing of the Declaration of Independence: men in eighteenth-century dress gathered around a desk in a meeting hall."
+      "alt": "The Declaration of Independence on aged parchment, headed In Congress, July 4, 1776."
     },
     {
       "id": "U6-S07",

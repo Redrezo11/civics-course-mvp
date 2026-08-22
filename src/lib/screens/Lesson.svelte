@@ -12,6 +12,7 @@
   import NarrationButton from '../components/NarrationButton.svelte';
   import PracticeItem from '../components/PracticeItem.svelte';
   import ScreenImage from '../components/ScreenImage.svelte';
+  import LevelsDiagram from '../components/LevelsDiagram.svelte';
   import QuestionCard from '../components/QuestionCard.svelte';
   import AnswerLabel from '../components/AnswerLabel.svelte';
   import SingleSelect from '../components/SingleSelect.svelte';
@@ -243,7 +244,19 @@
         <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary">{screen.afterTest}</p>
 
       {:else if screen.type === 'hook'}
-        <div class="w-16 h-16 rounded-full mx-auto mb-4 bg-[repeating-linear-gradient(135deg,theme(colors.border),theme(colors.border)_6px,theme(colors.surface)_6px,theme(colors.surface)_12px)]"></div>
+        <!--
+          Was a bare striped <div> with no text, alt or role — a blob to a
+          sighted learner and nothing at all to a screen reader. companionPose
+          was authored on this screen the whole time and read by nobody.
+        -->
+        <div class="w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden">
+          <ScreenImage
+            image="companion-{screen.companionPose || 'thinking'}.webp"
+            shape="square"
+            decorative
+            wrapperClass=""
+          />
+        </div>
         <h1 class="text-thesis font-bold text-center mb-5">{screen.question}</h1>
         {#each screen.options as opt, i}
           <button
@@ -273,7 +286,11 @@
 
       {:else if screen.type === 'bigIdea'}
         {#if screen.image}
-          <ScreenImage image={screen.image} alt={screen.alt} />
+          <ScreenImage image={screen.image} alt={screen.alt} decorative={screen.decorative} />
+        {/if}
+        <!-- Drawn, not photographed: the slot asked for a structure. -->
+        {#if screen.diagram === 'federal-state-two-levels'}
+          <LevelsDiagram />
         {/if}
         <!--
           A row of images rather than one composite. The delivered composite
@@ -360,6 +377,16 @@
         />
 
       {:else if screen.type === 'lockItIn'}
+        <!-- These screens have specified a pose since they were written; it has
+             simply never been drawn. -->
+        <div class="w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden">
+          <ScreenImage
+            image="companion-{screen.companionPose || 'pleased'}.webp"
+            shape="square"
+            decorative
+            wrapperClass=""
+          />
+        </div>
         <!-- No companion placeholder here. On a hook screen the striped circle
              marks where the character will speak; on the finishing screen it is
              a stand-in for nothing and makes a completed lesson look unbuilt. -->

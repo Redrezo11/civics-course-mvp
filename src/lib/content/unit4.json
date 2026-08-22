@@ -71,7 +71,6 @@
     {
       "id": "U4-S05",
       "type": "bigIdea",
-      "image": "federal-state-two-levels.jpg",
       "paragraphs": [
         "Country-sized jobs go to the federal government.",
         "These are jobs that only work if the whole country does them together: print paper money and mint coins (fifty different currencies would be chaos), declare war, create an army, make treaties with other countries, set foreign policy. One country must speak with one voice to the world.",
@@ -81,7 +80,7 @@
       "resolution": "The federal government gets only what the Constitution gives it. Everything else stays close to home.",
       "handle": "Country-sized jobs are federal. Close-to-home jobs are state.",
       "primaryLabel": "Next",
-      "alt": "Two levels drawn as a diagram: a single national government above, and fifty state governments below it."
+      "diagram": "federal-state-two-levels"
     },
     {
       "id": "U4-S06",
