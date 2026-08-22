@@ -16,7 +16,7 @@
          footprint reserved so dropping the real illustration in later
          causes no layout shift (Colour_Scheme_and_Asset_Direction.md §5). -->
     <div class="w-full max-w-[200px] mx-auto mb-6">
-      <ScreenImage image="companion-welcome.webp" shape="square" decorative wrapperClass="" />
+      <ScreenImage image="companion-welcome.webp" decorative wrapperClass="" />
     </div>
     <h1 class="text-heading font-bold text-center mb-3">Welcome.</h1>
     <p class="text-base text-center mb-8">

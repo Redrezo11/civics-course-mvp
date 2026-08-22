@@ -17,6 +17,9 @@ import { readdirSync, readFileSync } from 'node:fs';
 
 import ScreenImage from '../src/lib/components/ScreenImage.svelte';
 import manifest from '../src/lib/content/image-manifest.json';
+
+/** The manifest is now name → [w, h], read from the files themselves. */
+const NAMES = Object.keys(manifest.images);
 import Lesson from '../src/lib/screens/Lesson.svelte';
 import LevelsDiagram from '../src/lib/components/LevelsDiagram.svelte';
 import { progress } from '../src/lib/stores/progress.js';
@@ -53,7 +56,7 @@ describe('the image manifest', () => {
     // empty one. If it drifts from the folder, a slot either shows a broken
     // image or hides one that is right there.
     const onDisk = readdirSync('public/images').filter((n) => !n.startsWith('.'));
-    expect([...manifest.images].sort()).toEqual([...onDisk].sort());
+    expect([...NAMES].sort()).toEqual([...onDisk].sort());
   });
 });
 
@@ -88,7 +91,7 @@ describe('every image slot', () => {
     // "with its two wings marked as the Senate chamber and the House chamber";
     // nothing in the photograph is marked. U0-S02 had people with "their right
     // hands raised"; they are waving flags.
-    const filled = slots().filter((s) => manifest.images.includes(s.image));
+    const filled = slots().filter((s) => NAMES.includes(s.image));
     for (const s of filled) {
       expect(s.alt, `${s.screen} alt still describes a marked-up diagram`).not.toMatch(/marked as/i);
       expect(s.alt, `${s.screen} alt still claims a raised-hand oath`).not.toMatch(/hands raised/i);
@@ -116,7 +119,7 @@ describe('a slot with no file', () => {
 });
 
 describe('a slot with a file', () => {
-  const image = manifest.images[0];
+  const image = NAMES.find((n) => !n.startsWith('companion-'));
 
   it('renders a real image, lazily and without shifting the page', () => {
     const { container } = render(ScreenImage, { props: { image, alt: 'A photograph of something.' } });
@@ -156,7 +159,7 @@ describe('the companion character', () => {
     }
     expect(poses.size).toBeGreaterThan(0);
     for (const pose of poses) {
-      expect(manifest.images, `no artwork for companionPose "${pose}"`).toContain(`companion-${pose}.webp`);
+      expect(NAMES, `no artwork for companionPose "${pose}"`).toContain(`companion-${pose}.webp`);
     }
   });
 
@@ -244,5 +247,86 @@ describe('the drawn diagram', () => {
     expect(fig.getAttribute('aria-label')).toMatch(/state/i);
     // The SVG itself is hidden: the label above already says what it shows.
     expect(container.querySelector('svg').getAttribute('aria-hidden')).toBe('true');
+  });
+});
+
+// ---------------------------------------------------------------------------
+// The guard that was missing
+// ---------------------------------------------------------------------------
+
+describe('an image is sized from the image', () => {
+  it('declares the file\'s real dimensions, and a box that matches them', () => {
+    // This is what silent cropping IS: a box whose aspect differs from the
+    // file's. Nothing in the suite could see it — the image rendered, the alt
+    // was right, every test passed — while 44% of a portrait was cut away.
+    for (const name of NAMES) {
+      const [w, h] = manifest.images[name];
+      const { container } = render(ScreenImage, { props: { image: name, alt: 'x' } });
+      const img = container.querySelector('img');
+
+      expect(img, `${name} did not render`).toBeTruthy();
+      expect(Number(img.getAttribute('width')), `${name} declares the wrong width`).toBe(w);
+      expect(Number(img.getAttribute('height')), `${name} declares the wrong height`).toBe(h);
+
+      const square = w === h;
+      expect(
+        img.className.includes(square ? 'aspect-square' : 'aspect-video'),
+        `${name} is ${w}×${h} but its box is ${square ? 'not square' : 'not 16:9'}`
+      ).toBe(true);
+    }
+  });
+
+  it('takes no shape from the caller at all', () => {
+    // The prop is gone on purpose. Two call sites forgot to pass it and got a
+    // 44% crop; the fix is that there is nothing to forget.
+    const files = readdirSync('src/lib/screens').concat(readdirSync('src/lib/components'));
+    const sources = [
+      ...readdirSync('src/lib/screens').map((f) => `src/lib/screens/${f}`),
+      ...readdirSync('src/lib/components').map((f) => `src/lib/components/${f}`),
+    ].filter((f) => f.endsWith('.svelte'));
+    for (const f of sources) {
+      expect(readFileSync(f, 'utf8'), `${f} still states an image shape`).not.toMatch(/shape="(square|video)"/);
+    }
+  });
+});
+
+describe('small round avatars are cropped to the head', () => {
+  it('every companion in a box under 96px asks for the head crop', () => {
+    // A head-and-torso portrait dropped whole into a 64px circle renders the
+    // face at about 35px with its shoulders clipped away. The delivery shipped
+    // hand-made 64px crops for two poses because of exactly this.
+    const sources = ['Lesson', 'Rehearsal', 'Welcome'].map((n) => [
+      n,
+      readFileSync(`src/lib/screens/${n}.svelte`, 'utf8'),
+    ]);
+    for (const [name, text] of sources) {
+      // Any wrapper sized below 96px (w-16 = 64px, w-20 = 80px) holding a
+      // companion must pass crop="head".
+      const smallBoxes = text.match(/<div class="w-(1[0-9]|2[0-3]) [^"]*"[\s\S]{0,240}?<\/div>/g) || [];
+      for (const block of smallBoxes) {
+        if (!block.includes('companion-')) continue;
+        expect(block, `${name}: a small companion avatar is missing crop="head"`).toMatch(/crop="head"/);
+      }
+    }
+  });
+
+  it('shows the top of the artwork, where the head is', () => {
+    const { container } = render(ScreenImage, {
+      props: { image: 'companion-thinking.webp', decorative: true, crop: 'head', wrapperClass: '' },
+    });
+    const img = container.querySelector('img');
+    // Anchored to the top and scaled past the box, so the visible window is the
+    // upper part of the portrait rather than the whole figure shrunk down.
+    expect(img.className).toMatch(/top-0/);
+    expect(img.className).toMatch(/w-\[160%\]/);
+    expect(container.querySelector('div').className).toMatch(/overflow-hidden/);
+  });
+
+  it('leaves Welcome uncropped — it is a portrait, not an avatar', () => {
+    const text = readFileSync('src/lib/screens/Welcome.svelte', 'utf8');
+    expect(text).toMatch(/companion-welcome\.webp/);
+    expect(text, 'Welcome shows the whole figure at 200px').not.toMatch(
+      /companion-welcome\.webp"[^>]*crop="head"/
+    );
   });
 });

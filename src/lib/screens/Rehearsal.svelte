@@ -112,7 +112,7 @@
         wrapperClass="mb-4"
       />
       <div class="w-20 h-20 mx-auto mb-4 rounded-full overflow-hidden">
-        <ScreenImage image="companion-speaking.webp" shape="square" decorative wrapperClass="" />
+        <ScreenImage image="companion-speaking.webp" crop="head" decorative wrapperClass="" />
       </div>
       <h1 class="text-heading font-bold mb-4">This is practice for the real interview.</h1>
       <p class="mb-3 leading-relaxed">

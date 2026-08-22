@@ -252,7 +252,7 @@
         <div class="w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden">
           <ScreenImage
             image="companion-{screen.companionPose || 'thinking'}.webp"
-            shape="square"
+            crop="head"
             decorative
             wrapperClass=""
           />
@@ -382,7 +382,7 @@
         <div class="w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden">
           <ScreenImage
             image="companion-{screen.companionPose || 'pleased'}.webp"
-            shape="square"
+            crop="head"
             decorative
             wrapperClass=""
           />
