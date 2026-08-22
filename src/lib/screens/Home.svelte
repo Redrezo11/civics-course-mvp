@@ -34,8 +34,18 @@
 
   // Where Continue actually resumes: the unit last opened, if it is still a
   // real unit. Falls back to the first unit not yet completed.
+  //
+  // `lastUnit` only counts while it is UNFINISHED. It used to win outright, so
+  // finishing Unit 1 left the home screen offering "CONTINUE — Unit 1" and
+  // sending the learner back to its final screen. The fallback below was
+  // already right and was simply never reached.
   $: resumeUnit =
-    units.find((u) => u.id === $progress.lastUnit && builtUnits.includes(u.id)) ||
+    units.find(
+      (u) =>
+        u.id === $progress.lastUnit &&
+        builtUnits.includes(u.id) &&
+        !$progress.unitsCompleted.includes(u.id)
+    ) ||
     units.find((u) => !$progress.unitsCompleted.includes(u.id) && builtUnits.includes(u.id)) ||
     units.find((u) => builtUnits.includes(u.id));
 

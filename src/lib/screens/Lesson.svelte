@@ -64,8 +64,14 @@
   let restored = false;
 
   onMount(() => {
-    // Resume at the saved position, if any (G-5 — progress saves every screen).
-    const saved = $progress.screenPosition[unitId];
+    // Resume at the saved position, if any (G-5 — progress saves every screen)
+    // — but only while the unit is unfinished. Revisiting a completed lesson
+    // starts at the beginning, because that is what "finished" means; walking
+    // back through it writes a fresh position, and without this guard that
+    // position would strand the next visit mid-lesson all over again.
+    const saved = $progress.unitsCompleted.includes(unitId)
+      ? null
+      : $progress.screenPosition[unitId];
     if (saved) {
       const i = unit.screens.findIndex((s) => s.id === saved);
       if (i >= 0) index = i;

@@ -74,6 +74,10 @@ export function setTheme(theme) {
 export function markUnitComplete(unitId) {
   const s = read();
   if (!s.unitsCompleted.includes(unitId)) s.unitsCompleted.push(unitId);
+  // A finished unit has no position to be at. Leaving one behind meant tapping
+  // a completed unit dropped the learner on its last slide — a lesson that was
+  // ticked as done and yet apparently mid-way through.
+  delete s.screenPosition[unitId];
   write(s);
 }
 
