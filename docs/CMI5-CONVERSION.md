@@ -30,7 +30,8 @@ odd-looking decisions in here descend from that.
 | The 128 questions | `src/lib/content/questions-u1.json` … `-u7.json` |
 | Persistence, the whole of it | `src/lib/storage.js` |
 | Routing | `src/lib/router.js`, `src/App.svelte` |
-| The rules the build enforces | `scripts/qa-check.js` — 17 checks |
+| The pictures | `public/images/`, mapped in `docs/IMAGE-ASSETS.md` |
+| The rules the build enforces | `scripts/qa-check.js` — 20 checks |
 | Why the second language works the way it does | `docs/ARCHITECTURE.md` |
 
 ---
@@ -91,6 +92,12 @@ Choose them once, from a domain you control.
 not become AUs — they are navigation within the learner's own session, not
 assignable work. Leave the in-app navigation intact.
 
+Two more are first-run screens rather than destinations: `#/language`, and
+`#/welcome` behind it. `App.svelte` redirects to `#/language` only when
+`$progress.language` is null **and** the route is `/` — so an AU launched
+straight at `#/unit/U3` never sees either, which is what you want. §5 covers
+skipping the language screen when the LMS already knows the answer.
+
 ---
 
 ## 4. Statement design
@@ -121,6 +128,12 @@ requires `result.completion: true`.
 A lesson AU is complete when `markUnitComplete(unitId)` fires — that is
 `Lesson.svelte`'s `next()` on the last screen, and it is already the course's own
 definition of finishing a unit. Do not invent a second one.
+
+Note that the function does **two** things: it appends to `unitsCompleted` and
+it clears `screenPosition[unitId]`. A finished unit has no position to be at, and
+`Lesson.svelte` refuses a stored one for a completed unit even if a fresh one is
+written while the learner walks back through it. Carry both over in §7c — see
+the warning there.
 
 ### What NOT to send
 
@@ -162,10 +175,17 @@ one of them, call `progress.setLanguage(...)` and **skip the language screen** �
 `src/App.svelte` currently redirects to `#/language` when
 `$progress.language` is null. The learner has already told the LMS.
 
-**`audioPreference`** is `"on"` or `"off"`. Narration already exists on every
-teaching and assessment screen (`docs/NARRATION.md`), so this maps cleanly.
-Nothing autoplays and nothing should start to — `"on"` is a preference for the
-control being available and prominent, not a licence to speak unasked.
+**`audioPreference`** is `"on"` or `"off"`. Narration exists on every teaching
+and assessment screen (`docs/NARRATION.md`), so this maps cleanly. Nothing
+autoplays and nothing should start to — `"on"` is a preference for the control
+being available and prominent, not a licence to speak unasked.
+
+Which screens are narrated has exactly one definition, shared by the app, the
+audio script and QA check 17: `NARRATED_FIELDS` in `src/lib/narration-text.js`
+for unit screens, and `src/lib/content/standalone-narration.js` for the rest.
+Recordings drop in by filename — `docs/AUDIO-ASSETS.md` is the generated map and
+holds the naming convention per language. Until they exist, every screen falls
+back to `SpeechSynthesis`.
 
 ---
 
@@ -277,6 +297,13 @@ you store:
   rehearsal{ attempts, bestCorrect, lastResult }, epitomeSeen }
 ```
 
+**`unitsCompleted` and `screenPosition` have a relationship.** A unit in
+`unitsCompleted` has no entry in `screenPosition` — completing it removes one.
+Port `markUnitComplete` with both halves intact, or a learner who finishes a
+lesson on one device opens it on their other device at the last slide, ticked as
+done and apparently mid-way through. That was a real defect here; the LMS is a
+new way to reintroduce it, since now the stale position travels.
+
 Use one State document keyed by `registration` so progress follows the learner
 across devices — that being the point of an LMS.
 
@@ -315,7 +342,7 @@ learner.
 
 ## 8. Copy that becomes false
 
-Four strings claim the course sends nothing anywhere. Under cmi5 that is no
+Five strings claim the course sends nothing anywhere. Under cmi5 that is no
 longer true, and leaving them is a lie to the learner about where their data
 goes.
 
@@ -325,6 +352,13 @@ goes.
 | `ui-strings.json` → `settings.saved` | "Your choice is saved on this phone." |
 | `Completion.svelte` | "runs entirely on your own phone and does not send your progress anywhere" |
 | `Help.svelte` | "This clears all your progress on this phone." |
+| `scripts/cmi5-manifest.js` → course description | "…plus an interview rehearsal. **Runs offline on a phone.**" |
+
+**The fifth one is not in the app**, which is why it is the easiest to miss. It
+is the course-level description in `cmi5.xml` — the text an LMS shows in its
+catalogue, before anyone enrols. And because the manifest is generated, fix it
+in `scripts/cmi5-manifest.js` and regenerate; editing the XML puts it out of
+step with the script that owns it (§11).
 
 Rewrite them to say that progress is reported to the organisation providing the
 course. **The Burmese must be re-translated too** — and note that changing the
@@ -341,7 +375,7 @@ this is the one place where the conversion straightforwardly improves the course
 
 ## 9. The QA gate
 
-`npm run qa` runs 17 checks and blocks the build on failure. **Check 8 will fail
+`npm run qa` runs 20 checks and blocks the build on failure. **Check 8 will fail
 the moment you add `fetch`:**
 
 > `8 zero external requests` — fails on any `fetch(`, `XMLHttpRequest`,
@@ -366,10 +400,11 @@ That is a stronger guarantee than the current check, not a weaker one: today
 nothing may call the network; afterwards, exactly one file may, and only to an
 address the LMS chose.
 
-**The other 16 checks stay as they are.** They will pass unchanged. They are
+**The other 19 checks stay as they are.** They will pass unchanged. They are
 also the reason this content can be trusted — question integrity, contrast,
 tap-target size, honest counters, the never-translate rule, the freshness
-guards. Keep them running in whatever build pipeline you set up.
+guards, and that every image reference resolves and every picture is described
+one way. Keep them running in whatever build pipeline you set up.
 
 ---
 
@@ -380,7 +415,8 @@ package.zip
 ├── cmi5.xml            ← docs/cmi5/cmi5.xml, namespace replaced
 ├── index.html
 ├── assets/             ← JS, CSS, the Myanmar font
-├── audio/              ← if recordings exist; see docs/AUDIO-ASSETS.md
+├── images/             ← 31 photographs and companion illustrations, WebP
+├── audio/              ← empty today; see docs/AUDIO-ASSETS.md
 ├── favicon.svg
 └── icons.svg
 ```
@@ -388,9 +424,43 @@ package.zip
 `npm run build` produces all of it but the manifest, in `dist/`. The manifest
 goes at the zip root, not inside `dist/`.
 
-Watch the size. `dist/` is ~500 KB today, but recorded narration would add
-several megabytes and the learners this is for are on prepaid data. Audio is
-fetched only when someone taps Listen and is never preloaded — keep it that way.
+**Do not omit `images/`.** The content references pictures by filename and a
+missing file does not error — `ScreenImage.svelte` renders a striped placeholder
+naming the file it wanted, so a package built without that folder runs perfectly
+and looks unfinished on 31 screens. Filenames are case-sensitive once served;
+QA check 18 fails on any reference that does not resolve.
+
+`audio/` ships empty today (0 of 62 files recorded, per `docs/AUDIO-ASSETS.md`).
+Every narrated screen falls back to `SpeechSynthesis`, which is the designed
+behaviour rather than a gap to fill before packaging.
+
+Watch the size. `dist/` is 1.3 MB today, of which 775 KB is images.
+Recorded narration would add several megabytes and the learners this is for are
+on prepaid data. Audio is fetched only when someone taps Listen and is never
+preloaded — keep it that way. Images are `loading="lazy"` for the same reason,
+so a learner pays only for the screens they actually reach.
+
+### Before you distribute
+
+Publishing this to a static host and handing an organisation a zip to run inside
+their LMS are different acts, and two things bite only on the second. Neither is
+a code change and neither blocks development — check them before a package goes
+anywhere real.
+
+| | |
+|---|---|
+| `voting.webp` | Carries a visible *"© Frame Stock Footage/Shutterstock.com"* watermark — a comp preview, not a licensed download. Replace the file with the licensed version; the content references it by name, so nothing else changes |
+| `civil-rights-march.webp` | A well-known press photograph with no licence recorded. Confirm it before publication |
+
+`docs/IMAGE-ASSETS.md` carries both and regenerates with any flagged file still
+outstanding, so this list stays true without anyone maintaining it.
+
+Three further things are incomplete rather than wrong, and each is honest about
+itself on screen: Burmese is built from sources marked `draft-unreviewed`, with
+outstanding fields listed in `docs/TRANSLATION-REQUEST.md`; seven of the eight
+dynamic answers are unverified and render as "not checked yet"; and no narration
+is recorded, so every screen speaks through `SpeechSynthesis`. None of them
+prevents a conforming package. All of them are visible to a learner.
 
 ---
 
@@ -406,9 +476,13 @@ They look arbitrary and each one is load-bearing. All are explained in
 - **The counters are honest.** "Questions practiced" counts only the official
   128, never guided practice, never screens merely shown.
 - **Generated files are generated.** `audio-manifest.json`,
-  `freshness.json`, `TRANSLATION-REQUEST.md`, `AUDIO-ASSETS.md`,
+  `image-manifest.json`, `freshness.json`, `TRANSLATION-REQUEST.md`,
+  `translation-source.json`, `AUDIO-ASSETS.md`, `IMAGE-ASSETS.md`,
   `narration-script.json` and `cmi5.xml` all have a script that writes them.
   Editing one by hand puts it out of step with the content it describes.
+  `image-manifest.json` is the sharpest case: it holds each file's real pixel
+  dimensions, read from the file, so that the renderer sizes a picture from the
+  picture. A hand-typed number there reserves the wrong space and crops.
 - **`current-answers.json` is unverified.** The eight dynamic answers are
   rendered as "not checked yet" rather than as fact. Do not fill them in from a
   model's memory; they change with elections.
@@ -428,6 +502,10 @@ testing by hand:
    is sent.
 2. Launch with `languagePreference: "my"` and confirm the language screen is
    skipped and the course opens in Burmese.
-3. Finish a lesson on one device, launch the same registration on another, and
-   confirm the learner resumes where they left off. That is the whole reason for
-   §7c, and the only way to know it works.
+3. Leave a lesson **part-way** on one device, launch the same registration on
+   another, and confirm the learner resumes where they left off. That is the
+   whole reason for §7c, and the only way to know it works.
+
+   Then do it with a **finished** lesson, and confirm the opposite: it opens at
+   screen 1, with its ✓ intact. Completing a unit clears its position on
+   purpose, and the two behaviours are easy to conflate into one bug.
