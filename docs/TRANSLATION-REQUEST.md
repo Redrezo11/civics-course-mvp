@@ -5,7 +5,7 @@
 content change rather than editing this file, or it will describe a course that
 no longer exists.
 
-Remaining: **5 interface strings** and **48 content
+Remaining: **8 interface strings** and **48 content
 fields** — 34 never translated, and
 **14 marked ↻**.
 
@@ -92,12 +92,15 @@ were lost this way before we worked out the cause.
 
 ---
 
-## 1. Interface strings — 5 of 43 remaining
+## 1. Interface strings — 8 of 46 remaining
 
 In `src/lib/content/ui-strings.json`. Fill the `my` value; leave `en` alone.
 
 | Key | English |
 |---|---|
+| `help.privacyLms` | Your privacy: this course saves your progress on this phone, and reports your progress to the organisation providing the course. |
+| `help.reset` | This clears all your progress on this phone. This cannot be undone. |
+| `help.resetLms` | This clears all your progress on this phone. This cannot be undone. Progress already reported to the organisation providing the course is not removed. |
 | `narration.listen` | Listen |
 | `narration.listenAgain` | Listen again |
 | `narration.pause` | Pause |

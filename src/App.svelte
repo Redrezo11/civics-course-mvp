@@ -1,6 +1,9 @@
 <script>
+  import { onMount } from 'svelte';
   import { route, parseRoute, navigate } from './lib/router.js';
   import { progress } from './lib/stores/progress.js';
+  import * as cmi5 from './lib/cmi5.js';
+  import { lmsSession } from './lib/stores/lms.js';
 
   import Language from './lib/screens/Language.svelte';
   import Welcome from './lib/screens/Welcome.svelte';
@@ -43,6 +46,30 @@
   }
 
   $: parsed = parseRoute($route);
+
+  // The LMS session, if there is one.
+  //
+  // Not awaited before the first paint. The alternative — hold the whole course
+  // back until a network round-trip finishes — punishes every learner on a slow
+  // connection for a handshake that changes nothing they can see, and leaves a
+  // blank screen if the LRS is down. The course renders; the session attaches
+  // when it attaches; `init()` is a no-op when nothing launched us.
+  onMount(async () => {
+    const session = await cmi5.init();
+    if (!session.active) return;
+    lmsSession.set(true);
+
+    // The LMS already asked which language they read. Asking again is a screen
+    // the learner has to get past to reach a course they were assigned.
+    const preferred = (session.languagePreference || '')
+      .split(',')
+      .map((tag) => tag.trim().toLowerCase().split('-')[0])
+      .find((tag) => tag === 'en' || tag === 'my');
+    if (preferred && !$progress.language) {
+      progress.setLanguage(preferred);
+      if ($route === '/language') navigate('/welcome');
+    }
+  });
 </script>
 
 <!-- Route map, storyboard §6. Unknown hashes fall through to Home rather than

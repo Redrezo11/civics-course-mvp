@@ -1,6 +1,11 @@
 <script>
   import { t } from '../i18n.js';
-  import { progress, questionsPracticedCount, lessonsFinishedCount } from '../stores/progress.js';
+  import {
+    progress,
+    questionsPracticedCount,
+    lessonsFinishedCount,
+    courseComplete,
+  } from '../stores/progress.js';
   import { navigate } from '../router.js';
   import { getUnitQuestions, TOTAL_QUESTIONS, ANSWERS_CHECKED } from '../content/questions.js';
   import { REVIEWS, unlockedReviews } from '../select-review.js';
@@ -27,9 +32,10 @@
   // no unit was complete yet.
   //
   // Three honest states instead.
-  $: allDone = builtUnits
-    .filter((id) => id !== 'U0')
-    .every((id) => $progress.unitsCompleted.includes(id));
+  // `courseComplete`, not a local reactive. This screen and the LMS session
+  // must agree on what finishing means, or a learner is congratulated here and
+  // reported incomplete to whoever assigned them the course.
+  $: allDone = $courseComplete;
   $: started = Boolean($progress.lastUnit) || $progress.unitsCompleted.length > 0;
 
   // Where Continue actually resumes: the unit last opened, if it is still a

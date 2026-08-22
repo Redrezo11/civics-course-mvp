@@ -52,6 +52,18 @@
     "en": "Your privacy: this course saves your progress only on your own phone.",
     "my": "သင့်ကိုယ်ရေးကိုယ်တာ — ဤသင်တန်းသည် သင့်တိုးတက်မှုကို သင့်ဖုန်းပေါ်တွင်သာ သိမ်းဆည်းပါသည်။"
   },
+  "help.privacyLms": {
+    "en": "Your privacy: this course saves your progress on this phone, and reports your progress to the organisation providing the course.",
+    "my": null
+  },
+  "help.reset": {
+    "en": "This clears all your progress on this phone. This cannot be undone.",
+    "my": null
+  },
+  "help.resetLms": {
+    "en": "This clears all your progress on this phone. This cannot be undone. Progress already reported to the organisation providing the course is not removed.",
+    "my": null
+  },
   "home.counterLessons": {
     "en": "lessons finished",
     "my": "သင်ခန်းစာ ပြီးဆုံးပြီ"

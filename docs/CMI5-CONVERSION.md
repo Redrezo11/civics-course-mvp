@@ -1,9 +1,23 @@
 # Building a cmi5 package from this repository
 
-**This project does not ship as cmi5.** It ships as a static site on GitHub
-Pages. This document exists so that someone — quite possibly an LLM reading the
-repository — can build a cmi5 package from it without having to reverse-engineer
-the rules the code obeys.
+> **Much of this is now done.** The repository builds a working package:
+> `node scripts/cmi5-package.js --ns https://your.domain/civics`, documented in
+> **[CMI5-PACKAGE.md](CMI5-PACKAGE.md)**, which is the practical guide. Read that
+> first if you just want the zip.
+>
+> What landed: the runtime (§7a/§7b/§7e, as one module `src/lib/cmi5.js`), the
+> copy fixes (§8), the narrowed network check (§9), packaging (§10). What did
+> **not**: the State API migration (§7c/§7d), so progress is still per-device.
+> And §3's nine-AU map was replaced by a single AU — the reasoning is in
+> CMI5-PACKAGE.md and repeated below.
+>
+> The rest of this document is still the reasoning, and §6 in particular is
+> still the part that will otherwise be got wrong.
+
+The app ships as a static site on GitHub Pages **and** as a cmi5 package; it
+detects which at launch. This document exists so that someone — quite possibly
+an LLM reading the repository — understands the rules the code obeys before
+changing any of it.
 
 It assumes you will look up the [cmi5 specification](https://aicc.github.io/CMI-5_Spec_Current/)
 yourself. It spends its length on what the spec cannot tell you: **what this
@@ -31,7 +45,7 @@ odd-looking decisions in here descend from that.
 | Persistence, the whole of it | `src/lib/storage.js` |
 | Routing | `src/lib/router.js`, `src/App.svelte` |
 | The pictures | `public/images/`, mapped in `docs/IMAGE-ASSETS.md` |
-| The rules the build enforces | `scripts/qa-check.js` — 20 checks |
+| The rules the build enforces | `scripts/qa-check.js` — 21 checks |
 | Why the second language works the way it does | `docs/ARCHITECTURE.md` |
 
 ---
@@ -63,20 +77,36 @@ a sweep through 40 components.
 
 ---
 
-## 3. The AU map
+## 3. The AU map — one AU
 
-Nine AUs. `docs/cmi5/cmi5.xml` is generated from the unit JSON by
-`node scripts/cmi5-manifest.js`, so unit ids and titles cannot drift from the
-course. Regenerate it rather than editing it.
+`docs/cmi5/cmi5.xml` is generated from the unit JSON by
+`node scripts/cmi5-manifest.js`, so ids and titles cannot drift from the course.
+Regenerate it rather than editing it.
 
 | AU | `moveOn` | Launch URL |
 |---|---|---|
-| U0 … U7 (one each) | `Completed` | `index.html#/unit/U0` … `#/unit/U7` |
-| Interview rehearsal | `Passed`, `masteryScore="0.6"` | `index.html#/rehearsal` |
+| The course | `Completed`, no `masteryScore` | `au/index.html` |
 
-`0.6` is 12 correct out of 20 — the real test's rule, from `PASS_AT` and `MAX`
-in `src/lib/screens/Rehearsal.svelte`. If those constants change, the manifest
-must change with them.
+**This used to be nine** — one per lesson, plus the rehearsal at
+`masteryScore="0.6"`, inside a block. Both halves of that were wrong for the
+target:
+
+- **Nine AUs.** TalentLMS imports a package as a *single learning activity*, and
+  nothing in its documentation says how nine assignable units are surfaced. One
+  AU has one launch and one completion and relies on no behaviour we cannot
+  confirm. If your LMS does surface every AU and you want per-lesson reporting,
+  the shape is easy to restore — but confirm it first.
+- **A mastery score.** It made `Failed` possible, on a rehearsal that is
+  self-marked and measures nothing. TalentLMS maps a package's statements onto
+  the course around it, so a practice run of 11 out of 20 could mark a learner
+  as having failed the course they are studying for. Rule G-1 forbids counting
+  anything against the learner; QA check 21 now asserts no code path emits
+  `Failed` and that the manifest declares no mastery score.
+
+A useful side effect: the manifest no longer keeps its own copy of `PASS_AT` and
+`MAX`. It used to duplicate `src/lib/screens/Rehearsal.svelte` behind a comment
+claiming to be a single source, and would have silently advertised a pass mark
+the course did not use.
 
 **Replace the identifier namespace.** The generated manifest uses
 `https://example.org/civics-course`. Activity ids are the key an LRS files
@@ -125,9 +155,22 @@ requires `result.completion: true`.
 
 ### When to send Completed
 
-A lesson AU is complete when `markUnitComplete(unitId)` fires — that is
-`Lesson.svelte`'s `next()` on the last screen, and it is already the course's own
-definition of finishing a unit. Do not invent a second one.
+With one AU covering the course, it is complete when **every lesson unit is** —
+`courseComplete` in `src/lib/stores/progress.js`, which `Home.svelte` also
+renders from, so the screen congratulating the learner and the record sent to
+their organisation cannot disagree.
+
+Two things that are NOT the trigger, both of which look like it:
+
+- **Not "Unit 7 finished".** Units are deliberately not locked, so a learner may
+  do U7 third. That would report completion early for them, and never for
+  someone who leaves U7 until last but skips U3.
+- **Not `unitsCompleted.length === 8`.** U0 is orientation and teaches none of
+  the 128, so finishing the course does not require it.
+
+The per-unit hook is still `markUnitComplete(unitId)` — one call site,
+`Lesson.svelte`'s `next()` on the last screen — which is where the `progressed`
+statement is sent from. Do not invent a second definition of either.
 
 Note that the function does **two** things: it appends to `unitsCompleted` and
 it clears `screenPosition[unitId]`. A finished unit has no position to be at, and
@@ -226,6 +269,12 @@ and the manifest changes accordingly.
 
 ## 7. The code changes
 
+> **§7a, §7b and §7e are done** — collapsed into one module,
+> `src/lib/cmi5.js`, because splitting the transport from the lifecycle bought
+> nothing at this size. §7c and §7d are **not** done: progress is still in
+> localStorage, so it does not follow a learner between devices. That is the
+> deferred next step, and the sketches below are still the plan for it.
+
 Four files, one new module, **no component changes**.
 
 ### 7a. `src/lib/lrs.js` — new, the only module allowed to touch the network
@@ -285,7 +334,7 @@ Parse `endpoint`, `fetch`, `actor`, `registration`, `activityId` from
 not be able to re-satisfy it. Gate every completion statement on
 `launchMode === 'Normal'`.
 
-### 7c. `src/lib/storage.js` — becomes async
+### 7c. `src/lib/storage.js` — becomes async  *(deferred, not done)*
 
 Keep every function name. Replace the bodies: `read()` returns the State
 document, `write()` PUTs it. The `DEFAULT_STATE` shape is unchanged and is what
@@ -312,7 +361,7 @@ returns defaults, because on some phones storage simply is not available and the
 course must still run. Over a network that matters more, not less: a dropped
 request must degrade to a working lesson, never a blank screen.
 
-### 7d. `src/lib/stores/progress.js` — an in-memory mirror
+### 7d. `src/lib/stores/progress.js` — an in-memory mirror  *(deferred, not done)*
 
 This is what keeps components untouched. Today every method is
 `storage.X(); refresh();`. Change it to mutate an in-memory copy, `set()` it
@@ -375,8 +424,9 @@ this is the one place where the conversion straightforwardly improves the course
 
 ## 9. The QA gate
 
-`npm run qa` runs 20 checks and blocks the build on failure. **Check 8 will fail
-the moment you add `fetch`:**
+`npm run qa` runs 21 checks and blocks the build on failure. **Check 8 has been
+narrowed exactly as this section proposed.** What follows is what it used to say,
+kept because the reasoning is why it was narrowed rather than deleted:
 
 > `8 zero external requests` — fails on any `fetch(`, `XMLHttpRequest`,
 > `WebSocket` or `sendBeacon` anywhere in `src/`, and on any external URL
@@ -399,6 +449,11 @@ So narrow the check rather than removing it:
 That is a stronger guarantee than the current check, not a weaker one: today
 nothing may call the network; afterwards, exactly one file may, and only to an
 address the LMS chose.
+
+That is what happened: network APIs are now permitted only in
+`src/lib/cmi5.js`, banned everywhere else exactly as before, and the check
+additionally asserts that the file contains no hardcoded address — so every URL
+it builds comes from a launch parameter. Check 21 was added alongside it.
 
 **The other 19 checks stay as they are.** They will pass unchanged. They are
 also the reason this content can be trusted — question integrity, contrast,

@@ -20,6 +20,7 @@
   import { navigate } from '../router.js';
   import { TOTAL_QUESTIONS } from '../content/questions.js';
   import LessonBar from '../components/LessonBar.svelte';
+  import { lmsSession } from '../stores/lms.js';
 
   const TOTAL_UNITS = 8;
 </script>
@@ -76,11 +77,25 @@
            The method is undecided; this states what is true today rather than
            implying the course has sent anything anywhere. -->
       <p class="font-bold mb-2">Showing that you finished</p>
-      <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary leading-relaxed">
-        This course runs entirely on your own phone and does not send your progress
-        anywhere. If someone asked you to show that you completed it, take a picture
-        of the two counters above.
-      </p>
+      <!--
+        The photograph instruction only ever existed because the course had no
+        way to report anything — the storyboard called it an interim shape and
+        it was. Launched from a learning management system there IS a record,
+        and telling someone to photograph their screen when their completion has
+        already been filed would be both wrong and faintly insulting.
+      -->
+      {#if $lmsSession}
+        <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary leading-relaxed">
+          Your progress is reported to the organisation providing this course.
+          They can see that you finished — there is nothing you need to send them.
+        </p>
+      {:else}
+        <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary leading-relaxed">
+          This course runs entirely on your own phone and does not send your progress
+          anywhere. If someone asked you to show that you completed it, take a picture
+          of the two counters above.
+        </p>
+      {/if}
     </div>
   </div>
 

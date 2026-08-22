@@ -495,28 +495,98 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
   }
 }
 
-// --- 8. Zero external requests ---------------------------------------------
-// G-11/G-12. Only uscis.gov links the learner taps are permitted; the app
-// itself must make no third-party request at runtime.
+// --- 8. One file may call out, and only where the LMS points ----------------
+//
+// G-11/G-12 was never "no network". It was NO SERVER OF OURS AND NO THIRD
+// PARTY, so that a learner's practice is not observable by anyone who was not
+// already part of the arrangement. An LRS supplied at launch by the
+// organisation the learner enrolled with is neither.
+//
+// So the rule narrowed rather than loosened. It used to be "nothing in src/ may
+// call the network". It is now "exactly one file may, and every address it uses
+// comes from a launch parameter" — which is a stronger guarantee, because the
+// second clause is checkable and the old rule had nothing to say about where a
+// request would go once one was permitted.
 {
-  const check = '8 zero external requests';
+  const check = '8 network confined to the LMS session';
   const ALLOWED = /^https:\/\/(www\.)?uscis\.gov\//;
+  // The one module permitted to make requests. Adding a second name here is a
+  // decision about the project's privacy guarantee, not a build fix.
+  const NETWORK_MODULE = 'src/lib/cmi5.js';
+  const rel = (f) => f.replace(root, '').replace(/\\/g, '/').replace(/^\//, '');
+
   const offenders = [];
   for (const { f, text } of sourceText) {
     const urls = text.match(/https?:\/\/[^\s"'`)]+/g) || [];
     for (const url of urls) {
       if (ALLOWED.test(url)) continue;
-      if (/^https?:\/\/(www\.)?(w3\.org|svelte\.dev)/.test(url)) continue; // namespaces & doc links in error text
-      offenders.push(`${f.replace(root, '')} → ${url}`);
+      // Namespaces and identifiers, which are names rather than addresses —
+      // xAPI verb and extension IRIs are never fetched.
+      if (/^https?:\/\/(www\.)?(w3\.org|w3id\.org|svelte\.dev|adlnet\.gov)/.test(url)) continue;
+      offenders.push(`${rel(f)} → ${url}`);
     }
   }
+
   const fetchers = sourceText
     .filter(({ text }) => /\bfetch\(|XMLHttpRequest|new WebSocket|navigator\.sendBeacon/.test(text))
-    .map((o) => o.f.replace(root, ''));
-  if (fetchers.length) fail(check, `network API used in: ${fetchers.join(', ')}`);
+    .map(({ f }) => rel(f))
+    .filter((f) => f !== NETWORK_MODULE);
+  if (fetchers.length) fail(check, `network API used outside ${NETWORK_MODULE}: ${fetchers.join(', ')}`);
   if (offenders.length) fail(check, `non-permitted external URL: ${offenders.join(', ')}`);
+
+  // Every address the session uses must come from the launch query string. A
+  // hardcoded host in this file would mean a learner's progress going somewhere
+  // the LMS did not name — which is the thing G-12 actually forbids.
+  const session = sourceText.find(({ f }) => rel(f) === NETWORK_MODULE);
+  if (!session) {
+    fail(check, `${NETWORK_MODULE} not found — the network module was renamed without updating this check`);
+  } else {
+    const inFetch = session.text.match(/fetch\(\s*[`'"](https?:)?\/\/[^`'"]+/g) || [];
+    if (inFetch.length) {
+      fail(check, `${NETWORK_MODULE} builds a request from a hardcoded address: ${inFetch.join(', ')}`);
+    }
+    if (!/param\('endpoint'\)/.test(session.text)) {
+      fail(check, `${NETWORK_MODULE} does not read its endpoint from the launch parameters`);
+    }
+  }
+
   if (!errors.some((e) => e.startsWith(check))) {
-    pass(check, 'no network APIs and no external URLs beyond the permitted uscis.gov links');
+    pass(check, `only ${NETWORK_MODULE} calls out, and every address comes from the launch parameters`);
+  }
+}
+
+// --- 21. Nothing is ever counted against the learner ------------------------
+//
+// Rule G-1. The rehearsal is self-marked — the learner taps "Yes, I got it" or
+// "Not yet" and nothing measures the answer — and no other screen scores
+// anything either. There is therefore no honest Failed statement this course
+// could send.
+//
+// It matters more than it sounds. TalentLMS maps a package's statements onto
+// the course containing it, so one Failed from a practice run of 11 out of 20
+// could mark a learner as having failed the course they are studying for. The
+// manifest declares moveOn="Completed" with no masteryScore for the same
+// reason; this makes the code agree with the manifest.
+{
+  const check = '21 no failure is ever reported';
+  const FAILED_VERB = 'expapi/verbs/failed';
+  const rel = (f) => f.replace(root, '').replace(/\\/g, '/').replace(/^\//, '');
+  const emitters = sourceText.filter(({ text }) => text.includes(FAILED_VERB)).map(({ f }) => rel(f));
+
+  if (emitters.length) {
+    fail(
+      check,
+      `the failed verb appears in ${emitters.join(', ')} — G-1 forbids counting anything against the learner, and an LMS may map it onto the whole course`
+    );
+  }
+
+  const manifestSrc = readFileSync(join(root, 'scripts', 'cmi5-manifest.js'), 'utf8');
+  if (/masteryScore=/.test(manifestSrc)) {
+    fail(check, 'the manifest declares a masteryScore, but nothing in this course is measured');
+  }
+
+  if (!errors.some((e) => e.startsWith(check))) {
+    pass(check, 'no code path emits Failed, and the manifest claims no mastery score');
   }
 }
 

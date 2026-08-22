@@ -31,3 +31,9 @@ dist-ssr
 .env
 .env.*
 !.env.example
+
+# cmi5 packaging — build artefacts of a build artefact.
+# The zip is ~1.5 MB and would be re-uploaded whole on every content change.
+dist-cmi5
+packages
+*.zip

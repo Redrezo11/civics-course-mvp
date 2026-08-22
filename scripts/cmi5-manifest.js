@@ -1,17 +1,34 @@
 #!/usr/bin/env node
 /**
- * cmi5-manifest.js — generate docs/cmi5/cmi5.xml.
+ * cmi5-manifest.js — generate the cmi5 course structure.
  *
- *   node scripts/cmi5-manifest.js
- *
- * This project does NOT ship as a cmi5 package. The manifest is generated so
- * that someone building one from this repository starts from unit ids and
- * titles that are actually current — see docs/CMI5-CONVERSION.md.
+ *   node scripts/cmi5-manifest.js [--ns https://your.domain/civics] [--out PATH]
  *
  * Generated rather than hand-written for the same reason as every other
  * generated document here: a hand-typed course structure goes stale the first
  * time a unit is retitled, and a stale manifest is worse than none, because an
  * LMS will happily import it and report against the wrong names.
+ *
+ * ONE AU, NOT NINE.
+ *
+ * This used to emit an AU per lesson plus one for the rehearsal, inside a
+ * block. That is valid cmi5 and it is the wrong shape for the target: TalentLMS
+ * imports a package as a single learning activity, and nothing in its
+ * documentation says how nine assignable units are surfaced. One AU covering
+ * the course has one launch, one completion, and no behaviour that depends on
+ * an LMS feature we cannot confirm.
+ *
+ * It also removes the only masteryScore, which is a relief — see below.
+ *
+ * NOTHING HERE IS SCORED, SO NOTHING CAN FAIL.
+ *
+ * The rehearsal is self-marked: the learner taps "Yes, I got it" or "Not yet"
+ * and nothing measures the answer. As a scored AU that made every Passed
+ * statement attested rather than measured, and — worse — made Failed possible.
+ * TalentLMS maps statements onto the enclosing course, so a learner practising
+ * and reaching 11 of 20 could have been marked as having failed the course.
+ * Rule G-1 says nothing is counted against the learner. moveOn="Completed" on
+ * an unscored AU is the shape that cannot do that.
  */
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
@@ -23,23 +40,25 @@ const root = join(here, '..');
 const contentDir = join(root, 'src', 'lib', 'content');
 const readJson = (p) => JSON.parse(readFileSync(p, 'utf8'));
 
+const arg = (name, fallback) => {
+  const i = process.argv.indexOf(name);
+  return i !== -1 && process.argv[i + 1] ? process.argv[i + 1] : fallback;
+};
+
 /**
- * The identifier namespace. An implementer MUST replace this with their own.
+ * The identifier namespace.
  *
- * cmi5 activity ids are the primary key an LRS keeps learner records against.
- * Changing one after learners have started orphans their history — the LMS
- * cannot tell that the old and new ids are the same course. Pick these once.
+ * cmi5 activity ids need not resolve to anything — they need to be unique — but
+ * they ARE the primary key an LRS keeps learner records against. Change one
+ * after learners have started and their history orphans, because the LMS cannot
+ * tell the old and new ids are the same course. Pick it once.
  */
-const NS = 'https://example.org/civics-course';
+const DEFAULT_NS = 'https://example.org/civics-course';
+const NS = arg('--ns', DEFAULT_NS);
 
-// Rehearsal's own constants, from src/lib/screens/Rehearsal.svelte. Kept here
-// as a single source so the manifest cannot claim a pass mark the course does
-// not use.
-const PASS_AT = 12;
-const MAX = 20;
+const outPath = arg('--out', join(root, 'docs', 'cmi5', 'cmi5.xml'));
 
-const LESSON = 'http://adlnet.gov/expapi/activities/lesson';
-const ASSESSMENT = 'http://adlnet.gov/expapi/activities/assessment';
+const COURSE = 'http://adlnet.gov/expapi/activities/course';
 
 const esc = (s) =>
   String(s)
@@ -59,88 +78,60 @@ const questionCount = ['u1', 'u2', 'u3', 'u4', 'u5', 'u6', 'u7'].reduce(
   (n, u) => n + readJson(join(contentDir, `questions-${u}.json`)).length,
   0
 );
+const lessons = units.filter((u) => u.id !== 'U0').length;
+const screens = units.reduce((n, u) => n + u.screens.length, 0);
 
-const aus = units
-  .map((unit) => {
-    const screens = unit.screens.length;
-    return [
-      `    <au id="${NS}/au/${unit.id}"`,
-      `        moveOn="Completed"`,
-      `        launchMethod="AnyWindow"`,
-      `        activityType="${LESSON}">`,
-      titled('title', `${unit.id} — ${unit.title}`, '      '),
-      titled(
-        'description',
-        `${screens} screens. Teaching, guided practice and official test questions for this lesson.`,
-        '      '
-      ),
-      `      <url>index.html#/unit/${unit.id}</url>`,
-      `    </au>`,
-    ].join('\n');
-  })
-  .join('\n');
+// "Runs offline on a phone" used to sit in this description. It is true of the
+// web build and false of a package that reports to an LRS — and this is the
+// text an LMS shows in its catalogue, before a learner enrols. It is the one
+// piece of copy in docs/CMI5-CONVERSION.md §8 that lives outside the app.
+const description =
+  `All ${questionCount} official civics questions across ${units.length} short lessons — ` +
+  `${screens} screens, English and Burmese — plus an interview rehearsal. ` +
+  `Progress is reported to this system as the learner finishes each lesson.`;
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <!--
   GENERATED by scripts/cmi5-manifest.js — do not edit by hand.
+  Regenerate with a namespace you control: --ns https://your.domain/civics
 
-  A STARTING POINT, not a finished package. Before using this:
-    · replace ${NS} with an identifier namespace you control;
-    · read docs/CMI5-CONVERSION.md, which explains what the AU code must send
-      and, more importantly, what it must NOT send.
-
-  Titles here are English only. Unit titles have no Burmese translation yet, and
+  Titles are English only. Unit titles have no Burmese translation yet, and
   inventing one would put unreviewed text in front of a learner as fact. Add
   <langstring lang="my"> entries once they are translated.
 -->
 <courseStructure xmlns="https://w3id.org/xapi/profiles/cmi5/v1/CourseStructure.xsd">
   <course id="${NS}">
 ${titled('title', 'U.S. Citizenship Civics Test Preparation', '    ')}
-${titled(
-  'description',
-  `All ${questionCount} official civics questions across ${units.length} short lessons, plus an interview rehearsal. Runs offline on a phone.`,
-  '    '
-)}
+${titled('description', description, '    ')}
   </course>
 
-  <block id="${NS}/block/lessons">
-${titled('title', 'Lessons', '    ')}
-${titled('description', `The ${units.length} lessons, in order. Each is satisfied by finishing it.`, '    ')}
-${aus}
-  </block>
-
   <!--
-    Rehearsal is the only AU with a pass mark: ${PASS_AT} correct out of ${MAX},
-    which is the real test's rule and gives masteryScore ${(PASS_AT / MAX).toFixed(1)}.
-
-    READ THIS BEFORE TRUSTING THE SCORE. Rehearsal is SELF-SCORED — the learner
-    taps "Yes, I got it" or "Not yet", and nothing measures the answer. That is
-    deliberate in the course, which rehearses a spoken interview. It means a
-    Passed statement from this AU is ATTESTED, NOT MEASURED, and an LMS must not
-    treat it as a proctored result. docs/CMI5-CONVERSION.md §6 gives the
-    objectively scored alternative.
+    moveOn="Completed" and no masteryScore, deliberately. The AU sends Completed
+    and Passed together when all ${lessons} lessons are finished; it never sends Failed,
+    because nothing in this course is scored against the learner (rule G-1) and
+    an LMS mapping a Failed statement onto its enclosing course would turn a
+    practice run into a failed course.
   -->
-  <au id="${NS}/au/rehearsal"
-      moveOn="Passed"
-      masteryScore="${(PASS_AT / MAX).toFixed(1)}"
+  <au id="${NS}/au/main"
+      moveOn="Completed"
       launchMethod="AnyWindow"
-      activityType="${ASSESSMENT}">
-${titled('title', 'Interview rehearsal', '    ')}
+      activityType="${COURSE}">
+${titled('title', 'U.S. Citizenship Civics Test Preparation', '    ')}
 ${titled(
   'description',
-  `Up to ${MAX} questions asked the way an officer asks them. ${PASS_AT} correct passes. Self-scored.`,
+  `${lessons} lessons covering all ${questionCount} official questions. Complete when every lesson is finished.`,
   '    '
 )}
-    <url>index.html#/rehearsal</url>
+    <url>au/index.html</url>
   </au>
 </courseStructure>
 `;
 
-const outDir = join(root, 'docs', 'cmi5');
+const outDir = dirname(outPath);
 if (!existsSync(outDir)) mkdirSync(outDir, { recursive: true });
-writeFileSync(join(outDir, 'cmi5.xml'), xml, 'utf8');
+writeFileSync(outPath, xml, 'utf8');
 
-console.log('docs/cmi5/cmi5.xml');
-console.log(`  ${units.length} lesson AUs + 1 assessment AU`);
-console.log(`  masteryScore ${(PASS_AT / MAX).toFixed(1)} (${PASS_AT} of ${MAX})`);
-console.log(`  identifier namespace: ${NS} — the implementer must replace this`);
+console.log(outPath.replace(root, '.'));
+console.log(`  1 AU, moveOn="Completed", no masteryScore — nothing is scored`);
+console.log(`  ${lessons} lessons, ${questionCount} questions, ${screens} screens`);
+console.log(`  namespace: ${NS}${NS === DEFAULT_NS ? '  ← placeholder; pass --ns to set your own' : ''}`);

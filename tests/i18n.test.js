@@ -303,6 +303,13 @@ describe('the UI string lookup', () => {
     // nobody is looking. Anything appearing here that is not on this list is a
     // gap someone introduced without requesting the translation.
     const AWAITING = [
+      // What the learner is told about where their progress goes, when a
+      // learning management system is listening. `help.reset` is not new copy —
+      // it was hardcoded in Help.svelte and untranslatable until it moved here
+      // to gain an LMS variant, so it arrives already outstanding.
+      'help.privacyLms',
+      'help.reset',
+      'help.resetLms',
       'narration.listen',
       'narration.listenAgain',
       'narration.pause',

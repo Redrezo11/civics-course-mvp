@@ -3,6 +3,7 @@
   import { navigate } from '../router.js';
   import { progress } from '../stores/progress.js';
   import { ANSWERS_CHECKED } from '../content/questions.js';
+  import { lmsSession } from '../stores/lms.js';
 
   const entries = [
     { q: 'My lessons disappeared', a: 'Private window or cleared data. Use a normal window — your lessons are all still here.' },
@@ -45,8 +46,14 @@
     </p>
   </div>
 
+  <!--
+    Where the learner's progress actually goes. Two answers, because there are
+    two truths: opened from the web it never leaves the phone, and launched from
+    a learning management system it is reported to whoever assigned the course.
+    Saying the first inside an LMS would be a lie about somebody's data.
+  -->
   <div class="border border-border dark:border-dark-border rounded-card p-3 mt-3 text-center text-sm font-bold">
-    {$t('help.privacy')}
+    {$t($lmsSession ? 'help.privacyLms' : 'help.privacy')}
   </div>
 
   {#if !confirmingReset}
@@ -55,7 +62,12 @@
     </button>
   {:else}
     <div class="mt-6 text-sm">
-      <p class="mb-2">This clears all your progress on this phone. This cannot be undone.</p>
+      <!--
+        Under an LMS this button is weaker than it looks: it clears the phone,
+        it cannot unsend what has already been reported. A learner starting over
+        would otherwise believe their record was gone.
+      -->
+      <p class="mb-2">{$t($lmsSession ? 'help.resetLms' : 'help.reset')}</p>
       <div class="flex gap-2">
         <button class="btn-secondary" on:click={() => (confirmingReset = false)}>Cancel</button>
         <button class="btn-primary" on:click={doReset}>Clear progress</button>

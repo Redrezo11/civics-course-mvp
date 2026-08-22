@@ -1,6 +1,9 @@
 {
   "_note": "Untruncated English for every field in TRANSLATION-REQUEST.md, keyed screenId.field. The markdown clips long values for table display; these are the full ones. Return each value in the same shape and, for lists, the same length and order. An entry shaped { english, previousMy } is a REVISION — marked ↻ in the markdown: the English was rewritten after you translated it, and previousMy is the Burmese you sent last time. Edit it rather than starting again, and return it in the shape the english value has. The ⚠ rules in section 0 of the markdown still apply.",
   "_ui": {
+    "help.privacyLms": "Your privacy: this course saves your progress on this phone, and reports your progress to the organisation providing the course.",
+    "help.reset": "This clears all your progress on this phone. This cannot be undone.",
+    "help.resetLms": "This clears all your progress on this phone. This cannot be undone. Progress already reported to the organisation providing the course is not removed.",
     "narration.listen": "Listen",
     "narration.listenAgain": "Listen again",
     "narration.pause": "Pause",
