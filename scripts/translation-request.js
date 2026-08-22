@@ -148,6 +148,8 @@ const uiTotal = Object.keys(ui).filter((k) => k !== '_note').length;
 const sections = [];
 const counts = [];
 const source = {};
+/** Fields translated once already, whose English has since been rewritten. */
+const revisions = [];
 
 for (const file of UNITS) {
   const unit = readJson(join(contentDir, `${file}.json`));
@@ -167,15 +169,33 @@ for (const file of UNITS) {
       const stale = known && known.en !== textHash(screen[label.split('[')[0].split('.')[0]]);
       if (translated && !stale) continue;
       const key = `${screen.id}.${label}`;
-      source[key] = raw;
-      rows.push(`| \`${screen.id}\` | \`${label}\` | ${cell(en, key)}${warn(label, en)} |`);
+
+      // A REVISION IS NOT NEW WORK.
+      //
+      // These rows used to be indistinguishable from never-translated ones, so
+      // a translator retyped from scratch a line they had already delivered —
+      // and could not see what about the English had changed. The previous
+      // Burmese is still on disk (the overlay keeps it; the runtime simply
+      // refuses it), so it goes out beside the new English as something to
+      // edit rather than an empty slot.
+      const previousMy = stale
+        ? m
+          ? done.items?.[Number(m[1])]?.[m[2]]
+          : done[label]
+        : undefined;
+      if (stale) revisions.push(key);
+
+      source[key] = previousMy === undefined ? raw : { english: raw, previousMy };
+      rows.push(
+        `| ${stale ? '↻' : ''} | \`${screen.id}\` | \`${label}\` | ${cell(en, key)}${warn(label, en)} |`
+      );
     }
   }
   counts.push([unit.id, unit.title, rows.length]);
   sections.push(
     `\n### ${unit.id} — ${unit.title}\n\n**${rows.length} fields.**\n\n` +
       (rows.length
-        ? `| Screen | Field | English |\n|---|---|---|\n${rows.join('\n')}\n`
+        ? `| | Screen | Field | English |\n|---|---|---|---|\n${rows.join('\n')}\n`
         : '_Fully translated._\n')
   );
 }
@@ -189,9 +209,38 @@ const doc = `# What still needs Burmese
 content change rather than editing this file, or it will describe a course that
 no longer exists.
 
-Everything already translated is live and is **not** listed here, so nothing gets
-translated twice. Remaining: **${uiMissing.length} interface strings** and
-**${totalFields} content fields**.
+Remaining: **${uiMissing.length} interface strings** and **${totalFields} content
+fields** — ${totalFields - revisions.length} never translated, and
+**${revisions.length} marked ↻**.
+
+A field that is translated and still current is live and is **not** listed here,
+so nothing gets translated twice.
+
+## ↻ means revise, not retranslate
+
+The English on these was rewritten *after* you translated it. Your Burmese is
+still in the repository and is not lost — the course simply stops showing it,
+because a translation of a sentence the screen no longer says is worse than
+English. Until a revision arrives, English learners and Burmese learners see the
+same words on those lines.
+
+**Your previous Burmese is in \`docs/translation-source.json\`.** A ↻ entry is an
+object rather than a plain value:
+
+\`\`\`json
+"U0-S01.body": {
+  "english": "…the new English…",
+  "previousMy": "…what you sent last time…"
+}
+\`\`\`
+
+Read the two together, change what the rewrite actually changed, and send back
+the value in the same shape a plain entry would take. Most are small edits.
+${
+  revisions.length
+    ? `\nThe ${revisions.length} this time: ${revisions.map((r) => `\`${r}\``).join(', ')}.\n`
+    : ''
+}
 
 **Work from \`docs/translation-source.json\`, not from the tables below.** The
 tables clip long values to fit a markdown column; that JSON carries the full
@@ -324,6 +373,10 @@ writeFileSync(
         'Untruncated English for every field in TRANSLATION-REQUEST.md, keyed screenId.field. ' +
         'The markdown clips long values for table display; these are the full ones. ' +
         'Return each value in the same shape and, for lists, the same length and order. ' +
+        'An entry shaped { english, previousMy } is a REVISION — marked ↻ in the markdown: ' +
+        'the English was rewritten after you translated it, and previousMy is the Burmese ' +
+        'you sent last time. Edit it rather than starting again, and return it in the shape ' +
+        'the english value has. ' +
         'The ⚠ rules in section 0 of the markdown still apply.',
       _ui: Object.fromEntries(uiMissing),
       ...source,

@@ -438,8 +438,60 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
       }
     }
   }
-  if (missing === 0) {
-    pass(check, 'every asset-bearing screen carries alt text, or declares itself decorative');
+  // One picture, one description.
+  //
+  // Alt text describes the file, not the screen it sits on, so the same image
+  // used twice must read the same way both times — and two different images
+  // must not share a description, or a screen-reader user is told they are
+  // looking at something they are not. `declaration-of-independence.webp`
+  // appears on U1-S08 and U6-S06 and is correctly described identically on
+  // both; nothing was checking that it stayed that way.
+  const altsFor = new Map(); // image -> Map(alt -> [screen ids])
+  const noteAlt = (image, alt, id) => {
+    if (!image || !alt) return;
+    if (!altsFor.has(image)) altsFor.set(image, new Map());
+    const byText = altsFor.get(image);
+    if (!byText.has(alt)) byText.set(alt, []);
+    byText.get(alt).push(id);
+  };
+  for (const u of units) {
+    for (const s of u.screens) {
+      noteAlt(s.image, s.alt, s.id);
+      for (const col of s.twoColumn || []) noteAlt(col.image, col.alt, s.id);
+      for (const pic of s.imageRow || []) noteAlt(pic.image, pic.alt, s.id);
+    }
+  }
+  let inconsistent = 0;
+  for (const [image, byText] of altsFor) {
+    if (byText.size > 1) {
+      inconsistent += 1;
+      fail(
+        check,
+        `"${image}" is described ${byText.size} different ways — ${[...byText.entries()]
+          .map(([t, ids]) => `${ids.join('/')}: "${t.slice(0, 40)}…"`)
+          .join(' vs ')}`
+      );
+    }
+  }
+  const byAlt = new Map();
+  for (const [image, byText] of altsFor) {
+    for (const t of byText.keys()) {
+      if (!byAlt.has(t)) byAlt.set(t, new Set());
+      byAlt.get(t).add(image);
+    }
+  }
+  for (const [text, images] of byAlt) {
+    if (images.size > 1) {
+      inconsistent += 1;
+      fail(check, `${images.size} different images share one description "${text.slice(0, 50)}…" — ${[...images].join(', ')}`);
+    }
+  }
+
+  if (missing === 0 && inconsistent === 0) {
+    pass(
+      check,
+      `every asset-bearing screen carries alt text or declares itself decorative; ${altsFor.size} images each described one way`
+    );
   }
 }
 
@@ -1093,6 +1145,86 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
 
   if (!errors.some((e) => e.startsWith(check))) {
     pass(check, `${files.length} file(s) in public/, ${(bytes / 1024).toFixed(0)} KB total, none oversized`);
+  }
+}
+
+// --- 20. No passage of copy written twice ------------------------------------
+// A learner read the same welcome twice: `U0-S01.body` was byte-identical to
+// the paragraph hardcoded in Welcome.svelte, so pressing Start appeared to do
+// nothing but change the illustration. Looking for more of it found six —
+// `afterQuote` on U1-S01 through U6-S01 was one sentence repeated, so the line
+// under the question card said the same nothing in every unit.
+//
+// Both were written independently by someone who could not see the other copy.
+// Nothing detects that except comparing all of it.
+//
+// ACROSS SCREENS, NOT ACROSS FIELDS.
+//
+// An `interpret` item holds the same string in `cardText` and `pairedOfficial`
+// — one screen showing a question, and recording which official question it
+// pairs to. Six of those exist and none is a defect, so the comparison is keyed
+// by screen id: a passage in two places on ONE screen is a data shape, the same
+// passage on two screens is a repeat.
+{
+  const check = '20 no passage of copy written twice';
+  const MIN = 25;
+
+  // Deliberate repeats. Each is one component's frame reused around different
+  // content, which is consistency rather than duplication — the alternative is
+  // rewording an instruction per unit so the learner has to re-read it.
+  const SHARED_COPY = [
+    ['Two names on the test sound alike. Do not mix them up.', 'confusablePair: one frame, two pairs of names'],
+    ['Tap these four events into the order they happened.', 'ordering item: one instruction, two sets of events'],
+    ['Choose an answer to continue', 'one instruction for one interaction (FullBank, Review)'],
+  ];
+  const norm = (t) => t.trim().toLowerCase().replace(/\s+/g, ' ').replace(/\.$/, '');
+  const allowed = new Set(SHARED_COPY.map(([t]) => norm(t)));
+
+  // Keys that are identifiers or asset names rather than prose a learner reads.
+  //
+  // `alt` is excluded on purpose. It describes the PICTURE, so the same file on
+  // two screens should carry the same description and it would be a defect if
+  // it did not — which is a rule about alt text, and now lives in check 6 where
+  // the rest of alt lives.
+  const NOT_PROSE = new Set(['id', 'type', 'image', 'alt', 'questionId', 'sampleQuestionId', 'diagram', 'companionPose']);
+
+  const sites = new Map(); // normalised passage -> Set of place names
+  const record = (text, where) => {
+    if (typeof text !== 'string' || text.trim().length < MIN) return;
+    const key = norm(text);
+    if (allowed.has(key)) return;
+    if (!sites.has(key)) sites.set(key, { text, where: new Set() });
+    sites.get(key).where.add(where);
+  };
+
+  const walk = (node, where) => {
+    if (typeof node === 'string') record(node, where);
+    else if (Array.isArray(node)) for (const v of node) walk(v, where);
+    else if (node && typeof node === 'object') {
+      for (const [k, v] of Object.entries(node)) if (!NOT_PROSE.has(k)) walk(v, where);
+    }
+  };
+
+  for (const unit of units) for (const screen of unit.screens) walk(screen, screen.id);
+
+  // Course copy also lives in markup. Text nodes only — attributes, class lists
+  // and script bodies are not prose a learner reads.
+  for (const file of allSourceFiles(join(srcDir, 'lib', 'screens'))) {
+    if (!file.endsWith('.svelte')) continue;
+    const name = file.split(/[\\/]/).pop();
+    const body = readFileSync(file, 'utf8').replace(/<script[\s\S]*?<\/script>/g, '');
+    for (const [, text] of body.matchAll(/>([^<>{}]+)</g)) record(text, name);
+  }
+
+  const repeats = [...sites.values()].filter((s) => s.where.size > 1);
+  for (const r of repeats) {
+    fail(
+      check,
+      `"${r.text.slice(0, 60)}${r.text.length > 60 ? '…' : ''}" appears in ${[...r.where].join(', ')} — write one of them afresh, or add it to SHARED_COPY with the reason it is deliberate`
+    );
+  }
+  if (!repeats.length) {
+    pass(check, `${sites.size} passages, each written once (${SHARED_COPY.length} shared frames allowed)`);
   }
 }
 

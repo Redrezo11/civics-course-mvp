@@ -10,7 +10,7 @@
       "heading": "Three branches",
       "body": "The officer will ask how American government is built — questions like:",
       "sampleQuestionId": "Q16",
-      "afterQuote": "This lesson will help you answer those questions.",
+      "afterQuote": "Three branches, built so that no one of them can act alone. Name them, and the rest of this lesson is who does what.",
       "coverageLine": "It covers 20 of the 128 on the test.",
       "afterTest": "And after the test: this is how to understand any news story about Washington.",
       "primaryLabel": "Begin"
@@ -89,11 +89,11 @@
       "imageRow": [
         {
           "image": "us-capitol.webp",
-          "alt": "The United States Capitol, its white dome above a long colonnaded front."
+          "alt": "The United States Capitol, its white dome above a long colonnaded front, a wing to each side."
         },
         {
           "image": "white-house.webp",
-          "alt": "The White House behind its lawn, with the curved columns of the South Portico."
+          "alt": "The White House seen across its lawn, the curved columns of the South Portico at its centre."
         },
         {
           "image": "us-supreme-court.webp",

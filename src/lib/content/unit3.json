@@ -10,7 +10,7 @@
       "heading": "Who represents you",
       "body": "The officer will ask about the people you will help elect — questions like:",
       "sampleQuestionId": "Q21",
-      "afterQuote": "This lesson will help you answer those questions.",
+      "afterQuote": "Some answers in this lesson are fixed numbers. Others depend on where you live — and part of the lesson is learning how to look those up.",
       "coverageLine": "It covers 23 of the 128 — the biggest single lesson.",
       "afterTest": "After you naturalize, you vote for every one of these jobs.",
       "primaryLabel": "Begin"
@@ -87,7 +87,7 @@
       "handle": "One state, two kinds of voice.",
       "handleSub": "Citizens elect both.",
       "primaryLabel": "Next",
-      "alt": "The United States Capitol, where Congress meets: a white dome above a long front with a wing to each side."
+      "alt": "The United States Capitol, its white dome above a long colonnaded front, a wing to each side."
     },
     {
       "id": "U3-S06",

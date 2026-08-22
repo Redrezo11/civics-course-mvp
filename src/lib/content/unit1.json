@@ -10,7 +10,7 @@
       "heading": "We the People",
       "body": "At your interview, the officer will ask about America's rulebook — questions like:",
       "sampleQuestionId": "Q2",
-      "afterQuote": "This lesson will help you answer those questions.",
+      "afterQuote": "One document is the answer to that question — and to most of the others in this lesson.",
       "coverageLine": "It covers 14 of the 128 on the test.",
       "afterTest": "And what you learn here matters after the test too — this rulebook is what protects your rights as a citizen.",
       "primaryLabel": "Begin"
@@ -83,7 +83,7 @@
       "handle": "It creates the government, limits it, and protects your rights.",
       "handleSub": "Three jobs, all born from the same fear of kings.",
       "primaryLabel": "Next",
-      "alt": "The first page of the United States Constitution on aged parchment, beginning with the large words We the People."
+      "alt": "The first page of the United States Constitution on aged parchment, headed with the large words We the People."
     },
     {
       "id": "U1-S06a",
@@ -104,7 +104,7 @@
       ],
       "image": "constitution-page-1.webp",
       "primaryLabel": "Next",
-      "alt": "The first page of the United States Constitution on aged parchment — the document the Bill of Rights amends."
+      "alt": "The first page of the United States Constitution on aged parchment, headed with the large words We the People."
     },
     {
       "id": "U1-S07",
@@ -144,7 +144,7 @@
           "image": "constitution-page-1.webp",
           "heading": "Constitution — 1787",
           "body": "A rulebook. It builds: the government America still uses today.",
-          "alt": "The first page of the Constitution on aged parchment, headed We the People."
+          "alt": "The first page of the United States Constitution on aged parchment, headed with the large words We the People."
         }
       ],
       "closing": "First the country announced what it believed. Eleven years later, it wrote the rules to make those beliefs real. 1776 declares. 1787 designs. Remember those two dates — they answer several test questions.",

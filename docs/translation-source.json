@@ -1,5 +1,5 @@
 {
-  "_note": "Untruncated English for every field in TRANSLATION-REQUEST.md, keyed screenId.field. The markdown clips long values for table display; these are the full ones. Return each value in the same shape and, for lists, the same length and order. The ⚠ rules in section 0 of the markdown still apply.",
+  "_note": "Untruncated English for every field in TRANSLATION-REQUEST.md, keyed screenId.field. The markdown clips long values for table display; these are the full ones. Return each value in the same shape and, for lists, the same length and order. An entry shaped { english, previousMy } is a REVISION — marked ↻ in the markdown: the English was rewritten after you translated it, and previousMy is the Burmese you sent last time. Edit it rather than starting again, and return it in the shape the english value has. The ⚠ rules in section 0 of the markdown still apply.",
   "_ui": {
     "narration.listen": "Listen",
     "narration.listenAgain": "Listen again",
@@ -7,20 +7,47 @@
     "narration.resume": "Resume",
     "settings.answersStayEnglish": "Answer choices show English first, with the Burmese underneath."
   },
-  "U0-S02.alt": "New citizens at a naturalization ceremony, standing close together, smiling and waving small United States flags, ceremony programmes in their hands.",
-  "U0-S04.body": "Here is a real test question. Choose the answer you would give.",
+  "U0-S01.heading": {
+    "english": "Test day",
+    "previousMy": "ကြိုဆိုပါသည်"
+  },
+  "U0-S01.body": {
+    "english": "Before the civics questions, this short lesson covers the interview itself: how the officer asks, how many answers you need right, and how to tell what kind of answer a question wants.",
+    "previousMy": "ဤသင်တန်းသည် အမေရိကန် နိုင်ငံသားခံယူခြင်း civics စာမေးပွဲရှိ မေးခွန်း ၁၂၈ ခုလုံးကို သင့်နေ့စဉ်ဘဝနှင့် အဆင်ပြေအောင် ချိန်ညှိနိုင်သည့် သင်ခန်းစာတိုများဖြင့် လွှမ်းခြုံပါသည်။"
+  },
+  "U0-S01.alt": "",
+  "U0-S02.alt": {
+    "english": "New citizens at a naturalization ceremony, standing close together, smiling and waving small United States flags, ceremony programmes in their hands.",
+    "previousMy": "နိုင်ငံသားခံယူပွဲ အခမ်းအနား — လူများ တန်းစီရပ်လျက် ညာလက်ကို မြှောက်ထားပြီး ဘယ်လက်တွင် အမေရိကန် အလံငယ်များ ကိုင်ထားကြသည်။"
+  },
+  "U0-S04.body": {
+    "english": "Here is a real test question. Choose the answer you would give.",
+    "previousMy": "ဤတွင် အမှန်တကယ် စာမေးပွဲမေးခွန်းတစ်ခု ရှိပါသည်။ ဖတ်ပြီး အသံထွက်၍ ဖြေကြည့်ပါ။"
+  },
+  "U0-S07.alt": "",
+  "U1-S01.afterQuote": {
+    "english": "One document is the answer to that question — and to most of the others in this lesson.",
+    "previousMy": "ဤသင်ခန်းစာသည် ထိုမေးခွန်းများကို ဖြေဆိုနိုင်ရန် ကူညီပါမည်။"
+  },
   "U1-S05.paragraphs": [
     "In 1787, the thirteen states had just finished a long war against a king. They needed a government — but they were afraid of two opposite things at the same time.",
     "They were afraid of having no government. Without one, nobody could defend the country, settle arguments between states, or pay for anything.",
     "They were also afraid of a government so strong it would act like the king they had just escaped."
   ],
-  "U1-S05.alt": "The first page of the United States Constitution on aged parchment, beginning with the large words We the People.",
+  "U1-S05.alt": {
+    "english": "The first page of the United States Constitution on aged parchment, headed with the large words We the People.",
+    "previousMy": "အဟောင်းဖြစ်နေသော ကတ္တီပါစက္ကူပေါ်ရှိ မူရင်း အမေရိကန် ဖွဲ့စည်းပုံအခြေခံဥပဒေ၏ ဓာတ်ပုံ၊ လက်ရေးစာသား မြင်နိုင်သည်။"
+  },
   "U1-S06b.paragraphs": [
     "Can the rulebook change? Yes — by amendment. But the writers made changing it slow and difficult on purpose. A rulebook that is easy to change is not much of a limit on anyone.",
     "In more than 230 years, it has changed only 27 times. That small number is the point.",
     "Many people worried that the new Constitution did not clearly protect individual rights. Several states ratified it while asking for those protections to be added. Congress soon proposed amendments. The first 10 became the Bill of Rights. They protect basic rights such as freedom of speech and freedom of religion.",
     "They protect the basic rights of people living in the United States — not only citizens."
   ],
+  "U1-S06b.alt": {
+    "english": "The first page of the United States Constitution on aged parchment, headed with the large words We the People.",
+    "previousMy": "အခွင့်အရေး ဥပဒေကြမ်း စာတမ်း၏ ဓာတ်ပုံ၊ လက်ရေးဖြင့် ရေးထားသည့် အပိုဒ်များ မြင်နိုင်သည့် ဟောင်းနွမ်းသော ကတ္တီပါစက္ကူ။"
+  },
   "U1-S08.twoColumn": [
     {
       "heading": "Declaration of Independence — 1776",
@@ -30,11 +57,15 @@
     {
       "heading": "Constitution — 1787",
       "body": "A rulebook. It builds: the government America still uses today.",
-      "alt": "The first page of the Constitution on aged parchment, headed We the People."
+      "alt": "The first page of the United States Constitution on aged parchment, headed with the large words We the People."
     }
   ],
   "U1-S09.items[0].question": "Name one thing the U.S. Constitution does.",
   "U1-S09.items[1].instructions": "Tap to sort into Declaration or Constitution.",
+  "U2-S01.afterQuote": {
+    "english": "Three branches, built so that no one of them can act alone. Name them, and the rest of this lesson is who does what.",
+    "previousMy": "ဤသင်ခန်းစာသည် ထိုမေးခွန်းများကို ဖြေဆိုနိုင်ရန် ကူညီပါမည်။"
+  },
   "U2-S04.cards": [
     {
       "word": "branch",
@@ -74,6 +105,10 @@
     "Each branch can block the others. That blocking has a name you already know from the rulebook lesson: checks and balances — also called separation of powers. It exists for one reason: so no one part becomes too powerful. The same reason answers three different test questions.",
     "One more piece of the same idea: Supreme Court justices serve for life. Why? If a judge could be fired, that judge would be afraid of the people above them. A judge who serves for life has no one to fear — so they are free to follow only the rulebook, not politics. That independence is the whole point."
   ],
+  "U3-S01.afterQuote": {
+    "english": "Some answers in this lesson are fixed numbers. Others depend on where you live — and part of the lesson is learning how to look those up.",
+    "previousMy": "ဤသင်ခန်းစာသည် ထိုမေးခွန်းများကို ဖြေဆိုနိုင်ရန် ကူညီပါမည်။"
+  },
   "U3-S03.bodyList": [
     "Imagine five towns that share one road, one water supply, and one school.",
     "One town is large; four are small. When they meet to decide things together, how should the voting work?",
@@ -112,13 +147,20 @@
     "The Senate: every state equal. Two senators per state, big or small. 50 states × 2 = 100 senators. A senator represents the people of their whole state and serves six years — a longer term than representatives get. Why two per state? Equal representation for small states — the deal that saved the union in 1787, called the Great Compromise.",
     "The House of Representatives: every person equal. Seats follow population — more people, more representatives. 435 voting members. A representative serves the people of one district and serves only two years. Why so short? So they must face the voters constantly — to more closely follow public opinion."
   ],
-  "U3-S05.alt": "The United States Capitol, where Congress meets: a white dome above a long front with a wing to each side.",
+  "U3-S05.alt": {
+    "english": "The United States Capitol, its white dome above a long colonnaded front, a wing to each side.",
+    "previousMy": "အမေရိကန် ကာပီတော် အဆောက်အအုံ — Senate ခန်းမနှင့် House ခန်းမဟု အမှတ်အသားပြုထားသည့် တောင်ပံနှစ်ဖက်နှင့်။"
+  },
   "U3-S06.paragraphs": [
     "The President is elected for four years — and may serve only two terms.",
     "Why the limit? The 22nd Amendment — and you already know the deeper reason: to keep the president from becoming too powerful. The fear of kings, again.",
     "Who actually decides the winner? The Electoral College — a compromise between electing the president by popular vote and letting Congress choose."
   ],
   "U3-S06.alt": "The White House seen across its lawn, the curved columns of the South Portico at its centre.",
+  "U4-S01.afterQuote": {
+    "english": "Every question here turns on one habit: asking whether a job belongs to the whole country, or to your state.",
+    "previousMy": "ဤသင်ခန်းစာသည် ထိုမေးခွန်းများကို ဖြေဆိုနိုင်ရန် ကူညီပါမည်။"
+  },
   "U4-S04.cards": [
     {
       "word": "federal",
@@ -147,11 +189,15 @@
     "Close-to-home jobs go to the states: schools, police, fire departments, driver's licenses, zoning. These need local knowledge — Sacramento knows California's roads; Washington does not.",
     "And the leftover rule is written in the rulebook itself — the 10th Amendment: powers not given to the federal government belong to the states, or to the people."
   ],
+  "U5-S01.afterQuote": {
+    "english": "The test asks about rights and duties as two short lists. This lesson gives you both — and the difference between them.",
+    "previousMy": "ဤသင်ခန်းစာသည် ထိုမေးခွန်းများကို ဖြေဆိုနိုင်ရန် ကူညီပါမည်။"
+  },
   "U5-S04.cards": [
     {
       "word": "right",
       "def": "a freedom the law protects for you.",
-      "example": "You have the right to speak freely."
+      "example": "The right to vote belongs to citizens."
     },
     {
       "word": "responsibility",
@@ -188,6 +234,10 @@
     "How do people become citizens at all? Three doors: born in the United States (a promise written in the 14th Amendment — its story is in Lesson 7), naturalize — your door, the one this course walks you to — or derive citizenship through parents."
   ],
   "U5-S06.alt": "A polling place: a Vote Here sign beside open voting booths, with people filling in ballots.",
+  "U6-S01.afterQuote": {
+    "english": "Behind that question is one summer in Philadelphia, thirteen colonies, and a decision none of them could take back.",
+    "previousMy": "ဤသင်ခန်းစာသည် ထိုမေးခွန်းများကို ဖြေဆိုနိုင်ရန် ကူညီပါမည်။"
+  },
   "U6-S04.cards": [
     {
       "word": "colony",
@@ -227,6 +277,10 @@
     "In the middle of that war, the colonies put their reasons in writing for the whole world. Thomas Jefferson wrote the Declaration of Independence, adopted July 4, 1776 — the date America still celebrates as its birthday. It declared the colonies free from Britain, and it declared why: all people are created equal, with rights of their own — life, liberty, the pursuit of happiness.",
     "The war was long — Bunker Hill, Washington crossing the Delaware, Valley Forge — but it ended with the British surrender at Yorktown."
   ],
+  "U6-S06.alt": {
+    "english": "The Declaration of Independence on aged parchment, headed In Congress, July 4, 1776.",
+    "previousMy": "လွတ်လပ်ရေး ကြေညာစာတမ်း လက်မှတ်ရေးထိုးပွဲ — ဆယ့်ရှစ်ရာစု ဝတ်စားဆင်ယင်မှုဖြင့် အမျိုးသားများ အစည်းအဝေးခန်းမရှိ စားပွဲတစ်လုံးပတ်လည်တွင် စုဝေးနေကြသည်။"
+  },
   "U6-S07.paragraphs": [
     "Chapter 3 — The build.",
     "The colonies were free — but they were struggling. The first loose arrangement between the states (the Articles of Confederation) proved too weak to work. So in 1787, the states sent their best minds to Philadelphia and wrote the Constitution — the rulebook you know, born from the two fears you know.",

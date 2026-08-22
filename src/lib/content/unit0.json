@@ -5,9 +5,9 @@
     {
       "id": "U0-S01",
       "type": "info",
-      "heading": "Welcome",
-      "body": "This course covers all 128 questions on the U.S. citizenship civics test, in short lessons you can fit around your day.",
-      "primaryLabel": "Start",
+      "heading": "Test day",
+      "body": "Before the civics questions, this short lesson covers the interview itself: how the officer asks, how many answers you need right, and how to tell what kind of answer a question wants.",
+      "primaryLabel": "Begin",
       "image": "companion-seated-phone.webp",
       "alt": "",
       "decorative": true

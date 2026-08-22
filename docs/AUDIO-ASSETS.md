@@ -79,7 +79,7 @@ learner who listens and the learner who reads get the same course.
 
 | | File | Screen | Script |
 |---|---|---|---|
-| ○ | `U0-S01.mp3` | `U0-S01` | Welcome. This course covers all 128 questions on the U.S. ci… |
+| ○ | `U0-S01.mp3` | `U0-S01` | Test day. Before the civics questions, this short lesson cov… |
 | ○ | `U0-S02.mp3` | `U0-S02` | The civics test is a conversation. An officer asks you quest… |
 | ○ | `U0-S03.mp3` | `U0-S03` | 12. Answer 12 correctly — you pass. The officer stops as soo… |
 | ○ | `U0-S05.mp3` | `U0-S05` | The question's opening words tell you what kind of answer. W… |

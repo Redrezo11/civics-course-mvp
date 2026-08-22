@@ -17,6 +17,14 @@ import { localiseWith } from '../src/lib/localise.js';
 import { textHash } from '../src/lib/text-hash.js';
 import freshness from '../src/lib/content/translations/freshness.json';
 import myUnit0 from '../src/lib/content/translations/my/unit0.json';
+import myUnit1 from '../src/lib/content/translations/my/unit1.json';
+import myUnit2 from '../src/lib/content/translations/my/unit2.json';
+import myUnit3 from '../src/lib/content/translations/my/unit3.json';
+import myUnit4 from '../src/lib/content/translations/my/unit4.json';
+import myUnit5 from '../src/lib/content/translations/my/unit5.json';
+import myUnit6 from '../src/lib/content/translations/my/unit6.json';
+import myUnit7 from '../src/lib/content/translations/my/unit7.json';
+import source from '../docs/translation-source.json';
 
 import unit0 from '../src/lib/content/unit0.json';
 import unit1 from '../src/lib/content/unit1.json';
@@ -113,6 +121,43 @@ describe('the real case', () => {
     const out = localiseWith(s04, myUnit0['U0-S04'], record);
     expect(out.body).toBe(s04.body);
     expect(isBurmese(out.body)).toBe(false);
+  });
+
+  it('every stale field is asked for again, as a revision carrying its old Burmese', () => {
+    // Falling back to English is only half of it. The other half is the
+    // translator ever finding out — and a stale row used to look exactly like
+    // a never-translated one, so the fix was to retype from scratch a line
+    // already delivered, with no way to see what about the English changed.
+    //
+    // Derived from the data rather than from a list, so it fails if the
+    // generator regresses OR if one artefact is regenerated without the other.
+    const OVERLAYS = { unit0: myUnit0, unit1: myUnit1, unit2: myUnit2, unit3: myUnit3,
+      unit4: myUnit4, unit5: myUnit5, unit6: myUnit6, unit7: myUnit7 };
+    const stale = [];
+
+    for (const [file, screens] of Object.entries(freshness.my)) {
+      const english = UNITS.find((u) => `unit${u.id[1]}` === file);
+      for (const [screenId, fields] of Object.entries(screens)) {
+        const screen = english?.screens.find((s) => s.id === screenId);
+        for (const [field, record] of Object.entries(fields)) {
+          // `items` is a list, and the request keys it per item — outside the
+          // scalar contract this asserts. None is stale today.
+          if (typeof screen?.[field] !== 'string') continue;
+          if (record.en !== textHash(screen[field])) stale.push([file, screenId, field]);
+        }
+      }
+    }
+
+    expect(stale.length, 'nothing is stale, so this asserts nothing').toBeGreaterThan(0);
+    for (const [file, screenId, field] of stale) {
+      const entry = source[`${screenId}.${field}`];
+      expect(entry, `${screenId}.${field} is stale but absent from the request`).toBeTruthy();
+      expect(
+        entry.previousMy,
+        `${screenId}.${field} is asked for as new work — the translator loses what they sent`
+      ).toBe(OVERLAYS[file][screenId][field]);
+      expect(entry.english, `${screenId}.${field} must carry the CURRENT English`).toBeTruthy();
+    }
   });
 
   it('leaves the rest of Unit 0 in Burmese', () => {
