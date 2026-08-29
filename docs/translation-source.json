@@ -1,19 +1,7 @@
 {
   "_note": "Untruncated English for every field in TRANSLATION-REQUEST.md, keyed screenId.field. The markdown clips long values for table display; these are the full ones. Return each value in the same shape and, for lists, the same length and order. An entry shaped { english, previousMy } is a REVISION — marked ↻ in the markdown: the English was rewritten after you translated it, and previousMy is the Burmese you sent last time. Edit it rather than starting again, and return it in the shape the english value has. The ⚠ rules in section 0 of the markdown still apply.",
   "_ui": {},
-  "U0-S01.heading": {
-    "english": "Test day",
-    "previousMy": "ကြိုဆိုပါသည်"
-  },
-  "U0-S01.body": {
-    "english": "Before the civics questions, this short lesson covers the interview itself: how the officer asks, how many answers you need right, and how to tell what kind of answer a question wants.",
-    "previousMy": "ဤသင်တန်းသည် အမေရိကန် နိုင်ငံသားခံယူခြင်း civics စာမေးပွဲရှိ မေးခွန်း ၁၂၈ ခုလုံးကို သင့်နေ့စဉ်ဘဝနှင့် အဆင်ပြေအောင် ချိန်ညှိနိုင်သည့် သင်ခန်းစာတိုများဖြင့် လွှမ်းခြုံပါသည်။"
-  },
   "U0-S01.alt": "",
-  "U0-S02.alt": {
-    "english": "New citizens at a naturalization ceremony, standing close together, smiling and waving small United States flags, ceremony programmes in their hands.",
-    "previousMy": "နိုင်ငံသားခံယူပွဲ အခမ်းအနား — လူများ တန်းစီရပ်လျက် ညာလက်ကို မြှောက်ထားပြီး ဘယ်လက်တွင် အမေရိကန် အလံငယ်များ ကိုင်ထားကြသည်။"
-  },
   "U0-S07.alt": "",
   "U1-S01.afterQuote": {
     "english": "One document is the answer to that question — and to most of the others in this lesson.",

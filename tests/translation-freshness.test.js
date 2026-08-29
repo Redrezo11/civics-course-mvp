@@ -109,24 +109,43 @@ describe('a translation of English that has changed', () => {
 });
 
 describe('the real case', () => {
-  // U0-S04 itself has since been fixed — the redaction settled, and a
-  // corrected translation was delivered and rebuilt, so it is no longer stale.
-  // U0-S01 is the same shape of case, current at time of writing: its heading
-  // and body were rewritten (the orientation-screens pass, 6dbe88f's sibling)
-  // after being translated, and the old Burmese is exactly what a learner must
-  // not be shown.
-  it('U0-S01 is recorded as stale, and renders English', () => {
-    const s01 = unit0.screens.find((s) => s.id === 'U0-S01');
-    const record = freshness.my.unit0['U0-S01'];
+  // Not pinned to one screen id. U0-S01 was this test's example, then got
+  // fixed and had to be swapped for U0-S04 as its own predecessor, which had
+  // already been swapped for U0-S01 — every fix here breaks the test that
+  // proved the mechanism, on a field that has nothing to do with the fix.
+  // Derived instead: whichever fields the build currently reports stale
+  // (there is always at least one — TRANSLATION-REQUEST.md lists them) prove
+  // the same property, and stay proof after the next one is fixed too.
+  const UNITS_BY_FILE = { unit0, unit1, unit2, unit3, unit4, unit5, unit6, unit7 };
+  const OVERLAYS_BY_FILE = { unit0: myUnit0, unit1: myUnit1, unit2: myUnit2, unit3: myUnit3,
+    unit4: myUnit4, unit5: myUnit5, unit6: myUnit6, unit7: myUnit7 };
 
-    expect(record?.body, 'no freshness record for U0-S01.body').toBeTruthy();
-    expect(record.body.en, 'the record was re-baselined against the new English').not.toBe(
-      textHash(s01.body)
-    );
+  it('a field currently reported stale falls back to English', () => {
+    let checked = 0;
+    for (const [file, screens] of Object.entries(freshness.my)) {
+      const unit = UNITS_BY_FILE[file];
+      for (const [screenId, fields] of Object.entries(screens)) {
+        const screen = unit.screens.find((s) => s.id === screenId);
+        for (const [field, record] of Object.entries(fields)) {
+          if (typeof screen?.[field] !== 'string') continue;
+          if (record.en === textHash(screen[field])) continue; // current, not stale
 
-    const out = localiseWith(s01, myUnit0['U0-S01'], record);
-    expect(out.body).toBe(s01.body);
-    expect(isBurmese(out.body)).toBe(false);
+          checked += 1;
+          // The third argument is the freshness map for the WHOLE screen — it
+          // looks itself up by field name — not one field's own {en, my}
+          // record. Passing `record` here made this test fail on real, working
+          // code: with no `afterQuote` key inside `record` to find, the lookup
+          // came back empty and localiseWith treated it as "no record", not
+          // "stale", and let the old Burmese through.
+          const out = localiseWith(screen, OVERLAYS_BY_FILE[file][screenId], fields);
+          expect(out[field], `${file} ${screenId}.${field}`).toBe(screen[field]);
+          expect(isBurmese(out[field]), `${file} ${screenId}.${field} rendered Burmese while stale`).toBe(
+            false
+          );
+        }
+      }
+    }
+    expect(checked, 'nothing is stale, so this proved nothing').toBeGreaterThan(0);
   });
 
   it('U0-S04 is fixed: current, and renders Burmese', () => {

@@ -5,9 +5,9 @@
 content change rather than editing this file, or it will describe a course that
 no longer exists.
 
-Remaining: **0 interface strings** and **42 content
+Remaining: **0 interface strings** and **39 content
 fields** — 31 never translated, and
-**11 marked ↻**.
+**8 marked ↻**.
 
 A field that is translated and still current is live and is **not** listed here,
 so nothing gets translated twice.
@@ -33,7 +33,7 @@ object rather than a plain value:
 Read the two together, change what the rewrite actually changed, and send back
 the value in the same shape a plain entry would take. Most are small edits.
 
-The 11 this time: `U0-S01.heading`, `U0-S01.body`, `U0-S02.alt`, `U1-S01.afterQuote`, `U2-S01.afterQuote`, `U3-S01.afterQuote`, `U3-S05.alt`, `U4-S01.afterQuote`, `U5-S01.afterQuote`, `U6-S01.afterQuote`, `U6-S06.alt`.
+The 8 this time: `U1-S01.afterQuote`, `U2-S01.afterQuote`, `U3-S01.afterQuote`, `U3-S05.alt`, `U4-S01.afterQuote`, `U5-S01.afterQuote`, `U6-S01.afterQuote`, `U6-S06.alt`.
 
 
 **Work from `docs/translation-source.json`, not from the tables below.** The
@@ -143,7 +143,7 @@ which is the authority if this description and the JSON ever disagree:
 
 | Unit | Fields outstanding |
 |---|---|
-| U0 Test day | 5 |
+| U0 Test day | 2 |
 | U1 We the People | 3 |
 | U2 Three branches | 4 |
 | U3 Who represents you | 7 |
@@ -151,7 +151,7 @@ which is the authority if this description and the JSON ever disagree:
 | U5 Rights and responsibilities | 5 |
 | U6 How America began | 7 |
 | U7 How America changed | 8 |
-| **Total** | **42** |
+| **Total** | **39** |
 
 ---
 
@@ -159,14 +159,11 @@ which is the authority if this description and the JSON ever disagree:
 
 ### U0 — Test day
 
-**5 fields.**
+**2 fields.**
 
 | | Screen | Field | English |
 |---|---|---|---|
-| ↻ | `U0-S01` | `heading` | Test day |
-| ↻ | `U0-S01` | `body` | Before the civics questions, this short lesson covers the interview itself: how the officer asks, how many answers you need right, and how to tell what kind of answer a question wants. |
 |  | `U0-S01` | `alt` |  |
-| ↻ | `U0-S02` | `alt` | New citizens at a naturalization ceremony, standing close together, smiling and waving small United States flags, ceremony programmes in their hands. |
 |  | `U0-S07` | `alt` |  |
 
 ### U1 — We the People
