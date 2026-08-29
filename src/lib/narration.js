@@ -7,7 +7,7 @@
 // See docs/NARRATION.md for the file naming convention and the workflow, and
 // for the browser defects the speech engine below is shaped around.
 
-import { writable } from 'svelte/store';
+import { writable, get } from 'svelte/store';
 import { route } from './router.js';
 import manifest from './content/audio-manifest.json';
 import { flatten, narrationHash, splitForSpeech } from './narration-text.js';
@@ -28,6 +28,100 @@ let current = null; // { owner, engine } — the single active narration
 let token = 0; // invalidates callbacks from an engine we have moved on from
 
 const hasSpeech = () => typeof window !== 'undefined' && 'speechSynthesis' in window;
+
+// --- Voices -----------------------------------------------------------------
+//
+// SETTING utterance.lang IS A REQUEST, NOT A GUARANTEE.
+//
+// The engine used to check only that `speechSynthesis` existed, then set
+// `utterance.lang = 'my-MM'` and hope. A phone with the Web Speech API but no
+// Burmese voice does not refuse: it hands the Burmese to whatever voice it has,
+// and an English voice reading Myanmar script produces sounds that are not
+// words. The learner is told the page is being read to them and gets noise —
+// which is worse than no button at all, because it looks like it worked.
+//
+// So availability is decided by what is INSTALLED, and a voice is assigned
+// explicitly rather than inferred from the tag.
+
+/**
+ * The voice list, as a store, because it arrives late.
+ *
+ * `getVoices()` returns [] on the first call in every Chromium browser and
+ * fills in after `voiceschanged`. A component that asked once at mount would
+ * conclude "no Burmese on this device" before the device had answered.
+ */
+export const voices = writable({ ready: false, list: [] });
+
+/**
+ * Implementations are inconsistent about tags: "my-MM", "my_MM" and bare "my"
+ * all occur, and Android reports underscores. Compare on a normalised form.
+ */
+const normaliseTag = (tag) => String(tag ?? '').replace(/_/g, '-').toLowerCase();
+
+/** The primary subtag: "my-MM" → "my". */
+const primary = (tag) => normaliseTag(tag).split('-')[0];
+
+/** What we ask for, per course language. */
+export const SPEECH_LANG = { en: 'en-US', my: 'my-MM' };
+
+/**
+ * Best installed voice for a course language, or null.
+ *
+ * Ranked rather than filtered: an exact region match first, then the bare
+ * language, then any region of the same language. A device with only "my-MM" and
+ * one with only "my" both work, and neither is served an English voice.
+ */
+export function voiceFor(lang, list = null) {
+  const all = list ?? readVoiceList();
+  const want = normaliseTag(SPEECH_LANG[lang] || lang);
+  const base = primary(want);
+  const same = all.filter((v) => primary(v.lang) === base);
+  if (!same.length) return null;
+  return (
+    same.find((v) => normaliseTag(v.lang) === want) ||
+    same.find((v) => normaliseTag(v.lang) === base) ||
+    same.find((v) => v.default) ||
+    same[0]
+  );
+}
+
+function readVoiceList() {
+  if (!hasSpeech()) return [];
+  try {
+    return window.speechSynthesis.getVoices() || [];
+  } catch {
+    // Some embedded browsers throw here rather than returning nothing.
+    return [];
+  }
+}
+
+/**
+ * Publish whatever the engine currently reports.
+ *
+ * `ready` means "the device has answered", not "voices exist". A device with no
+ * voices at all is a real answer, and the difference matters: not-yet-answered
+ * must not render as unavailable, and unavailable must not render forever as
+ * loading.
+ */
+function publishVoices(ready) {
+  const list = readVoiceList();
+  voices.set({ ready: ready || list.length > 0, list });
+}
+
+if (typeof window !== 'undefined' && hasSpeech()) {
+  publishVoices(false);
+  window.speechSynthesis.addEventListener?.('voiceschanged', () => publishVoices(true));
+
+  // A device with genuinely no voices never fires `voiceschanged`, and the
+  // button would sit disabled-and-waiting for the life of the page. Give the
+  // engine a moment, then take silence for an answer.
+  setTimeout(() => publishVoices(true), 2000);
+}
+
+/** Test seam: re-read the engine now. Never called by the app. */
+export function __refreshVoices(ready = true) {
+  publishVoices(ready);
+}
 
 // --- Source resolution ------------------------------------------------------
 
@@ -185,7 +279,21 @@ function speechSegment(text, lang, onDone) {
     const utterance = new SpeechSynthesisUtterance(chunks[index]);
     // Android will not pick the right language without this, and reports its
     // own voice languages with an underscore ("en_US") if they are ever read.
-    utterance.lang = lang === 'my' ? 'my-MM' : 'en-US';
+    utterance.lang = SPEECH_LANG[lang] || SPEECH_LANG.en;
+
+    // The voice is ASSIGNED, not left to the tag.
+    //
+    // `lang` alone is a hint the engine may ignore, and the way it ignores it is
+    // to read Burmese with an English voice. canNarrate refuses to offer the
+    // control in that case, so reaching here without a voice should be
+    // impossible — but if it ever happens, silence is the correct failure. A
+    // wrong-language reading is not a degraded success.
+    const voice = voiceFor(lang);
+    if (!voice) {
+      done();
+      return;
+    }
+    utterance.voice = voice;
 
     const advance = () => {
       // cancel() fires `end` on some browsers and not others. Without this the
@@ -249,6 +357,18 @@ function playlist(segments, onEnd) {
     }
     const s = segments[at];
     const src = s.audioSrc || null;
+
+    // A segment in a language this device cannot speak is SKIPPED, never read
+    // in another voice. The common case is a Burmese screen quoting the
+    // official question in English on a device with no English voice: the
+    // Burmese still plays, and the quoted sentence is silent rather than
+    // mangled. canNarrate already refuses the control when it is the learner's
+    // own language that is missing.
+    if (!src && !voiceFor(s.lang)) {
+      startAt(at + 1);
+      return;
+    }
+
     currentSegment = src
       ? fileSegment(src, () => startAt(at + 1))
       : speechSegment(s.text, s.lang, () => startAt(at + 1));
@@ -308,7 +428,10 @@ export function play({ owner, screenId, segments, text, audioSrc, lang = 'en' })
   if (!list.length) return;
 
   list = resolve(list, { screenId, lang });
-  if (!list.some((s) => s.audioSrc) && !hasSpeech()) return;
+  // Nothing would be heard: no recording, and no voice for anything in it.
+  // Returning here rather than starting an engine keeps the button out of a
+  // "playing" state that produces silence.
+  if (!list.some((s) => s.audioSrc || voiceFor(s.lang))) return;
 
   // iOS wants the first speak() inside the gesture, and later segments start
   // from an `end` handler. Priming here means the handoff is never the first
@@ -347,14 +470,58 @@ export function cancel() {
   narration.set({ owner: null, state: 'idle' });
 }
 
-/** Whether there is anything to play at all — the button does not render without one. */
-export function canNarrate({ segments, text, audioSrc, screenId, lang = 'en' }) {
-  if (audioSrc) return true;
-  const list = segments && segments.length ? segments : text ? [{ text }] : [];
-  if (!list.length) return false;
-  if (list.some((s) => s.questionId && questionAudioFor(s.questionId, s.text))) return true;
-  if (screenId && audioSourceFor(screenId, lang, flatten(list))) return true;
-  return hasSpeech();
+/**
+ * Can this narration actually be played, and if not, why not.
+ *
+ * Returns one of:
+ *   { state: 'ready' }         something will be heard
+ *   { state: 'loading' }       the device has not finished listing its voices
+ *   { state: 'unavailable', missing }  nothing will be heard, and what is absent
+ *
+ * THE PRIORITY IS RECORDING, THEN A REAL VOICE, THEN NOTHING.
+ *
+ * A recorded file makes a screen available whatever the device has installed —
+ * that is the whole point of shipping audio, and a phone with no Burmese voice
+ * is exactly the phone the recordings are for.
+ *
+ * Judged against the LEARNER'S language, not against every language in the
+ * narration. A Burmese screen also carries the official question in English
+ * (G-3): if Burmese cannot be spoken, reading only that question aloud would be
+ * a button that appears to work and delivers one sentence out of eight.
+ */
+export function narrationAvailability(
+  { segments, text, audioSrc, screenId, lang = 'en' },
+  voiceState = null
+) {
+  const list = segments && segments.length ? segments : text ? [{ text, lang }] : [];
+  if (!list.length) return { state: 'unavailable', missing: [] };
+
+  // 1. Recordings.
+  const resolved = audioSrc
+    ? [{ ...list[0], audioSrc }, ...list.slice(1)]
+    : resolve(list, { screenId, lang });
+  const spoken = resolved.filter((s) => !s.audioSrc);
+  if (!spoken.length) return { state: 'ready' };
+
+  // 2. A voice that can actually say it.
+  if (!hasSpeech()) return { state: 'unavailable', missing: [lang] };
+
+  const { ready, list: installed } = voiceState ?? get(voices);
+  if (!ready) return { state: 'loading' };
+
+  const needed = [...new Set(spoken.map((s) => s.lang || lang))];
+  const missing = needed.filter((l) => !voiceFor(l, installed));
+  if (!missing.length) return { state: 'ready' };
+
+  // The learner's own language is the content; anything else in the narration
+  // is incidental and can be skipped silently.
+  if (missing.includes(lang)) return { state: 'unavailable', missing };
+  return { state: 'ready' };
+}
+
+/** Boolean form, for callers that only need to know whether to render. */
+export function canNarrate(opts, voiceState = null) {
+  return narrationAvailability(opts, voiceState).state === 'ready';
 }
 
 // --- Cleanup ----------------------------------------------------------------

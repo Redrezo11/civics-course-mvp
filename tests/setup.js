@@ -66,7 +66,35 @@ function fakeSpeech() {
     },
     pause() {},
     resume() {},
-    getVoices: () => [],
+
+    /**
+     * Installed voices.
+     *
+     * The default is an ORDINARY device: it has both languages, so every test
+     * that is not about voice discovery keeps testing what it meant to. Tests
+     * that care set `voices` themselves and fire `voiceschanged`.
+     *
+     * This used to return [] and nothing noticed, because availability only
+     * checked that the API existed. It now decides whether the button appears.
+     */
+    voices: [
+      { name: 'English (US)', lang: 'en-US', default: true },
+      { name: 'Burmese', lang: 'my-MM' },
+    ],
+    getVoices() {
+      return this.voices;
+    },
+    listeners: {},
+    addEventListener(type, fn) {
+      (this.listeners[type] ||= []).push(fn);
+    },
+    removeEventListener(type, fn) {
+      this.listeners[type] = (this.listeners[type] || []).filter((f) => f !== fn);
+    },
+    /** What a browser does once its voice list has loaded. */
+    emitVoicesChanged() {
+      for (const fn of this.listeners.voiceschanged || []) fn();
+    },
     reset() {
       this.spoken = [];
       this.cancelled = 0;

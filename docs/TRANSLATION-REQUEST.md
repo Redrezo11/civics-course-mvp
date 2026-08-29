@@ -5,7 +5,7 @@
 content change rather than editing this file, or it will describe a course that
 no longer exists.
 
-Remaining: **8 interface strings** and **48 content
+Remaining: **11 interface strings** and **48 content
 fields** — 34 never translated, and
 **14 marked ↻**.
 
@@ -92,7 +92,7 @@ were lost this way before we worked out the cause.
 
 ---
 
-## 1. Interface strings — 8 of 46 remaining
+## 1. Interface strings — 11 of 49 remaining
 
 In `src/lib/content/ui-strings.json`. Fill the `my` value; leave `en` alone.
 
@@ -104,7 +104,10 @@ In `src/lib/content/ui-strings.json`. Fill the `my` value; leave `en` alone.
 | `narration.listen` | Listen |
 | `narration.listenAgain` | Listen again |
 | `narration.pause` | Pause |
+| `narration.preparing` | Preparing speech… |
 | `narration.resume` | Resume |
+| `narration.unavailable` | Speech is not available on this device. |
+| `narration.unavailableMy` | Burmese speech is not available on this device. |
 | `settings.answersStayEnglish` | Answer choices show English first, with the Burmese underneath. |
 
 ---

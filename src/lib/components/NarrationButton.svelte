@@ -12,7 +12,15 @@
 
   import { onDestroy } from 'svelte';
   import { t } from '../i18n.js';
-  import { narration, play, pause, resume, cancel, canNarrate } from '../narration.js';
+  import {
+    narration,
+    voices,
+    play,
+    pause,
+    resume,
+    cancel,
+    narrationAvailability,
+  } from '../narration.js';
   import { flatten } from '../narration-text.js';
 
   /** Language-tagged segments — the normal input. A bare `text` string still
@@ -32,7 +40,14 @@
   const me = {};
 
   $: state = $narration.owner === me ? $narration.state : 'idle';
-  $: available = canNarrate({ segments, text, audioSrc, screenId, lang });
+
+  // Recomputed when the voice list arrives. `getVoices()` is empty on the first
+  // call in every Chromium browser, so a one-shot check at mount would decide
+  // "this device has no Burmese" before the device had answered — and the
+  // control would stay wrong for the life of the page.
+  $: availability = narrationAvailability({ segments, text, audioSrc, screenId, lang }, $voices);
+  $: available = availability.state !== 'unavailable';
+  $: waiting = availability.state === 'loading';
 
   // What is on screen changes as the learner works: an answer is submitted and
   // feedback appears, Rehearsal reveals its answers, a guided item advances.
@@ -54,7 +69,31 @@
           ? $t('narration.listenAgain')
           : $t('narration.listen');
 
+  /**
+   * A short spoken-to-assistive-technology status, empty almost always.
+   *
+   * Deliberately NOT the play/pause state: a focused button announces its own
+   * name change, and a live region on top of that says everything twice. This
+   * carries only the things a name change cannot — that the device is still
+   * finding its voices, and why nothing happened when it could not.
+   */
+  let status = '';
+
+  $: unavailableMessage =
+    availability.state === 'unavailable'
+      ? availability.missing?.includes('my')
+        ? $t('narration.unavailableMy')
+        : $t('narration.unavailable')
+      : '';
+
   function activate() {
+    if (waiting) {
+      // Tapped before the device listed its voices. Say so rather than doing
+      // nothing at all, which reads as a broken button.
+      status = $t('narration.preparing');
+      return;
+    }
+    status = '';
     if (state === 'playing') pause();
     else if (state === 'paused') resume();
     else play({ owner: me, screenId, segments, text, audioSrc, lang });
@@ -69,11 +108,44 @@
   });
 </script>
 
-{#if available}
+{#if !available}
+  <!--
+    The device cannot speak this language, and saying so is the point.
+    `aria-disabled` rather than `disabled`: a disabled button is removed from the
+    tab order, so the one person who most needs the explanation — someone
+    navigating by keyboard or screen reader — would never reach it. This stays
+    focusable, announces its own name, and does nothing when activated.
+
+    Same pill, same footprint, muted. It replaces the Listen control rather than
+    sitting beside it, so no screen changes shape.
+  -->
+  <div class={wrapperClass}>
+    <span
+      class="tap inline-flex items-center gap-2 rounded-full border-2 border-border dark:border-dark-border
+             px-3.5 py-2 text-sm font-bold text-ink-secondary dark:text-dark-ink-secondary bg-transparent"
+      role="button"
+      aria-disabled="true"
+      tabindex="0"
+    >
+      <span class="shrink-0" aria-hidden="true">
+        <!-- speaker with a slash: this page cannot be read aloud here -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" focusable="false">
+          <path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z" fill="currentColor" stroke-linejoin="round" />
+          <line x1="16" y1="9" x2="21" y2="15" />
+          <line x1="21" y1="9" x2="16" y2="15" />
+        </svg>
+      </span>
+      <span>{unavailableMessage}</span>
+    </span>
+  </div>
+{:else}
   <div class={wrapperClass}>
     <button
       class="tap inline-flex items-center gap-2 rounded-full border-2 border-accent dark:border-dark-accent
-             px-3.5 py-2 text-sm font-bold text-ink dark:text-dark-ink bg-transparent transition-colors"
+             px-3.5 py-2 text-sm font-bold text-ink dark:text-dark-ink bg-transparent transition-colors
+             aria-disabled:opacity-60"
+      aria-disabled={waiting ? 'true' : undefined}
       on:click={activate}
     >
       <!--
@@ -126,5 +198,12 @@
       -->
       <span>{label}</span>
     </button>
+
+    <!--
+      Empty in normal use. Carries only what a button-name change cannot say:
+      that the device has not finished listing its voices. Polite, so it waits
+      for a gap rather than interrupting.
+    -->
+    <p class="sr-only" role="status" aria-live="polite">{status}</p>
   </div>
 {/if}

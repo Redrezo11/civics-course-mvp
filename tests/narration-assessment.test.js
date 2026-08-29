@@ -260,12 +260,35 @@ describe('narration follows the screen as it changes', () => {
 });
 
 describe('the control announces itself once', () => {
-  it('carries no live region — the accessible name already changes', () => {
-    // A focused button announces its own name change. A live region on top of
-    // that says everything twice, which is worst on assessment screens where
-    // an answer changes the feedback and resets this button at the same moment.
+  it('never puts the play state in a live region — the name already changes', async () => {
+    // A focused button announces its own name change. A live region repeating
+    // it says everything twice, which is worst on assessment screens where an
+    // answer changes the feedback and resets this button at the same moment.
+    //
+    // There IS now a status region, for the one thing a name change cannot say:
+    // that the device has not finished listing its voices. It must stay empty
+    // through ordinary playback, which is what this asserts — a stricter rule
+    // than "no live region exists", and the one that actually matters.
     const { container } = render(NarrationButton, { props: { text: 'Some narration.' } });
-    expect(container.querySelector('[aria-live]')).toBeNull();
+    const live = () => container.querySelector('[aria-live]');
+
+    expect(live()?.textContent ?? '').toBe('');
     expect(container.querySelector('button').getAttribute('aria-pressed')).toBeNull();
+
+    await fireEvent.click(container.querySelector('button')); // play
+    expect(label(container)).toBe('Pause');
+    expect(live()?.textContent ?? '', 'the play state was announced twice').toBe('');
+
+    await fireEvent.click(container.querySelector('button')); // pause
+    expect(label(container)).toBe('Resume');
+    expect(live()?.textContent ?? '', 'the pause state was announced twice').toBe('');
+  });
+
+  it('keeps the live region polite, never assertive', () => {
+    // Assertive interrupts whatever the learner is being read. Nothing this
+    // control has to say is worth cutting off a lesson.
+    const { container } = render(NarrationButton, { props: { text: 'Some narration.' } });
+    const live = container.querySelector('[aria-live]');
+    if (live) expect(live.getAttribute('aria-live')).toBe('polite');
   });
 });

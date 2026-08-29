@@ -100,8 +100,20 @@
     "en": "Pause",
     "my": null
   },
+  "narration.preparing": {
+    "en": "Preparing speech…",
+    "my": null
+  },
   "narration.resume": {
     "en": "Resume",
+    "my": null
+  },
+  "narration.unavailable": {
+    "en": "Speech is not available on this device.",
+    "my": null
+  },
+  "narration.unavailableMy": {
+    "en": "Burmese speech is not available on this device.",
     "my": null
   },
   "nav.tabLearn": {

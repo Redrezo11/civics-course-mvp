@@ -7,7 +7,10 @@
     "narration.listen": "Listen",
     "narration.listenAgain": "Listen again",
     "narration.pause": "Pause",
+    "narration.preparing": "Preparing speech…",
     "narration.resume": "Resume",
+    "narration.unavailable": "Speech is not available on this device.",
+    "narration.unavailableMy": "Burmese speech is not available on this device.",
     "settings.answersStayEnglish": "Answer choices show English first, with the Burmese underneath."
   },
   "U0-S01.heading": {

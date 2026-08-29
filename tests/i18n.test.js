@@ -313,7 +313,13 @@ describe('the UI string lookup', () => {
       'narration.listen',
       'narration.listenAgain',
       'narration.pause',
+      // Told to a learner whose device cannot speak their language — so the
+      // English fallback is exactly the case these describe. Still owed a
+      // translation, and listed in TRANSLATION-REQUEST.md like everything else.
+      'narration.preparing',
       'narration.resume',
+      'narration.unavailable',
+      'narration.unavailableMy',
       'settings.answersStayEnglish',
     ];
     const missing = Object.entries(uiStrings)
