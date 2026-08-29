@@ -297,36 +297,15 @@ describe('the UI string lookup', () => {
     expect(isBurmese(get(t)('settings.coverage.my'))).toBe(true);
   });
 
-  it('has Burmese for every key but the ones known to be outstanding', () => {
-    // Named rather than counted. A count would let a newly-added English string
-    // slip in the moment an old one was translated, which is exactly when
-    // nobody is looking. Anything appearing here that is not on this list is a
-    // gap someone introduced without requesting the translation.
-    const AWAITING = [
-      // What the learner is told about where their progress goes, when a
-      // learning management system is listening. `help.reset` is not new copy —
-      // it was hardcoded in Help.svelte and untranslatable until it moved here
-      // to gain an LMS variant, so it arrives already outstanding.
-      'help.privacyLms',
-      'help.reset',
-      'help.resetLms',
-      'narration.listen',
-      'narration.listenAgain',
-      'narration.pause',
-      // Told to a learner whose device cannot speak their language — so the
-      // English fallback is exactly the case these describe. Still owed a
-      // translation, and listed in TRANSLATION-REQUEST.md like everything else.
-      'narration.preparing',
-      'narration.resume',
-      'narration.unavailable',
-      'narration.unavailableMy',
-      // No prior delivery covers this sentence — welcome.heading and
-      // welcome.body reuse a translation made for U0-S01 before it was rewritten
-      // to stop repeating this screen's own text; the disclaimer was never part
-      // of that delivery.
-      'welcome.footnote',
-      'settings.answersStayEnglish',
-    ];
+  it('has Burmese for every key — nothing outstanding', () => {
+    // This used to name the exceptions. There are none: every UI string now
+    // carries Burmese, so the honest assertion is that the list is empty rather
+    // than that it matches a roster somebody has to remember to shorten.
+    //
+    // All of it is DRAFT, machine-produced, exactly like the rest of the corpus
+    // (docs/STRUCTURAL_CHANGES.md). A native pass is still owed on every line;
+    // QA check 13 is what keeps that visible.
+    const AWAITING = [];
     const missing = Object.entries(uiStrings)
       .filter(([k, v]) => k !== '_note' && !v.my)
       .map(([k]) => k);

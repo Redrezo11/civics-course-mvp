@@ -8,6 +8,7 @@
   // to find out what the right answer actually was.
 
   import { createEventDispatcher } from 'svelte';
+  import { t } from '../i18n.js';
   const dispatch = createEventDispatcher();
 
   export let options = [];
@@ -59,7 +60,7 @@
 
   {#if answered}
     <div class="mt-3 p-3 rounded-card border border-border dark:border-dark-border text-sm leading-relaxed">
-      <span class="font-bold">The correct answer is {correctAnswerText || options[correctIndex]}.</span>
+      <span class="font-bold">{$t('guided.correctAnswerIs', { answer: correctAnswerText || options[correctIndex] })}</span>
       {#if feedbackExplain} {feedbackExplain}{/if}
     </div>
   {/if}

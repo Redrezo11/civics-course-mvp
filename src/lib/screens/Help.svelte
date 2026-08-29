@@ -35,14 +35,14 @@
   {/each}
 
   <div class="border-t border-border dark:border-dark-border pt-3 mt-4 text-xs text-ink-muted dark:text-dark-ink-muted">
-    <p class="mb-1">About: a self-paced civics course to help you prepare for the U.S. naturalization test.</p>
+    <p class="mb-1">{$t('help.about')}</p>
     <!-- Derived, never hardcoded. This line previously read "checked Aug 2026"
          while current-answers.json carried no date at all and every dynamic
          card said "not checked yet" — the app contradicting itself about
          whether anyone had verified anything. -->
     <p>
-      Sources: USCIS M-1778 · National Archives / Library of Congress photos ·
-      {#if ANSWERS_CHECKED}answers checked {ANSWERS_CHECKED}{:else}answers that change with elections have not been checked yet{/if}
+      {$t('help.sources')} ·
+      {#if ANSWERS_CHECKED}{$t('help.sourcesChecked', { date: ANSWERS_CHECKED })}{:else}{$t('help.sourcesUnchecked')}{/if}
     </p>
   </div>
 
@@ -58,7 +58,7 @@
 
   {#if !confirmingReset}
     <button class="tap inline-flex items-center text-xs text-ink-muted dark:text-dark-ink-muted underline mt-6" on:click={() => (confirmingReset = true)}>
-      Start over (clears your progress)
+      {$t('help.startOverButton')}
     </button>
   {:else}
     <div class="mt-6 text-sm">
@@ -69,8 +69,8 @@
       -->
       <p class="mb-2">{$t($lmsSession ? 'help.resetLms' : 'help.reset')}</p>
       <div class="flex gap-2">
-        <button class="btn-secondary" on:click={() => (confirmingReset = false)}>Cancel</button>
-        <button class="btn-primary" on:click={doReset}>Clear progress</button>
+        <button class="btn-secondary" on:click={() => (confirmingReset = false)}>{$t('help.cancel')}</button>
+        <button class="btn-primary" on:click={doReset}>{$t('help.clearProgress')}</button>
       </div>
     </div>
   {/if}

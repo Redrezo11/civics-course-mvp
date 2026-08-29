@@ -1,4 +1,5 @@
 <script>
+  import { t } from '../i18n.js';
   import { onMount } from 'svelte';
   import { navigate } from '../router.js';
   import { progress, questionsPracticedCount } from '../stores/progress.js';
@@ -164,7 +165,7 @@
 </script>
 
 {#if !unit}
-  <div class="p-6">Unit not found.</div>
+  <div class="p-6">{$t('lesson.notFound')}</div>
 {:else}
   <div class="min-h-screen flex flex-col max-w-md mx-auto">
     <LessonBar
@@ -404,7 +405,7 @@
           <button
             class="btn-secondary mb-2.5"
             on:click={() => navigate(`/practice/${screen.fullBankOffer.unit}`)}
-          >Practice all {screen.fullBankOffer.total} questions</button>
+          >{$t('lesson.practiceAll', { n: screen.fullBankOffer.total })}</button>
         {/if}
 
         <!-- A review unlocks after U2, U5 and U7 (§8). -->
@@ -412,7 +413,10 @@
           <button
             class="btn-secondary mb-2.5"
             on:click={() => navigate(`/review/${screen.unlocksReview}`)}
-          >Start {screen.unlocksReview} — {screen.unlocksReview === 'R3' ? '10' : '8'} mixed questions</button>
+          >{$t('lesson.startReview', {
+            name: screen.unlocksReview,
+            n: screen.unlocksReview === 'R3' ? 10 : 8,
+          })}</button>
         {/if}
       {/if}
       {/key}

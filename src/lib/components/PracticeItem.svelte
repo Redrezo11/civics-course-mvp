@@ -16,6 +16,7 @@
   import NarrationButton from './NarrationButton.svelte';
   import { practiceSegments } from '../narration-text.js';
   import { progress } from '../stores/progress.js';
+  import { t } from '../i18n.js';
   import SingleSelect from './SingleSelect.svelte';
   import MultiSelect from './MultiSelect.svelte';
   import {
@@ -64,6 +65,7 @@
   // never from q.options, or the spoken order would differ from the visible one
   // and mislead exactly the learner this is for.
   $: lang = $progress.language || 'en';
+  $: my = lang === 'my' ? 'my' : undefined;
   $: narration = q
     ? [
         ...(lead ? [{ lang, text: lead }] : []),
@@ -93,25 +95,24 @@
     {#if q.dynamic}
       <div class="border border-border dark:border-dark-border rounded-card p-4">
         <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-1">
-          {currentAnswer?.label || 'Current answer'}
+          {currentAnswer?.label || $t('dynamic.currentAnswer')}
         </p>
         {#if currentAnswer && currentAnswer.verified && currentAnswer.value}
           <p class="text-lg font-bold mb-2">{currentAnswer.value}</p>
           <p class="text-xs text-ink-muted dark:text-dark-ink-muted">
-            Checked: {ANSWERS_CHECKED || 'not yet recorded'}
+            {$t('dynamic.checkedOn', { date: ANSWERS_CHECKED || $t('dynamic.notRecorded') })}
           </p>
         {:else}
-          <p class="font-bold mb-2">This answer has not been checked yet.</p>
-          <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary">
-            This one changes with elections or appointments. Look it up before your
-            interview — never rely on an old answer.
+          <p class="font-bold mb-2" lang={my}>{$t('dynamic.notChecked')}</p>
+          <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary" lang={my}>
+            {$t('dynamic.changesWarning')}
           </p>
         {/if}
         <a
           class="text-sm underline font-bold inline-block mt-2"
           href={USCIS_UPDATES_URL}
           target="_blank"
-          rel="noopener noreferrer">Check at uscis.gov</a
+          rel="noopener noreferrer">{$t('dynamic.checkUscis')}</a
         >
       </div>
     {:else if q.multiSelect}

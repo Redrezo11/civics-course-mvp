@@ -95,46 +95,58 @@
   }
 
   $: asked = index + (phase === 'done' ? 1 : 0);
+
+  // Every string on this screen follows the learner's language. It was entirely
+  // hardcoded English — including the rules, which state the pass mark, and the
+  // result screens. A learner rehearsing for an English interview still needs
+  // to be told the rules in a language they read.
+  $: lang = $progress.language || 'en';
+  $: my = lang === 'my' ? 'my' : undefined;
 </script>
 
 <div class="min-h-screen flex flex-col max-w-md mx-auto">
   <LessonBar
-    unitLabel="Rehearsal"
-    position={phase === 'asking' ? `${index + 1} of up to ${MAX}` : ''}
+    unitLabel={$t('rehearsal.heading')}
+    position={phase === 'asking' ? $t('rehearsal.positionOf', { n: index + 1, max: MAX }) : ''}
     onBack={() => navigate('/')}
   />
 
   <div class="flex-1 overflow-y-auto px-5 py-6">
     {#if phase === 'intro'}
+      <!--
+        From the registry, filtered to the learner's language — the registry is
+        what the audio script and QA check 17 read, so a recording can only stay
+        in step if the screen plays what the registry holds. A test asserts the
+        registry text and the rendered text still say the same thing.
+      -->
       <NarrationButton
-        segments={STANDALONE_NARRATION['rehearsal-intro'].segments}
+        segments={STANDALONE_NARRATION['rehearsal-intro'].segments.filter((s) => s.lang === lang)}
+        {lang}
         screenId="rehearsal-intro"
         wrapperClass="mb-4"
       />
       <div class="w-40 mx-auto mb-4">
         <ScreenImage image="companion-speaking.webp" decorative wrapperClass="" />
       </div>
-      <h1 class="text-heading font-bold mb-4">This is practice for the real interview.</h1>
-      <p class="mb-3 leading-relaxed">
-        At the real interview you will <em>hear</em> these questions. Here you read them
-        — and answer out loud, the same way. No choices, no hints. Then check yourself.
-      </p>
-      <p class="mb-3 leading-relaxed font-bold">
-        The rules are the real rules: up to {MAX} questions. {PASS_AT} right = pass.
-        {FAIL_AT} wrong = stop.
+      <h1 class="text-heading font-bold mb-4" lang={my}>{$t('rehearsal.introHeading')}</h1>
+      <p class="mb-3 leading-relaxed" lang={my}>{$t('rehearsal.introBody')}</p>
+      <p class="mb-3 leading-relaxed font-bold" lang={my}>
+        {$t('rehearsal.rules', { max: MAX, pass: PASS_AT, fail: FAIL_AT })}
       </p>
       {#if $progress.rehearsal.attempts > 0}
-        <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary">
-          You have practiced this {$progress.rehearsal.attempts}
-          {$progress.rehearsal.attempts === 1 ? 'time' : 'times'}. Your best so far:
-          {$progress.rehearsal.bestCorrect} correct.
+        <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary" lang={my}>
+          {$t('rehearsal.attemptsSoFar', {
+            n: $progress.rehearsal.attempts,
+            times: $t($progress.rehearsal.attempts === 1 ? 'rehearsal.timeOne' : 'rehearsal.timeMany'),
+            best: $progress.rehearsal.bestCorrect,
+          })}
         </p>
       {/if}
 
     {:else if phase === 'asking'}
       <!-- Running tally: icon + word + colour together, never colour alone (G-5c). -->
-      <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-3">
-        ✓ {correct} right · ✗ {wrong} wrong
+      <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-3" lang={my}>
+        {$t('rehearsal.tally', { correct, wrong })}
       </p>
 
       <!--
@@ -161,20 +173,20 @@
       <QuestionCard text={current.official} />
 
       {#if !revealed}
-        <p class="font-bold text-center my-5 leading-relaxed">
-          Do you know the answer?<br />Say it out loud to yourself before you look.
+        <p class="font-bold text-center my-5 leading-relaxed" lang={my}>
+          {$t('rehearsal.doYouKnow')}<br />{$t('rehearsal.sayOutLoud')}
         </p>
         <button class="btn-primary" on:click={() => (revealed = true)}>{$t('rehearsal.checkMyAnswer')}</button>
       {:else}
         <div class="border border-border dark:border-dark-border rounded-card p-4 my-4">
-          <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-2">Accepted answers</p>
+          <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-2" lang={my}>{$t('rehearsal.acceptedAnswers')}</p>
           {#each acceptedFor(current) as a}
             <p class="font-bold mb-1">{a}</p>
           {/each}
         </div>
         <p class="font-bold text-center mb-3">{$t('rehearsal.didYouGetItRight')}</p>
-        <button class="btn-secondary mb-2.5" on:click={() => selfMark(true)}>✓ Yes, I got it</button>
-        <button class="btn-secondary" on:click={() => selfMark(false)}>✗ Not yet</button>
+        <button class="btn-secondary mb-2.5" on:click={() => selfMark(true)}>{$t('rehearsal.gotIt')}</button>
+        <button class="btn-secondary" on:click={() => selfMark(false)}>{$t('rehearsal.notYet')}</button>
       {/if}
 
     {:else}
@@ -185,42 +197,42 @@
       <NarrationButton
         segments={[
           {
-            lang: 'en',
+            lang,
             text: passed
-              ? `You passed this practice. ${asked} questions asked — just like the real test, which can end early once you have ${PASS_AT} right.`
-              : 'This practice test ended. The real one would too. Every question you missed is now in your review list. Try again anytime.',
+              ? `${$t('rehearsal.passedHeading')} ${$t('rehearsal.passedBody', { asked, pass: PASS_AT })}`
+              : `${$t('rehearsal.endedHeading')} ${$t('rehearsal.endedBody')}`,
           },
-          { lang: 'en', text: `${correct} right, ${wrong} wrong. This practice asked ${asked} of the 128.` },
+          {
+            lang,
+            text: `${$t('rehearsal.tally', { correct, wrong })}. ${$t('rehearsal.askedOf128', { asked })}`,
+          },
         ]}
+        {lang}
         wrapperClass="mb-4"
       />
       {#if passed}
-        <h1 class="text-heading font-bold mb-3">You passed this practice.</h1>
-        <p class="mb-3 leading-relaxed">
-          {asked} questions asked — just like the real test, which can end early once
-          you have {PASS_AT} right.
+        <h1 class="text-heading font-bold mb-3" lang={my}>{$t('rehearsal.passedHeading')}</h1>
+        <p class="mb-3 leading-relaxed" lang={my}>
+          {$t('rehearsal.passedBody', { asked, pass: PASS_AT })}
         </p>
       {:else}
-        <h1 class="text-heading font-bold mb-3">This practice test ended.</h1>
-        <p class="mb-3 leading-relaxed">
-          The real one would too. Every question you missed is now in your review list.
-          Try again anytime.
-        </p>
+        <h1 class="text-heading font-bold mb-3" lang={my}>{$t('rehearsal.endedHeading')}</h1>
+        <p class="mb-3 leading-relaxed" lang={my}>{$t('rehearsal.endedBody')}</p>
       {/if}
       <!-- No "unlimited retries" line: the Try again button below says it. -->
-      <p class="mb-3">✓ {correct} right · ✗ {wrong} wrong</p>
-      <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary">
-        This practice asked {asked} of the 128.
+      <p class="mb-3" lang={my}>{$t('rehearsal.tally', { correct, wrong })}</p>
+      <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary" lang={my}>
+        {$t('rehearsal.askedOf128', { asked })}
       </p>
     {/if}
   </div>
 
   <div class="px-5 py-4 border-t border-border dark:border-dark-border">
     {#if phase === 'intro'}
-      <button class="btn-primary" on:click={start}>Start</button>
+      <button class="btn-primary" on:click={start}>{$t('common.start')}</button>
     {:else if phase === 'done'}
-      <button class="btn-primary mb-2.5" on:click={start}>Try again</button>
-      <button class="btn-secondary" on:click={() => navigate('/')}>Back to lessons</button>
+      <button class="btn-primary mb-2.5" on:click={start}>{$t('common.tryAgain')}</button>
+      <button class="btn-secondary" on:click={() => navigate('/')}>{$t('common.backToLessons')}</button>
     {/if}
   </div>
 </div>

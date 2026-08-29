@@ -1,6 +1,7 @@
 <script>
   // Vocabulary flip cards — reference/lookup use of tap-to-reveal (the ONLY
   // surviving use per v5.0; graded practice never uses bare reveal).
+  import { t } from '../i18n.js';
   import { createEventDispatcher } from 'svelte';
   const dispatch = createEventDispatcher();
 
@@ -22,7 +23,7 @@
 </script>
 
 <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-3">
-  Tap each word ({flipped.size} of {cards.length})
+  {$t('vocab.tapEachWord', { shown: flipped.size, total: cards.length })}
 </p>
 
 {#each cards as card, i}
@@ -43,5 +44,5 @@
 {/each}
 
 {#if !allFlipped}
-  <p class="text-xs text-ink-muted dark:text-dark-ink-muted text-center mt-3">flip all {cards.length} to continue</p>
+  <p class="text-xs text-ink-muted dark:text-dark-ink-muted text-center mt-3">{$t('vocab.flipAll', { n: cards.length })}</p>
 {/if}

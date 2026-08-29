@@ -68,14 +68,13 @@
       on:click={submit}
     >
       {chosen.length < required
-        ? `Choose ${required - chosen.length} more`
-        : 'Check my answer'}
+        ? $t('practice.chooseNMore', { n: required - chosen.length })
+        : $t('rehearsal.checkMyAnswer')}
     </button>
   {:else}
     <div class="mt-3 p-3 rounded-card border border-border dark:border-dark-border text-sm leading-relaxed">
-      <span class="font-bold">Accepted answers are marked ✓.</span>
-      Any {required} of them is enough — the officer asks for {required}, so give
-      {required} and stop.
+      <span class="font-bold">{$t('practice.acceptedMarked')}</span>
+      {$t('practice.anyNIsEnough', { n: required })}
       {#if feedbackExplain}<br />{feedbackExplain}{/if}
     </div>
   {/if}

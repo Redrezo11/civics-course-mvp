@@ -1,5 +1,16 @@
 <script>
+  import { t } from '../i18n.js';
+
   // U4-S05: federal and state, drawn rather than photographed.
+  //
+  // THE LABELS ARE TRANSLATED, WHICH THEY WERE NOT.
+  //
+  // This diagram carries information the prose then builds on — it is not
+  // decoration — and being SVG it sat outside both translation paths: unit
+  // content goes through localiseScreen, chrome goes through $t, and text
+  // hand-written into an <svg> went through neither. A Burmese learner reached
+  // the one screen that explains federal versus state and found it labelled in
+  // English, with nothing anywhere flagging that it needed translating.
   //
   // The slot was named `federal-state-two-levels` and asked for "two levels
   // drawn as a diagram" — it was never a photograph. Nothing was ever going to
@@ -22,7 +33,7 @@
 <figure
   class="w-full mb-4"
   role="img"
-  aria-label="A diagram of two levels of government: one federal government above, responsible for country-sized jobs, and fifty state governments below, responsible for close-to-home jobs."
+  aria-label={$t('diagram.levelsAlt')}
 >
   <svg viewBox="0 0 320 180" class="w-full h-auto" aria-hidden="true" focusable="false">
     <!-- Federal: one box, spanning the width -->
@@ -35,12 +46,12 @@
       x="160" y="34" text-anchor="middle"
       class="fill-ink dark:fill-dark-ink"
       font-size="14" font-weight="700"
-    >Federal</text>
+    >{$t('diagram.federal')}</text>
     <text
       x="160" y="50" text-anchor="middle"
       class="fill-ink-secondary dark:fill-dark-ink-secondary"
       font-size="10"
-    >one national government</text>
+    >{$t('diagram.oneNational')}</text>
 
     <!-- The line between the levels -->
     <line
@@ -57,17 +68,17 @@
         stroke-width="2"
       />
     {/each}
-    <text x="65" y="108" text-anchor="middle" class="fill-ink dark:fill-dark-ink" font-size="12" font-weight="700">State</text>
-    <text x="165" y="108" text-anchor="middle" class="fill-ink dark:fill-dark-ink" font-size="12" font-weight="700">State</text>
-    <text x="265" y="108" text-anchor="middle" class="fill-ink dark:fill-dark-ink" font-size="12" font-weight="700">State</text>
-    <text x="65" y="122" text-anchor="middle" class="fill-ink-secondary dark:fill-dark-ink-secondary" font-size="9">schools</text>
-    <text x="165" y="122" text-anchor="middle" class="fill-ink-secondary dark:fill-dark-ink-secondary" font-size="9">police</text>
-    <text x="265" y="122" text-anchor="middle" class="fill-ink-secondary dark:fill-dark-ink-secondary" font-size="9">licences</text>
+    <text x="65" y="108" text-anchor="middle" class="fill-ink dark:fill-dark-ink" font-size="12" font-weight="700">{$t('diagram.state')}</text>
+    <text x="165" y="108" text-anchor="middle" class="fill-ink dark:fill-dark-ink" font-size="12" font-weight="700">{$t('diagram.state')}</text>
+    <text x="265" y="108" text-anchor="middle" class="fill-ink dark:fill-dark-ink" font-size="12" font-weight="700">{$t('diagram.state')}</text>
+    <text x="65" y="122" text-anchor="middle" class="fill-ink-secondary dark:fill-dark-ink-secondary" font-size="9">{$t('diagram.schools')}</text>
+    <text x="165" y="122" text-anchor="middle" class="fill-ink-secondary dark:fill-dark-ink-secondary" font-size="9">{$t('diagram.police')}</text>
+    <text x="265" y="122" text-anchor="middle" class="fill-ink-secondary dark:fill-dark-ink-secondary" font-size="9">{$t('diagram.licences')}</text>
 
     <text
       x="160" y="154" text-anchor="middle"
       class="fill-ink-secondary dark:fill-dark-ink-secondary"
       font-size="11"
-    >… fifty of them</text>
+    >{$t('diagram.fiftyOfThem')}</text>
   </svg>
 </figure>

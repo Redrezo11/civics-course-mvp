@@ -1,5 +1,6 @@
 <script>
   import { t } from '../i18n.js';
+  import { progress } from '../stores/progress.js';
   // G-03 · the ungated reference to every official question. G-16 lists this
   // as one of the affordances a layout change may never remove.
   //
@@ -41,6 +42,8 @@
           q.acceptedAnswers.some((a) => a.toLowerCase().includes(needle))
       )
     : questions;
+
+  $: my = ($progress.language || 'en') === 'my' ? 'my' : undefined;
 </script>
 
 <div class="min-h-screen max-w-md mx-auto flex flex-col">
@@ -50,15 +53,15 @@
     <input
       type="text"
       bind:value={search}
-      placeholder="Search questions..."
+      placeholder={$t('questionBank.searchPlaceholder')}
       class="w-full border border-border dark:border-dark-border rounded-card py-2.5 px-4 mb-4 bg-raised dark:bg-dark-raised text-ink dark:text-dark-ink"
     />
 
     <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-3">
       {#if needle}
-        {filtered.length} of {TOTAL_QUESTIONS} questions match
+        {$t('questionBank.matchCount', { shown: filtered.length, total: TOTAL_QUESTIONS })}
       {:else}
-        All {TOTAL_QUESTIONS} official questions · ★ marks the 65/20 questions
+        {$t('questionBank.allOfficial', { n: TOTAL_QUESTIONS })}
       {/if}
     </p>
 
@@ -90,19 +93,16 @@
               {#if ca && ca.verified && ca.value}
                 <p class="font-bold mb-1">{ca.value}</p>
                 <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-2">
-                  Checked: {ANSWERS_CHECKED || 'not yet recorded'}
+                  {$t('dynamic.checkedOn', { date: ANSWERS_CHECKED || $t('dynamic.notRecorded') })}
                 </p>
               {:else}
-                <p class="mb-2">
-                  This answer changes. It has not been checked yet — look it up before
-                  your interview.
-                </p>
+                <p class="mb-2" lang={my}>{$t('dynamic.notCheckedLong')}</p>
               {/if}
               <a
                 class="text-xs font-bold underline"
                 href={USCIS_UPDATES_URL}
                 target="_blank"
-                rel="noopener noreferrer">Check at uscis.gov</a
+                rel="noopener noreferrer">{$t('dynamic.checkUscis')}</a
               >
             {:else}
               <ul class="mb-2 pl-4">
@@ -114,7 +114,7 @@
                 class="tap inline-flex items-center text-xs font-bold underline text-ink dark:text-dark-ink"
                 on:click={() => navigate(`/unit/${q.unit}`)}
               >
-                Why is this the answer? → {UNIT_NAMES[q.unit] || q.unit}
+                {$t('questionBank.whyAnswer', { unit: UNIT_NAMES[q.unit] || q.unit })}
               </button>
             </div>
           </div>
@@ -123,8 +123,8 @@
     {/each}
 
     {#if filtered.length === 0}
-      <p class="text-sm text-ink-muted dark:text-dark-ink-muted text-center py-6">
-        No question matches “{search}”.
+      <p class="text-sm text-ink-muted dark:text-dark-ink-muted text-center py-6" lang={my}>
+        {$t('questionBank.noMatch', { q: search })}
       </p>
     {/if}
   </div>
@@ -133,6 +133,6 @@
     <button class="tap flex-1 text-center py-3 text-sm text-ink-muted dark:text-dark-ink-muted" on:click={() => navigate('/')}>
       {$t('nav.tabLearn')}
     </button>
-    <div class="flex-1 text-center py-3 text-sm font-bold">All {TOTAL_QUESTIONS} questions</div>
+    <div class="flex-1 text-center py-3 text-sm font-bold">{$t('questionBank.allQuestions', { n: TOTAL_QUESTIONS })}</div>
   </div>
 </div>

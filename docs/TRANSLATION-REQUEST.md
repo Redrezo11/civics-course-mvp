@@ -5,7 +5,7 @@
 content change rather than editing this file, or it will describe a course that
 no longer exists.
 
-Remaining: **12 interface strings** and **48 content
+Remaining: **0 interface strings** and **48 content
 fields** — 34 never translated, and
 **14 marked ↻**.
 
@@ -92,24 +92,11 @@ were lost this way before we worked out the cause.
 
 ---
 
-## 1. Interface strings — 12 of 52 remaining
+## 1. Interface strings — 0 of 155 remaining
 
 In `src/lib/content/ui-strings.json`. Fill the `my` value; leave `en` alone.
 
-| Key | English |
-|---|---|
-| `help.privacyLms` | Your privacy: this course saves your progress on this phone, and reports your progress to the organisation providing the course. |
-| `help.reset` | This clears all your progress on this phone. This cannot be undone. |
-| `help.resetLms` | This clears all your progress on this phone. This cannot be undone. Progress already reported to the organisation providing the course is not removed. |
-| `narration.listen` | Listen |
-| `narration.listenAgain` | Listen again |
-| `narration.pause` | Pause |
-| `narration.preparing` | Preparing speech… |
-| `narration.resume` | Resume |
-| `narration.unavailable` | Speech is not available on this device. |
-| `narration.unavailableMy` | Burmese speech is not available on this device. |
-| `settings.answersStayEnglish` | Answer choices show English first, with the Burmese underneath. |
-| `welcome.footnote` | This course teaches civics and test preparation. For questions about your own immigration case, see uscis.gov or a qualified legal-service provider. |
+_All 155 interface strings carry Burmese._ They remain `draft-unreviewed` and still need a native pass, but none is missing.
 
 ---
 

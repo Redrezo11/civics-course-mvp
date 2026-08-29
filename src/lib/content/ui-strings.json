@@ -4,6 +4,14 @@
     "en": "‹ Back",
     "my": "‹ နောက်သို့"
   },
+  "common.backToLessons": {
+    "en": "Back to lessons",
+    "my": "သင်ခန်းစာများသို့ ပြန်သွားရန်"
+  },
+  "common.chooseToContinue": {
+    "en": "Choose an answer to continue",
+    "my": "ဆက်လုပ်ရန် အဖြေတစ်ခု ရွေးပါ"
+  },
   "common.continue": {
     "en": "Continue",
     "my": "ဆက်လုပ်ပါ"
@@ -11,6 +19,10 @@
   "common.exit": {
     "en": "Exit ✕",
     "my": "ထွက်ရန် ✕"
+  },
+  "common.finish": {
+    "en": "Finish",
+    "my": "ပြီးဆုံးပါပြီ"
   },
   "common.next": {
     "en": "Next",
@@ -24,9 +36,145 @@
     "en": "Start",
     "my": "စတင်ပါ"
   },
+  "common.startOver": {
+    "en": "Start over",
+    "my": "အစမှ ပြန်စပါ"
+  },
   "common.tryAgain": {
     "en": "Try again",
     "my": "ထပ်စမ်းကြည့်ပါ"
+  },
+  "completion.almostThere": {
+    "en": "Your ceremony. Your oath. You are almost there.",
+    "my": "သင့်အခမ်းအနား။ သင့်ကတိသစ္စာ။ သင် နီးပါးရောက်ပါပြီ။"
+  },
+  "completion.counterSentence": {
+    "en": "You have finished {lessons} of {totalLessons} lessons and practiced {questions} of {totalQuestions} questions.",
+    "my": "သင်သည် သင်ခန်းစာ {totalLessons} ခုအနက် {lessons} ခု ပြီးဆုံးပြီး မေးခွန်း {totalQuestions} ခုအနက် {questions} ခု လေ့ကျင့်ပြီးပါပြီ။"
+  },
+  "completion.practiceInterview": {
+    "en": "Practice the interview",
+    "my": "အင်တာဗျူး လေ့ကျင့်ပါ"
+  },
+  "completion.practicedAll": {
+    "en": "You have practiced all {n}.",
+    "my": "သင်သည် {n} ခုလုံးကို လေ့ကျင့်ပြီးပါပြီ။"
+  },
+  "completion.proveLms": {
+    "en": "Your progress is reported to the organisation providing this course. They can see that you finished — there is nothing you need to send them.",
+    "my": "သင့်တိုးတက်မှုကို ဤသင်တန်းပေးသော အဖွဲ့အစည်းထံ အစီရင်ခံပါသည်။ သင်ပြီးဆုံးကြောင်း ၎င်းတို့ မြင်နိုင်သည် — သင် ပို့ပေးစရာ မလိုပါ။"
+  },
+  "completion.provePhone": {
+    "en": "This course runs entirely on your own phone and does not send your progress anywhere. If someone asked you to show that you completed it, take a picture of the two counters above.",
+    "my": "ဤသင်တန်းသည် သင့်ဖုန်းပေါ်တွင်သာ လုံးဝ အလုပ်လုပ်ပြီး သင့်တိုးတက်မှုကို မည်သည့်နေရာသို့မျှ မပို့ပါ။ ပြီးဆုံးကြောင်း ပြသရန် တစ်စုံတစ်ဦးက တောင်းဆိုပါက အထက်ပါ ကိန်းဂဏန်း နှစ်ခုကို ဓာတ်ပုံရိုက်ထားပါ။"
+  },
+  "completion.showingFinished": {
+    "en": "Showing that you finished",
+    "my": "သင် ပြီးဆုံးကြောင်း ပြသခြင်း"
+  },
+  "completion.unitLabel": {
+    "en": "Finishing up",
+    "my": "အပြီးသတ်ခြင်း"
+  },
+  "completion.wantPracticeAll": {
+    "en": "Want to practice every question? {n} are still unpracticed. Each lesson’s full set stays open from the lesson list.",
+    "my": "မေးခွန်းအားလုံးကို လေ့ကျင့်လိုပါသလား? {n} ခု မလေ့ကျင့်ရသေးပါ။ သင်ခန်းစာတစ်ခုစီ၏ မေးခွန်းအစုံကို သင်ခန်းစာစာရင်းမှ အမြဲဖွင့်နိုင်ပါသည်။"
+  },
+  "diagram.federal": {
+    "en": "Federal",
+    "my": "ဖက်ဒရယ်"
+  },
+  "diagram.fiftyOfThem": {
+    "en": "… fifty of them",
+    "my": "… ငါးဆယ် ရှိသည်"
+  },
+  "diagram.levelsAlt": {
+    "en": "A diagram of two levels of government: one federal government above, responsible for country-sized jobs, and fifty state governments below, responsible for close-to-home jobs.",
+    "my": "အစိုးရ အဆင့် နှစ်ဆင့်၏ ပုံကြမ်း — အပေါ်တွင် နိုင်ငံအဆင့် လုပ်ငန်းများအတွက် တာဝန်ရှိသော ဖက်ဒရယ် အစိုးရ တစ်ခု၊ အောက်တွင် ဒေသဆိုင်ရာ လုပ်ငန်းများအတွက် တာဝန်ရှိသော ပြည်နယ် အစိုးရ ငါးဆယ်။"
+  },
+  "diagram.licences": {
+    "en": "licences",
+    "my": "လိုင်စင်များ"
+  },
+  "diagram.oneNational": {
+    "en": "one national government",
+    "my": "အမျိုးသား အစိုးရ တစ်ခု"
+  },
+  "diagram.police": {
+    "en": "police",
+    "my": "ရဲတပ်ဖွဲ့"
+  },
+  "diagram.schools": {
+    "en": "schools",
+    "my": "ကျောင်းများ"
+  },
+  "diagram.state": {
+    "en": "State",
+    "my": "ပြည်နယ်"
+  },
+  "dynamic.changesWarning": {
+    "en": "This one changes with elections or appointments. Look it up before your interview — never rely on an old answer.",
+    "my": "ဤအရာသည် ရွေးကောက်ပွဲများ သို့မဟုတ် ခန့်အပ်မှုများနှင့်အတူ ပြောင်းလဲပါသည်။ အင်တာဗျူးမတိုင်မီ ရှာဖွေပါ — အဟောင်းကို လုံးဝ မအားကိုးပါနှင့်။"
+  },
+  "dynamic.checkUscis": {
+    "en": "Check at uscis.gov",
+    "my": "uscis.gov တွင် စစ်ဆေးပါ"
+  },
+  "dynamic.checkedOn": {
+    "en": "Checked: {date}",
+    "my": "စစ်ဆေးသည့်ရက် — {date}"
+  },
+  "dynamic.currentAnswer": {
+    "en": "Current answer",
+    "my": "လက်ရှိ အဖြေ"
+  },
+  "dynamic.notChecked": {
+    "en": "This answer has not been checked yet.",
+    "my": "ဤအဖြေကို မစစ်ဆေးရသေးပါ။"
+  },
+  "dynamic.notCheckedLong": {
+    "en": "This answer changes. It has not been checked yet — look it up before your interview.",
+    "my": "ဤအဖြေသည် ပြောင်းလဲပါသည်။ မစစ်ဆေးရသေးပါ — အင်တာဗျူးမတိုင်မီ ရှာဖွေပါ။"
+  },
+  "dynamic.notRecorded": {
+    "en": "not yet recorded",
+    "my": "မှတ်တမ်း မတင်ရသေးပါ"
+  },
+  "epitome.closing": {
+    "en": "Every lesson in this course explains one piece of this picture. By the end, you will see how all 128 test questions fit inside these four ideas.",
+    "my": "ဤသင်တန်းရှိ သင်ခန်းစာတိုင်းသည် ဤပုံရိပ်၏ အပိုင်းတစ်ခုစီကို ရှင်းပြပါသည်။ အဆုံးတွင် စာမေးပွဲမေးခွန်း ၁၂၈ ခုလုံးသည် ဤအယူအဆ လေးခုအတွင်း မည်သို့ ကိုက်ညီသည်ကို သင်တွေ့ရပါမည်။"
+  },
+  "epitome.heading": {
+    "en": "How America works",
+    "my": "အမေရိကန် အစိုးရ လုပ်ဆောင်ပုံ"
+  },
+  "epitome.line1": {
+    "en": "The people choose the lawmakers and the President.",
+    "my": "ပြည်သူများက ဥပဒေပြုသူများနှင့် သမ္မတကို ရွေးချယ်ကြသည်။"
+  },
+  "epitome.line2": {
+    "en": "The leaders work in three separate parts — so no one part becomes too strong.",
+    "my": "ခေါင်းဆောင်များသည် သီးခြားအပိုင်း သုံးပိုင်းဖြင့် လုပ်ဆောင်သည် — မည်သည့်အပိုင်းမျှ အလွန်အားကြီးမလာစေရန်။"
+  },
+  "epitome.line3": {
+    "en": "A written rulebook limits all of them.",
+    "my": "ရေးသားထားသော စည်းမျဉ်းစာအုပ်တစ်ခုက ၎င်းတို့အားလုံးကို ကန့်သတ်ထားသည်။"
+  },
+  "epitome.line4": {
+    "en": "That rulebook is the Constitution.",
+    "my": "ထိုစည်းမျဉ်းစာအုပ်သည် ဖွဲ့စည်းပုံအခြေခံဥပဒေ ဖြစ်သည်။"
+  },
+  "epitome.showNext": {
+    "en": "Show the next line ({shown} of {total})",
+    "my": "နောက်တစ်ကြောင်း ပြပါ ({shown} / {total})"
+  },
+  "epitome.startUnit1": {
+    "en": "Start Unit 1",
+    "my": "သင်ခန်းစာ ၁ စတင်ပါ"
+  },
+  "epitome.unitLabel": {
+    "en": "The whole picture",
+    "my": "ပုံရိပ်တစ်ခုလုံး"
   },
   "footer.help": {
     "en": "Help",
@@ -36,13 +184,77 @@
     "en": "Settings",
     "my": "ဆက်တင်များ"
   },
+  "fullBank.continuePractice": {
+    "en": "Continue practice",
+    "my": "လေ့ကျင့်ခန်း ဆက်လုပ်ပါ"
+  },
   "fullBank.heading": {
     "en": "Practice all {n} questions from this lesson",
     "my": "ဤသင်ခန်းစာမှ မေးခွန်း {n} ခုလုံးကို လေ့ကျင့်ပါ"
   },
+  "fullBank.practicedAltogether": {
+    "en": "That is {done} of {total} questions practiced altogether.",
+    "my": "ယင်းသည် စုစုပေါင်း မေးခွန်း {total} ခုအနက် {done} ခု လေ့ကျင့်ပြီးဖြစ်သည်။"
+  },
+  "fullBank.practicedCount": {
+    "en": "You have now practiced {done} of {total} questions from this lesson.",
+    "my": "ဤသင်ခန်းစာမှ မေးခွန်း {total} ခုအနက် {done} ခုကို ယခု လေ့ကျင့်ပြီးပါပြီ။"
+  },
+  "fullBank.questionsPracticed": {
+    "en": "questions practiced",
+    "my": "မေးခွန်း လေ့ကျင့်ပြီး"
+  },
+  "fullBank.resumingAt": {
+    "en": "You stopped at question {n}. Starting there.",
+    "my": "သင် မေးခွန်း {n} တွင် ရပ်ခဲ့သည်။ ထိုနေရာမှ စတင်ပါမည်။"
+  },
   "fullBank.startPractice": {
     "en": "Start practice",
     "my": "လေ့ကျင့်ခန်း စတင်ပါ"
+  },
+  "guided.allSorted": {
+    "en": "All sorted correctly.",
+    "my": "အားလုံး မှန်ကန်စွာ ခွဲခြားပြီးပါပြီ။"
+  },
+  "guided.correctAnswerIs": {
+    "en": "The correct answer is {answer}.",
+    "my": "မှန်ကန်သော အဖြေမှာ {answer} ဖြစ်သည်။"
+  },
+  "guided.correctOrder": {
+    "en": "Correct order.",
+    "my": "အစဉ်လိုက် မှန်ကန်ပါသည်။"
+  },
+  "guided.correctOrderIs": {
+    "en": "The correct order is:",
+    "my": "မှန်ကန်သော အစဉ်မှာ —"
+  },
+  "guided.label": {
+    "en": "Practice {n} of {total} — not an official test question",
+    "my": "လေ့ကျင့်ခန်း {n} / {total} — တရားဝင် စာမေးပွဲမေးခွန်း မဟုတ်ပါ"
+  },
+  "guided.manyBelong": {
+    "en": "{n} belong somewhere else:",
+    "my": "{n} ခုသည် အခြားနေရာတွင် ရှိသင့်သည် —"
+  },
+  "guided.oneBelongs": {
+    "en": "One belongs somewhere else:",
+    "my": "တစ်ခုသည် အခြားနေရာတွင် ရှိသင့်သည် —"
+  },
+  "guided.sameAsOfficial": {
+    "en": "It asks the same thing as the official question:",
+    "my": "ဤသည်မှာ တရားဝင်မေးခွန်းနှင့် အတူတူ မေးခြင်း ဖြစ်သည် —"
+  },
+  "help.about": {
+    "en": "About: a self-paced civics course to help you prepare for the U.S. naturalization test.",
+    "my": "အကြောင်းအရာ — အမေရိကန် နိုင်ငံသားခံယူမှု စာမေးပွဲအတွက် ပြင်ဆင်ရာတွင် ကူညီရန် ကိုယ်တိုင်နှုန်းထားဖြင့် လေ့လာနိုင်သော civics သင်တန်း။"
+  },
+  "help.cancel": {
+    "en": "Cancel",
+    "my": "မလုပ်တော့ပါ"
+  },
+  "help.clearProgress": {
+    "en": "Clear progress",
+    "my": "တိုးတက်မှုကို ရှင်းလင်းပါ"
   },
   "help.heading": {
     "en": "Help",
@@ -54,15 +266,39 @@
   },
   "help.privacyLms": {
     "en": "Your privacy: this course saves your progress on this phone, and reports your progress to the organisation providing the course.",
-    "my": null
+    "my": "သင့်ကိုယ်ရေးကိုယ်တာ — ဤသင်တန်းသည် သင့်တိုးတက်မှုကို သင့်ဖုန်းပေါ်တွင် သိမ်းဆည်းပြီး ဤသင်တန်းပေးသော အဖွဲ့အစည်းထံ အစီရင်ခံပါသည်။"
   },
   "help.reset": {
     "en": "This clears all your progress on this phone. This cannot be undone.",
-    "my": null
+    "my": "ဤသည်က သင့်ဖုန်းပေါ်ရှိ သင့်တိုးတက်မှုအားလုံးကို ရှင်းလင်းပါမည်။ ပြန်လည်ပြင်၍ မရပါ။"
   },
   "help.resetLms": {
     "en": "This clears all your progress on this phone. This cannot be undone. Progress already reported to the organisation providing the course is not removed.",
-    "my": null
+    "my": "ဤသည်က သင့်ဖုန်းပေါ်ရှိ သင့်တိုးတက်မှုအားလုံးကို ရှင်းလင်းပါမည်။ ပြန်လည်ပြင်၍ မရပါ။ ဤသင်တန်းပေးသော အဖွဲ့အစည်းထံ အစီရင်ခံပြီးသော တိုးတက်မှုကို ဖယ်ရှားမည် မဟုတ်ပါ။"
+  },
+  "help.sources": {
+    "en": "Sources: USCIS M-1778 · National Archives / Library of Congress photos",
+    "my": "အရင်းအမြစ်များ — USCIS M-1778 · National Archives / Library of Congress ဓာတ်ပုံများ"
+  },
+  "help.sourcesChecked": {
+    "en": "answers checked {date}",
+    "my": "အဖြေများ စစ်ဆေးပြီး {date}"
+  },
+  "help.sourcesUnchecked": {
+    "en": "answers that change with elections have not been checked yet",
+    "my": "ရွေးကောက်ပွဲများနှင့်အတူ ပြောင်းလဲသော အဖြေများကို မစစ်ဆေးရသေးပါ"
+  },
+  "help.startOverButton": {
+    "en": "Start over (clears your progress)",
+    "my": "အစမှ ပြန်စပါ (သင့်တိုးတက်မှုကို ရှင်းလင်းသည်)"
+  },
+  "home.allFromUnit": {
+    "en": "All {n} from {name}",
+    "my": "{name} မှ {n} ခုလုံး"
+  },
+  "home.answersChecked": {
+    "en": "Answers checked: {date}",
+    "my": "အဖြေများ စစ်ဆေးသည့်ရက် — {date}"
   },
   "home.counterLessons": {
     "en": "lessons finished",
@@ -76,6 +312,26 @@
     "en": "Or go to any lesson:",
     "my": "သို့မဟုတ် မည်သည့်သင်ခန်းစာသို့မဆို သွားနိုင်သည် —"
   },
+  "home.practiceEvery": {
+    "en": "Practice every question",
+    "my": "မေးခွန်းတိုင်းကို လေ့ကျင့်ပါ"
+  },
+  "home.reviewSubtitle": {
+    "en": "{name} — questions from every lesson so far",
+    "my": "{name} — ယခုအထိ သင်ခန်းစာတိုင်းမှ မေးခွန်းများ"
+  },
+  "home.reviews": {
+    "en": "Reviews",
+    "my": "ပြန်လည်လေ့လာမှုများ"
+  },
+  "home.someAnswersChange": {
+    "en": "Some answers change — check uscis.gov",
+    "my": "အချို့အဖြေများ ပြောင်းလဲသည် — uscis.gov တွင် စစ်ဆေးပါ"
+  },
+  "home.stillUnpracticed": {
+    "en": "{n} of {total} are still unpracticed.",
+    "my": "{total} ခုအနက် {n} ခု မလေ့ကျင့်ရသေးပါ။"
+  },
   "language.changeLater": {
     "en": "You can change this anytime in Settings.",
     "my": "ဤအရာကို ဆက်တင်များတွင် အချိန်မရွေး ပြောင်းလဲနိုင်ပါသည်။"
@@ -88,33 +344,45 @@
     "en": "Choose your language.",
     "my": "သင့်ဘာသာစကားကို ရွေးချယ်ပါ။"
   },
+  "lesson.notFound": {
+    "en": "Unit not found.",
+    "my": "သင်ခန်းစာ မတွေ့ပါ။"
+  },
+  "lesson.practiceAll": {
+    "en": "Practice all {n} questions",
+    "my": "မေးခွန်း {n} ခုလုံးကို လေ့ကျင့်ပါ"
+  },
+  "lesson.startReview": {
+    "en": "Start {name} — {n} mixed questions",
+    "my": "{name} စတင်ပါ — ရောနှောမေးခွန်း {n} ခု"
+  },
   "narration.listen": {
     "en": "Listen",
-    "my": null
+    "my": "နားထောင်ပါ"
   },
   "narration.listenAgain": {
     "en": "Listen again",
-    "my": null
+    "my": "ထပ်နားထောင်ပါ"
   },
   "narration.pause": {
     "en": "Pause",
-    "my": null
+    "my": "ခဏရပ်ပါ"
   },
   "narration.preparing": {
     "en": "Preparing speech…",
-    "my": null
+    "my": "အသံကို ပြင်ဆင်နေသည်…"
   },
   "narration.resume": {
     "en": "Resume",
-    "my": null
+    "my": "ဆက်နားထောင်ပါ"
   },
   "narration.unavailable": {
     "en": "Speech is not available on this device.",
-    "my": null
+    "my": "ဤစက်ပစ္စည်းတွင် အသံဖတ်ခြင်း မရနိုင်ပါ။"
   },
   "narration.unavailableMy": {
     "en": "Burmese speech is not available on this device.",
-    "my": null
+    "my": "ဤစက်ပစ္စည်းတွင် မြန်မာဘာသာ အသံဖတ်ခြင်း မရနိုင်ပါ။"
   },
   "nav.tabLearn": {
     "en": "Learn",
@@ -124,9 +392,57 @@
     "en": "Rehearsal",
     "my": "စာမေးပွဲ လေ့ကျင့်ခန်း"
   },
+  "practice.acceptedMarked": {
+    "en": "Accepted answers are marked ✓.",
+    "my": "လက်ခံနိုင်သော အဖြေများကို ✓ ဖြင့် အမှတ်အသား ပြုထားသည်။"
+  },
+  "practice.anyNIsEnough": {
+    "en": "Any {n} of them is enough — the officer asks for {n}, so give {n} and stop.",
+    "my": "၎င်းတို့အနက် မည်သည့် {n} ခုမဆို လုံလောက်သည် — အရာရှိက {n} ခု တောင်းသဖြင့် {n} ခု ပေးပြီး ရပ်ပါ။"
+  },
   "practice.chooseCount": {
     "en": "Choose {n}.",
     "my": "{n} ခု ရွေးပါ။"
+  },
+  "practice.chooseNMore": {
+    "en": "Choose {n} more",
+    "my": "နောက်ထပ် {n} ခု ရွေးပါ"
+  },
+  "questionBank.allOfficial": {
+    "en": "All {n} official questions · ★ marks the 65/20 questions",
+    "my": "တရားဝင်မေးခွန်း {n} ခုလုံး · ★ သည် ၆၅/၂၀ မေးခွန်းများကို ပြသည်"
+  },
+  "questionBank.allQuestions": {
+    "en": "All {n} questions",
+    "my": "မေးခွန်း {n} ခုလုံး"
+  },
+  "questionBank.matchCount": {
+    "en": "{shown} of {total} questions match",
+    "my": "မေးခွန်း {total} ခုအနက် {shown} ခု ကိုက်ညီသည်"
+  },
+  "questionBank.noMatch": {
+    "en": "No question matches “{q}”.",
+    "my": "“{q}” နှင့် ကိုက်ညီသော မေးခွန်း မရှိပါ။"
+  },
+  "questionBank.searchPlaceholder": {
+    "en": "Search questions...",
+    "my": "မေးခွန်းများ ရှာပါ..."
+  },
+  "questionBank.whyAnswer": {
+    "en": "Why is this the answer? → {unit}",
+    "my": "ဤအဖြေက ဘာကြောင့်လဲ? → {unit}"
+  },
+  "rehearsal.acceptedAnswers": {
+    "en": "Accepted answers",
+    "my": "လက်ခံနိုင်သော အဖြေများ"
+  },
+  "rehearsal.askedOf128": {
+    "en": "This practice asked {asked} of the 128.",
+    "my": "ဤလေ့ကျင့်ခန်းသည် ၁၂၈ ခုအနက် {asked} ခု မေးခဲ့သည်။"
+  },
+  "rehearsal.attemptsSoFar": {
+    "en": "You have practiced this {n} {times}. Your best so far: {best} correct.",
+    "my": "ဤအရာကို {n} {times} လေ့ကျင့်ပြီးပါပြီ။ ယခုအထိ အကောင်းဆုံး — {best} ခု မှန်ကန်သည်။"
   },
   "rehearsal.checkMyAnswer": {
     "en": "Check my answer",
@@ -136,13 +452,101 @@
     "en": "Did you get it right?",
     "my": "မှန်ကန်စွာ ဖြေနိုင်ခဲ့ပါသလား?"
   },
+  "rehearsal.doYouKnow": {
+    "en": "Do you know the answer?",
+    "my": "အဖြေကို သင် သိပါသလား?"
+  },
+  "rehearsal.endedBody": {
+    "en": "The real one would too. Every question you missed is now in your review list. Try again anytime.",
+    "my": "တကယ့်စာမေးပွဲလည်း ထိုနည်းတူ ဖြစ်မည်။ သင် လွဲချော်ခဲ့သော မေးခွန်းတိုင်းသည် ယခု သင့်ပြန်လည်လေ့လာမှုစာရင်းထဲတွင် ရှိပါသည်။ အချိန်မရွေး ထပ်စမ်းကြည့်ပါ။"
+  },
+  "rehearsal.endedHeading": {
+    "en": "This practice test ended.",
+    "my": "ဤလေ့ကျင့်ခန်း စာမေးပွဲ ပြီးဆုံးပါပြီ။"
+  },
+  "rehearsal.gotIt": {
+    "en": "✓ Yes, I got it",
+    "my": "✓ ဟုတ်ကဲ့၊ ဖြေနိုင်ခဲ့သည်"
+  },
   "rehearsal.heading": {
     "en": "Rehearsal",
     "my": "စာမေးပွဲ လေ့ကျင့်ခန်း"
   },
+  "rehearsal.introBody": {
+    "en": "At the real interview you will hear these questions. Here you read them — and answer out loud, the same way. No choices, no hints. Then check yourself.",
+    "my": "တကယ့်အင်တာဗျူးတွင် ဤမေးခွန်းများကို သင် ကြားရမည်။ ဤနေရာတွင် ဖတ်ရပြီး — အသံထွက်၍ ထိုနည်းအတိုင်း ဖြေပါ။ ရွေးချယ်စရာ မရှိ၊ အရိပ်အမြွက် မရှိ။ ထို့နောက် ကိုယ်တိုင် စစ်ဆေးပါ။"
+  },
+  "rehearsal.introHeading": {
+    "en": "This is practice for the real interview.",
+    "my": "ဤသည်မှာ တကယ့်အင်တာဗျူးအတွက် လေ့ကျင့်ခန်း ဖြစ်သည်။"
+  },
+  "rehearsal.notYet": {
+    "en": "✗ Not yet",
+    "my": "✗ မဖြေနိုင်သေးပါ"
+  },
+  "rehearsal.passedBody": {
+    "en": "{asked} questions asked — just like the real test, which can end early once you have {pass} right.",
+    "my": "မေးခွန်း {asked} ခု မေးခဲ့သည် — တကယ့်စာမေးပွဲကဲ့သို့ပင်၊ {pass} ခု မှန်သည်နှင့် စောစီးစွာ ပြီးဆုံးနိုင်ပါသည်။"
+  },
+  "rehearsal.passedHeading": {
+    "en": "You passed this practice.",
+    "my": "ဤလေ့ကျင့်ခန်းကို သင် အောင်မြင်ပါသည်။"
+  },
+  "rehearsal.positionOf": {
+    "en": "{n} of up to {max}",
+    "my": "{n} / {max} အထိ"
+  },
+  "rehearsal.rules": {
+    "en": "The rules are the real rules: up to {max} questions. {pass} right = pass. {fail} wrong = stop.",
+    "my": "စည်းမျဉ်းများသည် တကယ့်စည်းမျဉ်းများ ဖြစ်သည် — မေးခွန်း {max} ခုအထိ။ {pass} ခု မှန်လျှင် အောင်မြင်သည်။ {fail} ခု မှားလျှင် ရပ်သည်။"
+  },
+  "rehearsal.sayOutLoud": {
+    "en": "Say it out loud to yourself before you look.",
+    "my": "မကြည့်မီ ကိုယ့်ကိုယ်ကို အသံထွက်၍ ပြောပါ။"
+  },
+  "rehearsal.tally": {
+    "en": "✓ {correct} right · ✗ {wrong} wrong",
+    "my": "✓ မှန် {correct} · ✗ မှား {wrong}"
+  },
+  "rehearsal.timeMany": {
+    "en": "times",
+    "my": "ကြိမ်"
+  },
+  "rehearsal.timeOne": {
+    "en": "time",
+    "my": "ကြိမ်"
+  },
+  "review.allSeven": {
+    "en": "You have reviewed all seven lessons.",
+    "my": "သင်ခန်းစာ ခုနစ်ခုလုံးကို ပြန်လည်လေ့လာပြီးပါပြီ။"
+  },
+  "review.finishReview": {
+    "en": "Finish review",
+    "my": "ပြန်လည်လေ့လာမှု ပြီးဆုံးပါပြီ"
+  },
+  "review.finished": {
+    "en": "Review finished.",
+    "my": "ပြန်လည်လေ့လာမှု ပြီးဆုံးပါပြီ။"
+  },
+  "review.mixedOnPurpose": {
+    "en": "Questions from different lessons, mixed together on purpose.",
+    "my": "သင်ခန်းစာ အမျိုးမျိုးမှ မေးခွန်းများကို ရည်ရွယ်ချက်ရှိရှိ ရောနှောထားပါသည်။"
+  },
+  "review.notFound": {
+    "en": "Review not found.",
+    "my": "ပြန်လည်လေ့လာမှု မတွေ့ပါ။"
+  },
+  "review.preparing": {
+    "en": "Preparing your review…",
+    "my": "သင့်ပြန်လည်လေ့လာမှုကို ပြင်ဆင်နေသည်…"
+  },
+  "review.reviewedCount": {
+    "en": "Reviewed: {n} questions.",
+    "my": "ပြန်လည်လေ့လာပြီး — မေးခွန်း {n} ခု။"
+  },
   "settings.answersStayEnglish": {
     "en": "Answer choices show English first, with the Burmese underneath.",
-    "my": null
+    "my": "အဖြေရွေးချယ်စရာများသည် အင်္ဂလိပ်လို ဦးစွာပြပြီး မြန်မာဘာသာပြန်ကို အောက်တွင် ပြပါသည်။"
   },
   "settings.back": {
     "en": "‹ Back",
@@ -196,13 +600,21 @@
     "en": "Settings",
     "my": "ဆက်တင်များ"
   },
+  "vocab.flipAll": {
+    "en": "flip all {n} to continue",
+    "my": "ဆက်လုပ်ရန် {n} ခုလုံးကို လှန်ပါ"
+  },
+  "vocab.tapEachWord": {
+    "en": "Tap each word ({shown} of {total})",
+    "my": "စကားလုံးတစ်ခုစီကို နှိပ်ပါ ({shown} / {total})"
+  },
   "welcome.body": {
     "en": "This course covers all 128 questions on the U.S. citizenship civics test, in short lessons you can fit around your day.",
     "my": "ဤသင်တန်းသည် အမေရိကန် နိုင်ငံသားခံယူခြင်း civics စာမေးပွဲရှိ မေးခွန်း ၁၂၈ ခုလုံးကို သင့်နေ့စဉ်ဘဝနှင့် အဆင်ပြေအောင် ချိန်ညှိနိုင်သည့် သင်ခန်းစာတိုများဖြင့် လွှမ်းခြုံပါသည်။"
   },
   "welcome.footnote": {
     "en": "This course teaches civics and test preparation. For questions about your own immigration case, see uscis.gov or a qualified legal-service provider.",
-    "my": null
+    "my": "ဤသင်တန်းသည် civics နှင့် စာမေးပွဲပြင်ဆင်မှုကို သင်ကြားပေးပါသည်။ သင့်ကိုယ်ပိုင် လူဝင်မှုကြီးကြပ်ရေး အမှုနှင့်ပတ်သက်၍ မေးမြန်းလိုပါက uscis.gov သို့မဟုတ် အရည်အချင်းပြည့်မီသော ဥပဒေဝန်ဆောင်မှုပေးသူထံ ဆက်သွယ်ပါ။"
   },
   "welcome.heading": {
     "en": "Welcome.",

@@ -16,6 +16,7 @@
   import { onMount } from 'svelte';
   import { progress } from '../stores/progress.js';
   import { navigate } from '../router.js';
+  import { t } from '../i18n.js';
   import { REVIEWS, buildReviewPool } from '../select-review.js';
   import LessonBar from '../components/LessonBar.svelte';
   import PracticeItem from '../components/PracticeItem.svelte';
@@ -60,6 +61,12 @@
   }
 
   $: canAdvance = itemDone || (current && current.dynamic);
+
+  // Every string on this screen now follows the learner's language, narration
+  // included — it used to be hardcoded English throughout, invisible to both
+  // the translation pipeline and anyone reading TRANSLATION-REQUEST.md.
+  $: lang = $progress.language || 'en';
+  $: my = lang === 'my' ? 'my' : undefined;
 </script>
 
 <div class="min-h-screen flex flex-col max-w-md mx-auto">
@@ -71,35 +78,36 @@
 
   <div class="flex-1 overflow-y-auto px-5 py-6">
     {#if !review}
-      <p>Review not found.</p>
+      <p lang={my}>{$t('review.notFound')}</p>
 
     {:else if !questions.length}
-      <p>Preparing your review…</p>
+      <p lang={my}>{$t('review.preparing')}</p>
 
     {:else if finished}
       <NarrationButton
         segments={[
-          { lang: 'en', text: `Review finished. Reviewed: ${questions.length} questions.` },
-          ...(reviewId === 'R3' ? [{ lang: 'en', text: 'You have reviewed all seven lessons.' }] : []),
+          { lang, text: `${$t('review.finished')} ${$t('review.reviewedCount', { n: questions.length })}` },
+          ...(reviewId === 'R3' ? [{ lang, text: $t('review.allSeven') }] : []),
         ]}
+        {lang}
         wrapperClass="mb-4"
       />
-      <h1 class="text-heading font-bold mb-3">Review finished.</h1>
-      <p class="mb-4">Reviewed: {questions.length} questions.</p>
+      <h1 class="text-heading font-bold mb-3" lang={my}>{$t('review.finished')}</h1>
+      <p class="mb-4" lang={my}>{$t('review.reviewedCount', { n: questions.length })}</p>
       <!-- Missed questions are re-queued silently. The learner does not need to
            be told the mechanic, and telling them was an excuse to add a line
            reassuring them that nothing is scored. -->
       {#if reviewId === 'R3'}
-        <p class="font-bold">You have reviewed all seven lessons.</p>
+        <p class="font-bold" lang={my}>{$t('review.allSeven')}</p>
       {/if}
 
     {:else}
-      <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-3">
-        Questions from different lessons, mixed together on purpose.
+      <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-3" lang={my}>
+        {$t('review.mixedOnPurpose')}
       </p>
       <PracticeItem
         q={current}
-        lead="Questions from different lessons, mixed together on purpose."
+        lead={$t('review.mixedOnPurpose')}
         label="Question {index + 1} of {questions.length}"
         on:answer={onAnswer}
       />
@@ -109,17 +117,17 @@
   <div class="px-5 py-4 border-t border-border dark:border-dark-border">
     {#if finished}
       {#if reviewId === 'R3'}
-        <button class="btn-primary" on:click={() => navigate('/completion')}>Continue</button>
+        <button class="btn-primary" on:click={() => navigate('/completion')}>{$t('common.continue')}</button>
       {:else}
-        <button class="btn-primary" on:click={() => navigate('/')}>Back to lessons</button>
+        <button class="btn-primary" on:click={() => navigate('/')}>{$t('common.backToLessons')}</button>
       {/if}
     {:else if questions.length && canAdvance}
       <button class="btn-primary" on:click={next}>
-        {index >= questions.length - 1 ? 'Finish review' : 'Next'}
+        {index >= questions.length - 1 ? $t('review.finishReview') : $t('common.next')}
       </button>
     {:else if questions.length}
-      <p class="text-xs text-ink-muted dark:text-dark-ink-muted text-center">
-        Choose an answer to continue
+      <p class="text-xs text-ink-muted dark:text-dark-ink-muted text-center" lang={my}>
+        {$t('common.chooseToContinue')}
       </p>
     {/if}
   </div>

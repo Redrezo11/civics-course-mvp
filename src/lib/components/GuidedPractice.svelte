@@ -124,20 +124,21 @@
   $: feedbackFor = items.map((item, i) => {
     if (!doneFlags[i]) return [];
     if (item.kind === 'compare') {
-      if (!sortWrong[i].length) return ['All sorted correctly.'];
+      if (!sortWrong[i].length) return [$t('guided.allSorted')];
       return [
         sortWrong[i].length === 1
-          ? 'One belongs somewhere else:'
-          : `${sortWrong[i].length} belong somewhere else:`,
+          ? $t('guided.oneBelongs')
+          : $t('guided.manyBelong', { n: sortWrong[i].length }),
         ...sortWrong[i].map((w) => `${w.si.text} goes in ${item.buckets[w.si.bucket]}.`),
       ];
     }
     if (item.kind === 'order') {
       return orderCorrect[i]
-        ? ['Correct order.', item.feedbackCorrect || '']
-        : ['The correct order is:', ...item.orderItems.map((t, n) => `${n + 1}. ${t}`)];
+        ? [$t('guided.correctOrder'), item.feedbackCorrect || '']
+        : [$t('guided.correctOrderIs'), ...item.orderItems.map((x, n) => `${n + 1}. ${x}`)];
     }
-    if (answers[i] !== undefined) return [`The correct answer is ${item.options[item.correctIndex]}.`];
+    if (answers[i] !== undefined)
+      return [$t('guided.correctAnswerIs', { answer: item.options[item.correctIndex] })];
     return [];
   });
 
@@ -163,7 +164,7 @@
       wrapperClass="mb-3"
     />
     <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-2">
-      Practice {i + 1} of {items.length} — not an official test question
+      {$t('guided.label', { n: i + 1, total: items.length })}
     </p>
 
     <div>
@@ -214,10 +215,12 @@
         {#if doneFlags[i]}
           <div class="mt-1 p-3 rounded-card border border-border dark:border-dark-border text-sm leading-relaxed">
             {#if sortWrong[i].length === 0}
-              <span class="font-bold">All sorted correctly.</span>
+              <span class="font-bold">{$t('guided.allSorted')}</span>
             {:else}
               <span class="font-bold">
-                {sortWrong[i].length === 1 ? 'One belongs' : `${sortWrong[i].length} belong`} somewhere else:
+                {sortWrong[i].length === 1
+                  ? $t('guided.oneBelongs')
+                  : $t('guided.manyBelong', { n: sortWrong[i].length })}
               </span>
               {#each sortWrong[i] as w}
                 {@const siIdx = item.sortItems.indexOf(w.si)}
@@ -234,7 +237,7 @@
             {$t('common.tryAgain')}
           </button>
           {#if i < items.length - 1}
-            <button class="btn-primary mt-3" on:click={advance}>Next</button>
+            <button class="btn-primary mt-3" on:click={advance}>{$t('common.next')}</button>
           {/if}
         {/if}
 
@@ -268,15 +271,15 @@
           {/each}
           {#if (orderPicks[i] || []).length > 0}
             <button class="tap inline-flex items-center text-xs underline text-ink-muted dark:text-dark-ink-muted mt-1" on:click={() => resetOrder(i)}>
-              Start over
+              {$t('common.startOver')}
             </button>
           {/if}
         {:else}
           <div class="mt-1 p-3 rounded-card border border-border dark:border-dark-border text-sm leading-relaxed">
             {#if orderCorrect[i]}
-              <span class="font-bold">Correct order.</span> {item.feedbackCorrect || ''}
+              <span class="font-bold">{$t('guided.correctOrder')}</span> {item.feedbackCorrect || ''}
             {:else}
-              <span class="font-bold">The correct order is:</span>
+              <span class="font-bold">{$t('guided.correctOrderIs')}</span>
               {#each item.orderItems as t, n}
                 <div class="mt-1 flex gap-2">
                   <span class="shrink-0">{n + 1}.</span>
@@ -286,10 +289,10 @@
             {/if}
           </div>
           <button class="tap inline-flex items-center text-xs underline text-ink-muted dark:text-dark-ink-muted mt-2" on:click={() => resetOrder(i)}>
-            Try again
+            {$t('common.tryAgain')}
           </button>
           {#if i < items.length - 1}
-            <button class="btn-primary mt-3" on:click={advance}>Next</button>
+            <button class="btn-primary mt-3" on:click={advance}>{$t('common.next')}</button>
           {/if}
         {/if}
 
@@ -330,14 +333,14 @@
 
         {#if answers[i] !== undefined}
           <div class="mt-2 p-3 rounded-card border border-border dark:border-dark-border text-sm leading-relaxed">
-            <span class="font-bold">The correct answer is {item.options[item.correctIndex]}.</span>
+            <span class="font-bold">{$t('guided.correctAnswerIs', { answer: item.options[item.correctIndex] })}</span>
             {#if item.pairedOfficial}
-              <br />It asks the same thing as the official question:
+              <br />{$t('guided.sameAsOfficial')}
               <em>“{item.pairedOfficial}”</em>
             {/if}
           </div>
           {#if i < items.length - 1}
-            <button class="btn-primary mt-3" on:click={advance}>Next</button>
+            <button class="btn-primary mt-3" on:click={advance}>{$t('common.next')}</button>
           {/if}
         {/if}
       {/if}

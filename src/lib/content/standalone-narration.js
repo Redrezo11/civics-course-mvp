@@ -75,6 +75,10 @@ export const STANDALONE_NARRATION = {
   'rehearsal-intro': {
     label: 'Rehearsal — the rules',
     recordable: true,
+    // One screen in two languages, filtered to one before it is spoken — not
+    // bilingual in the sense `language` is. The Burmese exists because this
+    // screen states the pass mark, and a learner who cannot read the rules
+    // cannot follow them.
     segments: [
       {
         lang: 'en',
@@ -83,6 +87,15 @@ export const STANDALONE_NARRATION = {
           'hear these questions. Here you read them — and answer out loud, the same ' +
           'way. No choices, no hints. Then check yourself. The rules are the real ' +
           'rules: up to 20 questions. 12 right passes. 9 wrong stops.',
+      },
+      {
+        lang: 'my',
+        text:
+          'ဤသည်မှာ တကယ့်အင်တာဗျူးအတွက် လေ့ကျင့်ခန်း ဖြစ်သည်။ တကယ့်အင်တာဗျူးတွင် ' +
+          'ဤမေးခွန်းများကို သင် ကြားရမည်။ ဤနေရာတွင် ဖတ်ရပြီး — အသံထွက်၍ ထိုနည်းအတိုင်း ' +
+          'ဖြေပါ။ ရွေးချယ်စရာ မရှိ၊ အရိပ်အမြွက် မရှိ။ ထို့နောက် ကိုယ်တိုင် စစ်ဆေးပါ။ ' +
+          'စည်းမျဉ်းများသည် တကယ့်စည်းမျဉ်းများ ဖြစ်သည် — မေးခွန်း ၂၀ ခုအထိ။ ' +
+          '၁၂ ခု မှန်လျှင် အောင်မြင်သည်။ ၉ ခု မှားလျှင် ရပ်သည်။',
       },
     ],
   },

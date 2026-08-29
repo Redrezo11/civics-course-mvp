@@ -81,6 +81,10 @@
 
   // ◆ items cannot be answered, so they must not gate the Next control.
   $: canAdvance = itemDone || (current && current.dynamic);
+
+  // Every string here follows the learner's language, narration included.
+  $: lang = $progress.language || 'en';
+  $: my = lang === 'my' ? 'my' : undefined;
 </script>
 
 <div class="min-h-screen flex flex-col max-w-md mx-auto">
@@ -94,22 +98,23 @@
     {#if phase === 'entry'}
       <NarrationButton
         segments={[
-          { lang: 'en', text: `Practice all ${questions.length} questions from this lesson.` },
+          { lang, text: $t('fullBank.heading', { n: questions.length }) },
           ...(resumeAt > 0 && resumeAt < questions.length
-            ? [{ lang: 'en', text: `You stopped at question ${resumeAt + 1}. Starting there.` }]
+            ? [{ lang, text: $t('fullBank.resumingAt', { n: resumeAt + 1 }) }]
             : []),
         ]}
+        {lang}
         wrapperClass="mb-4"
       />
-      <h1 class="text-heading font-bold mb-3">
-        Practice all {questions.length} questions from this lesson
+      <h1 class="text-heading font-bold mb-3" lang={my}>
+        {$t('fullBank.heading', { n: questions.length })}
       </h1>
       <!-- The heading names the set and the buttons say what to do with it, so
            nothing else belongs here. The resume line stays: it is the one thing
            on this screen the learner cannot work out for themselves. -->
       {#if resumeAt > 0 && resumeAt < questions.length}
-        <p class="text-sm font-bold mb-4">
-          You stopped at question {resumeAt + 1}. Starting there.
+        <p class="text-sm font-bold mb-4" lang={my}>
+          {$t('fullBank.resumingAt', { n: resumeAt + 1 })}
         </p>
       {/if}
 
@@ -124,15 +129,15 @@
       <NarrationButton
         segments={[
           {
-            lang: 'en',
-            text: `You have now practiced ${questions.length} of ${questions.length} questions from this lesson. That is ${$questionsPracticedCount} of ${TOTAL_QUESTIONS} questions practiced altogether.`,
+            lang,
+            text: `${$t('fullBank.practicedCount', { done: questions.length, total: questions.length })} ${$t('fullBank.practicedAltogether', { done: $questionsPracticedCount, total: TOTAL_QUESTIONS })}`,
           },
         ]}
+        {lang}
         wrapperClass="mb-4"
       />
-      <h1 class="text-heading font-bold mb-3">
-        You have now practiced {questions.length} of {questions.length} questions from
-        this lesson.
+      <h1 class="text-heading font-bold mb-3" lang={my}>
+        {$t('fullBank.practicedCount', { done: questions.length, total: questions.length })}
       </h1>
       <div class="border border-border dark:border-dark-border rounded-card p-4 mb-4 text-center">
         <div class="text-xl font-bold">
@@ -141,7 +146,7 @@
           >
         </div>
         <div class="text-[10px] text-ink-muted dark:text-dark-ink-muted">
-          questions practiced
+          {$t('fullBank.questionsPracticed')}
         </div>
       </div>
     {/if}
@@ -150,21 +155,23 @@
   <div class="px-5 py-4 border-t border-border dark:border-dark-border">
     {#if phase === 'entry'}
       <button class="btn-primary mb-2.5" on:click={start}>
-        {resumeAt > 0 && resumeAt < questions.length ? 'Continue practice' : 'Start practice'}
+        {resumeAt > 0 && resumeAt < questions.length
+          ? $t('fullBank.continuePractice')
+          : $t('fullBank.startPractice')}
       </button>
       <button class="btn-secondary" on:click={leave}>{$t('common.skip')}</button>
     {:else if phase === 'running'}
       {#if canAdvance}
         <button class="btn-primary" on:click={next}>
-          {index >= questions.length - 1 ? 'Finish' : 'Next'}
+          {index >= questions.length - 1 ? $t('common.finish') : $t('common.next')}
         </button>
       {:else}
-        <p class="text-xs text-ink-muted dark:text-dark-ink-muted text-center">
-          Choose an answer to continue
+        <p class="text-xs text-ink-muted dark:text-dark-ink-muted text-center" lang={my}>
+          {$t('common.chooseToContinue')}
         </p>
       {/if}
     {:else}
-      <button class="btn-primary" on:click={leave}>Back to lessons</button>
+      <button class="btn-primary" on:click={leave}>{$t('common.backToLessons')}</button>
     {/if}
   </div>
 </div>

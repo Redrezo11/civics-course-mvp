@@ -23,10 +23,22 @@
   import { lmsSession } from '../stores/lms.js';
 
   const TOTAL_UNITS = 8;
+
+  // Every string here follows the learner's language. This is the last screen
+  // of the course; finishing in a language you cannot read is a poor way to be
+  // congratulated.
+  $: lang = $progress.language || 'en';
+  $: my = lang === 'my' ? 'my' : undefined;
+  $: counterSentence = $t('completion.counterSentence', {
+    lessons: $lessonsFinishedCount,
+    totalLessons: TOTAL_UNITS,
+    questions: $questionsPracticedCount,
+    totalQuestions: TOTAL_QUESTIONS,
+  });
 </script>
 
 <div class="min-h-screen flex flex-col max-w-md mx-auto">
-  <LessonBar unitLabel="Finishing up" onBack={() => navigate('/')} />
+  <LessonBar unitLabel={$t('completion.unitLabel')} onBack={() => navigate('/')} />
 
   <div class="flex-1 overflow-y-auto px-5 py-6">
     <ScreenImage
@@ -36,14 +48,15 @@
     />
     <NarrationButton
       segments={[
-        { text: 'Your ceremony. Your oath. You are almost there.', lang: 'en' },
-        { text: `You have finished ${$lessonsFinishedCount} of ${TOTAL_UNITS} lessons and practiced ${$questionsPracticedCount} of ${TOTAL_QUESTIONS} questions.`, lang: 'en' },
+        { text: $t('completion.almostThere'), lang },
+        { text: counterSentence, lang },
       ]}
       screenId="completion"
+      {lang}
       wrapperClass="mb-4"
     />
-    <h1 class="text-heading font-bold mb-3">
-      Your ceremony. Your oath. You are almost there.
+    <h1 class="text-heading font-bold mb-3" lang={my}>
+      {$t('completion.almostThere')}
     </h1>
 
     <!-- The two honest counters again, unmerged (G-22). This screen is the
@@ -64,19 +77,20 @@
     </div>
 
     {#if $questionsPracticedCount < TOTAL_QUESTIONS}
-      <p class="text-sm leading-relaxed mb-4">
-        Want to practice every question? {TOTAL_QUESTIONS - $questionsPracticedCount} are
-        still unpracticed. Each lesson's full set stays open from the lesson list.
+      <p class="text-sm leading-relaxed mb-4" lang={my}>
+        {$t('completion.wantPracticeAll', { n: TOTAL_QUESTIONS - $questionsPracticedCount })}
       </p>
     {:else}
-      <p class="text-sm font-bold mb-4">You have practiced all {TOTAL_QUESTIONS}.</p>
+      <p class="text-sm font-bold mb-4" lang={my}>
+        {$t('completion.practicedAll', { n: TOTAL_QUESTIONS })}
+      </p>
     {/if}
 
     <div class="border-t border-border dark:border-dark-border pt-4">
       <!-- G-05b interim shape: one instruction line, one primary button.
            The method is undecided; this states what is true today rather than
            implying the course has sent anything anywhere. -->
-      <p class="font-bold mb-2">Showing that you finished</p>
+      <p class="font-bold mb-2" lang={my}>{$t('completion.showingFinished')}</p>
       <!--
         The photograph instruction only ever existed because the course had no
         way to report anything — the storyboard called it an interim shape and
@@ -85,15 +99,12 @@
         already been filed would be both wrong and faintly insulting.
       -->
       {#if $lmsSession}
-        <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary leading-relaxed">
-          Your progress is reported to the organisation providing this course.
-          They can see that you finished — there is nothing you need to send them.
+        <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary leading-relaxed" lang={my}>
+          {$t('completion.proveLms')}
         </p>
       {:else}
-        <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary leading-relaxed">
-          This course runs entirely on your own phone and does not send your progress
-          anywhere. If someone asked you to show that you completed it, take a picture
-          of the two counters above.
+        <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary leading-relaxed" lang={my}>
+          {$t('completion.provePhone')}
         </p>
       {/if}
     </div>
@@ -101,8 +112,8 @@
 
   <div class="px-5 py-4 border-t border-border dark:border-dark-border">
     <button class="btn-primary mb-2.5" on:click={() => navigate('/rehearsal')}>
-      Practice the interview
+      {$t('completion.practiceInterview')}
     </button>
-    <button class="btn-secondary" on:click={() => navigate('/')}>Back to lessons</button>
+    <button class="btn-secondary" on:click={() => navigate('/')}>{$t('common.backToLessons')}</button>
   </div>
 </div>

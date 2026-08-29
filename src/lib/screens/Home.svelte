@@ -129,7 +129,7 @@
     </div>
 
     {#if reviews.length}
-      <p class="text-sm font-bold mt-6 mb-2">Reviews</p>
+      <p class="text-sm font-bold mt-6 mb-2">{$t('home.reviews')}</p>
       <div class="border-t border-border dark:border-dark-border">
         {#each reviews as r}
           {@const done = $progress.reviewsDone.includes(r)}
@@ -137,7 +137,7 @@
             class="tap w-full flex items-center justify-between py-2.5 border-b border-border dark:border-dark-border text-sm text-left"
             on:click={() => navigate(`/review/${r}`)}
           >
-            <span class="flex-1">{REVIEWS[r].label} — questions from every lesson so far</span>
+            <span class="flex-1">{$t('home.reviewSubtitle', { name: REVIEWS[r].label })}</span>
             {#if done}<span class="text-ink-muted dark:text-dark-ink-muted mr-1.5">✓</span>{/if}
             <span class="text-ink-muted dark:text-dark-ink-muted">›</span>
           </button>
@@ -146,9 +146,9 @@
     {/if}
 
     {#if unfinishedBanks.length}
-      <p class="text-sm font-bold mt-6 mb-1">Practice every question</p>
+      <p class="text-sm font-bold mt-6 mb-1">{$t('home.practiceEvery')}</p>
       <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-2">
-        {unpractised} of {TOTAL_QUESTIONS} are still unpracticed.
+        {$t('home.stillUnpracticed', { n: unpractised, total: TOTAL_QUESTIONS })}
       </p>
       <div class="border-t border-border dark:border-dark-border">
         {#each unfinishedBanks as u}
@@ -156,7 +156,7 @@
             class="tap w-full flex items-center justify-between py-2.5 border-b border-border dark:border-dark-border text-sm text-left"
             on:click={() => navigate(`/practice/${u.id}`)}
           >
-            <span class="flex-1">All {u.total} from {u.name}</span>
+            <span class="flex-1">{$t('home.allFromUnit', { n: u.total, name: u.name })}</span>
             <span class="text-ink-muted dark:text-dark-ink-muted">›</span>
           </button>
         {/each}
@@ -164,7 +164,7 @@
     {/if}
 
     <p class="text-[10px] text-ink-muted dark:text-dark-ink-muted text-center mt-4">
-      {#if ANSWERS_CHECKED}Answers checked: {ANSWERS_CHECKED}{:else}Some answers change — check uscis.gov{/if} ·
+      {#if ANSWERS_CHECKED}{$t('home.answersChecked', { date: ANSWERS_CHECKED })}{:else}{$t('home.someAnswersChange')}{/if} ·
       <button class="underline font-bold text-ink dark:text-dark-ink" on:click={() => navigate('/help')}>{$t('footer.help')}</button> ·
       <button class="underline font-bold text-ink dark:text-dark-ink" on:click={() => navigate('/settings')}>{$t('footer.settings')}</button>
     </p>
@@ -176,7 +176,7 @@
       {$t('nav.tabRehearsal')}
     </button>
     <button class="tap flex-1 text-center py-3 text-sm text-ink-muted dark:text-dark-ink-muted" on:click={() => navigate('/questions')}>
-      All {TOTAL_QUESTIONS} questions
+      {$t('questionBank.allQuestions', { n: TOTAL_QUESTIONS })}
     </button>
   </div>
 </div>
