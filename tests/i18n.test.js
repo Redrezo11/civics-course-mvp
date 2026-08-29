@@ -358,6 +358,45 @@ describe('vocab cards', () => {
     }
   });
 
+  it('no screen teaches a tested term without ever showing it in English', () => {
+    // Screen-level, not sentence-level, and that is the whole design of it.
+    //
+    // A learner needs to be able to recognise the word an officer says. Meeting
+    // it once on the screen does that. Requiring it in every sentence would
+    // swell the four-paragraph teaching screens — Burmese stacks vowel marks
+    // and needs more vertical room than Latin — for a reader who already has it.
+    //
+    // Congress, Federal and veto are deliberately absent from this list: they
+    // are TRANSLITERATED in Burmese (ကွန်ဂရက်, ဖက်ဒရယ်, ဗီတို), so the learner
+    // can already sound them out and reach the English unaided. The terms below
+    // are true translations with no phonetic route back — ဖွဲ့စည်းပုံအခြေခံဥပဒေ
+    // gives a learner no way to arrive at "Constitution".
+    const NO_PHONETIC_ROUTE = [
+      'Constitution', 'Declaration of Independence', 'Bill of Rights', 'Supreme Court',
+      'Cabinet', 'Senate', 'House of Representatives', 'amendment', 'branch',
+      'justice', 'Memorial Day', 'Veterans Day',
+    ];
+    const gaps = [];
+    for (const unit of UNITS) {
+      for (const screen of unit.screens) {
+        const loc = localiseScreen(screen, unit.id, 'my');
+        const en = JSON.stringify(screen);
+        const my = JSON.stringify(loc);
+        // Screens with no Burmese at all fall back to English wholesale, which
+        // is a different (already covered) condition.
+        if (!isBurmese(my)) continue;
+        for (const term of NO_PHONETIC_ROUTE) {
+          // Case-insensitive: "Amendment" opening a sentence still teaches the
+          // learner to recognise "amendment".
+          if (en.includes(term) && !my.toLowerCase().includes(term.toLowerCase())) {
+            gaps.push(`${screen.id} loses "${term}"`);
+          }
+        }
+      }
+    }
+    expect(gaps, gaps.join('\n')).toEqual([]);
+  });
+
   it('every example still contains the word it exemplifies', () => {
     // An example sentence exists to show the word IN USE. Translated so that
     // the word itself vanished — "Police enforce traffic laws" becoming a

@@ -508,7 +508,47 @@ function buildUnit(unit) {
   let overlay = {};
 
   if (existsSync(bilingualPath)) {
-    overlay = fromBilingual(readJson(bilingualPath), buildById, gaps, notes);
+    const bilingual = readJson(bilingualPath);
+
+    // THE BILINGUAL FILE CARRIES ITS OWN ENGLISH, AND NOTHING WAS READING IT.
+    //
+    // Every pair in there is { en, my } — the Burmese and the English it was
+    // translated FROM. The mapping below takes only `.my` and attaches it to
+    // whatever the build says today, then freshness records that as
+    // "translated from the current English". When the English has moved since
+    // this file was authored, that record is false: the overlay ships a
+    // translation of superseded text, marked fresh, and the runtime fallback
+    // that exists precisely to catch this never fires.
+    //
+    // It bit once. U1-S07b's fourth line read "The judges must follow the
+    // book. The book does not answer to the judges." The build now says "They
+    // cannot change it by themselves" — a different claim, on the screen whose
+    // whole point is that judges cannot unilaterally change the Constitution.
+    // A Burmese learner was taught the wrong thing, silently, and freshness
+    // said everything was current.
+    //
+    // Reported, not fatal: this file is a legacy source and some of its drift
+    // is in `notes` and other fields that never reach a learner. What matters
+    // is that drift is visible instead of laundered into a false baseline.
+    const norm = (s) => String(s ?? '').replace(/[*_]/g, '').replace(/\s+/g, ' ').trim();
+    const buildText = norm(JSON.stringify(build));
+    const drifted = [];
+    (function walk(node) {
+      if (Array.isArray(node)) return node.forEach(walk);
+      if (!node || typeof node !== 'object') return;
+      if (typeof node.en === 'string' && typeof node.my === 'string') {
+        const en = norm(node.en);
+        if (en.length > 25 && !buildText.includes(en)) drifted.push(node.en);
+      }
+      Object.values(node).forEach(walk);
+    })(bilingual);
+    for (const en of drifted) {
+      notes.push(
+        `bilingual source is translated from English the build no longer has: "${en.slice(0, 70)}…" — verify its Burmese still says what the build says`
+      );
+    }
+
+    overlay = fromBilingual(bilingual, buildById, gaps, notes);
   }
 
   if (existsSync(flatPath)) {

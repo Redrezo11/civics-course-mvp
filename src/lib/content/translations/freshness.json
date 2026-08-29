@@ -73,7 +73,7 @@
         },
         "feedback": {
           "en": "bb70168f",
-          "my": "8d390032"
+          "my": "d4a34483"
         }
       },
       "U1-S04": {
@@ -89,7 +89,7 @@
         },
         "resolution": {
           "en": "269222c4",
-          "my": "bc8a681a"
+          "my": "9f8404ab"
         },
         "handle": {
           "en": "6ddd8f25",
@@ -107,7 +107,7 @@
       "U1-S06a": {
         "paragraphs": {
           "en": "cab24fd5",
-          "my": "97db2a9d"
+          "my": "1aa1d9c8"
         }
       },
       "U1-S06b": {
@@ -117,7 +117,7 @@
         },
         "paragraphs": {
           "en": "fc5a7a39",
-          "my": "6e1dd85e"
+          "my": "7b75628b"
         }
       },
       "U1-S07": {
@@ -127,7 +127,7 @@
         },
         "example": {
           "en": "66444640",
-          "my": "cad013cc"
+          "my": "d6cf7c9b"
         },
         "nonExample": {
           "en": "e2032a09",
@@ -145,7 +145,7 @@
         },
         "resolution": {
           "en": "4c639963",
-          "my": "62d2fe25"
+          "my": "6c64758e"
         },
         "termA": {
           "en": "8efcd9e5",
@@ -213,7 +213,7 @@
         },
         "closing": {
           "en": "2965bca7",
-          "my": "853922ba"
+          "my": "122f8e77"
         }
       },
       "U1-S08": {
@@ -247,13 +247,13 @@
       "U1-S14": {
         "feedbackExplain": {
           "en": "69e2b30c",
-          "my": "8dceae01"
+          "my": "99653afc"
         }
       },
       "U1-S15": {
         "feedbackExplain": {
           "en": "d216069f",
-          "my": "f8fc2acd"
+          "my": "962aeab3"
         }
       }
     },
@@ -335,7 +335,7 @@
       "U2-S07": {
         "heading": {
           "en": "d0c3c2a9",
-          "my": "808e1c3c"
+          "my": "f0c77d2e"
         },
         "example": {
           "en": "5703e7fc",
@@ -377,7 +377,7 @@
       "U2-S15": {
         "feedbackExplain": {
           "en": "b48226c4",
-          "my": "afdfd9cb"
+          "my": "1fb0152a"
         }
       },
       "U2-S18": {
@@ -585,7 +585,7 @@
       "U4-S05": {
         "resolution": {
           "en": "33b812b0",
-          "my": "5d045996"
+          "my": "c849f001"
         },
         "handle": {
           "en": "00eaee20",
@@ -883,7 +883,7 @@
         },
         "takeaway": {
           "en": "7c65851a",
-          "my": "772f921b"
+          "my": "f21878d0"
         }
       },
       "U6-S09": {
@@ -943,7 +943,7 @@
         },
         "feedback": {
           "en": "4f4da3ed",
-          "my": "ae043f1a"
+          "my": "1a477b71"
         },
         "options": {
           "en": "0c84cd2f",
@@ -953,7 +953,7 @@
       "U7-S03": {
         "bodyList": {
           "en": "f5423cb5",
-          "my": "0b232d94"
+          "my": "a5b79caf"
         },
         "bodyList2": {
           "en": "0dc049ca",
@@ -997,7 +997,7 @@
         },
         "nonExample": {
           "en": "3f979b7a",
-          "my": "638f7670"
+          "my": "af361551"
         },
         "takeaway": {
           "en": "1b319d95",
@@ -1025,7 +1025,7 @@
       "U7-S11": {
         "heading": {
           "en": "ed571f17",
-          "my": "edd089ce"
+          "my": "f5a8f657"
         },
         "termA": {
           "en": "6b01b717",
@@ -1071,7 +1071,7 @@
       "U7-S04": {
         "cards": {
           "en": "9d805068",
-          "my": "1ef56511"
+          "my": "e8c884ca"
         }
       }
     }

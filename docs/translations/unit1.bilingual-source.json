@@ -75,7 +75,7 @@
       "feedback": {
         "any": {
           "en": "In America, the answer is: **the people.** The Constitution starts with three words — *We the People.* But how can millions of people be the boss? That is what this lesson explains.",
-          "my": "အမေရိကတွင် အဖြေမှာ — **ပြည်သူများ** ဖြစ်သည်။ ဖွဲ့စည်းပုံအခြေခံဥပဒေသည် စကားလုံးသုံးလုံးဖြင့် စတင်သည် — *We the People* (ကျွန်ုပ်တို့ ပြည်သူများ)။ သို့သော် လူသန်းပေါင်းများစွာက မည်သို့ အုပ်ချုပ်သူ ဖြစ်နိုင်မည်နည်း? ထိုအချက်ကို ဤသင်ခန်းစာက ရှင်းပြပါမည်။"
+          "my": "အမေရိကတွင် အဖြေမှာ — **ပြည်သူများ** ဖြစ်သည်။ Constitution (ဖွဲ့စည်းပုံအခြေခံဥပဒေ) သည် စကားလုံးသုံးလုံးဖြင့် စတင်သည် — *We the People* (ကျွန်ုပ်တို့ ပြည်သူများ)။ သို့သော် လူသန်းပေါင်းများစွာက မည်သို့ အုပ်ချုပ်သူ ဖြစ်နိုင်မည်နည်း? ထိုအချက်ကို ဤသင်ခန်းစာက ရှင်းပြပါမည်။"
         }
       },
       "notes": "Gagné 1. Feedback poses the question the Big Idea answers, instead of answering it prematurely."
@@ -201,7 +201,7 @@
           "No law is allowed to go against the Constitution. That is why it is called the **supreme law of the land** — the highest law. And the **rule of law** means everyone must follow it. Leaders too. No one is above the law."
         ],
         "my": [
-          "မည်သည့်ဥပဒေမျှ ဖွဲ့စည်းပုံအခြေခံဥပဒေကို ဆန့်ကျင်ခွင့် မရှိပါ။ ထိုကြောင့် ၎င်းကို **နိုင်ငံ၏ အမြင့်ဆုံးဥပဒေ** ဟု ခေါ်ခြင်း ဖြစ်သည်။ ထို့ပြင် **ဥပဒေစိုးမိုးရေး** ဆိုသည်မှာ လူတိုင်း ၎င်းကို လိုက်နာရမည် ဖြစ်သည်။ ခေါင်းဆောင်များပါ လိုက်နာရသည်။ ဥပဒေအထက်တွင် မည်သူမျှ မရှိပါ။"
+          "မည်သည့်ဥပဒေမျှ Constitution (ဖွဲ့စည်းပုံအခြေခံဥပဒေ) ကို ဆန့်ကျင်ခွင့် မရှိပါ။ ထိုကြောင့် ၎င်းကို **နိုင်ငံ၏ အမြင့်ဆုံးဥပဒေ** ဟု ခေါ်ခြင်း ဖြစ်သည်။ ထို့ပြင် **ဥပဒေစိုးမိုးရေး** ဆိုသည်မှာ လူတိုင်း ၎င်းကို လိုက်နာရမည် ဖြစ်သည်။ ခေါင်းဆောင်များပါ လိုက်နာရသည်။ ဥပဒေအထက်တွင် မည်သူမျှ မရှိပါ။"
         ]
       },
       "interaction": "next"
@@ -247,7 +247,7 @@
           "level": 2,
           "text": {
             "en": "Congress passes a new law. A court decides it goes against the Constitution. The law stops — even Congress must obey the book.",
-            "my": "ကွန်ဂရက်က ဥပဒေအသစ်တစ်ခု ပြဋ္ဌာန်းသည်။ ၎င်းသည် ဖွဲ့စည်းပုံအခြေခံဥပဒေကို ဆန့်ကျင်သည်ဟု တရားရုံးက ဆုံးဖြတ်သည်။ ထိုဥပဒေ ရပ်တန့်သွားသည် — ကွန်ဂရက်ပင် ထိုစာအုပ်ကို လိုက်နာရသည်။"
+            "my": "ကွန်ဂရက်က ဥပဒေအသစ်တစ်ခု ပြဋ္ဌာန်းသည်။ ၎င်းသည် Constitution (ဖွဲ့စည်းပုံအခြေခံဥပဒေ) ကို ဆန့်ကျင်သည်ဟု တရားရုံးက ဆုံးဖြတ်သည်။ ထိုဥပဒေ ရပ်တန့်သွားသည် — ကွန်ဂရက်ပင် ထိုစာအုပ်ကို လိုက်နာရသည်။"
           }
         },
         {
@@ -298,8 +298,8 @@
         {
           "level": 4,
           "text": {
-            "en": "The judges must follow the book. The book does not answer to the judges.",
-            "my": "တရားသူကြီးများသည် ထိုစာအုပ်ကို လိုက်နာရသည်။ ထိုစာအုပ်က တရားသူကြီးများကို မလိုက်နာရပါ။"
+            "en": "The judges must follow the Constitution. They cannot change it by themselves.",
+            "my": "တရားသူကြီးများသည် Constitution (ဖွဲ့စည်းပုံအခြေခံဥပဒေ) ကို လိုက်နာရသည်။ ၎င်းတို့ ကိုယ်တိုင် ၎င်းကို ပြောင်းလဲ၍ မရပါ။"
           }
         }
       ],
