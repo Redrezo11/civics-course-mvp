@@ -36,6 +36,7 @@ import {
 
 const labels = (c) => [...c.querySelectorAll('button')].map((b) => b.textContent.trim());
 const hasListen = (c) => labels(c).includes('Listen');
+const isBurmese = (s) => /[က-႟]/.test(s);
 
 beforeEach(() => {
   progress.resetAll();
@@ -161,15 +162,45 @@ describe('the Language screen speaks both languages', () => {
 });
 
 describe('Welcome still says what it narrates', () => {
-  it('the registry text matches the rendered copy', () => {
+  it('the English registry text matches the rendered copy', () => {
     const { container } = render(Welcome, {});
     const rendered = container.textContent.replace(/\s+/g, ' ');
+    const enSegment = STANDALONE_NARRATION.welcome.segments.find((s) => s.lang === 'en');
     // Sentence by sentence, so a rewrite of the markup that leaves the
     // narration behind fails here rather than in front of a learner.
-    for (const sentence of STANDALONE_NARRATION.welcome.segments[0].text.split('. ')) {
+    for (const sentence of enSegment.text.split('. ')) {
       const s = sentence.replace(/\.$/, '').trim();
       if (s.length > 12) expect(rendered).toContain(s);
     }
+  });
+
+  it('renders and narrates in Burmese once that is the chosen language', () => {
+    // The defect this pins: the learner picks Burmese on /language, is sent to
+    // /welcome, and the screen showed English regardless — nothing here ever
+    // read $progress.language.
+    progress.setLanguage('my');
+    const { container } = render(Welcome, {});
+    expect(isBurmese(container.textContent)).toBe(true);
+
+    const mySegment = STANDALONE_NARRATION.welcome.segments.find((s) => s.lang === 'my');
+    for (const sentence of mySegment.text.split(/[။]/).filter((s) => s.trim().length > 6)) {
+      expect(container.textContent).toContain(sentence.trim());
+    }
+  });
+
+  it('speaks Burmese ONLY, not English then Burmese back to back', async () => {
+    // welcome is not `language`: the learner has already chosen, so hearing
+    // the sentence twice — once in a language they may not read — is not a
+    // courtesy, it doubles the length of the one screen that most needs to be
+    // short. Only `language`'s entry is meant to read every segment it has.
+    progress.setLanguage('my');
+    const { container } = render(Welcome, {});
+    await fireEvent.click(container.querySelector('button', { name: /listen/i }) ||
+      [...container.querySelectorAll('button')].find((b) => /Listen/i.test(b.textContent)));
+
+    const spoken = window.speechSynthesis.spoken.map((u) => u.text).join(' ');
+    expect(isBurmese(spoken), 'Burmese was not spoken at all').toBe(true);
+    expect(spoken, 'the English segment was spoken as well').not.toMatch(/short lessons/i);
   });
 });
 

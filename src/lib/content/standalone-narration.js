@@ -24,6 +24,11 @@
  * it, because the text differs per learner rather than per edit.
  */
 export const STANDALONE_NARRATION = {
+  // Not spoken directly — narrationFor() in Lesson-style callers filters this
+  // to the segment matching the learner's language and speaks that one alone.
+  // Welcome had been speaking (and showing) English regardless of the language
+  // chosen on the screen immediately before it, because nothing here read
+  // $progress.language at all.
   welcome: {
     label: 'Welcome screen',
     recordable: true,
@@ -34,18 +39,31 @@ export const STANDALONE_NARRATION = {
           'Welcome. This course covers all 128 questions on the U.S. citizenship ' +
           'civics test, in short lessons you can fit around your day.',
       },
+      {
+        lang: 'my',
+        text:
+          'ကြိုဆိုပါသည်။ ဤသင်တန်းသည် အမေရိကန် နိုင်ငံသားခံယူခြင်း civics ' +
+          'စာမေးပွဲရှိ မေးခွန်း ၁၂၈ ခုလုံးကို သင့်နေ့စဉ်ဘဝနှင့် အဆင်ပြေအောင် ' +
+          'ချိန်ညှိနိုင်သည့် သင်ခန်းစာတိုများဖြင့် လွှမ်းခြုံပါသည်။',
+      },
     ],
   },
 
   language: {
     label: 'Language choice — the first screen',
     recordable: true,
-    // The only narration in the app that is deliberately bilingual.
-    //
-    // Nobody has chosen a language yet, so there is no "current language" to
-    // narrate in. A learner who cannot read either script is otherwise stuck
-    // before the course starts — on the one screen where the fallback to
+    // The ONLY narration in the app meant to be read in both languages, in one
+    // pass. Nobody has chosen a language yet, so there is no "current language"
+    // to narrate in — a learner who cannot read either script is otherwise
+    // stuck before the course starts, on the one screen where falling back to
     // English is no help, because English may be the problem.
+    //
+    // `bilingual: true` marks that on purpose. Every other multi-language entry
+    // in this registry is one screen's text in two languages, meant to be
+    // filtered down to ONE before it is spoken — this is the single exception,
+    // and callers must check the flag rather than assume from the segment
+    // shape.
+    bilingual: true,
     segments: [
       { lang: 'en', text: 'Choose your language.' },
       { lang: 'my', text: 'သင့်ဘာသာစကားကို ရွေးချယ်ပါ။' },

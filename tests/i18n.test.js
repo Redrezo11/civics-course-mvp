@@ -320,6 +320,11 @@ describe('the UI string lookup', () => {
       'narration.resume',
       'narration.unavailable',
       'narration.unavailableMy',
+      // No prior delivery covers this sentence — welcome.heading and
+      // welcome.body reuse a translation made for U0-S01 before it was rewritten
+      // to stop repeating this screen's own text; the disclaimer was never part
+      // of that delivery.
+      'welcome.footnote',
       'settings.answersStayEnglish',
     ];
     const missing = Object.entries(uiStrings)

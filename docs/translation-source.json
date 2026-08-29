@@ -11,7 +11,8 @@
     "narration.resume": "Resume",
     "narration.unavailable": "Speech is not available on this device.",
     "narration.unavailableMy": "Burmese speech is not available on this device.",
-    "settings.answersStayEnglish": "Answer choices show English first, with the Burmese underneath."
+    "settings.answersStayEnglish": "Answer choices show English first, with the Burmese underneath.",
+    "welcome.footnote": "This course teaches civics and test preparation. For questions about your own immigration case, see uscis.gov or a qualified legal-service provider."
   },
   "U0-S01.heading": {
     "english": "Test day",
