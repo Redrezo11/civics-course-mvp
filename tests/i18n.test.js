@@ -311,6 +311,29 @@ describe('the Burmese gloss beneath an answer', () => {
   });
 });
 
+describe('vocab cards', () => {
+  // Same shape of gap as the hook-screen options, in a different field. Only
+  // U1-S04 — the first unit's vocab screen — was ever translated; U2-S04
+  // through U7-S04 render `word`, `def` and `example` from `screen.cards`,
+  // which is not covered by the gloss machinery above (`cards` replaces the
+  // whole card rather than glossing it, so it needed its own check).
+  it('every vocab screen has cards translated, in every unit', () => {
+    const gaps = [];
+    for (const unit of UNITS) {
+      for (const screen of unit.screens) {
+        if (screen.type !== 'vocab') continue;
+        const loc = localiseScreen(screen, unit.id, 'my');
+        loc.cards.forEach((card, i) => {
+          if (!isBurmese(card.def) || !isBurmese(card.example)) {
+            gaps.push(`${screen.id}.cards[${i}]`);
+          }
+        });
+      }
+    }
+    expect(gaps).toEqual([]);
+  });
+});
+
 describe('an answer on screen', () => {
   it('shows the English and the Burmese together', async () => {
     progress.setLanguage('my');
