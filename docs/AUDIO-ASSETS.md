@@ -198,7 +198,7 @@ learner who listens and the learner who reads get the same course.
 
 **0 recorded · 0 need re-recording · 62 not yet recorded** (62 total)
 
-> **5 screen(s) below still show English**, because their Burmese has not arrived.
+> **4 screen(s) below still show English**, because their Burmese has not arrived.
 > They are marked ⚠ — recording those now is wasted work; the words change when the translation lands.
 
 ### U0 — Test day
@@ -218,12 +218,12 @@ learner who listens and the learner who reads get the same course.
 |---|---|---|---|
 | ○ | `U1-S01.mp3` | `U1-S01` | သင်ခန်းစာ ၁. ကျွန်ုပ်တို့ ပြည်သူများ. သင့်အင်တာဗျူးတွင် အရာရ… |
 | ○ | `U1-S03.mp3` | `U1-S03` | သင်ပါဝင်ခဲ့ဖူးသည့် အဖွဲ့တိုင်းတွင် စည်းမျဉ်းများ ရှိခဲ့သည်။ … |
-| ○ | `U1-S05.mp3` | `U1-S05` | In 1787, the thirteen states had just finished a long war ag… |
+| ○ | `U1-S05.mp3` | `U1-S05` | ၁၇၈၇ ခုနှစ်တွင် ပြည်နယ်တစ်ဆယ့်သုံးခုသည် ဘုရင်တစ်ပါးနှင့် ကြာ… |
 | ○ | `U1-S06a.mp3` | `U1-S06a` | မည်သည့်ဥပဒေမျှ ဖွဲ့စည်းပုံအခြေခံဥပဒေကို ဆန့်ကျင်ခွင့် မရှိပါ… |
-| ○ | `U1-S06b.mp3` | `U1-S06b` ⚠ | Can the rulebook change? Yes — by amendment. But the writers… |
+| ○ | `U1-S06b.mp3` | `U1-S06b` | စည်းမျဉ်းစာအုပ်ကို ပြောင်းလဲနိုင်ပါသလား? နိုင်ပါသည် — ပြင်ဆင… |
 | ○ | `U1-S07.mp3` | `U1-S07` | စည်းမျဉ်းစာအုပ်သည် တစ်စုံတစ်ဦးကို အမှန်တကယ် ရပ်တန့်စေနိုင်မှ… |
 | ○ | `U1-S07b.mp3` | `U1-S07b` | စာမေးပွဲရှိ အမည်နှစ်ခုသည် အသံတူသည်။ မရောထွေးပါနှင့်။ Supreme… |
-| ○ | `U1-S08.mp3` | `U1-S08` | Declaration of Independence — 1776. An announcement to the w… |
+| ○ | `U1-S08.mp3` | `U1-S08` | လွတ်လပ်ရေး ကြေညာစာတမ်း — ၁၇၇၆. ကမ္ဘာသို့ ကြေညာချက်တစ်ခု — အမ… |
 | ○ | `U1-S16.mp3` | `U1-S16` | သင်ခန်းစာ ၁ ပြီးဆုံးပါပြီ။ ဤသင်ခန်းစာရှိ မေးခွန်း ၁၄ ခုလုံး၏… |
 
 ### U2 — Three branches

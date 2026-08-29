@@ -5,9 +5,9 @@
 content change rather than editing this file, or it will describe a course that
 no longer exists.
 
-Remaining: **0 interface strings** and **48 content
-fields** — 34 never translated, and
-**14 marked ↻**.
+Remaining: **0 interface strings** and **42 content
+fields** — 31 never translated, and
+**11 marked ↻**.
 
 A field that is translated and still current is live and is **not** listed here,
 so nothing gets translated twice.
@@ -33,7 +33,7 @@ object rather than a plain value:
 Read the two together, change what the rewrite actually changed, and send back
 the value in the same shape a plain entry would take. Most are small edits.
 
-The 14 this time: `U0-S01.heading`, `U0-S01.body`, `U0-S02.alt`, `U0-S04.body`, `U1-S01.afterQuote`, `U1-S05.alt`, `U1-S06b.alt`, `U2-S01.afterQuote`, `U3-S01.afterQuote`, `U3-S05.alt`, `U4-S01.afterQuote`, `U5-S01.afterQuote`, `U6-S01.afterQuote`, `U6-S06.alt`.
+The 11 this time: `U0-S01.heading`, `U0-S01.body`, `U0-S02.alt`, `U1-S01.afterQuote`, `U2-S01.afterQuote`, `U3-S01.afterQuote`, `U3-S05.alt`, `U4-S01.afterQuote`, `U5-S01.afterQuote`, `U6-S01.afterQuote`, `U6-S06.alt`.
 
 
 **Work from `docs/translation-source.json`, not from the tables below.** The
@@ -143,15 +143,15 @@ which is the authority if this description and the JSON ever disagree:
 
 | Unit | Fields outstanding |
 |---|---|
-| U0 Test day | 6 |
-| U1 We the People | 8 |
+| U0 Test day | 5 |
+| U1 We the People | 3 |
 | U2 Three branches | 4 |
 | U3 Who represents you | 7 |
 | U4 Federal and state | 3 |
 | U5 Rights and responsibilities | 5 |
 | U6 How America began | 7 |
 | U7 How America changed | 8 |
-| **Total** | **48** |
+| **Total** | **42** |
 
 ---
 
@@ -159,7 +159,7 @@ which is the authority if this description and the JSON ever disagree:
 
 ### U0 — Test day
 
-**6 fields.**
+**5 fields.**
 
 | | Screen | Field | English |
 |---|---|---|---|
@@ -167,21 +167,15 @@ which is the authority if this description and the JSON ever disagree:
 | ↻ | `U0-S01` | `body` | Before the civics questions, this short lesson covers the interview itself: how the officer asks, how many answers you need right, and how to tell what kind of answer a question wants. |
 |  | `U0-S01` | `alt` |  |
 | ↻ | `U0-S02` | `alt` | New citizens at a naturalization ceremony, standing close together, smiling and waving small United States flags, ceremony programmes in their hands. |
-| ↻ | `U0-S04` | `body` | Here is a real test question. Choose the answer you would give. |
 |  | `U0-S07` | `alt` |  |
 
 ### U1 — We the People
 
-**8 fields.**
+**3 fields.**
 
 | | Screen | Field | English |
 |---|---|---|---|
 | ↻ | `U1-S01` | `afterQuote` | One document is the answer to that question — and to most of the others in this lesson. |
-|  | `U1-S05` | `paragraphs` | In 1787, the thirteen states had just finished a long war against a king. They needed a government — but they were afraid of two opposite things at the same time. \| They were afraid of having no government. Without one, nobody could defend the country, settle arguments between states, or pay for anything. \| They were… **[clipped — full text in `translation-source.json` under `U1-S05.paragraphs`]** |
-| ↻ | `U1-S05` | `alt` | The first page of the United States Constitution on aged parchment, headed with the large words We the People. |
-|  | `U1-S06b` | `paragraphs` | Can the rulebook change? Yes — by amendment. But the writers made changing it slow and difficult on purpose. A rulebook that is easy to change is not much of a limit on anyone. \| In more than 230 years, it has changed only 27 times. That small number is the point. \| Many people worried that the new Constitution did n… **[clipped — full text in `translation-source.json` under `U1-S06b.paragraphs`]** |
-| ↻ | `U1-S06b` | `alt` | The first page of the United States Constitution on aged parchment, headed with the large words We the People. |
-|  | `U1-S08` | `twoColumn` | Declaration of Independence — 1776: An announcement to the world: America is free from Britain. It says all people are created equal, with rights that belong to them — 'Life, Liberty, and the pursuit of Happiness.' \| Constitution — 1787: A rulebook. It builds: the government America still uses today. |
 |  | `U1-S09` | `items[0].question` | Name one thing the U.S. Constitution does. **⚠ keep the quoted official question in English**; translate only the words around it |
 |  | `U1-S09` | `items[1].instructions` | Tap to sort into Declaration or Constitution. |
 

@@ -109,18 +109,38 @@ describe('a translation of English that has changed', () => {
 });
 
 describe('the real case', () => {
-  it('U0-S04 is recorded as stale, and renders English', () => {
+  // U0-S04 itself has since been fixed — the redaction settled, and a
+  // corrected translation was delivered and rebuilt, so it is no longer stale.
+  // U0-S01 is the same shape of case, current at time of writing: its heading
+  // and body were rewritten (the orientation-screens pass, 6dbe88f's sibling)
+  // after being translated, and the old Burmese is exactly what a learner must
+  // not be shown.
+  it('U0-S01 is recorded as stale, and renders English', () => {
+    const s01 = unit0.screens.find((s) => s.id === 'U0-S01');
+    const record = freshness.my.unit0['U0-S01'];
+
+    expect(record?.body, 'no freshness record for U0-S01.body').toBeTruthy();
+    expect(record.body.en, 'the record was re-baselined against the new English').not.toBe(
+      textHash(s01.body)
+    );
+
+    const out = localiseWith(s01, myUnit0['U0-S01'], record);
+    expect(out.body).toBe(s01.body);
+    expect(isBurmese(out.body)).toBe(false);
+  });
+
+  it('U0-S04 is fixed: current, and renders Burmese', () => {
+    // The positive half of the same fact. A regression here means either the
+    // English moved again without a new translation, or freshness lost the
+    // record — QA check 23 guards the second case directly.
     const s04 = unit0.screens.find((s) => s.id === 'U0-S04');
     const record = freshness.my.unit0['U0-S04'];
 
-    expect(record?.body, 'no freshness record for the string that prompted this').toBeTruthy();
-    expect(record.body.en, 'the record was re-baselined against the new English').not.toBe(
-      textHash(s04.body)
-    );
+    expect(record?.body).toBeTruthy();
+    expect(record.body.en).toBe(textHash(s04.body));
 
     const out = localiseWith(s04, myUnit0['U0-S04'], record);
-    expect(out.body).toBe(s04.body);
-    expect(isBurmese(out.body)).toBe(false);
+    expect(isBurmese(out.body)).toBe(true);
   });
 
   it('every stale field is asked for again, as a revision carrying its old Burmese', () => {

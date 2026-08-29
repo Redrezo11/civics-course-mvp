@@ -34,8 +34,8 @@
       },
       "U0-S04": {
         "body": {
-          "en": "b54a4a48",
-          "my": "9fdc7c3e"
+          "en": "f6933de9",
+          "my": "91cf57c3"
         }
       },
       "U0-S05": {
@@ -84,8 +84,8 @@
       },
       "U1-S05": {
         "alt": {
-          "en": "55a54bcf",
-          "my": "e17b8007"
+          "en": "65ec549d",
+          "my": "eaa3a34c"
         },
         "resolution": {
           "en": "269222c4",
@@ -98,6 +98,10 @@
         "handleSub": {
           "en": "38fa3089",
           "my": "e109f1c4"
+        },
+        "paragraphs": {
+          "en": "1309b4a4",
+          "my": "89417ab9"
         }
       },
       "U1-S06a": {
@@ -108,8 +112,12 @@
       },
       "U1-S06b": {
         "alt": {
-          "en": "42b881f2",
-          "my": "c8aa4a21"
+          "en": "65ec549d",
+          "my": "eaa3a34c"
+        },
+        "paragraphs": {
+          "en": "fc5a7a39",
+          "my": "6e1dd85e"
         }
       },
       "U1-S07": {
@@ -209,6 +217,10 @@
         }
       },
       "U1-S08": {
+        "twoColumn": {
+          "en": "22d210d2",
+          "my": "0f9b5f09"
+        },
         "closing": {
           "en": "1101ea43",
           "my": "a8d13bc2"

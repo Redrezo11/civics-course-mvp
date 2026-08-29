@@ -14,46 +14,11 @@
     "english": "New citizens at a naturalization ceremony, standing close together, smiling and waving small United States flags, ceremony programmes in their hands.",
     "previousMy": "နိုင်ငံသားခံယူပွဲ အခမ်းအနား — လူများ တန်းစီရပ်လျက် ညာလက်ကို မြှောက်ထားပြီး ဘယ်လက်တွင် အမေရိကန် အလံငယ်များ ကိုင်ထားကြသည်။"
   },
-  "U0-S04.body": {
-    "english": "Here is a real test question. Choose the answer you would give.",
-    "previousMy": "ဤတွင် အမှန်တကယ် စာမေးပွဲမေးခွန်းတစ်ခု ရှိပါသည်။ ဖတ်ပြီး အသံထွက်၍ ဖြေကြည့်ပါ။"
-  },
   "U0-S07.alt": "",
   "U1-S01.afterQuote": {
     "english": "One document is the answer to that question — and to most of the others in this lesson.",
     "previousMy": "ဤသင်ခန်းစာသည် ထိုမေးခွန်းများကို ဖြေဆိုနိုင်ရန် ကူညီပါမည်။"
   },
-  "U1-S05.paragraphs": [
-    "In 1787, the thirteen states had just finished a long war against a king. They needed a government — but they were afraid of two opposite things at the same time.",
-    "They were afraid of having no government. Without one, nobody could defend the country, settle arguments between states, or pay for anything.",
-    "They were also afraid of a government so strong it would act like the king they had just escaped."
-  ],
-  "U1-S05.alt": {
-    "english": "The first page of the United States Constitution on aged parchment, headed with the large words We the People.",
-    "previousMy": "အဟောင်းဖြစ်နေသော ကတ္တီပါစက္ကူပေါ်ရှိ မူရင်း အမေရိကန် ဖွဲ့စည်းပုံအခြေခံဥပဒေ၏ ဓာတ်ပုံ၊ လက်ရေးစာသား မြင်နိုင်သည်။"
-  },
-  "U1-S06b.paragraphs": [
-    "Can the rulebook change? Yes — by amendment. But the writers made changing it slow and difficult on purpose. A rulebook that is easy to change is not much of a limit on anyone.",
-    "In more than 230 years, it has changed only 27 times. That small number is the point.",
-    "Many people worried that the new Constitution did not clearly protect individual rights. Several states ratified it while asking for those protections to be added. Congress soon proposed amendments. The first 10 became the Bill of Rights. They protect basic rights such as freedom of speech and freedom of religion.",
-    "They protect the basic rights of people living in the United States — not only citizens."
-  ],
-  "U1-S06b.alt": {
-    "english": "The first page of the United States Constitution on aged parchment, headed with the large words We the People.",
-    "previousMy": "အခွင့်အရေး ဥပဒေကြမ်း စာတမ်း၏ ဓာတ်ပုံ၊ လက်ရေးဖြင့် ရေးထားသည့် အပိုဒ်များ မြင်နိုင်သည့် ဟောင်းနွမ်းသော ကတ္တီပါစက္ကူ။"
-  },
-  "U1-S08.twoColumn": [
-    {
-      "heading": "Declaration of Independence — 1776",
-      "body": "An announcement to the world: America is free from Britain. It says all people are created equal, with rights that belong to them — 'Life, Liberty, and the pursuit of Happiness.'",
-      "alt": "The Declaration of Independence on aged parchment, headed In Congress, July 4, 1776."
-    },
-    {
-      "heading": "Constitution — 1787",
-      "body": "A rulebook. It builds: the government America still uses today.",
-      "alt": "The first page of the United States Constitution on aged parchment, headed with the large words We the People."
-    }
-  ],
   "U1-S09.items[0].question": "Name one thing the U.S. Constitution does.",
   "U1-S09.items[1].instructions": "Tap to sort into Declaration or Constitution.",
   "U2-S01.afterQuote": {

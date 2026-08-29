@@ -17,7 +17,7 @@
  *   node scripts/qa-check.js --warn   → report only (used for local runs)
  */
 
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -1315,6 +1315,45 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
   const problems = xmlProblems(readFileSync(manifestPath, 'utf8'));
   for (const p of problems) fail(check, p);
   if (!problems.length) pass(check, 'docs/cmi5/cmi5.xml parses as XML');
+}
+
+// --- 23. Translation freshness covers every unit that has an overlay --------
+//
+// build-translations.js used to start freshness.my EMPTY on every run.
+// Regenerating a single unit — `node scripts/build-translations.js unit3` —
+// wrote a freshness.json containing ONLY unit3, discarding every other unit's
+// staleness record. The next run, even a full one, then read that truncated
+// file as its OWN baseline, found no prior record for the missing units, and
+// treated every field in them as freshly delivered — silently re-baselining
+// genuinely stale translations as current. A learner would have been shown
+// Burmese that no longer matches what the English says, which is the exact
+// failure this whole mechanism exists to catch, reintroduced by the tool that
+// maintains it.
+//
+// This does not re-detect staleness — that needs the English and the overlay,
+// which this check does not load. It catches the SHAPE of the bug: a
+// freshness file that has quietly stopped covering a unit it used to.
+{
+  const check = '23 translation freshness covers every unit';
+  const freshnessPath = join(contentDir, 'translations', 'freshness.json');
+  const freshness = readJson(freshnessPath);
+  const recorded = new Set(Object.keys(freshness.my || {}));
+
+  for (const unit of ['unit0', ...UNIT_IDS.map((u) => `unit${u[1]}`)]) {
+    const overlayPath = join(contentDir, 'translations', 'my', `${unit}.json`);
+    if (!existsSync(overlayPath)) continue;
+    if (!recorded.has(unit)) {
+      fail(
+        check,
+        `${unit} has a Burmese overlay but no entry in freshness.json — ` +
+          `regenerate with a full run: node scripts/build-translations.js`
+      );
+    }
+  }
+
+  if (!errors.some((e) => e.startsWith(check))) {
+    pass(check, `freshness.json covers all ${recorded.size} translated units`);
+  }
 }
 
 // Contrast and readability USED to be listed here as human-only. They are not:
