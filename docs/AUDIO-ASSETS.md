@@ -198,7 +198,7 @@ learner who listens and the learner who reads get the same course.
 
 **0 recorded · 0 need re-recording · 62 not yet recorded** (62 total)
 
-> **4 screen(s) below still show English**, because their Burmese has not arrived.
+> **3 screen(s) below still show English**, because their Burmese has not arrived.
 > They are marked ⚠ — recording those now is wasted work; the words change when the translation lands.
 
 ### U0 — Test day
@@ -232,8 +232,8 @@ learner who listens and the learner who reads get the same course.
 |---|---|---|---|
 | ○ | `U2-S01.mp3` | `U2-S01` | သင်ခန်းစာ ၂. အစိုးရ သုံးပိုင်း. အမေရိကန် အစိုးရကို မည်သို့ တ… |
 | ○ | `U2-S03.mp3` | `U2-S03` | ဤအရာကို သင် နေရာတိုင်းတွင် မြင်ဖူးပါသည်။ ဘောလုံးပွဲတွင် ကစား… |
-| ○ | `U2-S05.mp3` | `U2-S05` | Three buildings. Three jobs. The Capitol: Congress works her… |
-| ○ | `U2-S06.mp3` | `U2-S06` | Now watch the buildings push against each other. Congress pa… |
+| ○ | `U2-S05.mp3` | `U2-S05` | အဆောက်အအုံ သုံးခု။ အလုပ် သုံးမျိုး။ The Capitol — Congress (… |
+| ○ | `U2-S06.mp3` | `U2-S06` | ယခု အဆောက်အအုံများ အချင်းချင်း တွန်းကန်နေပုံကို ကြည့်ပါ။ Con… |
 | ○ | `U2-S07.mp3` | `U2-S07` | Branch (အပိုင်း) တစ်ခုစီသည် အခြားအပိုင်းများကို ရပ်တန့်စေနို… |
 | ○ | `U2-S08.mp3` | `U2-S08` | စာမေးပွဲရှိ အမည်နှစ်ခုသည် အသံတူသည်။ မရောထွေးပါနှင့်။ The Cab… |
 | ○ | `U2-S18.mp3` | `U2-S18` | သင်ခန်းစာ ၂ ပြီးဆုံးပါပြီ။ ဤသင်ခန်းစာရှိ မေးခွန်း ၂၀ ခုလုံး၏… |
@@ -243,9 +243,9 @@ learner who listens and the learner who reads get the same course.
 | | File | Screen | Script |
 |---|---|---|---|
 | ○ | `U3-S01.mp3` | `U3-S01` | သင်ခန်းစာ ၃. သင့်ကို မည်သူ ကိုယ်စားပြုသနည်း. သင် ရွေးကောက်တင… |
-| ○ | `U3-S03.mp3` | `U3-S03` | Imagine five towns that share one road, one water supply, an… |
-| ○ | `U3-S05.mp3` | `U3-S05` | Inside the Capitol are two rooms, built on two opposite prin… |
-| ○ | `U3-S06.mp3` | `U3-S06` | The President is elected for four years — and may serve only… |
+| ○ | `U3-S03.mp3` | `U3-S03` | လမ်းတစ်လမ်း၊ ရေပေးဝေမှုတစ်ခုနှင့် ကျောင်းတစ်ကျောင်းကို မျှဝေ… |
+| ○ | `U3-S05.mp3` | `U3-S05` | The Capitol အတွင်း၌ ဆန့်ကျင်ဘက် အခြေခံမူ နှစ်ခုပေါ်တွင် ရည်ရ… |
+| ○ | `U3-S06.mp3` | `U3-S06` | သမ္မတကို လေးနှစ်အတွက် ရွေးကောက်တင်မြှောက်ပြီး သက်တမ်း နှစ်ကြ… |
 | ○ | `U3-S07.mp3` | `U3-S07` | ခန်းမနှစ်ခု၊ တရားမျှတမှု နှစ်မျိုး — နှစ်ခုစလုံး တစ်ပြိုင်နက… |
 | ○ | `U3-S08.mp3` | `U3-S08` | စာမေးပွဲရှိ ရာထူးနှစ်ခုသည် အသံတူသည်။ မရောထွေးပါနှင့်။ Senato… |
 | ○ | `U3-S17.mp3` | `U3-S17` | သင်ခန်းစာ ၃ ပြီးဆုံးပါပြီ။ ဤသင်ခန်းစာရှိ မေးခွန်း ၂၃ ခုလုံး၏… |
@@ -256,7 +256,7 @@ learner who listens and the learner who reads get the same course.
 |---|---|---|---|
 | ○ | `U4-S01.mp3` | `U4-S01` | သင်ခန်းစာ ၄. ဖက်ဒရယ်နှင့် ပြည်နယ်. မည်သည့် အစိုးရအဆင့်က ဘာလု… |
 | ○ | `U4-S03.mp3` | `U4-S03` | တိုက်ခန်းအဆောက်အအုံကြီးတစ်ခုသည် စည်းမျဉ်း နှစ်ဆင့်ဖြင့် လည်ပ… |
-| ○ | `U4-S05.mp3` | `U4-S05` | Country-sized jobs go to the federal government. These are j… |
+| ○ | `U4-S05.mp3` | `U4-S05` | နိုင်ငံအရွယ်အစား လုပ်ငန်းများသည် ဖက်ဒရယ်အစိုးရထံ သွားသည်။ ၎င… |
 | ○ | `U4-S06.mp3` | `U4-S06` | တာဝန်၏ အရွယ်အစားက အစိုးရအဆင့်ကို ဆုံးဖြတ်သည်။ အမေရိကန်ပြည်ထေ… |
 | ○ | `U4-S07.mp3` | `U4-S07` | ရှောင်ရှားရမည့် ထောင်ချောက်။ Federal (ဖက်ဒရယ်) — 'ပိုအရေးကြီ… |
 | ○ | `U4-S13.mp3` | `U4-S13` | သင်ခန်းစာ ၄ ပြီးဆုံးပါပြီ။ ဤသင်ခန်းစာရှိ မေးခွန်း ၅ ခုလုံး၏ … |
@@ -267,8 +267,8 @@ learner who listens and the learner who reads get the same course.
 |---|---|---|---|
 | ○ | `U5-S01.mp3` | `U5-S01` | သင်ခန်းစာ ၅. အခွင့်အရေးများနှင့် တာဝန်များ. နိုင်ငံသားများ ဘ… |
 | ○ | `U5-S03.mp3` | `U5-S03` | မည်သည့်အဖွဲ့အစည်းသို့မဆို ဝင်ရောက်ခြင်းသည် သင့်အနေအထားကို ပြ… |
-| ○ | `U5-S05.mp3` | `U5-S05` | Remember the Bill of Rights from the rulebook lesson — prote… |
-| ○ | `U5-S06.mp3` | `U5-S06` | Belonging also asks. Everyone who earns money here pays fede… |
+| ○ | `U5-S05.mp3` | `U5-S05` | စည်းမျဉ်းစာအုပ် သင်ခန်းစာမှ the Bill of Rights ကို ပြန်စဉ်းစ… |
+| ○ | `U5-S06.mp3` | `U5-S06` | ပါဝင်ခြင်းသည် တောင်းဆိုမှုလည်း ရှိသည်။ ဤနေရာတွင် ဝင်ငွေ ရရှိ… |
 | ○ | `U5-S07.mp3` | `U5-S07` | အခွင့်အရေးများသည် ယခုပင် သင့်ကို ကာကွယ်ပေးသည်။ အသင်းဝင်၏ အသံ… |
 | ○ | `U5-S08.mp3` | `U5-S08` | စာမေးပွဲရှိ စကားလုံးနှစ်လုံးသည် အသံတူသည်။ မရောထွေးပါနှင့်။ A… |
 | ○ | `U5-S16.mp3` | `U5-S16` | သင်ခန်းစာ ၅ ပြီးဆုံးပါပြီ။ ဤသင်ခန်းစာရှိ မေးခွန်း ၁၀ ခုလုံး၏… |
@@ -279,9 +279,9 @@ learner who listens and the learner who reads get the same course.
 |---|---|---|---|
 | ○ | `U6-S01.mp3` | `U6-S01` | သင်ခန်းစာ ၆. အမေရိက မည်သို့ စတင်ခဲ့သနည်း. နိုင်ငံ မည်သို့ စတ… |
 | ○ | `U6-S03.mp3` | `U6-S03` | ဤဇာတ်လမ်း၏ အဆုံးသတ်ကို သင် သိပြီး ဖြစ်သည်။ သင်ခန်းစာ ၁ တွင် … |
-| ○ | `U6-S05.mp3` | `U6-S05` | Chapter 1 — Before. American Indians — Native Americans — li… |
-| ○ | `U6-S06.mp3` | `U6-S06` | Chapter 2 — The break. The thirteen colonies were ruled by B… |
-| ○ | `U6-S07.mp3` | `U6-S07` | Chapter 3 — The build. The colonies were free — but they wer… |
+| ○ | `U6-S05.mp3` | `U6-S05` | အခန်း ၁ — မတိုင်မီ။ American Indians — Native Americans — သည… |
+| ○ | `U6-S06.mp3` | `U6-S06` | အခန်း ၂ — ကွဲထွက်ခြင်း။ ကိုလိုနီ တစ်ဆယ့်သုံးခုကို ဗြိတိန်က အ… |
+| ○ | `U6-S07.mp3` | `U6-S07` | အခန်း ၃ — တည်ဆောက်ခြင်း။ ကိုလိုနီများ လွတ်လပ်ခဲ့သည် — သို့သေ… |
 | ○ | `U6-S08.mp3` | `U6-S08` | မှတ်ထားရမည့် ပုံစံ — ခြေလှမ်း ခြောက်ဆင့်၊ လမ်းကြောင်း တစ်ခုတ… |
 | ○ | `U6-S17.mp3` | `U6-S17` | သင်ခန်းစာ ၆ ပြီးဆုံးပါပြီ။ ဤသင်ခန်းစာရှိ မေးခွန်း ၁၇ ခုလုံး၏… |
 
@@ -291,10 +291,10 @@ learner who listens and the learner who reads get the same course.
 |---|---|---|---|
 | ○ | `U7-S01.mp3` | `U7-S01` | သင်ခန်းစာ ၇. အမေရိက မည်သို့ ပြောင်းလဲခဲ့သနည်း. နောက်ဆုံး သင်… |
 | ○ | `U7-S03.mp3` | `U7-S03` | တည်ထောင်ရေး ဇာတ်လမ်းကို သင် သိပြီး ဖြစ်သည် — မစောင့်ထိန်းနို… |
-| ○ | `U7-S05.mp3` | `U7-S05` | Chapter 1 — The war over the promise. First, the country gre… |
-| ○ | `U7-S06.mp3` | `U7-S06` | Chapter 2 — The promise, written into the rulebook. After th… |
-| ○ | `U7-S07.mp3` | `U7-S07` ⚠ | Chapter 3 — America in the world. The 1900s took America int… |
-| ○ | `U7-S08.mp3` | `U7-S08` | Chapter 4 — The symbols you will stand under. At your ceremo… |
+| ○ | `U7-S05.mp3` | `U7-S05` | အခန်း ၁ — ကတိအတွက် စစ်ပွဲ။ ဦးစွာ နိုင်ငံ ကြီးထွားလာသည် — ၁၈၀… |
+| ○ | `U7-S06.mp3` | `U7-S06` | အခန်း ၂ — စည်းမျဉ်းစာအုပ်ထဲ ရေးထည့်လိုက်သော ကတိ။ စစ်ပွဲအပြီး… |
+| ○ | `U7-S07.mp3` | `U7-S07` | အခန်း ၃ — ကမ္ဘာပေါ်ရှိ အမေရိက။ ၁၉၀၀ ပြည့်လွန်နှစ်များသည် အမေ… |
+| ○ | `U7-S08.mp3` | `U7-S08` | အခန်း ၄ — သင် ရပ်တည်မည့် သင်္ကေတများ။ သင့်အခမ်းအနားတွင် အလံတ… |
 | ○ | `U7-S09.mp3` | `U7-S09` | ဤအရာများသည် သီးခြား အချက်အလက် ၃၉ ခု မဟုတ်ပါ။ ၁၇၇၆ ခုနှစ်တွင်… |
 | ○ | `U7-S10.mp3` | `U7-S10` | စာမေးပွဲရှိ အားလပ်ရက် နှစ်ခုသည် အသံတူသည်။ မရောထွေးပါနှင့်။ M… |
 | ○ | `U7-S11.mp3` | `U7-S11` | မဲပေးခြင်းဆိုင်ရာ amendment (ပြင်ဆင်ချက်) နှစ်ခု။ အစီအစဉ်အတိ… |

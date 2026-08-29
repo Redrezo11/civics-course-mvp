@@ -320,6 +320,10 @@
         "handleSub": {
           "en": "4a330a80",
           "my": "505d9231"
+        },
+        "paragraphs": {
+          "en": "acf944d0",
+          "my": "08484618"
         }
       },
       "U2-S06": {
@@ -330,6 +334,10 @@
         "handle": {
           "en": "6872813f",
           "my": "ea0942cb"
+        },
+        "paragraphs": {
+          "en": "10f59477",
+          "my": "80873a7a"
         }
       },
       "U2-S07": {
@@ -446,6 +454,10 @@
         "closing": {
           "en": "9c8aa638",
           "my": "0a8a82b8"
+        },
+        "bodyList": {
+          "en": "44a2f16f",
+          "my": "dedf5084"
         }
       },
       "U3-S05": {
@@ -460,12 +472,20 @@
         "alt": {
           "en": "4be80d0e",
           "my": "ac85f136"
+        },
+        "paragraphs": {
+          "en": "c6427370",
+          "my": "828c8423"
         }
       },
       "U3-S06": {
         "resolution": {
           "en": "0e0873f7",
           "my": "0f167d0e"
+        },
+        "paragraphs": {
+          "en": "bfa1717a",
+          "my": "23f44913"
         }
       },
       "U3-S07": {
@@ -590,6 +610,10 @@
         "handle": {
           "en": "00eaee20",
           "my": "01a11311"
+        },
+        "paragraphs": {
+          "en": "c833769a",
+          "my": "fd485c8c"
         }
       },
       "U4-S06": {
@@ -714,12 +738,20 @@
         "handle": {
           "en": "3310c1be",
           "my": "90972682"
+        },
+        "paragraphs": {
+          "en": "52ed1268",
+          "my": "c0a27c80"
         }
       },
       "U5-S06": {
         "handle": {
           "en": "f71fefd7",
           "my": "195b570e"
+        },
+        "paragraphs": {
+          "en": "d3e4dddd",
+          "my": "2f90a854"
         }
       },
       "U5-S07": {
@@ -846,6 +878,10 @@
         "resolution": {
           "en": "6482c0af",
           "my": "1bb9ad97"
+        },
+        "paragraphs": {
+          "en": "e0ecae1e",
+          "my": "0c9b2b28"
         }
       },
       "U6-S06": {
@@ -856,6 +892,10 @@
         "alt": {
           "en": "b73939e6",
           "my": "506ac218"
+        },
+        "paragraphs": {
+          "en": "0993e686",
+          "my": "d7565ad7"
         }
       },
       "U6-S07": {
@@ -866,6 +906,10 @@
         "handleSub": {
           "en": "df18cacf",
           "my": "1f6ad2d7"
+        },
+        "paragraphs": {
+          "en": "0e1f9029",
+          "my": "f083480b"
         }
       },
       "U6-S08": {
@@ -968,6 +1012,10 @@
         "resolution": {
           "en": "799ff3eb",
           "my": "00b88fa6"
+        },
+        "paragraphs": {
+          "en": "dcdc0f12",
+          "my": "750a4d2f"
         }
       },
       "U7-S06": {
@@ -978,12 +1026,20 @@
         "handleSub": {
           "en": "9b2dedcc",
           "my": "e32ee9ee"
+        },
+        "paragraphs": {
+          "en": "ab1a90d4",
+          "my": "daf03154"
         }
       },
       "U7-S08": {
         "resolution": {
           "en": "02321963",
           "my": "ed9521af"
+        },
+        "paragraphs": {
+          "en": "ce2489d9",
+          "my": "a8c646ab"
         }
       },
       "U7-S09": {
@@ -1072,6 +1128,12 @@
         "cards": {
           "en": "9d805068",
           "my": "e8c884ca"
+        }
+      },
+      "U7-S07": {
+        "paragraphs": {
+          "en": "56056817",
+          "my": "16f171de"
         }
       }
     }

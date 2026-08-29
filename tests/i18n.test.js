@@ -358,6 +358,32 @@ describe('vocab cards', () => {
     }
   });
 
+  it('every teaching paragraph is translated, in every unit', () => {
+    // The largest gap the app had, and the one a learner hits hardest: the
+    // bigIdea screens are the main teaching body of nearly every unit — the
+    // three-branches explanation, the Senate/House split, the whole history
+    // sequence — and 15 of them had `paragraphs` untranslated. Small fields
+    // around them (handle, resolution) WERE translated, so the screens looked
+    // half-done rather than absent, which is why they survived earlier sweeps
+    // that asked "does this screen have any Burmese at all".
+    //
+    // English fallback is correct behaviour for missing content, not a
+    // substitute for having it.
+    const gaps = [];
+    for (const unit of UNITS) {
+      for (const screen of unit.screens) {
+        const loc = localiseScreen(screen, unit.id, 'my');
+        for (const field of ['paragraphs', 'bodyList', 'bodyList2']) {
+          if (!Array.isArray(screen[field])) continue;
+          (loc[field] || []).forEach((p, i) => {
+            if (!isBurmese(String(p))) gaps.push(`${screen.id}.${field}[${i}]`);
+          });
+        }
+      }
+    }
+    expect(gaps, gaps.join('\n')).toEqual([]);
+  });
+
   it('no screen teaches a tested term without ever showing it in English', () => {
     // Screen-level, not sentence-level, and that is the whole design of it.
     //
