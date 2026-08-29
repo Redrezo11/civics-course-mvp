@@ -108,11 +108,13 @@ A useful side effect: the manifest no longer keeps its own copy of `PASS_AT` and
 claiming to be a single source, and would have silently advertised a pass mark
 the course did not use.
 
-**Replace the identifier namespace.** The generated manifest uses
-`https://example.org/civics-course`. Activity ids are the key an LRS files
-learner records under; changing one after learners have started orphans their
-history, because the LMS cannot tell the old and new ids are the same course.
-Choose them once, from a domain you control.
+**The identifier namespace.** The generated manifest defaults to a fixed
+`urn:uuid:…` — platform-agnostic on purpose: it does not name GitHub Pages or
+any other host, which matters because the AU does not run from there once it is
+inside an LMS; it ships as files in the zip. Activity ids are the key an LRS
+files learner records under, so changing one after learners have started
+orphans their history — pass `--ns` only if you want ids under a domain you
+control instead, and then keep using that same value on every rebuild.
 
 ### Routes the AUs do not cover
 

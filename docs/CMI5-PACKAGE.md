@@ -3,8 +3,14 @@
 **Build it:**
 
 ```
-node scripts/cmi5-package.js --ns https://your.domain/civics-mvp
+node scripts/cmi5-package.js
 ```
+
+No `--ns` needed — the manifest generator's default is a fixed `urn:uuid:…`
+namespace, checked into the repo, that names no host or domain. Pass `--ns
+https://your.domain/civics-mvp` only if you specifically want ids under a
+domain you control instead; whichever you pick, keep using that exact value on
+every future rebuild, since it is the key an LRS files learner records under.
 
 Output is `packages/civics-course-cmi5.zip`, which is **gitignored** — it is a
 build artefact of a build artefact, about a megabyte, and committing it would
@@ -163,10 +169,13 @@ the lesson down with it.
 
 ## Before real learners
 
-- **Pass `--ns` with a namespace you control.** Activity ids are the key an LRS
-  files learner records under. Change one after learners have started and their
-  history orphans, because the LMS cannot tell the old and new ids are the same
-  course. The default is a placeholder and the script warns when it is used.
+- **The default namespace is fine to ship as-is** — a fixed `urn:uuid:…` that
+  names no host, so it stays correct even if this repo moves or GitHub Pages
+  goes away. Only pass `--ns` if you specifically want ids under a domain you
+  control. Either way: activity ids are the key an LRS files learner records
+  under, so once real learners have started, keep rebuilding with the exact
+  same namespace — changing it orphans their history, because the LMS cannot
+  tell the old and new ids are the same course.
 - **`voting.webp` carries a visible Shutterstock watermark** — a comp preview,
   not a licensed download. Publishing a static site and handing an organisation
   a package to host are different acts. See `docs/IMAGE-ASSETS.md`.

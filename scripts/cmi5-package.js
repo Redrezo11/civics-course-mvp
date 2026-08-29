@@ -2,7 +2,8 @@
 /**
  * cmi5-package.js — build the importable package.
  *
- *   node scripts/cmi5-package.js --ns https://your.domain/civics-mvp
+ *   node scripts/cmi5-package.js
+ *   node scripts/cmi5-package.js --ns https://your.domain/civics-mvp   # optional: own the ids
  *
  * Produces packages/civics-course-cmi5.zip:
  *
@@ -146,10 +147,12 @@ if (!manifestAtRoot || !appAtAu || anyBackslash.length || manifestProblems.lengt
 
 if (!NS) {
   console.log(
-    '\n  ! Built with the placeholder namespace https://example.org/civics-course.\n' +
-      "    Fine for a test import. Before real learners: pass --ns with a namespace you\n" +
-      '    control, because activity ids are the key an LRS files their records under\n' +
-      '    and changing one later orphans everything recorded against the old id.'
+    '\n  Built with the default namespace (a fixed urn:uuid — see scripts/cmi5-manifest.js).\n' +
+      '    That is fine to ship as-is: it identifies nothing but this course and does not\n' +
+      '    depend on any domain or host. Pass --ns only if you specifically want ids under\n' +
+      '    a domain you control instead. Either way, once learners have started, keep\n' +
+      '    rebuilding with the SAME namespace — changing it orphans every record filed\n' +
+      '    against the old one.'
   );
 }
 
