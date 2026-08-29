@@ -45,6 +45,8 @@
 
   let index = 0;
   let interactionDone = false; // set true when a self-advancing component signals completion
+  /** Which option the learner tapped on a hook screen. Local, never recorded. */
+  let hookPick = null;
 
   // Screen types that manage their own "did the learner finish this" state
   // rather than always showing the parent's Next button immediately.
@@ -96,7 +98,7 @@
   $: isDynamicPractice =
     screen?.type === 'practice' && getQuestion(screen.questionId)?.dynamic;
   $: isLast = unit && index === unit.screens.length - 1;
-  $: if (screen) { interactionDone = false; }
+  $: if (screen) { interactionDone = false; hookPick = null; }
 
   $: if (screen && restored) {
     progress.saveScreenPosition(unitId, screen.id);
@@ -292,12 +294,38 @@
           />
         </div>
         <h1 class="text-thesis font-bold text-center mb-5">{screen.question}</h1>
+        <!--
+          The same three-state treatment every other answer surface uses:
+          SingleSelect, MultiSelect and GuidedPractice all mark the correct
+          option ✓ green and the learner's wrong pick ✗ red, and this screen
+          alone dimmed everything identically — so the one screen that LOOKS
+          most like a quiz was the one that answered you the least. The answer
+          was already on the screen, in the feedback prose underneath; it just
+          was not on the buttons.
+
+          Still ungraded, deliberately. `hookPick` is local and nothing calls
+          recordAnswer — a hook is asked BEFORE the lesson teaches, so counting
+          it would score a learner on material they have not been given (G-1).
+          Showing which answer the lesson endorses is feedback, not scoring.
+        -->
         {#each screen.options as opt, i}
+          {@const isCorrect = i === screen.correctIndex}
+          {@const isWrongPick = interactionDone && hookPick === i && !isCorrect}
           <button
-            class="btn-secondary mb-2.5 disabled:opacity-70"
+            class="tap flex items-center gap-2 w-full text-left py-2.5 px-4 mb-2.5 rounded-full font-bold text-sm border-2 transition-colors
+              {interactionDone && isCorrect ? 'bg-gotit-bg dark:bg-dark-gotit-bg border-gotit dark:border-dark-gotit' : ''}
+              {isWrongPick ? 'bg-notyet-bg dark:bg-dark-notyet-bg border-notyet dark:border-dark-notyet' : ''}
+              {interactionDone && !isCorrect && !isWrongPick ? 'border-border-interactive dark:border-dark-border-interactive opacity-55' : ''}
+              {!interactionDone ? 'border-border-interactive dark:border-dark-border-interactive' : ''}"
             disabled={interactionDone}
-            on:click={() => { interactionDone = true; }}
-          ><AnswerLabel text={opt} gloss={screen.optionsGloss?.[i]} /></button>
+            on:click={() => { hookPick = i; interactionDone = true; }}
+          >
+            <span class="flex-1">
+              <AnswerLabel text={opt} gloss={screen.optionsGloss?.[i]}
+                >{#if interactionDone && isCorrect}✓ {:else if isWrongPick}✗ {/if}</AnswerLabel
+              >
+            </span>
+          </button>
         {/each}
         {#if interactionDone}
           <p class="text-sm mt-4 p-3 rounded-card border border-border dark:border-dark-border leading-relaxed">

@@ -25,7 +25,8 @@
         "No",
         "Both, somehow"
       ],
-      "feedback": "In 1787 the states nearly walked away from each other over exactly this question. Their compromise built Congress — and it is worth understanding, because it explains six test answers at once."
+      "correctIndex": 2,
+      "feedback": "Both, somehow — and that is what the states worked out. In 1787 they nearly walked away from each other over exactly this question. Their compromise built Congress — and it is worth understanding, because it explains six test answers at once."
     },
     {
       "id": "U3-S03",

@@ -25,7 +25,8 @@
         "Protest",
         "Leave"
       ],
-      "feedback": "Thirteen colonies faced exactly that. Their answer created the United States — and it explains almost every question in this lesson."
+      "correctIndex": 1,
+      "feedback": "They protested. Thirteen colonies faced exactly that, and their answer created the United States — it explains almost every question in this lesson."
     },
     {
       "id": "U6-S03",
