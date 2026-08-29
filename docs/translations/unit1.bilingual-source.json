@@ -7,7 +7,22 @@
     "en": "We the People",
     "my": "ကျွန်ုပ်တို့ ပြည်သူများ"
   },
-  "questions": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+  "questions": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
   "objectives": [
     {
       "en": "Choose the correct plain-English meaning of \"the Constitution limits government power\" from three options.",
@@ -45,8 +60,16 @@
         "my": "အမေရိကကို အုပ်ချုပ်သူက ဘယ်သူလဲ?"
       },
       "options": {
-        "en": ["The President", "Congress", "The people"],
-        "my": ["သမ္မတ", "ကွန်ဂရက်", "ပြည်သူများ"]
+        "en": [
+          "The President",
+          "Congress",
+          "The people"
+        ],
+        "my": [
+          "သမ္မတ",
+          "ကွန်ဂရက်",
+          "ပြည်သူများ"
+        ]
       },
       "correct": 2,
       "feedback": {
@@ -83,44 +106,59 @@
       "revealAllToAdvance": true,
       "cards": [
         {
-          "term": { "en": "Constitution", "my": "ဖွဲ့စည်းပုံအခြေခံဥပဒေ" },
+          "term": {
+            "en": "Constitution",
+            "my": "ဖွဲ့စည်းပုံအခြေခံဥပဒေ"
+          },
           "meaning": {
             "en": "the rulebook of the government",
             "my": "အစိုးရ၏ စည်းမျဉ်းစာအုပ်"
           },
           "example": {
             "en": "The Constitution is the highest law in America.",
-            "my": "ဖွဲ့စည်းပုံအခြေခံဥပဒေသည် အမေရိက၏ အမြင့်ဆုံးဥပဒေ ဖြစ်သည်။"
+            "my": "Constitution သည် အမေရိက၏ အမြင့်ဆုံးဥပဒေ ဖြစ်သည်။"
           }
         },
         {
-          "term": { "en": "supreme", "my": "အမြင့်ဆုံး" },
-          "meaning": { "en": "highest", "my": "အမြင့်ဆုံး" },
+          "term": {
+            "en": "supreme",
+            "my": "အမြင့်ဆုံး"
+          },
+          "meaning": {
+            "en": "highest",
+            "my": "အမြင့်ဆုံး"
+          },
           "example": {
             "en": "Supreme means nothing is above it.",
-            "my": "အမြင့်ဆုံး ဆိုသည်မှာ ၎င်းအထက်တွင် ဘာမျှ မရှိခြင်း ဖြစ်သည်။"
+            "my": "Supreme ဆိုသည်မှာ ၎င်းအထက်တွင် မည်သည့်အရာမျှ မရှိခြင်း ဖြစ်သည်။"
           }
         },
         {
-          "term": { "en": "amendment", "my": "ပြင်ဆင်ချက်" },
+          "term": {
+            "en": "amendment",
+            "my": "ပြင်ဆင်ချက်"
+          },
           "meaning": {
             "en": "an official change or addition to the Constitution",
-            "my": "ဖွဲ့စည်းပုံအခြေခံဥပဒေအား တရားဝင် ပြောင်းလဲခြင်း သို့မဟုတ် ဖြည့်စွက်ခြင်း"
+            "my": "Constitution အား တရားဝင် ပြောင်းလဲခြင်း သို့မဟုတ် ဖြည့်စွက်ခြင်း"
           },
           "example": {
             "en": "The 19th Amendment gave women the vote — your daughter votes because of it.",
-            "my": "၁၉ ကြိမ်မြောက် ပြင်ဆင်ချက်သည် အမျိုးသမီးများအား မဲပေးခွင့် ပေးခဲ့သည် — ထိုကြောင့် သင့်သမီး မဲပေးနိုင်ခြင်း ဖြစ်သည်။"
+            "my": "19th Amendment က အမျိုးသမီးများကို မဲပေးခွင့် ပေးခဲ့သည် — ထို့ကြောင့် သင့်သမီး မဲပေးနိုင်ခြင်း ဖြစ်သည်။"
           }
         },
         {
-          "term": { "en": "rights", "my": "အခွင့်အရေးများ" },
+          "term": {
+            "en": "rights",
+            "my": "အခွင့်အရေးများ"
+          },
           "meaning": {
             "en": "freedoms the law protects for you",
             "my": "ဥပဒေက သင့်အတွက် ကာကွယ်ပေးထားသည့် လွတ်လပ်ခွင့်များ"
           },
           "example": {
             "en": "You have the right to speak freely.",
-            "my": "သင့်တွင် လွတ်လပ်စွာ ပြောဆိုခွင့် ရှိသည်။"
+            "my": "သင့်တွင် လွတ်လပ်စွာ ပြောဆိုနိုင်သည့် rights ရှိသည်။"
           }
         }
       ],
@@ -272,7 +310,10 @@
       "id": "U1-S08",
       "type": "teach",
       "beat": "see-it-not-it",
-      "asset": [3, 2],
+      "asset": [
+        3,
+        2
+      ],
       "alt": {
         "en": "Two documents side by side: the Declaration of Independence on the left, the U.S. Constitution on the right, both aged parchment.",
         "my": "စာတမ်းနှစ်ခု ဘေးချင်းယှဉ်၍ — ဘယ်ဘက်တွင် လွတ်လပ်ရေး ကြေညာစာတမ်း၊ ညာဘက်တွင် အမေရိကန် ဖွဲ့စည်းပုံအခြေခံဥပဒေ၊ နှစ်ခုစလုံး ဟောင်းနွမ်းသော ကတ္တီပါစက္ကူ။"
@@ -333,28 +374,57 @@
       "process": "compare",
       "practiceLabel": true,
       "buckets": [
-        { "id": "declaration", "label": { "en": "Declaration", "my": "ကြေညာစာတမ်း" }, "asset": 3 },
-        { "id": "constitution", "label": { "en": "Constitution", "my": "ဖွဲ့စည်းပုံအခြေခံဥပဒေ" }, "asset": 2 }
+        {
+          "id": "declaration",
+          "label": {
+            "en": "Declaration",
+            "my": "ကြေညာစာတမ်း"
+          },
+          "asset": 3
+        },
+        {
+          "id": "constitution",
+          "label": {
+            "en": "Constitution",
+            "my": "ဖွဲ့စည်းပုံအခြေခံဥပဒေ"
+          },
+          "asset": 2
+        }
       ],
       "items": [
         {
-          "text": { "en": "Says America is free from Britain", "my": "အမေရိကသည် ဗြိတိန်ထံမှ လွတ်မြောက်ပြီဟု ဆိုသည်" },
+          "text": {
+            "en": "Says America is free from Britain",
+            "my": "အမေရိကသည် ဗြိတိန်ထံမှ လွတ်မြောက်ပြီဟု ဆိုသည်"
+          },
           "bucket": "declaration"
         },
         {
-          "text": { "en": "The supreme law of the land", "my": "နိုင်ငံ၏ အမြင့်ဆုံးဥပဒေ" },
+          "text": {
+            "en": "The supreme law of the land",
+            "my": "နိုင်ငံ၏ အမြင့်ဆုံးဥပဒေ"
+          },
           "bucket": "constitution"
         },
         {
-          "text": { "en": "Life, Liberty, and the pursuit of Happiness", "my": "အသက်၊ လွတ်လပ်ခွင့်နှင့် ပျော်ရွှင်မှုကို ရှာဖွေခွင့်" },
+          "text": {
+            "en": "Life, Liberty, and the pursuit of Happiness",
+            "my": "အသက်၊ လွတ်လပ်ခွင့်နှင့် ပျော်ရွှင်မှုကို ရှာဖွေခွင့်"
+          },
           "bucket": "declaration"
         },
         {
-          "text": { "en": "Written in 1787", "my": "၁၇၈၇ ခုနှစ်တွင် ရေးသားခဲ့သည်" },
+          "text": {
+            "en": "Written in 1787",
+            "my": "၁၇၈၇ ခုနှစ်တွင် ရေးသားခဲ့သည်"
+          },
           "bucket": "constitution"
         },
         {
-          "text": { "en": "Has 27 amendments", "my": "ပြင်ဆင်ချက် ၂၇ ခု ရှိသည်" },
+          "text": {
+            "en": "Has 27 amendments",
+            "my": "ပြင်ဆင်ချက် ၂၇ ခု ရှိသည်"
+          },
           "bucket": "constitution"
         }
       ],
@@ -445,8 +515,24 @@
         "en": "One idea. Fourteen real questions.",
         "my": "အယူအဆ တစ်ခု။ အမှန်တကယ် မေးခွန်း ဆယ့်လေးခု။"
       },
-      "expanded": [1, 2, 3, 4, 5, 6, 7, 13],
-      "alsoCovered": [8, 9, 10, 11, 12, 14],
+      "expanded": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        13
+      ],
+      "alsoCovered": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        14
+      ],
       "notes": {
         "q14": {
           "en": "\"Many documents influenced the Constitution. Name one.\" — the Declaration of Independence, which you just learned about two screens ago, is one of the accepted answers. Any one is enough.",
@@ -523,7 +609,10 @@
         "en": "Lesson 1 finished.",
         "my": "သင်ခန်းစာ ၁ ပြီးဆုံးပါပြီ။"
       },
-      "counters": ["lessons", "questionsPracticed"],
+      "counters": [
+        "lessons",
+        "questionsPracticed"
+      ],
       "summaryLine": {
         "en": "You learned the ideas behind all 14 questions in this lesson, and practiced 5 of them.",
         "my": "ဤသင်ခန်းစာရှိ မေးခွန်း ၁၄ ခုလုံး၏ နောက်ကွယ်မှ အယူအဆများကို သင်ယူခဲ့ပြီး ၅ ခုကို လေ့ကျင့်ခဲ့ပါသည်။"

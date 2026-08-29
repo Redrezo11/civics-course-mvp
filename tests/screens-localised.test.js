@@ -92,9 +92,16 @@ describe('every screen renders in the learner’s language', () => {
 
 describe('the string table itself', () => {
   it('has no key whose Burmese is identical to its English', () => {
-    // A copy-paste rather than a translation. Language names are the legitimate
-    // exception — the picker shows each language in its own script.
-    const EXPECTED_SAME = new Set(['language.english']);
+    // A copy-paste rather than a translation. Two legitimate exceptions:
+    //
+    //   · language names — the picker shows each language in its own script;
+    //   · the federal/state diagram's two box labels. "Federal" and "State" are
+    //     accepted answers and appear in official question wording, so they
+    //     stay English exactly as an answer option does. The Burmese for each
+    //     box is carried by its subtitle line beneath (diagram.oneNational,
+    //     diagram.schools/police/licences), which IS translated — so the box
+    //     reads English term over Burmese explanation, not English alone.
+    const EXPECTED_SAME = new Set(['language.english', 'diagram.federal', 'diagram.state']);
     const same = Object.entries(uiStrings)
       .filter(([k]) => k !== '_note')
       .filter(([k, v]) => v.my && v.my === v.en && !EXPECTED_SAME.has(k))

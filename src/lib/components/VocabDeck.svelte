@@ -29,16 +29,34 @@
 {#each cards as card, i}
   {#if flipped.has(i)}
     <div class="border-2 border-ink dark:border-dark-ink rounded-card p-4 mb-2.5">
-      <p class="text-lg font-bold mb-1">{card.word}</p>
-      <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary mb-2">{card.def}</p>
+      <!--
+        English word, Burmese beneath — the same shape AnswerLabel gives an
+        answer option, and for the same reason: this is the term the officer
+        says out loud, so the learner has to meet it in English. lang="my"
+        scopes the Myanmar font and switches a screen reader's voice.
+      -->
+      <p class="text-lg font-bold">{card.word}</p>
+      {#if card.wordGloss}
+        <p
+          class="text-sm font-normal leading-relaxed text-ink-secondary dark:text-dark-ink-secondary mb-1"
+          lang="my"
+        >{card.wordGloss}</p>
+      {/if}
+      <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary mb-2 mt-1">{card.def}</p>
       <p class="text-xs italic text-ink-muted dark:text-dark-ink-muted">"{card.example}"</p>
     </div>
   {:else}
     <button
-      class="tap flex items-center w-full text-left border border-border dark:border-dark-border rounded-card py-3 px-4 mb-2.5 font-bold text-sm"
+      class="tap flex flex-col items-start w-full text-left border border-border dark:border-dark-border rounded-card py-3 px-4 mb-2.5 font-bold text-sm"
       on:click={() => flip(i)}
     >
-      {card.word}
+      <span>{card.word}</span>
+      {#if card.wordGloss}
+        <span
+          class="font-normal text-ink-secondary dark:text-dark-ink-secondary mt-0.5"
+          lang="my"
+        >{card.wordGloss}</span>
+      {/if}
     </button>
   {/if}
 {/each}

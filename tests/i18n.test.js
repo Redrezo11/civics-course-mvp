@@ -332,6 +332,56 @@ describe('vocab cards', () => {
     }
     expect(gaps).toEqual([]);
   });
+
+  it('keeps the English word itself, glossed rather than replaced', () => {
+    // The defect this exists for: `cards` is not one of GLOSS_FIELDS, so a
+    // delivered translation REPLACED the card outright and the English word
+    // vanished. Every one of these words appears in the official question
+    // wording or the accepted answers — branch, veto, justice, amendment,
+    // federal, right — so a learner who had only ever seen the Burmese could
+    // not recognise the term when an officer said it. That is the exact
+    // failure G-3 exists to prevent, on the screen that teaches the terms.
+    for (const unit of UNITS) {
+      for (const screen of unit.screens) {
+        if (screen.type !== 'vocab') continue;
+        const loc = localiseScreen(screen, unit.id, 'my');
+        loc.cards.forEach((card, i) => {
+          const english = screen.cards[i].word;
+          expect(card.word, `${screen.id}.cards[${i}].word was replaced, not glossed`).toBe(english);
+          expect(isBurmese(card.word), `${screen.id}.cards[${i}].word is Burmese`).toBe(false);
+          expect(card.wordGloss, `${screen.id}.cards[${i}] has no Burmese gloss`).toBeTruthy();
+          expect(isBurmese(card.wordGloss), `${screen.id}.cards[${i}].wordGloss`).toBe(true);
+          // The gloss must not repeat the English it sits beneath.
+          expect(String(card.wordGloss)).not.toContain(english);
+        });
+      }
+    }
+  });
+
+  it('every example still contains the word it exemplifies', () => {
+    // An example sentence exists to show the word IN USE. Translated so that
+    // the word itself vanished — "Police enforce traffic laws" becoming a
+    // Burmese sentence with no "enforce" in it — it stops being an example and
+    // becomes just another sentence, and the card teaches the term nowhere.
+    //
+    // All 34 were in that state, U1-S04's included, which predates this work.
+    // The English term now sits inside the Burmese sentence, which is already
+    // the corpus convention: U2-S08's delivered resolution reads
+    // "သမ္မတက Cabinet ကို ရွေးသည်။".
+    for (const unit of UNITS) {
+      for (const screen of unit.screens) {
+        if (screen.type !== 'vocab') continue;
+        const loc = localiseScreen(screen, unit.id, 'my');
+        loc.cards.forEach((card, i) => {
+          const word = screen.cards[i].word.toLowerCase();
+          expect(
+            String(card.example).toLowerCase(),
+            `${screen.id}.cards[${i}] example no longer contains "${screen.cards[i].word}"`
+          ).toContain(word);
+        });
+      }
+    }
+  });
 });
 
 describe('an answer on screen', () => {
