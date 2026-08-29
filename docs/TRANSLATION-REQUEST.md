@@ -5,9 +5,9 @@
 content change rather than editing this file, or it will describe a course that
 no longer exists.
 
-Remaining: **0 interface strings** and **16 content
+Remaining: **0 interface strings** and **8 content
 fields** — 8 never translated, and
-**8 marked ↻**.
+**0 marked ↻**.
 
 A field that is translated and still current is live and is **not** listed here,
 so nothing gets translated twice.
@@ -32,8 +32,6 @@ object rather than a plain value:
 
 Read the two together, change what the rewrite actually changed, and send back
 the value in the same shape a plain entry would take. Most are small edits.
-
-The 8 this time: `U1-S01.afterQuote`, `U2-S01.afterQuote`, `U3-S01.afterQuote`, `U3-S05.alt`, `U4-S01.afterQuote`, `U5-S01.afterQuote`, `U6-S01.afterQuote`, `U6-S06.alt`.
 
 
 **Work from `docs/translation-source.json`, not from the tables below.** The
@@ -92,11 +90,11 @@ were lost this way before we worked out the cause.
 
 ---
 
-## 1. Interface strings — 0 of 155 remaining
+## 1. Interface strings — 0 of 156 remaining
 
 In `src/lib/content/ui-strings.json`. Fill the `my` value; leave `en` alone.
 
-_All 155 interface strings carry Burmese._ They remain `draft-unreviewed` and still need a native pass, but none is missing.
+_All 156 interface strings carry Burmese._ They remain `draft-unreviewed` and still need a native pass, but none is missing.
 
 ---
 
@@ -144,14 +142,14 @@ which is the authority if this description and the JSON ever disagree:
 | Unit | Fields outstanding |
 |---|---|
 | U0 Test day | 2 |
-| U1 We the People | 3 |
-| U2 Three branches | 1 |
-| U3 Who represents you | 3 |
-| U4 Federal and state | 1 |
-| U5 Rights and responsibilities | 2 |
-| U6 How America began | 2 |
+| U1 We the People | 2 |
+| U2 Three branches | 0 |
+| U3 Who represents you | 1 |
+| U4 Federal and state | 0 |
+| U5 Rights and responsibilities | 1 |
+| U6 How America began | 0 |
 | U7 How America changed | 2 |
-| **Total** | **16** |
+| **Total** | **8** |
 
 ---
 
@@ -168,57 +166,46 @@ which is the authority if this description and the JSON ever disagree:
 
 ### U1 — We the People
 
-**3 fields.**
+**2 fields.**
 
 | | Screen | Field | English |
 |---|---|---|---|
-| ↻ | `U1-S01` | `afterQuote` | One document is the answer to that question — and to most of the others in this lesson. |
 |  | `U1-S09` | `items[0].question` | Name one thing the U.S. Constitution does. **⚠ keep the quoted official question in English**; translate only the words around it |
 |  | `U1-S09` | `items[1].instructions` | Tap to sort into Declaration or Constitution. |
 
 ### U2 — Three branches
 
+**0 fields.**
+
+_Fully translated._
+
+### U3 — Who represents you
+
 **1 fields.**
 
 | | Screen | Field | English |
 |---|---|---|---|
-| ↻ | `U2-S01` | `afterQuote` | Three branches, built so that no one of them can act alone. Name them, and the rest of this lesson is who does what. |
-
-### U3 — Who represents you
-
-**3 fields.**
-
-| | Screen | Field | English |
-|---|---|---|---|
-| ↻ | `U3-S01` | `afterQuote` | Some answers in this lesson are fixed numbers. Others depend on where you live — and part of the lesson is learning how to look those up. |
-| ↻ | `U3-S05` | `alt` | The United States Capitol, its white dome above a long colonnaded front, a wing to each side. |
 |  | `U3-S06` | `alt` | The White House seen across its lawn, the curved columns of the South Portico at its centre. |
 
 ### U4 — Federal and state
 
+**0 fields.**
+
+_Fully translated._
+
+### U5 — Rights and responsibilities
+
 **1 fields.**
 
 | | Screen | Field | English |
 |---|---|---|---|
-| ↻ | `U4-S01` | `afterQuote` | Every question here turns on one habit: asking whether a job belongs to the whole country, or to your state. |
-
-### U5 — Rights and responsibilities
-
-**2 fields.**
-
-| | Screen | Field | English |
-|---|---|---|---|
-| ↻ | `U5-S01` | `afterQuote` | The test asks about rights and duties as two short lists. This lesson gives you both — and the difference between them. |
 |  | `U5-S06` | `alt` | A polling place: a Vote Here sign beside open voting booths, with people filling in ballots. |
 
 ### U6 — How America began
 
-**2 fields.**
+**0 fields.**
 
-| | Screen | Field | English |
-|---|---|---|---|
-| ↻ | `U6-S01` | `afterQuote` | Behind that question is one summer in Philadelphia, thirteen colonies, and a decision none of them could take back. |
-| ↻ | `U6-S06` | `alt` | The Declaration of Independence on aged parchment, headed In Congress, July 4, 1776. |
+_Fully translated._
 
 ### U7 — How America changed
 

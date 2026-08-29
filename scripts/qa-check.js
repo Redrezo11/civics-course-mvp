@@ -1356,6 +1356,46 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
   }
 }
 
+// --- 24. Every advance-button label has a translation ----------------------
+//
+// `primaryLabel` is authored per screen and is deliberately SKIPped by the
+// translation pipeline — it is chrome, not prose, and nobody should be asked to
+// translate the word "Next" 58 times. But nothing translated it either, so
+// every lesson screen in the course rendered an English button to a Burmese
+// learner. Lesson.svelte now maps the label to a ui-string key.
+//
+// The failure mode this guards is quiet: author a new screen with a new label
+// and it renders English, on that screen only, with nothing complaining.
+{
+  const check = '24 advance-button labels are translatable';
+  const lessonSrc = readFileSync(join(srcDir, 'lib', 'screens', 'Lesson.svelte'), 'utf8');
+  const block = lessonSrc.match(/const ADVANCE_KEYS = \{([\s\S]*?)\};/);
+
+  if (!block) {
+    fail(check, 'Lesson.svelte no longer has an ADVANCE_KEYS map — the labels are untranslated again');
+  } else {
+    const mapped = new Set(
+      [...block[1].matchAll(/^\s*'?([^':\n]+?)'?\s*:/gm)].map((m) => m[1].trim())
+    );
+    const ui = readJson(join(contentDir, 'ui-strings.json'));
+    const labels = new Set();
+    for (const u of units) for (const s of u.screens) if (s.primaryLabel) labels.add(s.primaryLabel);
+
+    for (const label of labels) {
+      if (!mapped.has(label)) {
+        fail(check, `"${label}" is used as a primaryLabel but has no entry in Lesson.svelte's ADVANCE_KEYS`);
+      }
+    }
+    // And every key the map points at must actually exist.
+    for (const [, key] of block[1].matchAll(/:\s*'([^']+)'/g)) {
+      if (!ui[key]) fail(check, `ADVANCE_KEYS points at "${key}", which is not a ui-string`);
+    }
+    if (!errors.some((e) => e.startsWith(check))) {
+      pass(check, `${labels.size} distinct button label(s), all mapped to ui-strings`);
+    }
+  }
+}
+
 // Contrast and readability USED to be listed here as human-only. They are not:
 // both are mechanical and are now checks 4 and 5. What genuinely cannot be
 // done in this script is anything requiring the source document or human

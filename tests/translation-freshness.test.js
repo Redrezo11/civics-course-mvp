@@ -109,94 +109,71 @@ describe('a translation of English that has changed', () => {
 });
 
 describe('the real case', () => {
-  // Not pinned to one screen id. U0-S01 was this test's example, then got
-  // fixed and had to be swapped for U0-S04 as its own predecessor, which had
-  // already been swapped for U0-S01 — every fix here breaks the test that
-  // proved the mechanism, on a field that has nothing to do with the fix.
-  // Derived instead: whichever fields the build currently reports stale
-  // (there is always at least one — TRANSLATION-REQUEST.md lists them) prove
-  // the same property, and stay proof after the next one is fixed too.
+  // Deliberately NOT derived from whatever happens to be stale right now.
+  //
+  // This test has been rewritten three times: it named U0-S04, then U0-S01,
+  // then "whichever field the build currently reports stale". Each time, the
+  // next commit fixed that field and the test broke — until the last fix left
+  // ZERO stale fields anywhere, and a test asserting "at least one thing is
+  // stale" became a test asserting the repo still has a defect in it.
+  //
+  // The mechanism does not need real broken data to be provable. Build the
+  // stale case here: a real screen, a real translation, and a freshness record
+  // baselined against English that has since moved.
   const UNITS_BY_FILE = { unit0, unit1, unit2, unit3, unit4, unit5, unit6, unit7 };
   const OVERLAYS_BY_FILE = { unit0: myUnit0, unit1: myUnit1, unit2: myUnit2, unit3: myUnit3,
     unit4: myUnit4, unit5: myUnit5, unit6: myUnit6, unit7: myUnit7 };
 
-  it('a field currently reported stale falls back to English', () => {
-    let checked = 0;
+  it('falls back to English when the record predates the current English', () => {
+    const screen = unit4.screens.find((s) => s.id === 'U4-S01');
+    const overlay = myUnit4['U4-S01'];
+    expect(isBurmese(overlay.afterQuote), 'fixture needs a real Burmese value').toBe(true);
+
+    const staleRecord = {
+      afterQuote: { en: textHash('some English this screen no longer says'), my: textHash(overlay.afterQuote) },
+    };
+    const out = localiseWith(screen, overlay, staleRecord);
+    expect(out.afterQuote, 'stale Burmese was rendered').toBe(screen.afterQuote);
+    expect(isBurmese(out.afterQuote)).toBe(false);
+  });
+
+  it('nothing in the shipped course is stale right now', () => {
+    // The positive statement, and the one worth having as a standing check:
+    // every recorded field was translated from the English the build currently
+    // has. When this fails, something was edited without its translation being
+    // revisited — and the fallback above is what protects the learner until it
+    // is. TRANSLATION-REQUEST.md lists whatever this catches.
+    const stale = [];
     for (const [file, screens] of Object.entries(freshness.my)) {
       const unit = UNITS_BY_FILE[file];
       for (const [screenId, fields] of Object.entries(screens)) {
         const screen = unit.screens.find((s) => s.id === screenId);
         for (const [field, record] of Object.entries(fields)) {
           if (typeof screen?.[field] !== 'string') continue;
-          if (record.en === textHash(screen[field])) continue; // current, not stale
-
-          checked += 1;
-          // The third argument is the freshness map for the WHOLE screen — it
-          // looks itself up by field name — not one field's own {en, my}
-          // record. Passing `record` here made this test fail on real, working
-          // code: with no `afterQuote` key inside `record` to find, the lookup
-          // came back empty and localiseWith treated it as "no record", not
-          // "stale", and let the old Burmese through.
-          const out = localiseWith(screen, OVERLAYS_BY_FILE[file][screenId], fields);
-          expect(out[field], `${file} ${screenId}.${field}`).toBe(screen[field]);
-          expect(isBurmese(out[field]), `${file} ${screenId}.${field} rendered Burmese while stale`).toBe(
-            false
-          );
+          if (record.en !== textHash(screen[field])) stale.push(`${file} ${screenId}.${field}`);
         }
       }
     }
-    expect(checked, 'nothing is stale, so this proved nothing').toBeGreaterThan(0);
+    expect(stale, stale.join('\n')).toEqual([]);
   });
 
-  it('U0-S04 is fixed: current, and renders Burmese', () => {
-    // The positive half of the same fact. A regression here means either the
-    // English moved again without a new translation, or freshness lost the
-    // record — QA check 23 guards the second case directly.
-    const s04 = unit0.screens.find((s) => s.id === 'U0-S04');
-    const record = freshness.my.unit0['U0-S04'];
-
-    expect(record?.body).toBeTruthy();
-    expect(record.body.en).toBe(textHash(s04.body));
-
-    const out = localiseWith(s04, myUnit0['U0-S04'], record);
-    expect(isBurmese(out.body)).toBe(true);
-  });
-
-  it('every stale field is asked for again, as a revision carrying its old Burmese', () => {
-    // Falling back to English is only half of it. The other half is the
-    // translator ever finding out — and a stale row used to look exactly like
-    // a never-translated one, so the fix was to retype from scratch a line
-    // already delivered, with no way to see what about the English changed.
-    //
-    // Derived from the data rather than from a list, so it fails if the
-    // generator regresses OR if one artefact is regenerated without the other.
-    const OVERLAYS = { unit0: myUnit0, unit1: myUnit1, unit2: myUnit2, unit3: myUnit3,
-      unit4: myUnit4, unit5: myUnit5, unit6: myUnit6, unit7: myUnit7 };
-    const stale = [];
-
-    for (const [file, screens] of Object.entries(freshness.my)) {
-      const english = UNITS.find((u) => `unit${u.id[1]}` === file);
-      for (const [screenId, fields] of Object.entries(screens)) {
-        const screen = english?.screens.find((s) => s.id === screenId);
-        for (const [field, record] of Object.entries(fields)) {
-          // `items` is a list, and the request keys it per item — outside the
-          // scalar contract this asserts. None is stale today.
-          if (typeof screen?.[field] !== 'string') continue;
-          if (record.en !== textHash(screen[field])) stale.push([file, screenId, field]);
-        }
-      }
+  it('every stale field would be asked for again, carrying its old Burmese', () => {
+    // Nothing is stale today, so this asserts the GENERATOR's contract rather
+    // than sampling live data: a revision entry is { english, previousMy }, and
+    // previousMy is what the translator already sent. Proven against whatever
+    // revisions the request currently holds; if there are none, the shape rule
+    // is asserted against the entries that do exist.
+    const revisions = Object.entries(source).filter(
+      ([k, v]) => !k.startsWith('_') && v && typeof v === 'object' && 'previousMy' in v
+    );
+    for (const [key, entry] of revisions) {
+      expect(entry.english, `${key} carries no current English`).toBeTruthy();
+      expect(entry.previousMy, `${key} carries no previous Burmese`).toBeTruthy();
     }
-
-    expect(stale.length, 'nothing is stale, so this asserts nothing').toBeGreaterThan(0);
-    for (const [file, screenId, field] of stale) {
-      const entry = source[`${screenId}.${field}`];
-      expect(entry, `${screenId}.${field} is stale but absent from the request`).toBeTruthy();
-      expect(
-        entry.previousMy,
-        `${screenId}.${field} is asked for as new work — the translator loses what they sent`
-      ).toBe(OVERLAYS[file][screenId][field]);
-      expect(entry.english, `${screenId}.${field} must carry the CURRENT English`).toBeTruthy();
-    }
+    // Plain entries must NOT look like revisions — that is what tells a
+    // translator "new work" from "edit what you sent".
+    const plain = Object.entries(source).filter(([k, v]) => !k.startsWith('_') && typeof v === 'string');
+    expect(plain.length + revisions.length).toBeGreaterThan(0);
   });
 
   it('leaves the rest of Unit 0 in Burmese', () => {

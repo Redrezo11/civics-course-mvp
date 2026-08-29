@@ -125,6 +125,34 @@
   // re-ran it — the bar sat on "1 of 18" for an entire unit.
   $: positionLabel = unit ? `${index + 1} of ${unit.screens.length}` : '';
 
+  /**
+   * The advance button's text, translated.
+   *
+   * `primaryLabel` is authored per screen in the unit JSON and is deliberately
+   * SKIPped by the translation pipeline — it is not prose, and asking a
+   * translator for 67 copies of the word "Next" would be absurd. But nothing
+   * translated it either, so every lesson screen in the course showed an
+   * English button to a Burmese learner: "Next" on 58 screens, "Begin" on 8,
+   * "Start Unit 1" on 1.
+   *
+   * Mapped rather than translated in place, so the content keeps authoring
+   * plain English labels and the three distinct values resolve to ui-strings.
+   * A label with no mapping falls through to itself — the same
+   * English-rather-than-blank rule the rest of i18n follows. QA check 24
+   * fails if the content introduces a fourth label without a key for it.
+   */
+  const ADVANCE_KEYS = {
+    Next: 'common.next',
+    Begin: 'common.begin',
+    'Start Unit 1': 'epitome.startUnit1',
+    Finish: 'common.finish',
+  };
+  $: advanceLabel = (label, last) => {
+    const text = label || (last ? 'Finish' : 'Next');
+    const key = ADVANCE_KEYS[text];
+    return key ? $t(key) : text;
+  };
+
   // Derived from the LOCALISED screen, so the narration follows the translation
   // with no second set of strings to author and keep in step. An `orient`
   // screen shows an official question card, which is part of what the learner
@@ -427,7 +455,7 @@
     {#if !selfPaced.has(screen.type) || interactionDone || isDynamicPractice}
       <div class="px-5 py-4 border-t border-border dark:border-dark-border">
         <button class="btn-primary" on:click={next}>
-          {screen.primaryLabel || (isLast ? 'Finish' : 'Next')}
+          {advanceLabel(screen.primaryLabel, isLast)}
         </button>
       </div>
     {/if}
