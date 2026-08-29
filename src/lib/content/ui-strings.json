@@ -140,6 +140,10 @@
     "en": "This answer changes. It has not been checked yet — look it up before your interview.",
     "my": "ဤအဖြေသည် ပြောင်းလဲပါသည်။ မစစ်ဆေးရသေးပါ — အင်တာဗျူးမတိုင်မီ ရှာဖွေပါ။"
   },
+  "dynamic.notCheckedLookUp": {
+    "en": "Not checked yet — look this up at uscis.gov before your interview.",
+    "my": "မစစ်ဆေးရသေးပါ — အင်တာဗျူးမတိုင်မီ uscis.gov တွင် ရှာဖွေပါ။"
+  },
   "dynamic.notRecorded": {
     "en": "not yet recorded",
     "my": "မှတ်တမ်း မတင်ရသေးပါ"
@@ -248,6 +252,30 @@
     "en": "It asks the same thing as the official question:",
     "my": "ဤသည်မှာ တရားဝင်မေးခွန်းနှင့် အတူတူ မေးခြင်း ဖြစ်သည် —"
   },
+  "help.a1": {
+    "en": "Private window or cleared data. Use a normal window — your lessons are all still here.",
+    "my": "သီးသန့်ဝင်းဒိုး သို့မဟုတ် ဒေတာ ရှင်းလင်းထားခြင်း ဖြစ်နိုင်သည်။ ပုံမှန်ဝင်းဒိုးကို သုံးပါ — သင့်သင်ခန်းစာများ အားလုံး ဤနေရာတွင် ရှိနေဆဲ ဖြစ်သည်။"
+  },
+  "help.a2": {
+    "en": "Close and reopen. If still blank, connect once — it works offline after that.",
+    "my": "ပိတ်ပြီး ပြန်ဖွင့်ပါ။ ဗလာဖြစ်နေသေးပါက အင်တာနက်နှင့် တစ်ကြိမ် ချိတ်ဆက်ပါ — ထို့နောက် အင်တာနက်မလိုဘဲ အလုပ်လုပ်ပါမည်။"
+  },
+  "help.a3": {
+    "en": "Every question has a link: Why is this the answer? It goes to the lesson.",
+    "my": "မေးခွန်းတိုင်းတွင် လင့်ခ်တစ်ခု ရှိသည် — ဤအဖြေက ဘာကြောင့်လဲ? ၎င်းသည် သင်ခန်းစာသို့ ခေါ်သွားပါသည်။"
+  },
+  "help.a4": {
+    "en": "Normal. Nothing is scored against you.",
+    "my": "ပုံမှန်ပါပဲ။ သင့်အပေါ် အမှတ်ဖြတ်ခြင်း မရှိပါ။"
+  },
+  "help.a5": {
+    "en": "Some answers change. Check uscis.gov/citizenship/testupdates before your interview.",
+    "my": "အချို့အဖြေများ ပြောင်းလဲပါသည်။ အင်တာဗျူးမတိုင်မီ uscis.gov/citizenship/testupdates တွင် စစ်ဆေးပါ။"
+  },
+  "help.a6": {
+    "en": "This course teaches civics only. For your case, use uscis.gov or a qualified legal-service provider.",
+    "my": "ဤသင်တန်းသည် civics ကိုသာ သင်ကြားပေးပါသည်။ သင့်အမှုအတွက် uscis.gov သို့မဟုတ် အရည်အချင်းပြည့်မီသော ဥပဒေဝန်ဆောင်မှုပေးသူထံ ဆက်သွယ်ပါ။"
+  },
   "help.about": {
     "en": "About: a self-paced civics course to help you prepare for the U.S. naturalization test.",
     "my": "အကြောင်းအရာ — အမေရိကန် နိုင်ငံသားခံယူမှု စာမေးပွဲအတွက် ပြင်ဆင်ရာတွင် ကူညီရန် ကိုယ်တိုင်နှုန်းထားဖြင့် လေ့လာနိုင်သော civics သင်တန်း။"
@@ -271,6 +299,30 @@
   "help.privacyLms": {
     "en": "Your privacy: this course saves your progress on this phone, and reports your progress to the organisation providing the course.",
     "my": "သင့်ကိုယ်ရေးကိုယ်တာ — ဤသင်တန်းသည် သင့်တိုးတက်မှုကို သင့်ဖုန်းပေါ်တွင် သိမ်းဆည်းပြီး ဤသင်တန်းပေးသော အဖွဲ့အစည်းထံ အစီရင်ခံပါသည်။"
+  },
+  "help.q1": {
+    "en": "My lessons disappeared",
+    "my": "ကျွန်ုပ်၏ သင်ခန်းစာများ ပျောက်သွားသည်"
+  },
+  "help.q2": {
+    "en": "It opened but nothing appeared",
+    "my": "ဖွင့်လိုက်သော်လည်း ဘာမျှ မပေါ်လာပါ"
+  },
+  "help.q3": {
+    "en": "I don't understand a question",
+    "my": "မေးခွန်းတစ်ခုကို ကျွန်ုပ် နားမလည်ပါ"
+  },
+  "help.q4": {
+    "en": "I keep getting one wrong",
+    "my": "တစ်ခုကို ကျွန်ုပ် အမြဲ မှားနေသည်"
+  },
+  "help.q5": {
+    "en": "Is the answer still correct?",
+    "my": "အဖြေသည် ယခုလည်း မှန်ကန်နေဆဲလား?"
+  },
+  "help.q6": {
+    "en": "Questions about my own case",
+    "my": "ကျွန်ုပ်၏ ကိုယ်ပိုင်အမှုနှင့် ပတ်သက်သော မေးခွန်းများ"
   },
   "help.reset": {
     "en": "This clears all your progress on this phone. This cannot be undone.",
@@ -319,6 +371,10 @@
   "home.practiceEvery": {
     "en": "Practice every question",
     "my": "မေးခွန်းတိုင်းကို လေ့ကျင့်ပါ"
+  },
+  "home.practiceInterview": {
+    "en": "PRACTICE THE INTERVIEW",
+    "my": "အင်တာဗျူး လေ့ကျင့်ပါ"
   },
   "home.reviewSubtitle": {
     "en": "{name} — questions from every lesson so far",
@@ -411,6 +467,10 @@
   "practice.chooseNMore": {
     "en": "Choose {n} more",
     "my": "နောက်ထပ် {n} ခု ရွေးပါ"
+  },
+  "practice.officialLabel": {
+    "en": "Practice — the official test question",
+    "my": "လေ့ကျင့်ခန်း — တရားဝင် စာမေးပွဲမေးခွန်း"
   },
   "questionBank.allOfficial": {
     "en": "All {n} official questions · ★ marks the 65/20 questions",
@@ -603,6 +663,38 @@
   "settings.title": {
     "en": "Settings",
     "my": "ဆက်တင်များ"
+  },
+  "unit.U0": {
+    "en": "Test day",
+    "my": "စာမေးပွဲနေ့"
+  },
+  "unit.U1": {
+    "en": "We the People",
+    "my": "ကျွန်ုပ်တို့ ပြည်သူများ"
+  },
+  "unit.U2": {
+    "en": "Three branches",
+    "my": "အစိုးရ အခွဲ သုံးခု"
+  },
+  "unit.U3": {
+    "en": "Who represents you",
+    "my": "သင့်ကို ကိုယ်စားပြုသူများ"
+  },
+  "unit.U4": {
+    "en": "Federal and state",
+    "my": "ဖက်ဒရယ်နှင့် ပြည်နယ်"
+  },
+  "unit.U5": {
+    "en": "Rights and responsibilities",
+    "my": "အခွင့်အရေးများနှင့် တာဝန်များ"
+  },
+  "unit.U6": {
+    "en": "How America began",
+    "my": "အမေရိက စတင်ပုံ"
+  },
+  "unit.U7": {
+    "en": "How America changed",
+    "my": "အမေရိက ပြောင်းလဲပုံ"
   },
   "vocab.flipAll": {
     "en": "flip all {n} to continue",

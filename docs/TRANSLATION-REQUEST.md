@@ -90,11 +90,11 @@ were lost this way before we worked out the cause.
 
 ---
 
-## 1. Interface strings — 0 of 156 remaining
+## 1. Interface strings — 0 of 179 remaining
 
 In `src/lib/content/ui-strings.json`. Fill the `my` value; leave `en` alone.
 
-_All 156 interface strings carry Burmese._ They remain `draft-unreviewed` and still need a native pass, but none is missing.
+_All 179 interface strings carry Burmese._ They remain `draft-unreviewed` and still need a native pass, but none is missing.
 
 ---
 

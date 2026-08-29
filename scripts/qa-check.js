@@ -1396,6 +1396,55 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
   }
 }
 
+// --- 25. No learner-visible prose stranded in a script block ---------------
+//
+// Help.svelte held its whole FAQ — six questions and six answers — in a plain
+// array inside <script>, and the unit titles were hardcoded there in three more
+// screens. All of it rendered; none of it went through $t(); and none of it
+// could be FOUND, because scripts/extract-ui-strings.cjs stripped script blocks
+// before scanning on the assumption nothing learner-visible lived there. So a
+// sweep reporting "every learner-visible string is accounted for" was reporting
+// on files it had already thrown half of away.
+//
+// Both are fixed. This is the guard: prose-shaped literals in a component's
+// script block must be translated keys or a short allow-list, not text.
+{
+  const check = '25 no prose stranded in a script block';
+
+  // Things that read like sentences to the regex but are not shown to anyone.
+  const ALLOWED = [
+    'Start Unit 1',          // an ADVANCE_KEYS entry — check 24 owns it
+    'The correct answer is X.', // quoted inside a trailing code comment
+  ];
+
+  const offenders = [];
+  for (const file of allSourceFiles(join(srcDir, 'lib'))) {
+    if (!file.endsWith('.svelte')) continue;
+    const text = readFileSync(file, 'utf8');
+    const scripts = [...text.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)]
+      .map((m) => m[1])
+      .join('\n')
+      .replace(/\/\*[\s\S]*?\*\//g, '')
+      .replace(/\/\/.*$/gm, '');
+
+    for (const m of scripts.matchAll(/'([^'\n]{12,})'|"([^"\n]{12,})"/g)) {
+      const s = (m[1] || m[2]).trim();
+      if (!s || /^[.#/]|^https?:/.test(s)) continue;
+      if (/^[a-z0-9\-:_[\]/. ]+$/.test(s)) continue;
+      if (!/[A-Za-z]{3,}\s+\S/.test(s)) continue;
+      if (ALLOWED.includes(s)) continue;
+      offenders.push(`${file.replace(root, '').replace(/\\/g, '/')} → "${s.slice(0, 56)}"`);
+    }
+  }
+
+  for (const o of offenders) {
+    fail(check, `${o} — move it to ui-strings.json and render it through $t()`);
+  }
+  if (!offenders.length) {
+    pass(check, 'every learner-visible string reaches the translation pipeline');
+  }
+}
+
 // Contrast and readability USED to be listed here as human-only. They are not:
 // both are mechanical and are now checks 4 and 5. What genuinely cannot be
 // done in this script is anything requiring the source document or human

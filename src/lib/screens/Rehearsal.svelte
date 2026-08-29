@@ -89,7 +89,7 @@
       const ca = getCurrentAnswer(q.id);
       return ca && ca.verified && ca.value
         ? [`${ca.value}  (checked ${ANSWERS_CHECKED || 'not yet'})`]
-        : ['Not checked yet — look this up at uscis.gov before your interview.'];
+        : [$t('dynamic.notCheckedLookUp')];
     }
     return q.acceptedAnswers;
   }

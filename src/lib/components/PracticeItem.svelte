@@ -29,7 +29,7 @@
   const dispatch = createEventDispatcher();
 
   export let q;
-  export let label = 'Practice — the official test question';
+  export let label = '';
   /** Text the PARENT renders directly above this component. Narrated here so it
       is spoken in the order it is read; this component does not render it. */
   export let lead = '';
@@ -89,7 +89,7 @@
 {#if q}
   {#key q.id}
     <NarrationButton segments={narration} {lang} wrapperClass="mb-3" />
-    <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-2">{label}</p>
+    <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-2">{label || $t('practice.officialLabel')}</p>
     <QuestionCard text={q.official} />
 
     {#if q.dynamic}

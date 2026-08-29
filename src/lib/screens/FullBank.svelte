@@ -1,5 +1,6 @@
 <script>
   import { t } from '../i18n.js';
+  import { unitTitleKey } from '../content/unit-titles.js';
   // G-08 · Full-bank practice, per unit. Storyboard §6 (v5.3) and G-22.
   //
   // Why this screen exists: the core path practices 39 of 128 questions — 30%.
@@ -26,18 +27,8 @@
 
   export let unitId;
 
-  const UNIT_TITLES = {
-    U1: 'We the People',
-    U2: 'Three branches',
-    U3: 'Who represents you',
-    U4: 'Federal and state',
-    U5: 'Rights and responsibilities',
-    U6: 'How America began',
-    U7: 'How America changed',
-  };
-
   $: questions = getUnitQuestions(unitId);
-  $: title = UNIT_TITLES[unitId] || unitId;
+  $: title = $t(unitTitleKey(unitId));
 
   // 'entry' → 'running' → 'exit'
   let phase = 'entry';

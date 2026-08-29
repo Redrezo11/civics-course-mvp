@@ -1,5 +1,6 @@
 <script>
   import { t } from '../i18n.js';
+  import { unitTitleKey } from '../content/unit-titles.js';
   import { progress } from '../stores/progress.js';
   // G-03 · the ungated reference to every official question. G-16 lists this
   // as one of the affordances a layout change may never remove.
@@ -20,16 +21,6 @@
   } from '../content/questions.js';
 
   const questions = getAllQuestions();
-
-  const UNIT_NAMES = {
-    U1: 'We the People',
-    U2: 'Three branches',
-    U3: 'Who represents you',
-    U4: 'Federal and state',
-    U5: 'Rights and responsibilities',
-    U6: 'How America began',
-    U7: 'How America changed',
-  };
 
   let search = '';
   let expanded = null;
@@ -114,7 +105,7 @@
                 class="tap inline-flex items-center text-xs font-bold underline text-ink dark:text-dark-ink"
                 on:click={() => navigate(`/unit/${q.unit}`)}
               >
-                {$t('questionBank.whyAnswer', { unit: UNIT_NAMES[q.unit] || q.unit })}
+                {$t('questionBank.whyAnswer', { unit: $t(unitTitleKey(q.unit)) })}
               </button>
             </div>
           </div>

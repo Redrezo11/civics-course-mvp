@@ -5,14 +5,18 @@
   import { ANSWERS_CHECKED } from '../content/questions.js';
   import { lmsSession } from '../stores/lms.js';
 
-  const entries = [
-    { q: 'My lessons disappeared', a: 'Private window or cleared data. Use a normal window — your lessons are all still here.' },
-    { q: 'It opened but nothing appeared', a: 'Close and reopen. If still blank, connect once — it works offline after that.' },
-    { q: "I don't understand a question", a: 'Every question has a link: Why is this the answer? It goes to the lesson.' },
-    { q: 'I keep getting one wrong', a: 'Normal. Nothing is scored against you.' },
-    { q: 'Is the answer still correct?', a: 'Some answers change. Check uscis.gov/citizenship/testupdates before your interview.' },
-    { q: 'Questions about my own case', a: 'This course teaches civics only. For your case, use uscis.gov or a qualified legal-service provider.' },
-  ];
+  $: my = ($progress.language || 'en') === 'my' ? 'my' : undefined;
+
+  // Keys, not literals. These six pairs sat in a plain array inside this
+  // script block and so never reached the translation pipeline — a learner
+  // reading Burmese hit six English questions and six English answers on the
+  // one screen they open when something has gone wrong.
+  //
+  // They also could not be FOUND: scripts/extract-ui-strings.cjs strips
+  // <script> blocks before scanning, on the assumption that nothing
+  // learner-visible lives there. This array is the counter-example, and the
+  // extractor now scans script blocks too.
+  const FAQ = ['1', '2', '3', '4', '5', '6'];
 
   let confirmingReset = false;
   function doReset() {
@@ -27,10 +31,12 @@
 
   <h1 class="text-heading font-bold mb-4">{$t('help.heading')}</h1>
 
-  {#each entries as e}
+  {#each FAQ as n}
     <div class="mb-3.5">
-      <p class="text-sm font-bold mb-0.5">{e.q}</p>
-      <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary leading-relaxed">{e.a}</p>
+      <p class="text-sm font-bold mb-0.5" lang={my}>{$t(`help.q${n}`)}</p>
+      <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary leading-relaxed" lang={my}>
+        {$t(`help.a${n}`)}
+      </p>
     </div>
   {/each}
 

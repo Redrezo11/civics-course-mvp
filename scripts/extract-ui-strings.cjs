@@ -18,12 +18,42 @@ let total = 0;
 
 for (const file of walk(ROOT).sort()) {
   const text = fs.readFileSync(file, 'utf8');
-  // Drop the <script> block and HTML comments: neither is learner-visible.
+
+  // THE SCRIPT BLOCK IS SCANNED TOO, AND USED NOT TO BE.
+  //
+  // This said "Drop the <script> block and HTML comments: neither is
+  // learner-visible", which is true of comments and false of script. Help.svelte
+  // held its entire FAQ — six questions and six answers — in a plain array
+  // there, and so did the unit titles in Home, FullBank and QuestionBank. All
+  // of it rendered to the learner; none of it could be seen by this tool, so
+  // a sweep that reported "every learner-visible string is accounted for" was
+  // reporting on a file it had already thrown half of away.
+  //
+  // Comments really are not learner-visible, so those still go — including the
+  // long explanatory ones in the script, which would otherwise flood the
+  // inventory with prose nobody can read on screen.
+  const scriptBlocks = [...text.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/g)]
+    .map((m) => m[1])
+    .join('\n')
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/^\s*\/\/.*$/gm, '');
+
   const body = text
     .replace(/<script[\s\S]*?<\/script>/g, '')
     .replace(/<!--[\s\S]*?-->/g, '');
 
   const found = new Set();
+
+  // Prose held in a script-block literal. Deliberately strict: a string only
+  // counts if it reads like a sentence — two or more words, at least one of
+  // them long — so class lists, keys, ids and paths do not flood the list.
+  for (const m of scriptBlocks.matchAll(/'([^'\n]{12,})'|"([^"\n]{12,})"|`([^`\n${]{12,})`/g)) {
+    const s = (m[1] || m[2] || m[3]).trim();
+    if (!s || /^[.#/]|^https?:/.test(s)) continue;
+    if (/^[a-z0-9\-:_[\]/. ]+$/.test(s)) continue; // class list / path / key
+    if (!/[A-Za-z]{3,}\s+\S/.test(s)) continue; // needs at least two words
+    found.add(`[script] ${s}`);
+  }
 
   // 1. Text nodes between tags. Interpolations are collapsed to a placeholder
   // FIRST — otherwise a sentence like "The correct answer is {x}." is skipped

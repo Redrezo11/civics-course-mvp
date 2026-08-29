@@ -1,5 +1,6 @@
 <script>
   import { t } from '../i18n.js';
+  import { unitTitleKey } from '../content/unit-titles.js';
   import { onMount } from 'svelte';
   import { navigate } from '../router.js';
   import { progress, questionsPracticedCount } from '../stores/progress.js';
@@ -199,7 +200,7 @@
 {:else}
   <div class="min-h-screen flex flex-col max-w-md mx-auto">
     <LessonBar
-      unitLabel={unit.title}
+      unitLabel={$t(unitTitleKey(unitId))}
       position={positionLabel}
       onBack={back}
     />

@@ -9,17 +9,12 @@
   import { navigate } from '../router.js';
   import { getUnitQuestions, TOTAL_QUESTIONS, ANSWERS_CHECKED } from '../content/questions.js';
   import { REVIEWS, unlockedReviews } from '../select-review.js';
+  import { UNIT_IDS, unitTitleKey } from '../content/unit-titles.js';
 
-  const units = [
-    { id: 'U0', name: 'Test day' },
-    { id: 'U1', name: 'We the People' },
-    { id: 'U2', name: 'Three branches' },
-    { id: 'U3', name: 'Who represents you' },
-    { id: 'U4', name: 'Federal and state' },
-    { id: 'U5', name: 'Rights' },
-    { id: 'U6', name: 'America began' },
-    { id: 'U7', name: 'America changed' },
-  ];
+  // Names come from ui-strings, not from a copy kept here. This list used to
+  // hold its own — with U5/U6/U7 shortened, so the same unit read three ways
+  // across three screens — and none of it was translated.
+  $: units = UNIT_IDS.map((id) => ({ id, name: $t(unitTitleKey(id)) }));
 
   // All eight units are built: content authored from Storyboard v5.3 §5–6
   // and Question_Bank_Companion.md (all 128 questions).
@@ -60,7 +55,7 @@
   // CONTINUE keeps its title because which unit you are returning to is the
   // one thing the learner cannot infer.
   $: primary = allDone
-    ? { label: 'PRACTICE THE INTERVIEW', title: 'Rehearsal', href: '/rehearsal' }
+    ? { label: $t('home.practiceInterview'), title: $t('rehearsal.heading'), href: '/rehearsal' }
     : started
       ? { label: 'CONTINUE', title: `Unit ${resumeUnit.id.slice(1)} — ${resumeUnit.name}`, href: `/unit/${resumeUnit.id}` }
       : { label: 'START', title: '', href: `/unit/${resumeUnit.id}` };
