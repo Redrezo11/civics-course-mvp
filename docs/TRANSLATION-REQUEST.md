@@ -5,8 +5,8 @@
 content change rather than editing this file, or it will describe a course that
 no longer exists.
 
-Remaining: **0 interface strings** and **39 content
-fields** — 31 never translated, and
+Remaining: **0 interface strings** and **37 content
+fields** — 29 never translated, and
 **8 marked ↻**.
 
 A field that is translated and still current is live and is **not** listed here,
@@ -149,9 +149,9 @@ which is the authority if this description and the JSON ever disagree:
 | U3 Who represents you | 7 |
 | U4 Federal and state | 3 |
 | U5 Rights and responsibilities | 5 |
-| U6 How America began | 7 |
-| U7 How America changed | 8 |
-| **Total** | **39** |
+| U6 How America began | 6 |
+| U7 How America changed | 7 |
+| **Total** | **37** |
 
 ---
 
@@ -225,7 +225,7 @@ which is the authority if this description and the JSON ever disagree:
 
 ### U6 — How America began
 
-**7 fields.**
+**6 fields.**
 
 | | Screen | Field | English |
 |---|---|---|---|
@@ -235,11 +235,10 @@ which is the authority if this description and the JSON ever disagree:
 |  | `U6-S06` | `paragraphs` | Chapter 2 — The break. \| The thirteen colonies were ruled by Britain, and Britain taxed them — the Stamp Act, the Tea Act — while giving them no vote and no voice in the decisions. The colonists gave their complaint a name that still rings: taxation without representation. Protest grew — the Boston Tea Party — and pro… **[clipped — full text in `translation-source.json` under `U6-S06.paragraphs`]** |
 | ↻ | `U6-S06` | `alt` | The Declaration of Independence on aged parchment, headed In Congress, July 4, 1776. |
 |  | `U6-S07` | `paragraphs` | Chapter 3 — The build. \| The colonies were free — but they were struggling. The first loose arrangement between the states (the Articles of Confederation) proved too weak to work. So in 1787, the states sent their best minds to Philadelphia and wrote the Constitution — the rulebook you know, born from the two fears yo… **[clipped — full text in `translation-source.json` under `U6-S07.paragraphs`]** |
-|  | `U6-S09` | `items[2].options` | Founded the first free public libraries \| First president of the United States \| Led the Union during the Civil War **⚠ KEEP ENGLISH** — these restate accepted answers |
 
 ### U7 — How America changed
 
-**8 fields.**
+**7 fields.**
 
 | | Screen | Field | English |
 |---|---|---|---|
@@ -250,4 +249,3 @@ which is the authority if this description and the JSON ever disagree:
 |  | `U7-S07` | `paragraphs` | Chapter 3 — America in the world. \| The 1900s took America into the world, and the test asks why each time — so learn the reasons, not just the names. \| World War I. Germany attacked American ships. The United States entered the war. \| The Great Depression began in 1929 when the stock market crashed. It was the long… **[clipped — full text in `translation-source.json` under `U7-S07.paragraphs`]** |
 |  | `U7-S08` | `paragraphs` | Chapter 4 — The symbols you will stand under. \| At your ceremony there will be a flag. Read it like a sentence: 13 stripes — the 13 original colonies, from the founding story. 50 stars — one for each state, from the growing story. \| The capital: Washington, D.C. The Statue of Liberty stands in New York Harbor — for m… **[clipped — full text in `translation-source.json` under `U7-S08.paragraphs`]** |
 |  | `U7-S12` | `items[1].buckets` | Memorial Day \| Veterans Day |
-|  | `U7-S12` | `items[2].options` | To stop the spread of communism \| To defend Pearl Harbor \| To free Kuwait **⚠ KEEP ENGLISH** — these restate accepted answers |

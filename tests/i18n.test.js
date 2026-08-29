@@ -261,6 +261,54 @@ describe('the Burmese gloss beneath an answer', () => {
       });
     }
   });
+
+  it('covers every answer set, on every screen and every guided-practice item', () => {
+    // The gap this closes: six units' opening "hook" screen (U2-S02..U7-S02)
+    // had its question and feedback translated but never its options, so the
+    // buttons rendered English with nothing beneath them — the one field the
+    // original delivery for those screens skipped. Two guided-practice items
+    // had the same shape of gap the other direction: options DELIVERED, but
+    // left as English rather than translated, which the build script detects
+    // but only as a low-visibility note, not a failure.
+    //
+    // `interpret` items are the deliberate exception — the skill being taught
+    // is recognising an English question under unfamiliar wording, and a
+    // gloss there would remove the thing being practised. A handful of proper
+    // names (a holiday, an institution) also stay English on purpose,
+    // consistent with how the same name reads elsewhere on the same screen —
+    // those are allow-listed by exact match, not by field or by unit, so a
+    // genuinely new gap cannot hide behind one that was already reviewed.
+    const ALLOWED = new Set([
+      'U7-S12.items[1].buckets', // "Memorial Day" / "Veterans Day" — kept English
+    ]);                         // to match termA/termB two lines above them.
+
+    const gaps = [];
+    const check = (english, resolved, field, where) => {
+      if (english.type === 'interpret' || english.kind === 'interpret') return;
+      if (!english[field]) return;
+      if (ALLOWED.has(`${where}.${field}`)) return;
+      const gloss = resolved[`${field.slice(0, -1)}Gloss`] ?? resolved[`${field}Gloss`];
+      const glossField = { options: 'optionsGloss', buckets: 'bucketsGloss',
+        orderItems: 'orderItemsGloss', sortItems: 'sortItemsGloss' }[field];
+      const value = resolved[glossField];
+      if (!value || !value.some((g) => g && isBurmese(g))) gaps.push(`${where}.${field}`);
+    };
+
+    for (const unit of UNITS) {
+      for (const screen of unit.screens) {
+        const loc = localiseScreen(screen, unit.id, 'my');
+        for (const field of ['options', 'buckets', 'orderItems', 'sortItems']) {
+          check(screen, loc, field, screen.id);
+        }
+        (screen.items || []).forEach((item, i) => {
+          for (const field of ['options', 'buckets', 'orderItems', 'sortItems']) {
+            check(item, loc.items[i], field, `${screen.id}.items[${i}]`);
+          }
+        });
+      }
+    }
+    expect(gaps).toEqual([]);
+  });
 });
 
 describe('an answer on screen', () => {
