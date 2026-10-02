@@ -152,6 +152,15 @@ backlog to say what the screen already says.
 A screen may set `narrationText` to override this — the escape hatch for
 anything that should be spoken differently from how it reads.
 
+**In Burmese mode the English prose line is not spoken.** Since 2026-10-02 a
+Burmese lesson screen shows each passage as English with the Burmese beneath
+(`docs/ARCHITECTURE.md` §1), but narration still reads the localised screen
+only — by decision, because reading both would double the listening time on
+every screen. The English line is a reading aid. This is the one deliberate
+exception to "narrate what is on screen", and `tests/bilingual.test.js` records
+it, so a Burmese-mode case added to `tests/narration-coverage.test.js` will find
+the English "unnarrated" for this reason, not a bug.
+
 **Narrated:** `info`, `orient`, `connect`, `bigIdea`, `seeItNotIt`,
 `confusablePair`, `lockItIn`, plus Welcome. 60 screens per language.
 

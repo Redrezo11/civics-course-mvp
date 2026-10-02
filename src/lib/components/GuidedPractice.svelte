@@ -19,12 +19,16 @@
 
   import { createEventDispatcher } from 'svelte';
   import AnswerLabel from './AnswerLabel.svelte';
+  import Bilingual from './Bilingual.svelte';
   import NarrationButton from './NarrationButton.svelte';
   import { guidedItemSegments } from '../narration-text.js';
   import { progress } from '../stores/progress.js';
   const dispatch = createEventDispatcher();
 
   export let items = [];
+  /** The English items, index-aligned with `items`, so instructions and
+      questions render English with Burmese beneath. Falls back to `items`. */
+  export let english = [];
 
   let current = 0;
   let answers = {};         // itemIndex -> chosen option index
@@ -169,7 +173,7 @@
 
     <div>
       {#if item.kind === 'compare'}
-        <p class="text-sm mb-3">{item.instructions}</p>
+        <Bilingual wrapperClass="text-sm mb-3" en={english[i]?.instructions ?? item.instructions} my={item.instructions} />
         <div class="flex gap-2 mb-3">
           {#each item.buckets as b, bi}
             <div class="flex-1 border border-border dark:border-dark-border rounded-card p-2 min-h-[80px]">
@@ -242,7 +246,7 @@
         {/if}
 
       {:else if item.kind === 'order'}
-        <p class="text-sm mb-3">{item.instructions}</p>
+        <Bilingual wrapperClass="text-sm mb-3" en={english[i]?.instructions ?? item.instructions} my={item.instructions} />
 
         <div class="mb-3">
           {#each orderPicks[i] || [] as pickIdx, slot}
@@ -298,13 +302,13 @@
 
       {:else}
         {#if item.questionCard}
-          <p class="mb-2">{item.question}</p>
+          <Bilingual wrapperClass="mb-2" en={english[i]?.question ?? item.question} my={item.question} />
           <div class="question-card">
             <span class="question-tag">Q</span>
             <p class="font-bold m-0">{item.cardText}</p>
           </div>
         {:else}
-          <p class="mb-3">{item.question}</p>
+          <Bilingual wrapperClass="mb-3" en={english[i]?.question ?? item.question} my={item.question} />
         {/if}
 
         {#each item.options as opt, oi}

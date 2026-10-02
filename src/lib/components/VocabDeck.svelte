@@ -3,9 +3,13 @@
   // surviving use per v5.0; graded practice never uses bare reveal).
   import { t } from '../i18n.js';
   import { createEventDispatcher } from 'svelte';
+  import Bilingual from './Bilingual.svelte';
   const dispatch = createEventDispatcher();
 
   export let cards = [];
+  /** The English cards, so def/example render English with Burmese beneath.
+      Falls back to `cards` itself when a caller passes none. */
+  export let english = [];
   let flipped = new Set();
 
   function flip(i) {
@@ -42,8 +46,16 @@
           lang="my"
         >{card.wordGloss}</p>
       {/if}
-      <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary mb-2 mt-1">{card.def}</p>
-      <p class="text-xs italic text-ink-muted dark:text-dark-ink-muted">"{card.example}"</p>
+      <Bilingual
+        wrapperClass="text-sm text-ink-secondary dark:text-dark-ink-secondary mb-2 mt-1"
+        en={english[i]?.def ?? card.def}
+        my={card.def}
+      />
+      <Bilingual
+        wrapperClass="text-xs italic text-ink-muted dark:text-dark-ink-muted"
+        en={english[i]?.example ?? card.example}
+        my={card.example}
+      />
     </div>
   {:else}
     <button

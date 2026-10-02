@@ -407,7 +407,12 @@ describe('vocab cards', () => {
       for (const screen of unit.screens) {
         const loc = localiseScreen(screen, unit.id, 'my');
         const en = JSON.stringify(screen);
-        const my = JSON.stringify(loc);
+        // A confusable pair's term name renders as English with the Burmese
+        // beneath (Bilingual.svelte), so the Burmese name no longer carries the
+        // English inside it — that would print it twice. The English name is
+        // on screen, so count it as shown.
+        const pairedNames = ['termA', 'termB'].map((k) => screen[k]?.name).filter(Boolean);
+        const my = JSON.stringify(loc) + JSON.stringify(pairedNames);
         // Screens with no Burmese at all fall back to English wholesale, which
         // is a different (already covered) condition.
         if (!isBurmese(my)) continue;

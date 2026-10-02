@@ -71,6 +71,19 @@ export function applyFields(english, fields) {
       continue;
     }
 
+    // A string never replaces a structured English field. The confusable-pair
+    // screens are { name, def }; six deliveries arrived as one run-together
+    // string, which replaced the object and rendered both terms blank.
+    // build-translations.js now splits those at source — this is the backstop.
+    if (
+      typeof value === 'string' &&
+      english[key] &&
+      typeof english[key] === 'object' &&
+      !Array.isArray(english[key])
+    ) {
+      continue;
+    }
+
     const glossKey = GLOSS_FIELDS[key];
     if (glossKey && Array.isArray(english[key]) && Array.isArray(value)) {
       out[glossKey] = value.map((v) => (typeof v === 'string' ? v : v?.text));

@@ -1,5 +1,6 @@
 <script>
   import { t } from '../i18n.js';
+  import Bilingual from './Bilingual.svelte';
   // Multi-select — used by the six "any N of these" questions (Q10, Q48,
   // Q65, Q67, Q81, Q126). Storyboard: 5–6 options with the required count
   // stated on screen, per G-19 (never encourage more answers than asked).
@@ -13,7 +14,8 @@
   export let options = [];
   export let acceptedAnswers = [];
   export let required = 2;
-  export let feedbackExplain = ''; // course-authored, single language — see PracticeItem
+  export let feedbackExplain = ''; // course-authored — see PracticeItem
+  export let feedbackExplainEn = ''; // its English, shown above it in Burmese mode
 
   let chosen = [];
   let answered = false;
@@ -75,7 +77,9 @@
     <div class="mt-3 p-3 rounded-card border border-border dark:border-dark-border text-sm leading-relaxed">
       <span class="font-bold">{$t('practice.acceptedMarked')}</span>
       {$t('practice.anyNIsEnough', { n: required })}
-      {#if feedbackExplain}<br />{feedbackExplain}{/if}
+      {#if feedbackExplain}
+        <Bilingual tag="span" wrapperClass="block mt-1" en={feedbackExplainEn || feedbackExplain} my={feedbackExplain} />
+      {/if}
     </div>
   {/if}
 </div>

@@ -263,6 +263,43 @@ function mergeOverlays(base, top) {
 // ambiguous is an error, not a guess.
 // ---------------------------------------------------------------------------
 
+// ---------------------------------------------------------------------------
+// Confusable-pair terms — { name, def } in the build.
+//
+// Six screens were delivered as one string per term, "The Cabinet
+// (အစိုးရအဖွဲ့) — သမ္မတကို အကြံပေးသည်။ …". Nothing here checked non-array
+// objects, so the string replaced the object and the screen rendered both
+// terms blank in Burmese, silently.
+//
+// Split on the FIRST spaced em dash — five of the twelve defs contain a second
+// one. The Burmese name is the parenthesised part of the left side; with no
+// parenthesis ("Memorial Day") the left side is the English term itself and
+// the renderer collapses it to one line. An object-form delivery gets the same
+// treatment for its name, because "Supreme law of the land (နိုင်ငံ၏ …)" would
+// otherwise print the English twice under the English.
+// ---------------------------------------------------------------------------
+
+const isTerm = (v) =>
+  v && typeof v === 'object' && !Array.isArray(v) && 'name' in v && 'def' in v;
+
+const burmeseName = (left) => {
+  const m = /\(([^()]*[က-႟][^()]*)\)\s*$/.exec(left.trim());
+  return (m ? m[1] : left).trim();
+};
+
+function splitTerm(value) {
+  if (isTerm(value)) {
+    const name = burmeseName(String(value.name || ''));
+    return name && value.def ? { name, def: value.def } : null;
+  }
+  if (typeof value !== 'string') return null;
+  const at = value.indexOf(' — ');
+  if (at < 0) return null;
+  const name = burmeseName(value.slice(0, at));
+  const def = value.slice(at + 3).trim();
+  return name && def ? { name, def } : null;
+}
+
 function normaliseShape(overlay, buildById, unusable) {
   const AMBIGUOUS = Symbol('ambiguous');
 
@@ -290,6 +327,17 @@ function normaliseShape(overlay, buildById, unusable) {
     const en = buildById[screenId];
     if (!en) continue;
     for (const [field, value] of Object.entries(fields)) {
+      if (isTerm(en[field])) {
+        const term = splitTerm(value);
+        if (term) fields[field] = term;
+        else {
+          delete fields[field];
+          unusable.push(
+            `${screenId}.${field}: expected { name, def } or "Term (မြန်မာ) — definition"; got ${JSON.stringify(value).slice(0, 60)}`
+          );
+        }
+        continue;
+      }
       if (field === 'items' && Array.isArray(value)) {
         value.forEach((item, i) => {
           for (const [k, v] of Object.entries(item || {})) {

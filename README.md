@@ -184,8 +184,9 @@ per-question seed, so the order is stable across reloads but the answer moves.
 - Images are striped placeholders; alt text is authored, so the swap is a file
   drop with no content edits.
 - Companion character: placeholder box.
-- Burmese: preference is stored and honoured in the UI chrome, but lesson
-  content stays English until native-reviewed translation lands.
+- Burmese: every unit is translated, from sources marked as not yet
+  native-reviewed. Burmese mode shows lesson prose as English with the Burmese
+  beneath (`docs/ARCHITECTURE.md` §1); English mode is English only.
 - G-05b method undecided — the screen is built to the storyboard's interim
   shape and does not pretend to record anything.
 - `speechSynthesis` "Listen" button: cut from MVP per explicit decision.

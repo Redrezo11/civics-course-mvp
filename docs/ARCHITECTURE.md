@@ -9,30 +9,61 @@ rules that decide what may and may not be translated.
 
 ## 1. The runtime rule
 
-**Burmese is exclusively for the Burmese version.** A learner whose language is
-`my` sees Burmese; a learner set to `en` sees English. Teaching text is never
-presented as a bilingual pair — no side-by-side layout for prose, no English
-paragraph with its translation stacked under it.
+**English mode is English only. Burmese mode shows lesson prose as the English
+with the Burmese directly beneath it.**
 
-**Answers are the exception**, and §1a explains why at length: they stay English
-with the Burmese beneath. Everything below in this section is about the
-teaching text around them.
+This reverses the original rule, which kept teaching text single-language — "no
+English paragraph with its translation stacked under it". It was reversed on
+**2026-10-02** on reviewer feedback: learners using Burmese mode asked for both
+languages on the same page. The interview is in English, so meeting the English
+beside the Burmese they understand is preparation, not clutter.
 
-This is why every translatable field in the build is a **single string**, not a
-`{ en, my }` pair. `feedbackExplain`, `learnedLine`, `paragraphs` — one language,
-resolved before render. The pairing lives in the *source* files, not in the
-shipped content.
+What it covers, and what it does not:
 
-The pattern this was explicitly modelled against — `vocalize-mvp`, which stacks
-`explanation` and `explanationArabic` on the same screen — is the thing this
-course does **not** do *for teaching text*. Answers stack deliberately and for a
-specific reason (§1a); explanations do not stack at all.
+| | Burmese mode |
+|---|---|
+| Lesson prose — the 119 unit screens: headings, paragraphs, instructions, questions, feedback, vocab definitions and examples, confusable-pair terms | English, Burmese beneath, **same size and weight** |
+| Answers — options, buckets, sort chips, order cards, the vocab word | English, Burmese beneath in grey (§1a, unchanged) |
+| Official question wording and accepted answers | English only (§1b, unchanged) |
+| App screens around the lessons — Home, Welcome, Help, Settings, Rehearsal, Completion, Epitome — and every button and label | Burmese only |
+| Read-aloud | Burmese only — the English line is a reading aid, not spoken (`docs/NARRATION.md` §4) |
+
+#### How the pairing works
+
+**The data layer is unchanged.** Every translatable field in the build is still a
+single string, and `localiseScreen` still returns a screen whose prose fields
+*are* Burmese. `Lesson.svelte` already holds both versions — `rawScreen`
+(English) and `screen` (localised) — and renders each prose field from both
+through [`Bilingual.svelte`](../src/lib/components/Bilingual.svelte). Components
+that receive localised data take the English alongside: `VocabDeck` and
+`GuidedPractice` an `english` list, `PracticeItem` → `SingleSelect` /
+`MultiSelect` an `explainEn`.
+
+Pairing at render rather than in the data keeps narration, the recording script
+and every data-level test exactly as they were, and makes English mode
+untouched by construction: there `screen === rawScreen`, so every pair is one
+line.
+
+`Bilingual` collapses to one line whenever there is no distinct Burmese — a
+missing translation, a stale one (which `localiseWith` has already turned back
+into English), or one identical to the English. Where a translation quotes its
+own English ("Constitution — 1787 (ဖွဲ့စည်းပုံအခြေခံဥပဒေ)"), the Burmese line
+drops the quoted part so the English is not printed twice.
+
+The Burmese line keeps the passage's size and weight — unlike an answer gloss,
+it is what a Burmese reader actually reads. The one exception is the 14px floor
+(§1a): inside a `text-xs` passage the Burmese is lifted to 14px.
+
+QA check 26 fails if a prose field is interpolated straight from the localised
+screen again (`{screen.body}`), which would show the Burmese alone;
+`tests/bilingual.test.js` renders one screen of every type in both modes.
 
 ### 1a. The exception: answers
 
 **Everything the learner picks as an answer stays English, with the Burmese
-underneath it in grey.** This is the one place the two languages share a screen,
-and it is deliberate.
+underneath it in grey** — in grey, unlike lesson prose, because here the English
+is the thing being practised and the Burmese only supports it. This predates the
+2026-10-02 change and is unaffected by it.
 
 The reasoning is the reasoning behind the whole course. The officer conducts the
 interview in English. An answer a learner has only ever met in Burmese is an
@@ -50,9 +81,9 @@ That argument was never specific to interpret items, so it now covers all four
 answer surfaces — multiple-choice options, sort bucket labels, sort chips and
 ordering cards — with a proper layout instead of parentheses.
 
-**Teaching prose, questions and instructions are not answers** and stay fully
-translated. The learner reads those to understand; they only have to *produce*
-the answers.
+**Teaching prose, questions and instructions are not answers.** They are paired
+too since 2026-10-02 (§1), but as equals rather than English-plus-gloss: the
+learner reads those to understand, and only has to *produce* the answers.
 
 #### How it works
 
@@ -61,7 +92,7 @@ For those, `localiseScreen` does not overwrite — it writes a parallel
 `optionsGloss` / `bucketsGloss` / `orderItemsGloss` / `sortItemsGloss`, always a
 flat list of strings aligned by index.
 [`AnswerLabel.svelte`](../src/lib/components/AnswerLabel.svelte) renders the
-pair, and is the only component that does.
+answer pair; `Bilingual.svelte` renders prose pairs (§1).
 
 Two consequences worth keeping:
 

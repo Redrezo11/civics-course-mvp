@@ -40,6 +40,7 @@ const readJson = (p) => JSON.parse(readFileSync(p, 'utf8'));
 // narrated' has exactly one definition.
 import { NARRATED_FIELDS } from '../src/lib/narration-text.js';
 import { textHash } from '../src/lib/text-hash.js';
+import { GLOSS_FIELDS } from '../src/lib/localise.js';
 import { STANDALONE_NARRATION } from '../src/lib/content/standalone-narration.js';
 import { xmlProblems } from './lib/xml-check.js';
 
@@ -1442,6 +1443,56 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
   }
   if (!offenders.length) {
     pass(check, 'every learner-visible string reaches the translation pipeline');
+  }
+}
+
+// --- 26. Lesson prose renders English with its Burmese ----------------------
+//
+// Burmese mode shows every passage of lesson prose as the English with the
+// Burmese beneath it, through Bilingual.svelte (reviewer feedback, 2026-10-02).
+// A prose field interpolated straight from the localised screen — `{screen.body}`
+// — would show the Burmese alone again, and nothing else would notice: the
+// screen still renders, every data-level test still passes.
+//
+// So: no text-position interpolation of a translated prose field, in Lesson or
+// in the components that receive localised data. Attribute positions
+// (`my={screen.body}`) are exactly how the pair is built and are allowed — the
+// lookbehind is what tells the two apart.
+{
+  const check = '26 lesson prose renders as English + Burmese';
+
+  const overlayDir = join(contentDir, 'translations', 'my');
+  const NOT_PROSE = new Set([...Object.keys(GLOSS_FIELDS), ...Object.values(GLOSS_FIELDS), 'cards', 'items', 'alt', 'fullBankOffer', 'imageRow']);
+  const proseFields = new Set();
+  for (const f of readdirSync(overlayDir).filter((n) => n.endsWith('.json'))) {
+    for (const fields of Object.values(readJson(join(overlayDir, f)))) {
+      for (const k of Object.keys(fields)) if (!NOT_PROSE.has(k)) proseFields.add(k);
+    }
+  }
+
+  const SITES = [
+    ['src/lib/screens/Lesson.svelte', /(?<![=\w])\{screen\.(\w+)/g, (m) => proseFields.has(m[1])],
+    ['src/lib/components/GuidedPractice.svelte', /(?<![=\w])\{item\.(instructions|question)\}/g, () => true],
+    ['src/lib/components/VocabDeck.svelte', /(?<![=\w])\{card\.(def|example)\}/g, () => true],
+    ['src/lib/components/SingleSelect.svelte', /(?<![=\w])\{(feedbackExplain)\}/g, () => true],
+    ['src/lib/components/MultiSelect.svelte', /(?<![=\w])\{(feedbackExplain)\}/g, () => true],
+  ];
+
+  const offenders = [];
+  for (const [rel, pattern, isProse] of SITES) {
+    const markup = readFileSync(join(root, rel), 'utf8')
+      .replace(/<script[\s\S]*?<\/script>/g, '')
+      .replace(/<!--[\s\S]*?-->/g, '');
+    for (const m of markup.matchAll(pattern)) {
+      if (isProse(m)) offenders.push(`${rel} → ${m[0].endsWith('}') ? m[0] : `${m[0]}…}`}`);
+    }
+  }
+
+  for (const o of offenders) {
+    fail(check, `${o} shows the Burmese alone in Burmese mode — render it through <Bilingual en=… my=…>`);
+  }
+  if (!offenders.length) {
+    pass(check, `${proseFields.size} prose fields, every one paired with its English`);
   }
 }
 

@@ -17,6 +17,7 @@
   import LevelsDiagram from '../components/LevelsDiagram.svelte';
   import QuestionCard from '../components/QuestionCard.svelte';
   import AnswerLabel from '../components/AnswerLabel.svelte';
+  import Bilingual from '../components/Bilingual.svelte';
   import SingleSelect from '../components/SingleSelect.svelte';
   import VocabDeck from '../components/VocabDeck.svelte';
   import GuidedPractice from '../components/GuidedPractice.svelte';
@@ -96,6 +97,9 @@
   $: lang = $progress.language || 'en';
   $: rawScreen = unit?.screens[index];
   $: screen = rawScreen ? localiseScreen(rawScreen, unitId, lang) : rawScreen;
+  // Prose renders as a pair: English from `en`, Burmese from `screen`. In
+  // English mode the two are the same object, so every pair is one line.
+  $: en = rawScreen;
   $: isDynamicPractice =
     screen?.type === 'practice' && getQuestion(screen.questionId)?.dynamic;
   $: isLast = unit && index === unit.screens.length - 1;
@@ -239,7 +243,7 @@
         {#if screen.image}
           <ScreenImage image={screen.image} alt={screen.alt} />
         {/if}
-        {#if screen.heading}<h1 class="text-thesis font-bold mb-3">{screen.heading}</h1>{/if}
+        {#if screen.heading}<Bilingual tag="h1" wrapperClass="text-thesis font-bold mb-3" en={en.heading} my={screen.heading} />{/if}
         {#if screen.clueList}
           <div class="border-t border-border dark:border-dark-border mb-3">
             {#each screen.clueList as [word, meaning]}
@@ -252,16 +256,16 @@
         {/if}
         {#if screen.bodyList}
           <ul class="space-y-2 mb-4">
-            {#each screen.bodyList as line}<li class="font-bold">{line}</li>{/each}
+            {#each en.bodyList as line, i}<Bilingual tag="li" wrapperClass="font-bold" en={line} my={screen.bodyList?.[i]} />{/each}
           </ul>
         {:else if screen.body}
-          <p class="mb-4">{screen.body}</p>
+          <Bilingual wrapperClass="mb-4" en={en.body} my={screen.body} />
         {/if}
 
       {:else if screen.type === 'tryOne'}
         {@const q = getQuestion(screen.questionId)}
         {@const p = presentOptions(q)}
-        <p class="mb-3">{screen.body}</p>
+        <Bilingual wrapperClass="mb-3" en={en.body} my={screen.body} />
         <QuestionCard text={q.official} />
         <SingleSelect
           options={p.options}
@@ -271,15 +275,18 @@
         />
 
       {:else if screen.type === 'orient'}
-        <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-1">{screen.unitLabel}</p>
-        <h1 class="text-heading font-bold mb-4">{screen.heading}</h1>
-        <p class="mb-3">{screen.body}</p>
+        <Bilingual wrapperClass="text-xs text-ink-muted dark:text-dark-ink-muted mb-1" en={en.unitLabel} my={screen.unitLabel} />
+        <Bilingual tag="h1" wrapperClass="text-heading font-bold mb-4" en={en.heading} my={screen.heading} />
+        <Bilingual wrapperClass="mb-3" en={en.body} my={screen.body} />
         <QuestionCard text={getQuestion(screen.sampleQuestionId).official} />
-        <p class="mb-3">{screen.afterQuote}</p>
-        <div class="border border-border-interactive dark:border-dark-border-interactive rounded-card py-3 px-4 text-center font-bold mb-4">
-          {screen.coverageLine}
-        </div>
-        <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary">{screen.afterTest}</p>
+        <Bilingual wrapperClass="mb-3" en={en.afterQuote} my={screen.afterQuote} />
+        <Bilingual
+          tag="div"
+          wrapperClass="border border-border-interactive dark:border-dark-border-interactive rounded-card py-3 px-4 text-center font-bold mb-4"
+          en={en.coverageLine}
+          my={screen.coverageLine}
+        />
+        <Bilingual wrapperClass="text-sm text-ink-secondary dark:text-dark-ink-secondary" en={en.afterTest} my={screen.afterTest} />
 
       {:else if screen.type === 'hook'}
         <!--
@@ -294,7 +301,7 @@
             wrapperClass=""
           />
         </div>
-        <h1 class="text-thesis font-bold text-center mb-5">{screen.question}</h1>
+        <Bilingual tag="h1" wrapperClass="text-thesis font-bold text-center mb-5" en={en.question} my={screen.question} />
         <!--
           The same three-state treatment every other answer surface uses:
           SingleSelect, MultiSelect and GuidedPractice all mark the correct
@@ -329,23 +336,25 @@
           </button>
         {/each}
         {#if interactionDone}
-          <p class="text-sm mt-4 p-3 rounded-card border border-border dark:border-dark-border leading-relaxed">
-            {screen.feedback}
-          </p>
+          <Bilingual
+            wrapperClass="text-sm mt-4 p-3 rounded-card border border-border dark:border-dark-border leading-relaxed"
+            en={en.feedback}
+            my={screen.feedback}
+          />
         {/if}
 
       {:else if screen.type === 'connect'}
-        {#each screen.bodyList as line, i}
-          <p class="{i === 0 ? 'font-bold' : ''} mb-3">{line}</p>
+        {#each en.bodyList as line, i}
+          <Bilingual wrapperClass="{i === 0 ? 'font-bold' : ''} mb-3" en={line} my={screen.bodyList?.[i]} />
         {/each}
-        {#if screen.bodyList2}
+        {#if en.bodyList2}
           <div class="h-3"></div>
-          {#each screen.bodyList2 as line}<p class="font-bold mb-3">{line}</p>{/each}
+          {#each en.bodyList2 as line, i}<Bilingual wrapperClass="font-bold mb-3" en={line} my={screen.bodyList2?.[i]} />{/each}
         {/if}
-        {#if screen.closing}<p class="text-lg font-bold mt-4">{screen.closing}</p>{/if}
+        {#if screen.closing}<Bilingual wrapperClass="text-lg font-bold mt-4" en={en.closing} my={screen.closing} />{/if}
 
       {:else if screen.type === 'vocab'}
-        <VocabDeck cards={screen.cards} on:done={() => (interactionDone = true)} />
+        <VocabDeck cards={screen.cards} english={en.cards} on:done={() => (interactionDone = true)} />
 
       {:else if screen.type === 'bigIdea'}
         {#if screen.image}
@@ -370,44 +379,50 @@
             {/each}
           </div>
         {/if}
-        {#if screen.paragraphs}
-          {#each screen.paragraphs as p, i}
-            <p class="{i === 0 ? 'text-thesis font-bold' : ''} mb-3 leading-relaxed">{p}</p>
+        {#if en.paragraphs}
+          {#each en.paragraphs as p, i}
+            <Bilingual wrapperClass="{i === 0 ? 'text-thesis font-bold' : ''} mb-3 leading-relaxed" en={p} my={screen.paragraphs?.[i]} />
           {/each}
         {/if}
-        {#if screen.twoColumn}
+        <!--
+          Iterates the ENGLISH columns. The Burmese overlay replaces twoColumn
+          wholesale with { heading, body, alt } entries and no `image`, so
+          iterating `screen.twoColumn` dropped every picture in Burmese mode.
+        -->
+        {#if en.twoColumn}
           <div class="space-y-4 mb-4">
-            {#each screen.twoColumn as col}
+            {#each en.twoColumn as col, i}
+              {@const tr = screen.twoColumn?.[i] || {}}
               <div>
-                <ScreenImage image={col.image} alt={col.alt} wrapperClass="mb-2" />
-                <p class="font-bold mb-1">{col.heading}</p>
-                <p class="text-sm">{col.body}</p>
+                <ScreenImage image={col.image} alt={tr.alt || col.alt} wrapperClass="mb-2" />
+                <Bilingual wrapperClass="font-bold mb-1" en={col.heading} my={tr.heading} />
+                <Bilingual wrapperClass="text-sm" en={col.body} my={tr.body} />
               </div>
             {/each}
           </div>
         {/if}
-        {#if screen.closing}<p class="mb-3">{screen.closing}</p>{/if}
-        {#if screen.resolution}<p class="text-sm text-ink-secondary dark:text-dark-ink-secondary mb-3">{screen.resolution}</p>{/if}
+        {#if screen.closing}<Bilingual wrapperClass="mb-3" en={en.closing} my={screen.closing} />{/if}
+        {#if screen.resolution}<Bilingual wrapperClass="text-sm text-ink-secondary dark:text-dark-ink-secondary mb-3" en={en.resolution} my={screen.resolution} />{/if}
         {#if screen.handle}
           <div class="border-t border-border dark:border-dark-border pt-4 mt-2">
-            <p class="font-bold">{screen.handle}</p>
-            {#if screen.handleSub}<p class="text-sm text-ink-secondary dark:text-dark-ink-secondary mt-1">{screen.handleSub}</p>{/if}
+            <Bilingual wrapperClass="font-bold" en={en.handle} my={screen.handle} />
+            {#if screen.handleSub}<Bilingual wrapperClass="text-sm text-ink-secondary dark:text-dark-ink-secondary mt-1" en={en.handleSub} my={screen.handleSub} />{/if}
           </div>
         {/if}
 
       {:else if screen.type === 'seeItNotIt'}
-        <h1 class="text-thesis font-bold mb-4">{screen.heading}</h1>
-        <p class="mb-4">{screen.example}</p>
-        <p class="text-ink-secondary dark:text-dark-ink-secondary mb-5">{screen.nonExample}</p>
-        <p class="font-bold text-lg">{screen.takeaway}</p>
+        <Bilingual tag="h1" wrapperClass="text-thesis font-bold mb-4" en={en.heading} my={screen.heading} />
+        <Bilingual wrapperClass="mb-4" en={en.example} my={screen.example} />
+        <Bilingual wrapperClass="text-ink-secondary dark:text-dark-ink-secondary mb-5" en={en.nonExample} my={screen.nonExample} />
+        <Bilingual wrapperClass="font-bold text-lg" en={en.takeaway} my={screen.takeaway} />
 
       {:else if screen.type === 'confusablePair'}
-        <h1 class="text-thesis font-bold mb-5">{screen.heading}</h1>
-        <p class="font-bold mb-0.5">{screen.termA.name}</p>
-        <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary mb-4">{screen.termA.def}</p>
-        <p class="font-bold mb-0.5">{screen.termB.name}</p>
-        <p class="text-sm text-ink-secondary dark:text-dark-ink-secondary mb-5">{screen.termB.def}</p>
-        <p class="font-bold">{screen.resolution}</p>
+        <Bilingual tag="h1" wrapperClass="text-thesis font-bold mb-5" en={en.heading} my={screen.heading} />
+        <Bilingual wrapperClass="font-bold mb-0.5" en={en.termA.name} my={screen.termA?.name} />
+        <Bilingual wrapperClass="text-sm text-ink-secondary dark:text-dark-ink-secondary mb-4" en={en.termA.def} my={screen.termA?.def} />
+        <Bilingual wrapperClass="font-bold mb-0.5" en={en.termB.name} my={screen.termB?.name} />
+        <Bilingual wrapperClass="text-sm text-ink-secondary dark:text-dark-ink-secondary mb-5" en={en.termB.def} my={screen.termB?.def} />
+        <Bilingual wrapperClass="font-bold" en={en.resolution} my={screen.resolution} />
 
       {:else if screen.type === 'guidedPractice'}
         <!-- Guided-practice answers are deliberately NOT recorded. G-22: the
@@ -419,6 +434,7 @@
              practiced that G-22 exists to prevent. -->
         <GuidedPractice
           items={screen.items}
+          english={en.items}
           on:alldone={() => (interactionDone = true)}
         />
 
@@ -433,6 +449,7 @@
         <PracticeItem
           q={getQuestion(screen.questionId)}
           explain={screen.feedbackExplain || ''}
+          explainEn={en.feedbackExplain || ''}
           on:answer={(e) => {
             handleAnswer(e.detail.id, e.detail.correct);
             interactionDone = true;
@@ -452,8 +469,8 @@
         <!-- No companion placeholder here. On a hook screen the striped circle
              marks where the character will speak; on the finishing screen it is
              a stand-in for nothing and makes a completed lesson look unbuilt. -->
-        <h2 class="text-heading font-bold text-center mb-3">{screen.heading}</h2>
-        <p class="text-center mb-6">{screen.learnedLine}</p>
+        <Bilingual tag="h2" wrapperClass="text-heading font-bold text-center mb-3" en={en.heading} my={screen.heading} />
+        <Bilingual wrapperClass="text-center mb-6" en={en.learnedLine} my={screen.learnedLine} />
 
         <!-- G-08 entry point. Optional and non-blocking: it sits above the
              Next control, never in place of it, so it can never gate

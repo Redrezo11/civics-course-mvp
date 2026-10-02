@@ -36,9 +36,11 @@
   // Course-authored explanation for this item. Comes from the SCREEN in unit
   // JSON, never from the question file: question files hold verbatim USCIS
   // wording and are the never-translate boundary, whereas this is our prose
-  // and has to be translatable. Deliberately a single string, not a bilingual
-  // pair — feedback is shown in the learner's chosen language only.
+  // and has to be translatable. In Burmese mode it renders as a pair: `explain`
+  // is the learner's language, `explainEn` the English shown above it. Callers
+  // with no English to offer (Review, FullBank) pass neither.
   export let explain = '';
+  export let explainEn = '';
 
   $: presented = q && !q.dynamic ? presentOptions(q) : null;
   $: currentAnswer = q && q.dynamic ? getCurrentAnswer(q.id) : null;
@@ -121,6 +123,7 @@
         acceptedAnswers={q.acceptedAnswers}
         required={q.multiSelect}
         feedbackExplain={explain}
+        feedbackExplainEn={explainEn}
         on:answer={(e) => answered(e.detail.correct)}
       />
     {:else}
@@ -129,6 +132,7 @@
         correctIndex={presented.correctIndex}
         correctAnswerText={q.acceptedAnswers[0]}
         feedbackExplain={explain}
+        feedbackExplainEn={explainEn}
         on:answer={(e) => answered(e.detail.correct)}
       />
     {/if}

@@ -9,12 +9,14 @@
 
   import { createEventDispatcher } from 'svelte';
   import { t } from '../i18n.js';
+  import Bilingual from './Bilingual.svelte';
   const dispatch = createEventDispatcher();
 
   export let options = [];
   export let correctIndex = 0;
   export let correctAnswerText = ''; // used in feedback when option wording differs from acceptedAnswers[0]
   export let feedbackExplain = '';   // optional explanation appended after "The correct answer is X."
+  export let feedbackExplainEn = ''; // its English, shown above it in Burmese mode
 
   let selected = null;
   let answered = false;
@@ -61,7 +63,9 @@
   {#if answered}
     <div class="mt-3 p-3 rounded-card border border-border dark:border-dark-border text-sm leading-relaxed">
       <span class="font-bold">{$t('guided.correctAnswerIs', { answer: correctAnswerText || options[correctIndex] })}</span>
-      {#if feedbackExplain} {feedbackExplain}{/if}
+      {#if feedbackExplain}
+        <Bilingual tag="span" wrapperClass="block mt-1" en={feedbackExplainEn || feedbackExplain} my={feedbackExplain} />
+      {/if}
     </div>
   {/if}
 </div>
