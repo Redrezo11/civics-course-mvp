@@ -1,5 +1,6 @@
 <script>
-  import { t } from '../i18n.js';
+  import { t, glossOfficial } from '../i18n.js';
+  import AnswerLabel from '../components/AnswerLabel.svelte';
   import { unitTitleKey } from '../content/unit-titles.js';
   import { progress } from '../stores/progress.js';
   // G-03 · the ungated reference to every official question. G-16 lists this
@@ -62,7 +63,9 @@
           class="tap w-full flex items-center justify-between py-2.5 px-4 text-left text-sm"
           on:click={() => (expanded = expanded === q.id ? null : q.id)}
         >
-          <span>{q.id.slice(1)}. {q.official}{q.star ? ' ★' : ''}</span>
+          <span>
+            <AnswerLabel text="{q.id.slice(1)}. {q.official}{q.star ? ' ★' : ''}" gloss={$glossOfficial(q.official)} />
+          </span>
           <span class="text-ink-muted dark:text-dark-ink-muted ml-2">{expanded === q.id ? '︿' : '﹀'}</span>
         </button>
         {#if expanded === q.id}
@@ -73,7 +76,13 @@
             <NarrationButton
               segments={[
                 { text: q.official, lang: 'en', questionId: q.id },
-                ...(q.dynamic ? [] : q.acceptedAnswers.map((a) => ({ text: a, lang: 'en' }))),
+                ...($glossOfficial(q.official) ? [{ text: $glossOfficial(q.official), lang: 'my' }] : []),
+                ...(q.dynamic
+                  ? []
+                  : q.acceptedAnswers.flatMap((a) => [
+                      { text: a, lang: 'en' },
+                      ...($glossOfficial(a) ? [{ text: $glossOfficial(a), lang: 'my' }] : []),
+                    ])),
               ]}
               wrapperClass="mb-3"
             />
@@ -97,7 +106,7 @@
               >
             {:else}
               <ul class="mb-2 pl-4">
-                {#each q.acceptedAnswers as a}<li>{a}</li>{/each}
+                {#each q.acceptedAnswers as a}<li><AnswerLabel text={a} gloss={$glossOfficial(a)} /></li>{/each}
               </ul>
             {/if}
             <div class="mt-2">

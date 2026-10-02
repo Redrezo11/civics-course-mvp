@@ -1,5 +1,5 @@
 <script>
-  import { t } from '../i18n.js';
+  import { t, glossOfficial } from '../i18n.js';
   // T · Rehearsal mode — the mock interview. Storyboard §8, unchanged by v5.0.
   //
   // This is the ONE deliberate exception to the v5.0 conversion. Every other
@@ -25,6 +25,7 @@
   import { getCurrentAnswer, ANSWERS_CHECKED } from '../content/questions.js';
   import LessonBar from '../components/LessonBar.svelte';
   import QuestionCard from '../components/QuestionCard.svelte';
+  import AnswerLabel from '../components/AnswerLabel.svelte';
   import NarrationButton from '../components/NarrationButton.svelte';
   import ScreenImage from '../components/ScreenImage.svelte';
   import { rehearsalSegments } from '../narration-text.js';
@@ -166,6 +167,7 @@
           correct,
           wrong,
           lang: $progress.language || 'en',
+          gloss: $glossOfficial,
         })}
         lang={$progress.language || 'en'}
         wrapperClass="mb-3"
@@ -181,7 +183,9 @@
         <div class="border border-border dark:border-dark-border rounded-card p-4 my-4">
           <p class="text-xs text-ink-muted dark:text-dark-ink-muted mb-2" lang={my}>{$t('rehearsal.acceptedAnswers')}</p>
           {#each acceptedFor(current) as a}
-            <p class="font-bold mb-1">{a}</p>
+            <p class="font-bold mb-1">
+              <AnswerLabel text={a} gloss={$glossOfficial(a)} />
+            </p>
           {/each}
         </div>
         <p class="font-bold text-center mb-3">{$t('rehearsal.didYouGetItRight')}</p>

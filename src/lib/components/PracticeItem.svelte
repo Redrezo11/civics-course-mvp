@@ -16,7 +16,7 @@
   import NarrationButton from './NarrationButton.svelte';
   import { practiceSegments } from '../narration-text.js';
   import { progress } from '../stores/progress.js';
-  import { t } from '../i18n.js';
+  import { t, glossOfficial } from '../i18n.js';
   import SingleSelect from './SingleSelect.svelte';
   import MultiSelect from './MultiSelect.svelte';
   import {
@@ -83,6 +83,7 @@
           currentAnswer: q.dynamic ? currentAnswer : null,
           checked: ANSWERS_CHECKED,
           lang,
+          gloss: $glossOfficial,
         }),
       ]
     : [];

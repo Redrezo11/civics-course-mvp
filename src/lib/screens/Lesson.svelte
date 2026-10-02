@@ -8,7 +8,7 @@
     getQuestion,
     presentOptions,
   } from '../content/questions.js';
-  import { localiseScreen } from '../i18n.js';
+  import { localiseScreen, glossOfficial } from '../i18n.js';
   import { narrationFor, practiceSegments, seg, optionSegments } from '../narration-text.js';
   import LessonBar from '../components/LessonBar.svelte';
   import NarrationButton from '../components/NarrationButton.svelte';
@@ -180,6 +180,7 @@
             questionId: screen.questionId,
             presented: presentOptions(getQuestion(screen.questionId)),
             lang,
+            gloss: $glossOfficial,
           })
         : [];
 

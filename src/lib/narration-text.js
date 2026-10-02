@@ -69,6 +69,17 @@ export function seg(text, lang = 'en') {
   return s ? [{ text: s, lang }] : [];
 }
 
+/**
+ * Official wording, spoken English first and then its Burmese gloss when the
+ * caller supplies one. The English always comes first: it is what the officer
+ * says. `gloss` is a lookup (text → Burmese, or '') so this module stays free
+ * of the language store and usable from build scripts.
+ */
+function officialSeg(text, gloss, lang, extra = {}) {
+  const g = gloss ? gloss(text) : '';
+  return [...seg(text, 'en').map((x) => ({ ...x, ...extra })), ...(g ? seg(g, lang) : [])];
+}
+
 /** Everything spoken, as one string — for hashing and for the recording script. */
 export function flatten(segments) {
   if (typeof segments === 'string') return segments;
@@ -185,11 +196,12 @@ export function practiceSegments({
   currentAnswer = null,
   checked = '',
   lang = 'en',
+  gloss = null,
 } = {}) {
   // The official question is tagged with its id, so the playlist can find a
   // recording for it. One file per question serves every screen that asks it —
   // including Rehearsal and the full-bank sets, which draw at random.
-  const out = [...seg(label, lang), ...seg(official, 'en').map((x) => ({ ...x, questionId }))];
+  const out = [...seg(label, lang), ...officialSeg(official, gloss, lang, { questionId })];
 
   // ◆ Dynamic questions have no options at all — a current-answer card instead,
   // which may say the answer has not been checked. Read what is there; never
@@ -216,7 +228,12 @@ export function practiceSegments({
   }
 
   if (multiSelectCount) out.push(...seg(`Choose ${multiSelectCount}.`, lang));
-  out.push(...optionSegments(presented?.options, { lang }));
+  out.push(
+    ...optionSegments(presented?.options, {
+      glosses: (presented?.options || []).map((o) => (gloss ? gloss(o) : '')),
+      lang,
+    })
+  );
 
   if (answered) {
     out.push(
@@ -226,7 +243,7 @@ export function practiceSegments({
             lang
           )
         : seg('The correct answer is', lang)),
-      ...(multiSelectCount ? [] : seg(correctAnswerText, 'en')),
+      ...(multiSelectCount ? [] : officialSeg(correctAnswerText, gloss, lang)),
       ...seg(explain, lang)
     );
   }
@@ -246,6 +263,7 @@ export function rehearsalSegments({
   correct = 0,
   wrong = 0,
   lang = 'en',
+  gloss = null,
 } = {}) {
   const out = [];
 
@@ -253,7 +271,7 @@ export function rehearsalSegments({
   // the first question does not open with "zero right, zero wrong".
   if (correct || wrong) out.push(...seg(`${correct} right, ${wrong} wrong.`, lang));
 
-  out.push(...seg(official, 'en').map((x) => ({ ...x, questionId })));
+  out.push(...officialSeg(official, gloss, lang, { questionId }));
 
   if (!revealed) {
     // The instruction. Previously omitted, which left the narration reading the
@@ -262,7 +280,7 @@ export function rehearsalSegments({
   }
 
   out.push(...seg('Accepted answers', lang));
-  for (const a of accepted) out.push(...seg(a, 'en'));
+  for (const a of accepted) out.push(...officialSeg(a, gloss, lang));
   out.push(...seg('Did you get it right?', lang));
   return out;
 }
@@ -270,14 +288,14 @@ export function rehearsalSegments({
 /** One guided-practice item, in whichever of its four shapes it takes. */
 export function guidedItemSegments(
   item,
-  { answered = false, lang = 'en', position = '', feedback = [] } = {}
+  { answered = false, lang = 'en', position = '', feedback = [], gloss = null } = {}
 ) {
   if (!item) return [];
   // "Practice N of M — not an official test question". The disclaimer is the
   // G-22 honesty line separating authored items from the official 128, and it
   // was never spoken.
   const out = [...seg(position, lang), ...seg(item.instructions, lang), ...seg(item.question, lang)];
-  if (item.cardText) out.push(...seg(item.cardText, 'en'));
+  if (item.cardText) out.push(...officialSeg(item.cardText, gloss, lang));
 
   if (item.buckets) {
     out.push(...seg('Categories:', lang), ...optionSegments(item.buckets, { glosses: item.bucketsGloss || [], lang }));
@@ -295,7 +313,7 @@ export function guidedItemSegments(
     out.push(...optionSegments(item.options, { glosses: item.optionsGloss || [], lang }));
   }
   if (answered && item.pairedOfficial) {
-    out.push(...seg('It asks the same thing as the official question:', lang), ...seg(item.pairedOfficial, 'en'));
+    out.push(...seg('It asks the same thing as the official question:', lang), ...officialSeg(item.pairedOfficial, gloss, lang));
   }
 
   // Feedback ONLY once answered. The compare feedback names the correct bucket

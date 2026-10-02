@@ -161,7 +161,7 @@ describe('Burmese mode: English with the Burmese beneath', () => {
     // Found by the option's own text: the Listen control is also a rounded
     // button and comes first.
     const option = [...container.querySelectorAll('button')].find((b) =>
-      c.q.options.some((o) => squash(b.textContent).endsWith(squash(o)))
+      c.q.options.some((o) => squash(b.textContent).includes(squash(o)))
     );
     await fireEvent.click(option);
     expect(textIn(container, '[lang="en"]')).toContain(squash(c.screen.feedbackExplain));

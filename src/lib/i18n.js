@@ -22,6 +22,7 @@ import { progress } from './stores/progress.js';
 import { localiseWith } from './localise.js';
 import freshness from './content/translations/freshness.json';
 import uiStrings from './content/ui-strings.json';
+import officialGlosses from './content/translations/official-glosses-my.json';
 import myUnit0 from './content/translations/my/unit0.json';
 import myUnit1 from './content/translations/my/unit1.json';
 import myUnit2 from './content/translations/my/unit2.json';
@@ -102,6 +103,29 @@ export function localiseScreen(screen, unitId, lang) {
 /** Reactive helper for components: `$localise(screen, 'U1')`. */
 export const localise = derived(progress, ($p) => (screen, unitId) =>
   localiseScreen(screen, unitId, $p.language || 'en')
+);
+
+/**
+ * The Burmese beneath an official question, answer option or accepted answer.
+ *
+ * G-3 used to mean these were never translated at all. They still never are:
+ * the English is what renders and what is spoken first, every time, because it
+ * is what the officer says. Since 2026-10-02 Burmese mode adds the Burmese
+ * beneath it — the same English-over-gloss shape every other answer in the
+ * course already had, so an official question no longer sits alone in English
+ * above bilingual options.
+ *
+ * Keyed by the exact English, so it cannot go stale: if the wording changes,
+ * the lookup misses and the line simply does not appear.
+ */
+export function officialGloss(text, lang) {
+  if (lang !== 'my' || !text) return '';
+  return officialGlosses.glosses[text] || '';
+}
+
+/** Reactive helper for components: `{$glossOfficial(q.official)}`. */
+export const glossOfficial = derived(progress, ($p) => (text) =>
+  officialGloss(text, $p.language || 'en')
 );
 
 /** Which units actually have a translation in the given language. */

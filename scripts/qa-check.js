@@ -1496,6 +1496,42 @@ const sourceText = sourceFiles.map((f) => ({ f, text: readFileSync(f, 'utf8') })
   }
 }
 
+// --- 27. Official wording carries its Burmese gloss -------------------------
+//
+// Since 2026-10-02 Burmese mode shows the Burmese beneath every official
+// question, answer option and accepted answer — English first, always (G-3).
+// The glosses are keyed by the exact English, so a reworded question loses its
+// gloss silently rather than showing a translation of old wording. That is the
+// right runtime behaviour and the wrong thing to ship unnoticed: this fails on
+// any official string with no Burmese, and on any gloss whose English no longer
+// exists anywhere (a reword left behind).
+{
+  const check = '27 official questions and answers have Burmese';
+  const file = readJson(join(contentDir, 'translations', 'official-glosses-my.json'));
+  const glosses = file.glosses || {};
+  const burmese = (s) => /[က-႟]/.test(String(s || ''));
+
+  const needed = new Map();
+  for (const q of questions) {
+    needed.set(q.official, q.id);
+    if (q.dynamic) continue;
+    for (const s of [...(q.options || []), ...(q.acceptedAnswers || [])]) needed.set(s, q.id);
+  }
+
+  let bad = 0;
+  for (const [en, id] of needed) {
+    if (!burmese(glosses[en])) { fail(check, `${id}: "${en.slice(0, 60)}" has no Burmese gloss`); bad++; }
+    else if (glosses[en].includes(en) && en.length > 3) { fail(check, `${id}: the gloss for "${en.slice(0, 50)}" repeats its English — it would print twice`); bad++; }
+  }
+  for (const en of Object.keys(glosses)) {
+    if (!needed.has(en)) { fail(check, `gloss for "${en.slice(0, 60)}" matches no official string — reworded? update the key`); bad++; }
+  }
+  if (!bad) pass(check, `${needed.size} official strings, every one glossed`);
+  if (file._status && file._status !== 'reviewed') {
+    warn(check, `official-glosses-my.json is "${file._status}" — Burmese drafted, not yet native-reviewed (docs/translations/official-glosses-review.csv)`);
+  }
+}
+
 // Contrast and readability USED to be listed here as human-only. They are not:
 // both are mechanical and are now checks 4 and 5. What genuinely cannot be
 // done in this script is anything requiring the source document or human

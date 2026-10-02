@@ -24,7 +24,7 @@ What it covers, and what it does not:
 |---|---|
 | Lesson prose — the 119 unit screens: headings, paragraphs, instructions, questions, feedback, vocab definitions and examples, confusable-pair terms | English, Burmese beneath, **same size and weight** |
 | Answers — options, buckets, sort chips, order cards, the vocab word | English, Burmese beneath in grey (§1a, unchanged) |
-| Official question wording and accepted answers | English only (§1b, unchanged) |
+| Official questions, their answer options and accepted answers — Q box, practice, question bank, rehearsal | English, Burmese beneath in grey (§1b) |
 | App screens around the lessons — Home, Welcome, Help, Settings, Rehearsal, Completion, Epitome — and every button and label | Burmese only |
 | Read-aloud | Burmese only — the English line is a reading aid, not spoken (`docs/NARRATION.md` §4) |
 
@@ -112,12 +112,37 @@ The build strips a gloss that repeats its English (the old bracketed form) and
 omits one entirely where the translation came back in English, so no answer ever
 shows the same words twice.
 
-### 1b. Never translated at all
+### 1b. Official wording — never replaced, glossed since 2026-10-02
 
-Official question wording, accepted answers, and practice options — see
-`STRUCTURAL_CHANGES.md` Part 0 for the full rule and the reasoning. In short:
-the correct option restates an accepted answer, so translating it would put a
-Burmese answer beside an English question.
+Official question wording, accepted answers and practice options are never
+*replaced* by a translation — see `STRUCTURAL_CHANGES.md` Part 0. The English
+is always shown, always first, and is what read-aloud speaks first: it is what
+the officer will say.
+
+Until 2026-10-02 they had no Burmese at all. A learner on a phone reported the
+result: on U2-S10 the guided-practice options showed English with Burmese
+beneath, and the official question directly above them sat alone in English.
+So official wording now gets the same treatment as every other answer — the
+Burmese **beneath** the English, grey, `text-sm`, in Burmese mode only:
+
+- `QuestionCard.svelte` — every Q box: lessons, guided practice, practice,
+  full-bank sets, reviews, rehearsal.
+- `SingleSelect` / `MultiSelect` — the official practice options.
+- `QuestionBank` and the rehearsal reveal — the accepted answers.
+- Read-aloud speaks each official string in English, then its Burmese.
+
+The Burmese lives in `src/lib/content/translations/official-glosses-my.json`,
+**keyed by the exact English**. It cannot go stale: a reworded question misses
+the lookup and shows English alone. QA check 27 fails on any official string
+with no Burmese and on any gloss whose English no longer exists, so a reword
+cannot ship unnoticed. `tests/official-gloss.test.js` covers coverage, every
+surface, English mode and read-aloud order.
+
+The 683 glosses were drafted in-house and are marked `draft-unreviewed`. The
+review sheet for native speakers is `docs/translations/official-glosses-review.csv`
+(`node scripts/official-gloss-sheet.js` regenerates it): English, draft
+Burmese, and an empty column for the correction. Wrong options are glossed
+literally — a gloss must never hint at which option is right.
 
 ---
 

@@ -8,8 +8,9 @@
   // to find out what the right answer actually was.
 
   import { createEventDispatcher } from 'svelte';
-  import { t } from '../i18n.js';
+  import { t, glossOfficial } from '../i18n.js';
   import Bilingual from './Bilingual.svelte';
+  import AnswerLabel from './AnswerLabel.svelte';
   const dispatch = createEventDispatcher();
 
   export let options = [];
@@ -55,7 +56,9 @@
       disabled={answered}
     >
       <span class="flex-1">
-        {#if answered && isCorrect}✓ {:else if isWrongPick}✗ {/if}{opt}
+        <AnswerLabel text={opt} gloss={$glossOfficial(opt)}
+          >{#if answered && isCorrect}✓ {:else if isWrongPick}✗ {/if}</AnswerLabel
+        >
       </span>
     </button>
   {/each}

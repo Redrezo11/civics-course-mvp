@@ -161,6 +161,13 @@ exception to "narrate what is on screen", and `tests/bilingual.test.js` records
 it, so a Burmese-mode case added to `tests/narration-coverage.test.js` will find
 the English "unnarrated" for this reason, not a bug.
 
+**Official wording is the other way round.** An official question, answer
+option or accepted answer is spoken in English first — what the officer will
+say — and then, in Burmese mode, its Burmese gloss (`officialSeg` in
+`narration-text.js`, fed by `official-glosses-my.json`). Same order as the
+screen: English line, Burmese beneath. A recorded `audio/q/<id>.mp3` still
+covers only the English question.
+
 **Narrated:** `info`, `orient`, `connect`, `bigIdea`, `seeItNotIt`,
 `confusablePair`, `lockItIn`, plus Welcome. 60 screens per language.
 

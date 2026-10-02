@@ -44,6 +44,14 @@ in English.
 Everything else — teaching prose, UI chrome, feedback, instructions — is
 translatable.
 
+**Amended 2026-10-02: never replaced, but glossed.** None of the above is ever
+translated *in place* — the files stay English, and the English is always what
+is shown and spoken first. Burmese mode now adds a Burmese line **beneath**
+each official question, option and accepted answer, from a separate file keyed
+by the English (`translations/official-glosses-my.json`). The warning about
+`options` above still holds, which is why it is a gloss under the English and
+never a replacement for it. See `ARCHITECTURE.md` §1b.
+
 ---
 
 ## Part 1 — what changed since Storyboard v5.3

@@ -1,5 +1,6 @@
 <script>
-  import { t } from '../i18n.js';
+  import { t, glossOfficial } from '../i18n.js';
+  import QuestionCard from './QuestionCard.svelte';
   // Rotates through exemplify / compare / infer / interpret per item — this
   // is the fix for the "everything was classifying" defect found in the
   // Instructional Strategy Foundation audit. One item advances to the next;
@@ -159,6 +160,7 @@
          one rather than continuing to read the last. -->
     <NarrationButton
       segments={guidedItemSegments(item, {
+        gloss: $glossOfficial,
         answered: doneFlags[i],
         position: `Practice ${i + 1} of ${items.length} — not an official test question.`,
         feedback: feedbackFor[i],
@@ -303,10 +305,7 @@
       {:else}
         {#if item.questionCard}
           <Bilingual wrapperClass="mb-2" en={english[i]?.question ?? item.question} my={item.question} />
-          <div class="question-card">
-            <span class="question-tag">Q</span>
-            <p class="font-bold m-0">{item.cardText}</p>
-          </div>
+          <QuestionCard text={item.cardText} />
         {:else}
           <Bilingual wrapperClass="mb-3" en={english[i]?.question ?? item.question} my={item.question} />
         {/if}
@@ -340,7 +339,12 @@
             <span class="font-bold">{$t('guided.correctAnswerIs', { answer: item.options[item.correctIndex] })}</span>
             {#if item.pairedOfficial}
               <br />{$t('guided.sameAsOfficial')}
-              <em>“{item.pairedOfficial}”</em>
+              <em lang="en">“{item.pairedOfficial}”</em>
+              {#if $glossOfficial(item.pairedOfficial)}
+                <span class="block mt-1 text-ink-secondary dark:text-dark-ink-secondary" lang="my"
+                  >{$glossOfficial(item.pairedOfficial)}</span
+                >
+              {/if}
             {/if}
           </div>
           {#if i < items.length - 1}

@@ -1,6 +1,7 @@
 <script>
-  import { t } from '../i18n.js';
+  import { t, glossOfficial } from '../i18n.js';
   import Bilingual from './Bilingual.svelte';
+  import AnswerLabel from './AnswerLabel.svelte';
   // Multi-select — used by the six "any N of these" questions (Q10, Q48,
   // Q65, Q67, Q81, Q126). Storyboard: 5–6 options with the required count
   // stated on screen, per G-19 (never encourage more answers than asked).
@@ -59,7 +60,9 @@
     >
       <!-- Selection and correctness are carried by a word and a mark, never
            by colour alone (G-5c / §8). -->
-      {#if reveal}✓ {:else if wrongPick}✗ {:else if picked}● {:else}○ {/if}{opt}
+      <AnswerLabel text={opt} gloss={$glossOfficial(opt)}
+        >{#if reveal}✓ {:else if wrongPick}✗ {:else if picked}● {:else}○ {/if}</AnswerLabel
+      >
     </button>
   {/each}
 
